@@ -203,9 +203,9 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="tts-speed-container">
                 <span>Speed:</span>
                 <select class="tts-speed-select" id="tts-speed">
-                    <option value="1">1x</option>
+                    <option value="1" selected>1x</option>
                     <option value="1.25">1.25x</option>
-                    <option value="1.5" selected>1.5x</option>
+                    <option value="1.5">1.5x</option>
                     <option value="2">2x</option>
                 </select>
             </div>
@@ -330,7 +330,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (selectedVoice) {
                 utterance.voice = selectedVoice;
             }
-            utterance.rate = parseFloat(speedSelect.value) || 1.5;
+            utterance.rate = parseFloat(speedSelect.value) || 1.0;
 
             utterance.onend = function () {
                 currentUtterance = null;
