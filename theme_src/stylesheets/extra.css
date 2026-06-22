@@ -234,3 +234,96 @@ input[type="file"]#restore-file-input {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* TTS Player Container styling */
+.tts-player-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    background-color: #f8f9fa;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.tts-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tts-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    font-size: 0.9em;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid #cbd5e1;
+    background-color: #ffffff;
+    color: #334155;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.tts-btn:hover {
+    background-color: #f1f5f9;
+    border-color: #94a3b8;
+}
+
+.tts-btn:active {
+    transform: scale(0.98);
+}
+
+.tts-btn.active {
+    background-color: #1abc9c;
+    border-color: #16a085;
+    color: #ffffff;
+}
+
+.tts-btn-play {
+    min-width: 80px;
+}
+
+.tts-speed-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9em;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.tts-speed-select {
+    padding: 4px 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #334155;
+    cursor: pointer;
+    font-size: 0.95em;
+}
+
+.tts-speed-select:focus {
+    outline: none;
+    border-color: #1abc9c;
+}
+
+.tts-status {
+    font-size: 0.85em;
+    color: #64748b;
+    font-style: italic;
+    margin-left: auto;
+}
+
+/* Highlight effect for the currently read paragraph */
+.tts-reading-highlight {
+    background-color: rgba(26, 188, 156, 0.08);
+    border-left: 3px solid #1abc9c;
+    padding-left: 8px;
+    transition: background-color 0.3s ease, border-left-color 0.3s ease;
+}
