@@ -4,9 +4,10 @@ Welcome to **AI Kaboom**, the ultimate community-driven portal designed to help 
 
 Whether you are a Cluster Administrator, DevOps Engineer, Systems Architect, System Engineer, Network Engineer, Cloud Engineer, or an AI aspirant, this hub bridges the gap between hardware mechanics and software orchestration. 
 
-<a href="01_physical_realm/roadmap.md" class="start-learning-btn">🚀 Start Learning for Free</a>
+<a href="01_physical_realm/roadmap/" class="start-learning-btn">🚀 Start Learning for Free</a>
 
 ---
+
 
 
 ## 🎯 Our Mission: Build the Go-To AI Infrastructure Community
