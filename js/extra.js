@@ -192,6 +192,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const articleBody = document.querySelector('[itemprop="articleBody"]');
 
     if (lessonTags && articleBody) {
+        // Retrieve last saved playback speed or default to 1x
+        const savedSpeed = localStorage.getItem("nca-tts-speed") || "1";
+
         // Create the player element
         const ttsContainer = document.createElement("div");
         ttsContainer.className = "tts-player-container";
@@ -203,10 +206,10 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="tts-speed-container">
                 <span>Speed:</span>
                 <select class="tts-speed-select" id="tts-speed">
-                    <option value="1" selected>1x</option>
-                    <option value="1.25">1.25x</option>
-                    <option value="1.5">1.5x</option>
-                    <option value="2">2x</option>
+                    <option value="1" ${savedSpeed === "1" ? "selected" : ""}>1x</option>
+                    <option value="1.25" ${savedSpeed === "1.25" ? "selected" : ""}>1.25x</option>
+                    <option value="1.5" ${savedSpeed === "1.5" ? "selected" : ""}>1.5x</option>
+                    <option value="2" ${savedSpeed === "2" ? "selected" : ""}>2x</option>
                 </select>
             </div>
             <div class="tts-status" id="tts-status">Speaker Idle</div>
@@ -431,6 +434,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         speedSelect.addEventListener("change", function () {
+            // Save preferred speed to localStorage
+            localStorage.setItem("nca-tts-speed", speedSelect.value);
+
             if (isSpeaking) {
                 // If speaking, stop and restart from the current sentence index to apply speed change immediately
                 const wasPaused = isPaused;
