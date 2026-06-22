@@ -186,4 +186,265 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
         window.addEventListener("load", initAccordion);
     }
+
+    // --- 5. READ ALOUD (TEXT-TO-SPEECH) ENGINE ---
+    const lessonTags = document.querySelector(".lesson-tags");
+    const articleBody = document.querySelector('[itemprop="articleBody"]');
+
+    if (lessonTags && articleBody) {
+        // Create the player element
+        const ttsContainer = document.createElement("div");
+        ttsContainer.className = "tts-player-container";
+        ttsContainer.innerHTML = `
+            <div class="tts-controls">
+                <button class="tts-btn tts-btn-play" id="tts-play-btn">▶ Play</button>
+                <button class="tts-btn" id="tts-stop-btn" disabled>■ Stop</button>
+            </div>
+            <div class="tts-speed-container">
+                <span>Speed:</span>
+                <select class="tts-speed-select" id="tts-speed">
+                    <option value="1">1x</option>
+                    <option value="1.25">1.25x</option>
+                    <option value="1.5" selected>1.5x</option>
+                    <option value="2">2x</option>
+                </select>
+            </div>
+            <div class="tts-status" id="tts-status">Speaker Idle</div>
+        `;
+
+        // Insert right after lesson tags
+        lessonTags.parentNode.insertBefore(ttsContainer, lessonTags.nextSibling);
+
+        const playBtn = document.getElementById("tts-play-btn");
+        const stopBtn = document.getElementById("tts-stop-btn");
+        const speedSelect = document.getElementById("tts-speed");
+        const statusText = document.getElementById("tts-status");
+
+        let synth = window.speechSynthesis;
+        let sentences = [];
+        let currentSentenceIndex = 0;
+        let isSpeaking = false;
+        let isPaused = false;
+        let selectedVoice = null;
+        let paragraphsElements = []; // Store references to highlight paragraphs
+        let currentUtterance = null; // Store active utterance to clear event handlers during cancel
+
+        // Helper to cancel speech safely without triggering premature onend events
+        function cancelCurrentSpeech() {
+            if (currentUtterance) {
+                currentUtterance.onend = null;
+                currentUtterance.onerror = null;
+                currentUtterance = null;
+            }
+            if (synth) {
+                synth.cancel();
+            }
+        }
+
+        // Parse article content into clean readable text units
+        function prepareTextChunks() {
+            // Find all visible paragraphs, list items, blockquotes, and headings
+            // and associate text with DOM nodes so we can highlight them
+            const walk = document.createTreeWalker(articleBody, NodeFilter.SHOW_ELEMENT, {
+                acceptNode: function(node) {
+                    const tag = node.tagName.toLowerCase();
+                    // Skip ignored nodes
+                    if (node.closest('.lesson-completion') || node.closest('.lesson-tags') || tag === 'pre' || tag === 'code' || tag === 'a' && node.closest('.start-learning-btn')) {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+                    if (['h1', 'h2', 'h3', 'h4', 'p', 'li', 'blockquote'].includes(tag)) {
+                        return NodeFilter.FILTER_ACCEPT;
+                    }
+                    return NodeFilter.FILTER_SKIP;
+                }
+            });
+
+            let node;
+            paragraphsElements = [];
+            sentences = [];
+
+            while (node = walk.nextNode()) {
+                const text = node.innerText.trim();
+                if (text) {
+                    // Split the element's text into sentences
+                    // This regex splits on sentence endings but keeps punctuation
+                    const elementSentences = text.split(/(?<=[.!?])\s+/);
+                    elementSentences.forEach(s => {
+                        const cleanSentence = s.trim();
+                        if (cleanSentence.length > 1) {
+                            sentences.push(cleanSentence);
+                            paragraphsElements.push(node); // Map sentence to its DOM element for highlighting
+                        }
+                    });
+                }
+            }
+        }
+
+        // Load voices and select the best one
+        function loadVoices() {
+            if (!synth) return;
+            const voices = synth.getVoices();
+            // Look for Google, Microsoft, or natural voices containing "english" or code "en-"
+            selectedVoice = voices.find(v => v.lang.toLowerCase().startsWith("en-us") && v.name.toLowerCase().includes("natural")) ||
+                            voices.find(v => v.lang.toLowerCase().startsWith("en") && v.name.toLowerCase().includes("natural")) ||
+                            voices.find(v => v.lang.toLowerCase().startsWith("en-us") && v.name.toLowerCase().includes("google")) ||
+                            voices.find(v => v.lang.toLowerCase().startsWith("en-us")) ||
+                            voices.find(v => v.lang.toLowerCase().startsWith("en")) ||
+                            voices[0];
+        }
+
+        // Run voice loading (speechSynthesis.onvoiceschanged is needed for Chrome)
+        loadVoices();
+        if (synth && synth.onvoiceschanged !== undefined) {
+            synth.onvoiceschanged = loadVoices;
+        }
+
+        function clearHighlights() {
+            document.querySelectorAll(".tts-reading-highlight").forEach(el => {
+                el.classList.remove("tts-reading-highlight");
+            });
+        }
+
+        function speakCurrentSentence() {
+            if (!synth || currentSentenceIndex >= sentences.length) {
+                stopSpeech();
+                return;
+            }
+
+            const sentenceText = sentences[currentSentenceIndex];
+            const activeElement = paragraphsElements[currentSentenceIndex];
+
+            // Highlight active element
+            clearHighlights();
+            if (activeElement) {
+                activeElement.classList.add("tts-reading-highlight");
+                // Scroll it into view smoothly if it's off-screen
+                const rect = activeElement.getBoundingClientRect();
+                if (rect.top < 0 || rect.bottom > window.innerHeight) {
+                    activeElement.scrollIntoView({ behavior: "smooth", block: "center" });
+                }
+            }
+
+            const utterance = new SpeechSynthesisUtterance(sentenceText);
+            currentUtterance = utterance;
+            if (selectedVoice) {
+                utterance.voice = selectedVoice;
+            }
+            utterance.rate = parseFloat(speedSelect.value) || 1.5;
+
+            utterance.onend = function () {
+                currentUtterance = null;
+                if (isSpeaking && !isPaused) {
+                    currentSentenceIndex++;
+                    speakCurrentSentence();
+                }
+            };
+
+            utterance.onerror = function (e) {
+                currentUtterance = null;
+                console.error("TTS SpeechSynthesisUtterance error:", e);
+                // Advance to next sentence on error to prevent freezing
+                if (isSpeaking && !isPaused) {
+                    currentSentenceIndex++;
+                    speakCurrentSentence();
+                }
+            };
+
+            synth.speak(utterance);
+        }
+
+        function startSpeech() {
+            if (sentences.length === 0) {
+                prepareTextChunks();
+            }
+
+            if (sentences.length === 0) {
+                statusText.textContent = "No text found to read.";
+                return;
+            }
+
+            cancelCurrentSpeech(); // Stop any current reading safely
+            isSpeaking = true;
+            isPaused = false;
+            currentSentenceIndex = 0; // Always start fresh on Play click
+            
+            playBtn.textContent = "⏸ Pause";
+            playBtn.classList.add("active");
+            stopBtn.disabled = false;
+            statusText.textContent = "Reading...";
+
+            speakCurrentSentence();
+        }
+
+        function pauseSpeech() {
+            if (!synth) return;
+            isPaused = true;
+            synth.pause();
+            playBtn.textContent = "▶ Resume";
+            playBtn.classList.remove("active");
+            statusText.textContent = "Paused";
+        }
+
+        function resumeSpeech() {
+            if (!synth) return;
+            isPaused = false;
+            synth.resume();
+            playBtn.textContent = "⏸ Pause";
+            playBtn.classList.add("active");
+            statusText.textContent = "Reading...";
+            
+            // Web Speech API bug fallback: sometimes resume() doesn't fire correctly in Chrome
+            // If the voice is still paused after 500ms, force-cancel and restart from active sentence
+            setTimeout(() => {
+                if (isSpeaking && !isPaused && !synth.speaking) {
+                    cancelCurrentSpeech();
+                    speakCurrentSentence();
+                }
+            }, 300);
+        }
+
+        function stopSpeech() {
+            isSpeaking = false;
+            isPaused = false;
+            cancelCurrentSpeech();
+            clearHighlights();
+            currentSentenceIndex = 0;
+            
+            playBtn.textContent = "▶ Play";
+            playBtn.classList.remove("active");
+            stopBtn.disabled = true;
+            statusText.textContent = "Speaker Idle";
+        }
+
+        playBtn.addEventListener("click", function () {
+            if (!isSpeaking) {
+                startSpeech();
+            } else if (isPaused) {
+                resumeSpeech();
+            } else {
+                pauseSpeech();
+            }
+        });
+
+        stopBtn.addEventListener("click", function () {
+            stopSpeech();
+        });
+
+        speedSelect.addEventListener("change", function () {
+            if (isSpeaking) {
+                // If speaking, stop and restart from the current sentence index to apply speed change immediately
+                const wasPaused = isPaused;
+                cancelCurrentSpeech();
+                if (!wasPaused) {
+                    speakCurrentSentence();
+                }
+            }
+        });
+
+        // Crucial Page-Change Safety: Stop speech if user navigates away
+        window.addEventListener("beforeunload", cancelCurrentSpeech);
+        window.addEventListener("unload", cancelCurrentSpeech);
+
+    }
 });
+
