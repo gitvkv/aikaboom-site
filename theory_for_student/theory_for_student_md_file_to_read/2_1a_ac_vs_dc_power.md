@@ -1,0 +1,130 @@
+# 2.1a AC vs DC power: understanding voltage, amperage, and wattage (P=IV)
+
+#### 🏷️ The Physical Realm — Data Center Foundations & Hardware Architecture > 2 Data Center Facility Operations > 2.1 Power Infrastructure — From the Grid to the GPU
+
+---
+
+## 🔍 Context Introduction
+
+When you walk into a data center, you'll hear the hum of cooling fans and see rows of servers, switches, and storage systems. But what powers all of this? Electricity. Understanding the basics of AC (Alternating Current) and DC (Direct Current) power is essential for any engineer working with AI infrastructure. You don't need to be an electrician, but knowing the difference between voltage, amperage, and wattage — and how they relate through the formula **P = I × V** — will help you size power supplies, plan capacity, and troubleshoot issues.
+
+---
+
+## ⚡ What is AC vs DC Power?
+
+| Feature | AC (Alternating Current) | DC (Direct Current) |
+|---------|--------------------------|----------------------|
+| **Flow direction** | Changes direction periodically (e.g., 60 times per second in the US) | Flows in one direction only |
+| **Common source** | Wall outlets, utility grid, generators | Batteries, solar panels, power supply units (PSUs) |
+| **Used by** | Building lighting, HVAC, large motors | Servers, GPUs, networking equipment, electronics |
+| **Why it matters** | AC is efficient for long-distance transmission | DC is required for most computer components |
+
+**Key takeaway:** The power coming from the utility grid is AC. Inside your AI server, the power supply converts AC to DC because the GPU, CPU, and memory all run on DC.
+
+---
+
+## 📊 The Core Formula: P = I × V
+
+This is the single most important formula for power infrastructure. Let's break it down:
+
+- **P** = Power, measured in **Watts (W)**
+- **I** = Current (amperage), measured in **Amps (A)**
+- **V** = Voltage, measured in **Volts (V)**
+
+**In plain English:**  
+Power (watts) = Current (amps) × Voltage (volts)
+
+### 🧠 Simple Analogy
+
+Think of electricity like water flowing through a pipe:
+- **Voltage** = Water pressure (how hard the water is pushed)
+- **Amperage** = Pipe diameter (how much water flows)
+- **Wattage** = Total water delivered (the actual work done)
+
+---
+
+## 🛠️ Why This Matters for AI Infrastructure
+
+When you're planning a rack of AI servers, you need to know:
+
+### 1. Power Supply Sizing
+- A typical AI server GPU (like an NVIDIA H100) can draw **300–700 watts** per GPU
+- A full server with 8 GPUs might need **4,000–6,000 watts**
+- At **240V AC**, that's roughly **17–25 amps** per server
+
+### 2. Circuit Breaker Limits
+- Standard data center circuits: **20A, 30A, or 60A** at **208V or 240V**
+- Example: A **30A circuit at 208V** can deliver:  
+  **P = 30A × 208V = 6,240 watts** (but you should only use 80% for safety = ~5,000W)
+
+### 3. Voltage Drop Over Distance
+- Higher voltage = less current needed for same power
+- Less current = thinner (cheaper) copper cables
+- This is why data centers use **208V or 480V** instead of standard 120V household outlets
+
+---
+
+## 🕵️ Real-World Example: Sizing a GPU Server
+
+Imagine you have an AI server with:
+- 8 NVIDIA H100 GPUs (700W each)
+- CPU + memory + fans = 500W
+
+**Step 1: Calculate total power**  
+Total = (8 × 700W) + 500W = **6,100 watts**
+
+**Step 2: Find required current at 208V**  
+Using **P = I × V**, solve for I:  
+**I = P ÷ V = 6,100W ÷ 208V = 29.3 amps**
+
+**Step 3: Choose a circuit**  
+A **30A circuit** would be too close to the limit (safety margin needed).  
+You'd likely use a **40A or 60A circuit** for this server.
+
+---
+
+## ⚙️ AC vs DC in Your Data Center
+
+| Component | Power Type | Typical Voltage |
+|-----------|------------|-----------------|
+| Utility feed to building | AC | 480V or 13.8kV |
+| UPS output | AC | 208V or 480V |
+| PDU output to rack | AC | 208V or 240V |
+| Server PSU input | AC | 100–240V (auto-ranging) |
+| Server motherboard | DC | 12V, 5V, 3.3V |
+| GPU core voltage | DC | ~0.8–1.2V |
+
+**Important note:** Modern server power supplies are "power factor corrected" and can accept a wide range of AC voltages automatically.
+
+---
+
+## 📋 Quick Reference: Common Conversions
+
+| If you know... | And you want... | Use this formula |
+|----------------|-----------------|------------------|
+| Watts & Volts | Amps | **I = P ÷ V** |
+| Watts & Amps | Volts | **V = P ÷ I** |
+| Volts & Amps | Watts | **P = V × I** |
+
+---
+
+## ✅ Key Takeaways for New Engineers
+
+1. **Always check the nameplate** on your equipment — it lists max watts, amps, and voltage
+2. **Use the 80% rule** — never load a circuit above 80% of its rated capacity
+3. **AC is for transmission, DC is for computing** — the PSU bridges the two
+4. **Higher voltage = lower current** for the same power — this reduces cable size and heat
+5. **P = I × V** is your go-to formula for all power calculations
+
+---
+
+## 🔗 Related Topics to Explore Next
+
+- Power Distribution Units (PDUs) and how they connect to racks
+- Uninterruptible Power Supplies (UPS) and battery runtime
+- Power Usage Effectiveness (PUE) — measuring data center efficiency
+- Redundant power feeds (A-side and B-side) for high availability
+
+---
+
+*Remember: You don't need to memorize every detail. Keep this formula handy: **P = I × V**. It will answer most of your power questions as you work with AI infrastructure.*

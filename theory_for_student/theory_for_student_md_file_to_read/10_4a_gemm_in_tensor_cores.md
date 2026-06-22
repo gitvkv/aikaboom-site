@@ -1,0 +1,100 @@
+# 10.4a The GEMM operation in hardware: D = A×B + C executed in a single clock
+
+#### 🏷️ The Nvidia GPU Architecture — The Silicon at the Heart of AI Infrastructure > 10 GPU Microarchitecture — Inside an NVIDIA Data Center GPU > 10.4 Tensor Cores — Hardware Accelerated Matrix Multiplication
+
+## 🌐 Context Introduction
+
+Matrix multiplication is the mathematical backbone of deep learning. Every neural network layer—from simple dense layers to complex transformers—relies on multiplying matrices of weights and activations. The operation **D = A × B + C** (known as GEMM, or General Matrix Multiply) is so fundamental that NVIDIA designed specialized hardware units called **Tensor Cores** to execute it in a single clock cycle. For engineers new to AI infrastructure, understanding this single operation unlocks how modern GPUs achieve their incredible performance for training and inference.
+
+---
+
+## ⚙️ What is the GEMM Operation?
+
+The GEMM operation performs a fused multiply-add across entire matrices:
+
+- **A** and **B** are input matrices
+- **C** is an optional bias or accumulator matrix
+- **D** is the output matrix
+
+**Mathematically:** For each element in the output matrix D, the GPU computes the dot product of one row from A and one column from B, then adds the corresponding element from C.
+
+**Why it matters:** Traditional GPU cores (CUDA cores) would need many clock cycles to perform this. Tensor Cores do it in **one clock cycle**.
+
+---
+
+## 🕵️ How Tensor Cores Execute GEMM in One Clock
+
+Tensor Cores achieve single-clock execution through three key hardware innovations:
+
+- **Parallel input feeding:** All 16 elements of a 4×4 matrix are loaded simultaneously from registers
+- **Dedicated multiply-accumulate arrays:** Hardware multipliers are hardwired specifically for matrix math, not general-purpose arithmetic
+- **Pipelined data paths:** The result D is written back to registers in the same clock cycle as the computation finishes
+
+**The magic number:** A single Tensor Core can perform **64 floating-point operations** (16 multiplications + 48 additions) per clock cycle for a 4×4 matrix multiply.
+
+---
+
+## 📊 Comparison: Tensor Cores vs. CUDA Cores
+
+| Feature | Tensor Core | CUDA Core |
+|---------|-------------|-----------|
+| **Purpose** | Matrix multiply-accumulate (GEMM) | General-purpose arithmetic |
+| **Operation per clock** | 64 FLOPS (4×4 matrix) | 1 FLOPS (scalar) |
+| **Precision support** | FP16, BF16, TF32, INT8, INT4 | FP32, FP64, INT32 |
+| **Use case** | Neural network layers | Everything else |
+| **Clock cycles for 4×4 GEMM** | 1 | ~64+ |
+
+---
+
+## 🛠️ The 4×4 Matrix Tile: The Atomic Unit
+
+Tensor Cores operate on **4×4 matrix tiles** as the smallest unit of work:
+
+- **Matrix A:** 4 rows × 4 columns (16 elements)
+- **Matrix B:** 4 rows × 4 columns (16 elements)
+- **Matrix C:** 4 rows × 4 columns (16 elements)
+- **Matrix D:** 4 rows × 4 columns (16 elements)
+
+**Hardware layout:** Each Tensor Core contains:
+- 16 hardware multipliers (one per element pair)
+- 16 adder trees (to sum partial products)
+- 16 accumulator registers (for the C matrix addition)
+
+---
+
+## 🔄 How the Operation Flows in Hardware
+
+1. **Load phase:** All 16 elements of A and B are fetched from registers into the Tensor Core input buffers
+2. **Multiply phase:** Each of the 16 multipliers computes A[i][k] × B[k][j] in parallel
+3. **Accumulate phase:** The 16 partial products are summed across the k dimension
+4. **Add phase:** The result is added to the corresponding element from matrix C
+5. **Write phase:** The final 16 elements of D are written back to registers
+
+**All five phases complete in a single clock cycle** because the hardware is fully pipelined and dedicated.
+
+---
+
+## 🧠 Why This Matters for AI Infrastructure
+
+For engineers building and operating AI infrastructure, the single-clock GEMM operation explains:
+
+- **Why GPU memory bandwidth matters:** Tensor Cores consume data faster than any other unit
+- **Why matrix tiling is critical:** Large matrices must be broken into 4×4 tiles for Tensor Core efficiency
+- **Why precision affects performance:** Lower precision (FP16, INT8) allows more Tensor Core operations per second
+- **Why NVIDIA GPUs dominate AI:** No other hardware executes GEMM this efficiently
+
+---
+
+## 📈 Real-World Impact
+
+A single NVIDIA H100 GPU contains **528 Tensor Cores**. Each core executing a 4×4 GEMM in one clock means:
+
+- **33,792 floating-point operations per clock** across the entire GPU
+- At 1.8 GHz clock speed, that's **60 teraFLOPS** of matrix math throughput
+- For a large language model, this translates to training that would take weeks on CPUs completing in hours
+
+---
+
+## 🎯 Key Takeaway for New Engineers
+
+The GEMM operation **D = A × B + C** executed in a single clock is not just a hardware specification—it is the fundamental reason why modern AI is possible. When you see GPU performance numbers, remember that behind every teraFLOP is a Tensor Core performing this exact operation, one 4×4 tile at a time, in a single clock cycle. Understanding this operation helps you reason about why certain model architectures are efficient, why memory layout matters, and why NVIDIA GPUs remain the standard for AI infrastructure.

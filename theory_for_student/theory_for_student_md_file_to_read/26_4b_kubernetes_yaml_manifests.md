@@ -1,0 +1,172 @@
+# 26.4b YAML manifests: writing and applying Deployment and Pod specs
+
+#### 🏷️ The Cluster Orchestration — Managing the GPU Fleet at Scale > 26 Kubernetes Fundamentals — Container Orchestration from Scratch > 26.4 kubectl — The Kubernetes CLI
+
+---
+
+## 🧭 Context Introduction
+
+When you work with Kubernetes, you are essentially telling the cluster what you want your applications to look like. The most common way to do this is by writing **YAML manifests** — simple, human-readable files that describe the desired state of your workloads. For new engineers, think of a YAML manifest as a recipe card: it lists all the ingredients (containers, images, ports) and instructions (replicas, restart policies) for Kubernetes to follow. In this section, we focus on two fundamental resource types: **Pods** (the smallest deployable unit) and **Deployments** (which manage Pods at scale).
+
+---
+
+## ⚙️ What is a YAML Manifest?
+
+- A YAML manifest is a text file that defines a Kubernetes resource.
+- It uses indentation (spaces, not tabs) to structure data.
+- Every manifest has four required top-level fields:
+  - **apiVersion** — the version of the Kubernetes API you are using (e.g., v1 for Pods, apps/v1 for Deployments)
+  - **kind** — the type of resource (e.g., Pod, Deployment)
+  - **metadata** — information like name, labels, and namespace
+  - **spec** — the desired configuration for the resource
+
+---
+
+## 🛠️ Writing a Pod Manifest
+
+A Pod is the smallest and simplest unit in Kubernetes. It runs one or more containers.
+
+**Key elements in a Pod spec:**
+- **containers** — a list of containers to run inside the Pod
+- **image** — the container image to use (e.g., nginx:latest)
+- **ports** — container ports to expose
+- **restartPolicy** — when to restart the container (Always, OnFailure, Never)
+
+**Example structure (for reference):**
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-first-pod
+  labels:
+    app: demo
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+  restartPolicy: Always
+```
+
+📤 **Output:** This manifest describes a single Pod named **my-first-pod** running an nginx container on port 80.
+
+---
+
+## 🛠️ Writing a Deployment Manifest
+
+A Deployment manages a set of identical Pods (called replicas) and ensures they stay running. It also supports rolling updates and rollbacks.
+
+**Key elements in a Deployment spec:**
+- **replicas** — how many Pod copies you want running
+- **selector** — tells the Deployment which Pods to manage (using labels)
+- **template** — the Pod template that defines what each Pod looks like
+- **strategy** — how to update Pods (e.g., RollingUpdate or Recreate)
+
+**Example structure (for reference):**
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-first-deployment
+  labels:
+    app: demo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: demo
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+```
+
+📤 **Output:** This manifest creates a Deployment named **my-first-deployment** that keeps 3 Pods running, each with an nginx container.
+
+---
+
+## 📊 Pod vs Deployment — When to Use Which
+
+| Feature | Pod | Deployment |
+|---------|-----|------------|
+| **Purpose** | Runs a single instance of a container | Manages multiple Pods with scaling and updates |
+| **Self-healing** | No — if Pod dies, it is gone | Yes — automatically replaces failed Pods |
+| **Scaling** | Manual only | Supports horizontal scaling via replicas |
+| **Rolling updates** | Not supported | Built-in support for zero-downtime updates |
+| **Use case** | Testing, debugging, or single-run tasks | Production workloads, stateless applications |
+
+---
+
+## 🕵️ Applying Manifests with kubectl
+
+Once you have written a YAML manifest, you need to send it to the Kubernetes cluster. This is done using the **kubectl apply** command.
+
+**Workflow:**
+1. Save your YAML manifest to a file (e.g., **pod.yaml** or **deployment.yaml**)
+2. Run the apply command pointing to that file
+3. Kubernetes reads the file and creates or updates the resource
+
+**Example command (for reference):**
+
+```
+kubectl apply -f pod.yaml
+```
+
+📤 **Output:** The cluster responds with a message like **pod/my-first-pod created** or **deployment.apps/my-first-deployment created**.
+
+---
+
+## 🧪 Verifying Your Work
+
+After applying a manifest, you should verify that the resources are running as expected.
+
+**Common verification commands (for reference):**
+
+```
+kubectl get pods
+kubectl get deployments
+kubectl describe pod my-first-pod
+kubectl describe deployment my-first-deployment
+```
+
+📤 **Output examples:**
+- **kubectl get pods** shows a list of Pods with their status (Running, Pending, etc.)
+- **kubectl describe** gives detailed information including events and container status
+
+---
+
+## 🧹 Cleaning Up Resources
+
+When you no longer need a resource, you can delete it using the same YAML file.
+
+**Example command (for reference):**
+
+```
+kubectl delete -f pod.yaml
+kubectl delete -f deployment.yaml
+```
+
+📤 **Output:** The cluster confirms deletion with messages like **pod "my-first-pod" deleted** or **deployment.apps "my-first-deployment" deleted**.
+
+---
+
+## ✅ Key Takeaways for New Engineers
+
+- **YAML manifests** are the language you use to talk to Kubernetes — they define what you want to run.
+- **Pods** are the smallest unit; use them for simple, single-instance workloads or testing.
+- **Deployments** are for production workloads — they handle scaling, self-healing, and updates automatically.
+- Always use **kubectl apply** to create or update resources, and **kubectl delete** to remove them.
+- Verify your work with **kubectl get** and **kubectl describe** to ensure everything is running smoothly.
+
+---
+
+*Next step: Try writing a simple Pod manifest for a GPU-accelerated container using an NVIDIA CUDA image, then apply it to your cluster to see how Kubernetes schedules the workload.*

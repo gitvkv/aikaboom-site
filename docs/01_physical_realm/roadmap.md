@@ -1,0 +1,70 @@
+# 🗺️ Roadmap: The Physical Realm — Data Center Foundations & Hardware Architecture
+
+Below is the syllabus timeline of lessons in this module. Track your study progress here.
+
+## 📈 Progress
+<div class="progress-container">
+  <div class="progress-bar">0%</div>
+</div>
+---
+
+### 📁 1 What Is a Computer? Core Architecture for Absolute Beginners
+*   <span class="roadmap-badge" data-lesson-id="1_1a_fetch_decode_execute"></span> [1.1a The Fetch-Decode-Execute Cycle explained step by step](chapter_1/1.1a_11a_the_fetch.md)
+*   <span class="roadmap-badge" data-lesson-id="1_1b_memory_address_data_bus"></span> [1.1b Memory bus, address bus, and data bus — the three communication highways](chapter_1/1.1b_11b_memory_bus_address_bus_and_data_bus.md)
+*   <span class="roadmap-badge" data-lesson-id="1_1c_von_neumann_bottleneck_gpu_need"></span> [1.1c Why the Von Neumann bottleneck limits AI workloads (preview of GPU need)](chapter_1/1.1c_11c_why_the_von_neumann_bottleneck_limits_ai_workloads_preview_of_gpu_need.md)
+*   <span class="roadmap-badge" data-lesson-id="1_2a_cores_threads_clock_speed_parallelism"></span> [1.2a Cores, threads, and clock speed: understanding GHz and parallelism](chapter_1/1.2a_12a_cores_threads_and_clock_speed.md)
+*   <span class="roadmap-badge" data-lesson-id="1_2b_cache_hierarchy_l1_l2_l3"></span> [1.2b Cache hierarchy: L1, L2, L3 — why nearness to the core matters](chapter_1/1.2b_12b_cache_hierarchy.md)
+*   <span class="roadmap-badge" data-lesson-id="1_2c_intel_xeon_vs_amd_epyc_ai_servers"></span> [1.2c CPU architectures for AI servers: Intel Xeon Scalable vs AMD EPYC](chapter_1/1.2c_12c_cpu_architectures_for_ai_servers.md)
+*   <span class="roadmap-badge" data-lesson-id="1_2d_numa_socket_locality_ai"></span> [1.2d NUMA (Non-Uniform Memory Access): why socket locality matters for AI](chapter_1/1.2d_12d_numa_non.md)
+*   <span class="roadmap-badge" data-lesson-id="1_2e_smt_hyper_threading_logical_vs_physical_cores"></span> [1.2e SMT / Hyper-Threading: logical vs physical cores](chapter_1/1.2e_12e_smt_hyper.md)
+*   <span class="roadmap-badge" data-lesson-id="1_3a_ddr4_vs_ddr5"></span> [1.3a DDR4 vs DDR5: generation differences, bandwidth, and latency](chapter_1/1.3a_13a_ddr4_vs_ddr5.md)
+*   <span class="roadmap-badge" data-lesson-id="1_3b_udimm_rdimm_lrdimm"></span> [1.3b DIMM form factors: UDIMM, RDIMM, LRDIMM, and why AI servers need RDIMMs](chapter_1/1.3b_13b_dimm_form_factors.md)
+*   <span class="roadmap-badge" data-lesson-id="1_3c_ecc_memory_bit_flip_protection"></span> [1.3c ECC (Error-Correcting Code) Memory: why bit-flip errors can corrupt a 72-hour training run](chapter_1/1.3c_13c_ecc_error.md)
+*   <span class="roadmap-badge" data-lesson-id="1_3d_memory_channels_ranks_interleaving"></span> [1.3d Memory channels, ranks, and interleaving for maximum bandwidth](chapter_1/1.3d_13d_memory_channels_ranks_and_interleaving_for_maximum_bandwidth.md)
+*   <span class="roadmap-badge" data-lesson-id="1_3e_persistent_memory_optane"></span> [1.3e Persistent Memory (PMem / Optane): bridging storage and DRAM](chapter_1/1.3e_13e_persistent_memory_pmem_optane.md)
+*   <span class="roadmap-badge" data-lesson-id="1_4a_hdd_mechanics"></span> [1.4a HDD mechanics: platters, read/write heads, seek time, and rotational latency](chapter_1/1.4a_14a_hdd_mechanics.md)
+*   <span class="roadmap-badge" data-lesson-id="1_4b_ssd_nand_flash_wear_leveling"></span> [1.4b SSD internals: NAND Flash cells (SLC, MLC, TLC, QLC) and wear leveling](chapter_1/1.4b_14b_ssd_internals.md)
+*   <span class="roadmap-badge" data-lesson-id="1_4c_nvme_over_pcie"></span> [1.4c NVMe over PCIe: why NVMe is 5–7x faster than SATA SSDs for AI data pipelines](chapter_1/1.4c_14c_nvme_over_pcie.md)
+*   <span class="roadmap-badge" data-lesson-id="1_4d_u2_u3_m2_e1s_form_factors"></span> [1.4d U.2, U.3, M.2, and E1.S form factors — physical packaging differences](chapter_1/1.4d_14d_u2_u3_m2_and_e1s_form_factors.md)
+*   <span class="roadmap-badge" data-lesson-id="1_4e_tbw_enterprise_vs_consumer_drives"></span> [1.4e Endurance ratings (TBW) and enterprise vs consumer grade drives](chapter_1/1.4e_14e_endurance_ratings_tbw_and_enterprise_vs_consumer_grade_drives.md)
+*   <span class="roadmap-badge" data-lesson-id="1_5a_pcie_generations"></span> [1.5a PCIe generations: Gen 3 (8 GT/s), Gen 4 (16 GT/s), Gen 5 (32 GT/s), Gen 6 preview](chapter_1/1.5a_15a_pcie_generations.md)
+*   <span class="roadmap-badge" data-lesson-id="1_5b_pcie_lane_widths_bandwidth"></span> [1.5b Lane widths: x1, x4, x8, x16 and bandwidth calculations per generation](chapter_1/1.5b_15b_lane_widths.md)
+*   <span class="roadmap-badge" data-lesson-id="1_5c_pcie_slots_risers_switches"></span> [1.5c PCIe slots, risers, and switch chips: how multiple GPUs connect](chapter_1/1.5c_15c_pcie_slots_risers_and_switch_chips.md)
+*   <span class="roadmap-badge" data-lesson-id="1_5d_pcie_bifurcation"></span> [1.5d PCIe bifurcation: splitting one x16 slot into multiple x8 or x4 links](chapter_1/1.5d_15d_pcie_bifurcation.md)
+*   <span class="roadmap-badge" data-lesson-id="1_5e_pcie_gpu_traffic_bottleneck"></span> [1.5e The PCIe bottleneck: why GPU-to-GPU traffic through the CPU is catastrophically slow](chapter_1/1.5e_15e_the_pcie_bottleneck.md)
+*   <span class="roadmap-badge" data-lesson-id="1_6a_server_form_factors"></span> [1.6a Server form factors: Tower, 1U, 2U, 4U, and blade systems](chapter_1/1.6a_16a_server_form_factors.md)
+*   <span class="roadmap-badge" data-lesson-id="1_6b_motherboard_chipsets_pch"></span> [1.6b Motherboard chipsets and platform controller hubs in enterprise systems](chapter_1/1.6b_16b_motherboard_chipsets_and_platform_controller_hubs_in_enterprise_systems.md)
+*   <span class="roadmap-badge" data-lesson-id="1_6c_redundant_power_supplies"></span> [1.6c Redundant power supplies: N+1 and 2N configurations for zero downtime](chapter_1/1.6c_16c_redundant_power_supplies.md)
+*   <span class="roadmap-badge" data-lesson-id="1_6d_hot_swap_components"></span> [1.6d Hot-swap components: drives, PSUs, and fans without powering down](chapter_1/1.6d_16d_hot.md)
+*   <span class="roadmap-badge" data-lesson-id="1_6e_bios_vs_uefi"></span> [1.6e BIOS vs UEFI: firmware differences and Secure Boot implications for Linux](chapter_1/1.6e_16e_bios_vs_uefi.md)
+*   <span class="roadmap-badge" data-lesson-id="1_7a_bmc_basics"></span> [1.7a Baseboard Management Controller (BMC): the always-on embedded controller](chapter_1/1.7a_17a_baseboard_management_controller_bmc.md)
+*   <span class="roadmap-badge" data-lesson-id="1_7b_ipmi_protocol_ipmitool"></span> [1.7b IPMI (Intelligent Platform Management Interface): protocol and ipmitool commands](chapter_1/1.7b_17b_ipmi_intelligent_platform_management_interface.md)
+*   <span class="roadmap-badge" data-lesson-id="1_7c_redfish_api"></span> [1.7c Redfish API: the modern RESTful replacement for IPMI](chapter_1/1.7c_17c_redfish_api.md)
+*   <span class="roadmap-badge" data-lesson-id="1_7d_idrac_ilo_xcc_nvidia_bmc"></span> [1.7d Vendor implementations: iDRAC (Dell), iLO (HPE), XCC (Lenovo), NVIDIA BMC](chapter_1/1.7d_17d_vendor_implementations.md)
+*   <span class="roadmap-badge" data-lesson-id="1_7e_bmc_management_tasks"></span> [1.7e Tasks via BMC: power cycling, boot order, sensor readings, KVM-over-IP](chapter_1/1.7e_17e_tasks_via_bmc.md)
+
+### 📁 2 Data Center Facility Operations
+*   <span class="roadmap-badge" data-lesson-id="2_1a_ac_vs_dc_power"></span> [2.1a AC vs DC power: understanding voltage, amperage, and wattage (P=IV)](chapter_2/2.1a_21a_ac_vs_dc_power.md)
+*   <span class="roadmap-badge" data-lesson-id="2_1b_single_phase_vs_three_phase"></span> [2.1b Single-phase vs three-phase power and why AI racks need three-phase](chapter_2/2.1b_21b_single.md)
+*   <span class="roadmap-badge" data-lesson-id="2_1c_pdu_types"></span> [2.1c PDUs (Power Distribution Units): basic vs metered vs switched vs intelligent](chapter_2/2.1c_21c_pdus_power_distribution_units.md)
+*   <span class="roadmap-badge" data-lesson-id="2_1d_ups_architectures"></span> [2.1d UPS (Uninterruptible Power Supplies): online double-conversion vs line-interactive](chapter_2/2.1d_21d_ups_uninterruptible_power_supplies.md)
+*   <span class="roadmap-badge" data-lesson-id="2_1e_power_usage_effectiveness"></span> [2.1e Power Usage Effectiveness (PUE): the efficiency metric of a data center](chapter_2/2.1e_21e_power_usage_effectiveness_pue.md)
+*   <span class="roadmap-badge" data-lesson-id="2_1f_tdp_rack_power_calculation"></span> [2.1f Calculating TDP (Thermal Design Power) and rack wattage for GPU dense configurations](chapter_2/2.1f_21f_calculating_tdp_thermal_design_power_and_rack_wattage_for_gpu_dense_configurations.md)
+*   <span class="roadmap-badge" data-lesson-id="2_1g_generator_backup_systems"></span> [2.1g Generator backup systems and automatic transfer switches](chapter_2/2.1g_21g_generator_backup_systems_and_automatic_transfer_switches.md)
+*   <span class="roadmap-badge" data-lesson-id="2_2a_heat_transfer_fundamentals"></span> [2.2a Fundamentals of heat transfer: conduction, convection, and radiation in servers](chapter_2/2.2a_22a_fundamentals_of_heat_transfer.md)
+*   <span class="roadmap-badge" data-lesson-id="2_2b_hot_aisle_cold_aisle"></span> [2.2b Hot-aisle / cold-aisle containment: the standard data center airflow model](chapter_2/2.2b_22b_hot.md)
+*   <span class="roadmap-badge" data-lesson-id="2_2c_crac_vs_crah"></span> [2.2c Computer Room Air Conditioners (CRACs) and Air Handlers (CRAHs)](chapter_2/2.2c_22c_computer_room_air_conditioners_cracs_and_air_handlers_crahs.md)
+*   <span class="roadmap-badge" data-lesson-id="2_2d_in_row_overhead_cooling"></span> [2.2d In-row and overhead cooling systems for high-density deployments](chapter_2/2.2d_22d_in.md)
+*   <span class="roadmap-badge" data-lesson-id="2_2e_air_cooling_limits"></span> [2.2e Why air cooling hits a wall: TDP limits approaching 500W per GPU](chapter_2/2.2e_22e_why_air_cooling_hits_a_wall.md)
+*   <span class="roadmap-badge" data-lesson-id="2_2f_direct_liquid_cooling"></span> [2.2f Direct Liquid Cooling (DLC): cold plates, coolant distribution units (CDUs), and manifolds](chapter_2/2.2f_22f_direct_liquid_cooling_dlc.md)
+*   <span class="roadmap-badge" data-lesson-id="2_2g_immersion_cooling"></span> [2.2g Immersion cooling: single-phase vs two-phase dielectric fluid](chapter_2/2.2g_22g_immersion_cooling.md)
+*   <span class="roadmap-badge" data-lesson-id="2_2h_rear_door_heat_exchangers"></span> [2.2h Rear-door heat exchangers as a transitional solution](chapter_2/2.2h_22h_rear.md)
+*   <span class="roadmap-badge" data-lesson-id="2_3a_rack_units_and_cable_management"></span> [2.3a Rack Units (RU/U): 42U and 48U standard racks, rail systems, and cable management](chapter_2/2.3a_23a_rack_units_ruu.md)
+*   <span class="roadmap-badge" data-lesson-id="2_3b_floor_loading_and_seismic_bracing"></span> [2.3b Weight distribution: floor loading limits and seismic bracing for DGX systems](chapter_2/2.3b_23b_weight_distribution.md)
+*   <span class="roadmap-badge" data-lesson-id="2_3c_structured_cabling"></span> [2.3c Structured cabling: Cat6A copper for 10GbE management, fiber for high-speed networks](chapter_2/2.3c_23c_structured_cabling.md)
+*   <span class="roadmap-badge" data-lesson-id="2_3d_top_of_rack_switches"></span> [2.3d Top-of-Rack (ToR) switches: how servers connect to the network fabric](chapter_2/2.3d_23d_top.md)
+*   <span class="roadmap-badge" data-lesson-id="2_3e_airflow_management_best_practices"></span> [2.3e Overhead cable trays, blanking panels, and airflow management best practices](chapter_2/2.3e_23e_overhead_cable_trays_blanking_panels_and_airflow_management_best_practices.md)
+*   <span class="roadmap-badge" data-lesson-id="2_3f_data_center_tiers"></span> [2.3f Data center tiers: Tier I–IV (Uptime Institute) and availability percentages](chapter_2/2.3f_23f_data_center_tiers.md)
+*   <span class="roadmap-badge" data-lesson-id="2_4a_physical_access_control"></span> [2.4a Badge access systems, mantrap entries, and biometric authentication](chapter_2/2.4a_24a_badge_access_systems_mantrap_entries_and_biometric_authentication.md)
+*   <span class="roadmap-badge" data-lesson-id="2_4b_cctv_auditing_chain_of_custody"></span> [2.4b CCTV, auditing, and chain-of-custody for hardware](chapter_2/2.4b_24b_cctv_auditing_and_chain.md)
+*   <span class="roadmap-badge" data-lesson-id="2_4c_secure_hardware_decommissioning"></span> [2.4c Secure hardware decommissioning and drive destruction standards](chapter_2/2.4c_24c_secure_hardware_decommissioning_and_drive_destruction_standards.md)

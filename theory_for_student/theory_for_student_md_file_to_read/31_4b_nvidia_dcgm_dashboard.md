@@ -1,0 +1,127 @@
+# 31.4b NVIDIA DCGM Grafana dashboard: importing the official GPU cluster dashboard
+
+#### 🏷️ The Virtualization and Cloud — Extending AI Infrastructure Beyond Bare Metal > 31 Cluster-Wide Telemetry — DCGM, Prometheus, and Grafana > 31.4 Grafana — Visualizing Cluster Health
+
+---
+
+## 🧠 Context Introduction
+
+Once you have Prometheus collecting GPU metrics from DCGM (Data Center GPU Manager) across your cluster, the next step is to visualize that data in a meaningful way. Grafana is the industry-standard dashboarding tool that turns raw telemetry into actionable insights. NVIDIA provides an **official GPU cluster dashboard** for Grafana, which gives you a pre-built, comprehensive view of your entire GPU fleet — including utilization, memory, temperature, power, and more.
+
+This guide walks you through importing that official dashboard so you can start monitoring your cluster health immediately, without building charts from scratch.
+
+---
+
+## ⚙️ What You’ll Need Before Starting
+
+Before importing the dashboard, ensure the following are in place:
+
+- **Grafana** is installed and accessible (typically via web browser at `http://<grafana-server>:3000`)
+- **Prometheus** is configured as a data source in Grafana (named something like "Prometheus" or "DCGM Prometheus")
+- **DCGM Exporter** is running on all GPU nodes and Prometheus is scraping those targets successfully
+- You have **admin or editor permissions** in Grafana to import dashboards
+
+---
+
+## 📥 Where to Find the Official Dashboard
+
+NVIDIA publishes the official DCGM GPU cluster dashboard on **Grafana’s public dashboard repository** (Grafana.com) and also on **NVIDIA’s GitHub repository**.
+
+The dashboard ID you will use is: **`12239`**
+
+This dashboard is maintained by NVIDIA and includes panels for:
+- GPU utilization (per GPU and aggregate)
+- Memory usage (used, free, total)
+- Temperature and power draw
+- PCIe and NVLink throughput
+- Error counts (XID errors, ECC errors)
+
+---
+
+## 🛠️ Step-by-Step: Importing the Dashboard
+
+### Step 1: Log into Grafana
+
+Open your browser and navigate to your Grafana instance. Log in with your credentials.
+
+### Step 2: Open the Import Interface
+
+- On the left sidebar, hover over the **+** (Create) icon
+- Click **Import**
+
+### Step 3: Enter the Dashboard ID
+
+- In the **Import via grafana.com** field, type: **`12239`**
+- Click **Load**
+
+### Step 4: Configure the Import
+
+You will see a configuration screen. Fill in the following:
+
+- **Name**: Leave as default (e.g., "NVIDIA DCGM Exporter Dashboard") or rename it
+- **Folder**: Choose a folder (or leave as "General")
+- **Unique identifier (UID)**: Leave blank (auto-generated)
+- **Prometheus data source**: Select your Prometheus data source from the dropdown
+
+### Step 5: Finalize Import
+
+Click **Import**. The dashboard will load immediately, and you will be taken to the dashboard view.
+
+---
+
+## 📊 What You’ll See on the Dashboard
+
+Once imported, the dashboard is organized into several sections. Here’s a quick tour:
+
+| Section | What It Shows |
+|---------|---------------|
+| 🖥️ **GPU Utilization** | Real-time and historical GPU compute usage per node and cluster-wide |
+| 🧠 **Memory Usage** | Total, used, and free GPU memory per device |
+| 🌡️ **Temperature** | GPU temperature readings (with warning thresholds) |
+| ⚡ **Power Draw** | Power consumption per GPU and total cluster power |
+| 🔗 **PCIe / NVLink** | Bandwidth and throughput for inter-GPU and host-GPU links |
+| ❌ **Errors** | XID errors, ECC correctable/uncorrectable errors, and retired pages |
+
+Each panel is interactive — you can hover over data points, zoom in on time ranges, and filter by GPU or node.
+
+---
+
+## 🕵️ Customizing the Dashboard for Your Cluster
+
+The official dashboard works out of the box, but you may want to tailor it:
+
+- **Change time range**: Use the time picker in the top-right corner (e.g., last 6 hours, last 7 days)
+- **Add alerts**: Click on any panel title → **Edit** → **Alert** tab to set thresholds (e.g., alert if GPU temperature > 85°C)
+- **Duplicate panels**: If you need a specific view (e.g., only GPUs in a certain rack), duplicate a panel and modify its query
+- **Add annotations**: Use the **Annotations** feature to mark events like node reboots or job starts
+
+---
+
+## ✅ Verifying the Import Worked
+
+After importing, confirm the dashboard is functioning:
+
+- You should see **live data** populating the panels (not "No data" or "N/A")
+- Hover over any GPU utilization graph — a tooltip should show the exact value and timestamp
+- Check that the **Prometheus data source** dropdown in the dashboard settings matches your actual data source name
+
+If you see empty panels, double-check that:
+- DCGM Exporter is running on your GPU nodes
+- Prometheus is scraping those exporter endpoints
+- The Prometheus data source in Grafana is correctly configured and marked as "Default"
+
+---
+
+## 🧪 Troubleshooting Common Issues
+
+- **"No data" in all panels**: Your Prometheus data source is likely not connected or not scraping DCGM metrics. Verify by going to **Configuration > Data Sources > [Your Prometheus] > Test**
+- **"Panel plugin not found"**: You may need to update Grafana or install missing panel plugins (e.g., "grafana-piechart-panel"). Run a Grafana plugin update or install from the Grafana CLI
+- **Wrong GPU names**: The dashboard uses labels like `gpu_name` or `gpu_uuid`. If your nodes use different labels, edit the panel queries to match your Prometheus label schema
+
+---
+
+## 📚 Summary
+
+Importing the official NVIDIA DCGM Grafana dashboard (ID **12239**) gives you a powerful, pre-built visualization of your GPU cluster health in minutes. It eliminates the need to manually create charts for common metrics like utilization, memory, temperature, and errors. Once imported, you can customize it with alerts, annotations, and time ranges to fit your operational needs.
+
+This dashboard is your go-to tool for daily cluster monitoring — use it to spot underutilized GPUs, detect overheating nodes, or track power consumption trends across your AI infrastructure.

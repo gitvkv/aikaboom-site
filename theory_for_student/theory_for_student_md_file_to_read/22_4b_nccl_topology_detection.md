@@ -1,0 +1,117 @@
+# 22.4b NCCL topology detection: auto-selecting NVLink, PCIe, or InfiniBand for communication
+
+#### 🏷️ The Nvidia Software Stack — Bridging Silicon and Python > 22 Base Drivers, CUDA, and Core Libraries > 22.4 NCCL — GPU Collective Communications
+
+---
+
+## 🧠 Context Introduction
+
+When you run a multi-GPU training job, your GPUs need to talk to each other — fast. But not all GPUs are connected the same way. Some might share a high-speed **NVLink** bridge, others might be connected through slower **PCIe** lanes, and in a cluster, GPUs on different machines must communicate over **InfiniBand** or Ethernet.
+
+NCCL (NVIDIA Collective Communications Library) automatically detects how your GPUs are physically connected and chooses the fastest available path for each communication. This process is called **topology detection**, and it happens silently every time you launch a distributed training job.
+
+This topic explains how NCCL decides whether to use NVLink, PCIe, or InfiniBand — and why it matters for your AI workloads.
+
+---
+
+## ⚙️ What Is Topology Detection?
+
+Topology detection is NCCL's way of answering three questions:
+
+- **Which GPUs are physically close?** (e.g., on the same PCIe switch or NVLink domain)
+- **What is the fastest link between them?** (NVLink > PCIe > InfiniBand > Ethernet)
+- **How should data be routed to minimize latency?** (avoid unnecessary hops)
+
+NCCL builds a **topology graph** of your system by reading hardware information from:
+- **NVML** (NVIDIA Management Library) — for GPU-to-GPU connectivity
+- **PCIe topology** — from the system's device tree
+- **IB (InfiniBand) devices** — for network interfaces
+
+This graph is then used to select the best communication path for every collective operation (all-reduce, all-gather, broadcast, etc.).
+
+---
+
+## 🕵️ How NCCL Detects Each Link Type
+
+### 🔗 NVLink Detection
+- NVLink is a high-speed, direct GPU-to-GPU interconnect.
+- NCCL queries NVML to see which GPUs share an NVLink bridge.
+- If two GPUs are NVLink-connected, NCCL will **always prefer NVLink** over PCIe.
+- NVLink detection is automatic — no configuration needed.
+
+### 🔌 PCIe Detection
+- For GPUs not connected via NVLink, NCCL falls back to PCIe.
+- NCCL reads the PCIe bus topology to determine:
+  - Which GPUs are under the same PCIe root complex
+  - Whether they share a PCIe switch (faster) or are on separate CPU sockets (slower)
+- PCIe bandwidth is limited compared to NVLink, so NCCL will try to avoid it when possible.
+
+### 🌐 InfiniBand Detection
+- For multi-node communication, NCCL uses InfiniBand (or RoCE) network interfaces.
+- NCCL detects IB devices via the **ibv** library (InfiniBand Verbs).
+- It maps which GPU is closest to which IB adapter (based on PCIe proximity).
+- NCCL then uses the IB link for inter-node transfers, while keeping intra-node transfers on NVLink or PCIe.
+
+---
+
+## 📊 Comparison: NVLink vs PCIe vs InfiniBand
+
+| Feature | NVLink | PCIe | InfiniBand |
+|---------|--------|------|------------|
+| **Speed** | Up to 900 GB/s (NVLink 4.0) | Up to 64 GB/s (PCIe 5.0 x16) | Up to 400 Gb/s (HDR) |
+| **Latency** | Very low (~0.5 µs) | Low (~1-2 µs) | Low (~1-3 µs) |
+| **Scope** | Within a single node | Within a single node | Between nodes (cluster) |
+| **Detection method** | NVML | PCIe bus topology | InfiniBand Verbs (ibv) |
+| **NCCL priority** | Highest | Medium | Lowest (only for inter-node) |
+
+---
+
+## 🛠️ How NCCL Auto-Selects the Path
+
+NCCL uses a **hierarchical selection algorithm**:
+
+1. **Check if both GPUs are on the same NVLink domain** → use NVLink
+2. **If not, check if they share a PCIe switch** → use PCIe (direct)
+3. **If not, check if they are on the same CPU socket** → use PCIe (through CPU)
+4. **If not, check if they are on different nodes** → use InfiniBand (or Ethernet)
+
+This logic is built into NCCL and runs automatically. Engineers do not need to manually specify which link to use — NCCL picks the best one.
+
+---
+
+## 🧪 Verifying Topology Detection
+
+You can see how NCCL detects your system's topology by running a simple test. The output will show a **topology XML** or a **ring/tree** structure.
+
+For reference, a typical topology dump looks like this (conceptual):
+
+```
+GPU0 : NVLink connected to GPU1, GPU2, GPU3
+GPU0 : PCIe connected to GPU4 (via CPU socket 0)
+GPU4 : PCIe connected to GPU5, GPU6, GPU7 (via CPU socket 1)
+GPU0 : InfiniBand adapter mlx5_0 (local)
+GPU4 : InfiniBand adapter mlx5_1 (local)
+```
+
+📤 **Output:** NCCL will then construct communication rings that prioritize NVLink pairs first, then PCIe, and use InfiniBand only for cross-node traffic.
+
+---
+
+## 🧩 Practical Implications for Engineers
+
+- **No manual tuning needed** — NCCL's auto-detection works out of the box for most NVIDIA GPU systems.
+- **Performance depends on physical layout** — If you place GPUs across different PCIe switches or CPU sockets, NCCL will use slower paths. Always check your topology.
+- **Multi-node tuning** — For cluster training, ensure InfiniBand adapters are correctly installed and detected. Use **ibstatus** to verify link status.
+- **Debugging slow training** — If your training is slower than expected, check if NCCL is using PCIe instead of NVLink. This often indicates a hardware misconfiguration.
+
+---
+
+## ✅ Summary
+
+NCCL's topology detection is a silent but critical component of AI infrastructure. It automatically maps your GPU connectivity and selects the fastest communication path — NVLink, PCIe, or InfiniBand — for every collective operation. As an engineer, understanding this process helps you:
+
+- Diagnose performance bottlenecks
+- Optimize GPU placement in your servers
+- Validate that your cluster's network is properly configured
+
+No commands, no code — just smart hardware detection that makes distributed training faster and easier.

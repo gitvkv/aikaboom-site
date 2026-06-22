@@ -1,0 +1,126 @@
+# 31.1f DCGM groups and job stats: tracking GPU usage per Slurm or Kubernetes job
+
+#### 🏷️ The Virtualization and Cloud — Extending AI Infrastructure Beyond Bare Metal > 31 Cluster-Wide Telemetry — DCGM, Prometheus, and Grafana > 31.1 Data Center GPU Manager (DCGM)
+
+## 🧠 Context Introduction
+
+When running AI workloads across a cluster, it's not enough to know that GPUs are being used — you need to know *which* GPUs are used by *which job*, and for how long. This is where **DCGM groups** and **job-level statistics** come into play.
+
+DCGM (Data Center GPU Manager) allows you to organize GPUs into logical groups and track their performance metrics on a per-job basis. Whether you're using **Slurm** or **Kubernetes**, DCGM can help you answer questions like: *"Which job is consuming the most GPU memory?"* or *"Is my training job actually using the GPU efficiently?"*
+
+This topic covers how DCGM groups work and how to extract job-level GPU usage statistics in both Slurm and Kubernetes environments.
+
+---
+
+## ⚙️ What Are DCGM Groups?
+
+DCGM groups are logical collections of GPUs that you can monitor together. Instead of tracking every GPU individually, you can group them by:
+
+- **Node** — All GPUs on a single server
+- **Job** — GPUs assigned to a specific workload
+- **Custom set** — Any combination of GPUs you choose
+
+Groups make it easier to:
+- Aggregate metrics across multiple GPUs
+- Set thresholds and alerts for a specific set of devices
+- Isolate monitoring to only the GPUs relevant to a particular job
+
+---
+
+## 📊 How DCGM Tracks Job Stats
+
+DCGM provides two key mechanisms for job-level tracking:
+
+### 🕵️ DCGM Job Stats API
+
+DCGM exposes a **job stats API** that captures GPU metrics for a specific job from start to finish. When a job begins, you create a **job group** containing the GPUs assigned to that job. DCGM then records:
+
+- **GPU utilization** (compute and memory)
+- **Memory usage** (used, free, total)
+- **Power consumption**
+- **Temperature**
+- **PCIe traffic**
+- **SM (Streaming Multiprocessor) utilization**
+
+When the job ends, you can query the accumulated statistics to see the job's total GPU footprint.
+
+### 🔄 Integration with Slurm and Kubernetes
+
+| Feature | Slurm Integration | Kubernetes Integration |
+|---------|-------------------|------------------------|
+| **How GPUs are assigned** | Slurm allocates GPUs via `--gpus` flag | Kubernetes assigns GPUs via device plugin |
+| **Job identification** | Slurm job ID | Pod name or namespace |
+| **DCGM group creation** | Created per job using Slurm's `scontrol` or wrapper scripts | Created per pod using Kubernetes device plugin hooks |
+| **Metrics collection** | DCGM collects metrics for the job's GPU group | DCGM collects metrics for the pod's GPU group |
+| **Querying stats** | Use `dcgmi stats` with the job ID | Use `dcgmi stats` with the pod's GPU group ID |
+
+---
+
+## 🛠️ How to Set Up DCGM Groups for Jobs
+
+### For Slurm Workloads
+
+1. **Before job starts**: Create a DCGM group containing the GPUs allocated to the job.
+2. **During job execution**: DCGM automatically records metrics for that group.
+3. **After job ends**: Query the group's statistics to get the job's GPU usage summary.
+
+The typical workflow involves a wrapper script that:
+- Captures the Slurm job ID and allocated GPU indices
+- Creates a DCGM group with those GPUs
+- Enables job stats recording for that group
+- Runs the actual AI workload
+- Disables job stats and deletes the group after completion
+
+### For Kubernetes Workloads
+
+1. **Pod creation**: The Kubernetes device plugin assigns GPUs to a pod and registers them with DCGM.
+2. **Group creation**: DCGM automatically creates a group for the pod's GPUs.
+3. **Metrics collection**: DCGM tracks metrics for the pod's GPU group throughout its lifecycle.
+4. **Pod termination**: DCGM cleans up the group and makes the job stats available for querying.
+
+---
+
+## 📈 Extracting Job Stats
+
+Once a job has completed, you can retrieve its GPU usage statistics using DCGM's query tools.
+
+**For reference:**
+```
+dcgmi stats -j <job_id>
+```
+
+📤 Output: A summary of GPU utilization, memory usage, power, and temperature for the entire job duration.
+
+**For reference:**
+```
+dcgmi stats -j <job_id> -v
+```
+
+📤 Output: Detailed per-GPU statistics including min, max, and average values for each metric.
+
+**For reference:**
+```
+dcgmi stats -g <group_id>
+```
+
+📤 Output: Statistics for a specific DCGM group (useful when you know the group ID instead of the job ID).
+
+---
+
+## 🧩 Practical Use Cases
+
+- **Capacity planning** — Identify which jobs are underutilizing GPUs and adjust resource requests
+- **Cost allocation** — Track GPU usage per team or project by grouping jobs by their Slurm account or Kubernetes namespace
+- **Performance debugging** — Compare GPU utilization across different runs of the same model to spot regressions
+- **Anomaly detection** — Set alerts when a job's GPU power or temperature exceeds expected thresholds
+
+---
+
+## ✅ Key Takeaways
+
+- **DCGM groups** let you organize GPUs into logical sets for targeted monitoring
+- **Job stats** capture GPU metrics from job start to finish, giving you a complete picture of GPU usage
+- **Slurm and Kubernetes** both integrate with DCGM for job-level tracking, though the setup differs slightly
+- **Querying job stats** after completion helps engineers understand GPU efficiency and plan future resource allocation
+
+By using DCGM groups and job stats, you can move from asking *"Are my GPUs being used?"* to *"How well are my GPUs being used by each job?"* — a critical step in optimizing AI infrastructure.

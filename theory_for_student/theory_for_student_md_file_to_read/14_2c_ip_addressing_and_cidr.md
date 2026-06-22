@@ -1,0 +1,161 @@
+# 14.2c IP addressing: Class A/B/C, CIDR notation, and subnetting for AI clusters
+
+#### 🏷️ The AI Data Center Networking — Moving Petabytes Without Latency > 14 Enterprise Networking Baseline > 14.2 Ethernet Fundamentals — Switching, VLANs, and IP Routing
+
+Welcome, new engineer! In an AI cluster, every GPU, storage node, and management server needs a unique IP address so they can talk to each other. When you're moving terabytes of training data between hundreds of nodes, understanding how IP addresses are organized and subdivided is critical. This guide will walk you through the old Class A/B/C system, the modern CIDR notation, and the subnetting math you'll use daily in AI infrastructure.
+
+---
+
+## 🌐 Context: Why IP Addressing Matters for AI Clusters
+
+AI clusters are not like typical office networks. They often have:
+- **Hundreds to thousands of compute nodes** (each with multiple network interfaces)
+- **Separate networks** for data (e.g., InfiniBand or high-speed Ethernet), storage, and management
+- **Strict performance requirements** — every microsecond of latency counts
+
+Proper IP addressing ensures:
+- Every device has a unique, routable address
+- Traffic stays on the correct network (data vs. management)
+- You can scale from a small test cluster to a massive production cluster without redesigning the network
+
+---
+
+## 📊 Section 1: Class A, B, and C IP Addressing (The Old Way)
+
+Before CIDR, IP addresses were divided into fixed "classes." Think of these as pre-cut pizza slices — you got a whole slice whether you needed it or not.
+
+### 🅰️ Class A (Large Networks)
+- **First octet range:** 1–126
+- **Default subnet mask:** 255.0.0.0 (or /8)
+- **Hosts per network:** ~16 million
+- **Use case in AI:** Rarely used directly; too large for most clusters
+
+### 🅱️ Class B (Medium Networks)
+- **First octet range:** 128–191
+- **Default subnet mask:** 255.255.0.0 (or /16)
+- **Hosts per network:** ~65,000
+- **Use case in AI:** Could fit a medium cluster, but still wasteful
+
+### 🅲 Class C (Small Networks)
+- **First octet range:** 192–223
+- **Default subnet mask:** 255.255.255.0 (or /24)
+- **Hosts per network:** 254
+- **Use case in AI:** Too small for most clusters; you'd need many Class C blocks
+
+### 📋 Comparison Table: Class A vs. B vs. C
+
+| Feature | Class A | Class B | Class C |
+|---------|---------|---------|---------|
+| First octet range | 1–126 | 128–191 | 192–223 |
+| Default mask | 255.0.0.0 | 255.255.0.0 | 255.255.255.0 |
+| CIDR notation | /8 | /16 | /24 |
+| Max hosts | 16,777,214 | 65,534 | 254 |
+| AI cluster fit | Overkill | Possible but wasteful | Too small |
+
+**Key takeaway:** Classful addressing is rigid. For AI clusters, you almost never use it directly — but you'll see the legacy in subnet masks.
+
+---
+
+## 🛠️ Section 2: CIDR Notation — The Modern Standard
+
+CIDR (Classless Inter-Domain Routing) replaced the rigid class system. Instead of fixed slices, you can now order any size pizza you want.
+
+### 🔢 How CIDR Works
+
+CIDR uses a **prefix length** (the number after the slash) to tell you how many bits are the "network" part. The remaining bits are for hosts.
+
+- **Format:** `192.168.1.0/24`
+- **Meaning:** First 24 bits are network, last 8 bits are hosts
+- **Hosts available:** 2^(32 - prefix) - 2 (subtract network and broadcast addresses)
+
+### 📐 Common CIDR Prefixes for AI Clusters
+
+| CIDR | Subnet Mask | Hosts Available | AI Use Case |
+|------|-------------|-----------------|-------------|
+| /24 | 255.255.255.0 | 254 | Small management network |
+| /22 | 255.255.252.0 | 1,022 | Medium compute node network |
+| /20 | 255.255.240.0 | 4,094 | Large GPU cluster data network |
+| /16 | 255.255.0.0 | 65,534 | Entire cluster backbone |
+
+### 🧮 Example: Reading CIDR Notation
+
+- **10.0.0.0/8** → Network is 10.x.x.x, hosts from 10.0.0.1 to 10.255.255.254
+- **172.16.0.0/12** → Network is 172.16.x.x to 172.31.x.x (commonly used in private clouds)
+- **192.168.1.0/24** → Network is 192.168.1.x, hosts from .1 to .254
+
+---
+
+## 🕵️ Section 3: Subnetting for AI Clusters
+
+Subnetting is the art of carving a large IP block into smaller, manageable pieces. In an AI cluster, you'll subnet for:
+- **Separate data, storage, and management networks**
+- **Isolating different GPU racks or pods**
+- **Reserving IP ranges for future expansion**
+
+### 📝 Step-by-Step Subnetting Example
+
+Imagine you have a **10.0.0.0/16** block (65,534 hosts) for your AI cluster. You need:
+- 1 management network (100 hosts)
+- 4 data networks (500 hosts each)
+- 1 storage network (200 hosts)
+
+**Step 1: Determine the smallest subnet that fits each need**
+- Management: 100 hosts → need /25 (126 hosts)
+- Data: 500 hosts → need /23 (510 hosts)
+- Storage: 200 hosts → need /24 (254 hosts)
+
+**Step 2: Allocate subnets sequentially**
+- Management: **10.0.0.0/25** (hosts 10.0.0.1–10.0.0.126)
+- Data 1: **10.0.1.0/23** (hosts 10.0.1.1–10.0.2.254)
+- Data 2: **10.0.3.0/23** (hosts 10.0.3.1–10.0.4.254)
+- Data 3: **10.0.5.0/23** (hosts 10.0.5.1–10.0.6.254)
+- Data 4: **10.0.7.0/23** (hosts 10.0.7.1–10.0.8.254)
+- Storage: **10.0.9.0/24** (hosts 10.0.9.1–10.0.9.254)
+
+**Step 3: Verify no overlap** — Each subnet starts where the previous one ends.
+
+### ⚠️ Common Pitfall: Forgetting the Network and Broadcast Addresses
+
+Every subnet has two reserved addresses:
+- **Network address** (all host bits = 0) — e.g., 10.0.0.0/24
+- **Broadcast address** (all host bits = 1) — e.g., 10.0.0.255/24
+
+You cannot assign these to any device. In a /24, you only get 254 usable addresses, not 256.
+
+---
+
+## 🧩 Section 4: Practical Application in AI Clusters
+
+### 🏗️ Typical AI Cluster IP Layout
+
+| Network Purpose | CIDR Block | Hosts | Devices |
+|-----------------|------------|-------|---------|
+| Management | 10.0.0.0/24 | 254 | BMCs, switches, management servers |
+| Data (GPU-to-GPU) | 10.0.1.0/22 | 1,022 | GPU nodes (high-speed fabric) |
+| Storage | 10.0.5.0/24 | 254 | NAS, SAN, object storage |
+| Out-of-band | 192.168.0.0/24 | 254 | Console servers, PDU management |
+
+### 🔄 Why Separate Networks Matter
+
+- **Management traffic** (SSH, monitoring) must never compete with **data traffic** (training gradients)
+- **Storage traffic** (reading datasets) should have its own path to avoid congestion
+- **Out-of-band** (power cycling, BIOS access) needs to work even if the main network is down
+
+### 📈 Scaling Considerations
+
+When your cluster grows from 64 GPUs to 1,024 GPUs:
+- Start with a **/20** (4,094 hosts) for the data network
+- Reserve **/24** blocks for each rack of 8–16 GPUs
+- Leave **20% spare** IP space for future expansion
+
+---
+
+## ✅ Summary: What You Need to Remember
+
+1. **Class A/B/C** is legacy — you'll see the subnet masks but never use the classes directly
+2. **CIDR notation** (e.g., /24) is how you'll plan every network in your cluster
+3. **Subnetting** lets you split a large block into purpose-built networks for data, management, and storage
+4. **Always reserve** network and broadcast addresses — they're not usable
+5. **Plan for growth** — AI clusters expand fast, so leave room in your IP scheme
+
+You now have the fundamentals to read and design IP addressing for any AI cluster. When you see **10.0.0.0/16** on a network diagram, you'll know it can support over 65,000 devices — and you'll know exactly how to carve it up for your GPU nodes, storage arrays, and management servers.

@@ -1,0 +1,146 @@
+# 5.1a top and htop: load average, CPU%, MEM%, process states explained
+
+#### 🏷️ The Operating System Layer — Linux for AI Infrastructure Operators > 5 Storage & Resource Management for AI Workloads > 5.1 Linux Resource Monitoring — Understanding System Load
+
+## 🧭 Introduction
+
+When you start working with AI workloads on Linux systems, you need to know how your machine is performing. Two of the most essential tools for this are **top** and **htop**. They show you real-time information about your system's health — how busy the CPU is, how much memory is being used, and what each process is doing. This guide breaks down the key metrics you'll see: load average, CPU percentage, memory percentage, and process states.
+
+---
+
+## ⚙️ What Are top and htop?
+
+- **top** is the classic, built-in Linux process viewer. It comes pre-installed on almost every Linux distribution.
+- **htop** is a modern, more colorful alternative. It offers an interactive interface, mouse support, and easier navigation.
+- Both tools refresh every few seconds to give you a live snapshot of system activity.
+- For AI workloads, these tools help you spot bottlenecks — like a process using 100% CPU or memory running out.
+
+---
+
+## 📊 Understanding Load Average
+
+Load average is one of the most important numbers to watch. It tells you how many processes are waiting for CPU time or are currently running.
+
+- Load average is shown as three numbers: **1-minute**, **5-minute**, and **15-minute** averages.
+- A load average of **1.0** on a single-core system means the CPU is fully utilized.
+- On a multi-core system (e.g., 8 cores), a load average of **8.0** means the CPU is fully utilized.
+- **Good rule of thumb**: If the load average is consistently higher than the number of CPU cores, your system is overloaded.
+- For AI training jobs, high load average might mean your model is CPU-bound (waiting for CPU) rather than GPU-bound.
+
+**Example interpretation:**
+- Load average: **2.5, 1.8, 1.2** on a 4-core system — healthy, some recent activity.
+- Load average: **8.0, 7.5, 7.0** on a 4-core system — system is overloaded, processes are waiting.
+
+---
+
+## 🖥️ CPU% — What It Really Means
+
+CPU percentage shows how much of the processor's capacity a process is using.
+
+- **100% CPU** means one core is fully busy. On a multi-core system, a single process can use up to 100% per core.
+- **CPU% in top** is shown as **%CPU** — it's the percentage of CPU time used since the last update.
+- **CPU% in htop** is shown as **CPU%** — similar meaning, but often color-coded.
+- **Key CPU states you'll see**:
+  - **us** (user) — time spent running user processes (your AI code)
+  - **sy** (system) — time spent running kernel processes
+  - **ni** (nice) — time spent running low-priority user processes
+  - **id** (idle) — CPU is doing nothing
+  - **wa** (iowait) — CPU is waiting for disk or network I/O
+  - **hi** (hardware interrupt) — CPU handling hardware requests
+  - **si** (software interrupt) — CPU handling software requests
+  - **st** (steal time) — CPU time stolen by a virtual machine host
+
+**For AI workloads:**
+- High **us** + high CPU% = your model is CPU-intensive (common for data preprocessing).
+- High **wa** = your system is waiting for disk reads/writes (common when loading large datasets).
+- High **st** = you're on a shared virtual machine and another VM is taking CPU time.
+
+---
+
+## 💾 MEM% — Memory Usage Explained
+
+Memory percentage shows how much RAM a process is using relative to total system memory.
+
+- **MEM% in top** is shown as **%MEM** — it's the process's resident memory divided by total physical memory.
+- **htop** shows memory usage as a bar graph and per-process percentages.
+- **Key memory terms**:
+  - **RSS (Resident Set Size)** — physical memory actually used by the process
+  - **VSZ (Virtual Memory Size)** — total virtual memory allocated (may include swap)
+  - **Total memory** — all RAM installed
+  - **Used memory** — memory currently in use by processes and cache
+  - **Free memory** — memory not used at all
+  - **Buffers/cache** — memory used by the kernel for disk caching (can be freed if needed)
+
+**For AI workloads:**
+- Large models (like LLMs) can use 10–80 GB of RAM per instance.
+- If **MEM%** for a process is high and total memory is near 100%, you may need to reduce batch size or use a smaller model.
+- **Swap usage** (shown as **swp** in htop) means your system is running out of RAM — this severely slows down AI training.
+
+---
+
+## 🕵️ Process States Explained
+
+Every process on Linux is in one of several states. Both top and htop show these states.
+
+| State | Code | Meaning | Example for AI |
+|-------|------|---------|----------------|
+| Running | **R** | Process is actively using CPU or is ready to run | Your training script is computing |
+| Sleeping | **S** | Process is waiting for an event (e.g., I/O) | Waiting for data to load from disk |
+| Uninterruptible Sleep | **D** | Process is waiting for I/O and cannot be interrupted | Disk read/write during dataset loading |
+| Stopped | **T** | Process has been paused (e.g., by a signal) | You pressed Ctrl+Z on a training job |
+| Zombie | **Z** | Process has finished but parent hasn't collected its exit status | Rare; usually indicates a bug |
+| Dead | **X** | Process is being cleaned up | Very brief state, rarely seen |
+
+**How to read process states in top/htop:**
+- In **top**, the **S** column shows the state code (e.g., **R**, **S**, **D**).
+- In **htop**, the state is shown as a letter in the **STATE** column.
+- **For AI workloads**:
+  - Many processes in **D** state = your storage is too slow (common with spinning disks or network storage).
+  - Many processes in **R** state = CPU is busy, which is normal during training.
+  - A process stuck in **D** state for a long time = potential I/O bottleneck.
+
+---
+
+## 📋 Comparison: top vs htop
+
+| Feature | top | htop |
+|---------|-----|------|
+| Installation | Pre-installed | May need to install (apt install htop) |
+| Interface | Text-based, less colorful | Colorful, uses ncurses |
+| Mouse support | No | Yes |
+| Process tree view | No (use pstree) | Yes, with F5 |
+| Kill processes | Press k, then enter PID | Select process, press F9 |
+| Sort by column | Press Shift+F, select column | Click column header |
+| Scroll horizontally | No | Yes (with arrow keys) |
+| Customization | Limited | Extensive (F2 for setup) |
+| CPU/Memory bars | No | Yes, visual bars |
+| Load average display | Yes, top line | Yes, top bar |
+
+---
+
+## 🛠️ Practical Tips for AI Workload Monitoring
+
+- **Start with htop** — it's more intuitive for beginners and gives you a visual overview.
+- **Watch load average** — if it exceeds your core count, your system is struggling.
+- **Check CPU% per process** — if one process uses 100% CPU on all cores, it's likely your AI training script.
+- **Monitor MEM%** — if total memory usage is above 90%, you risk swapping.
+- **Look for D state processes** — if you see many, your storage is a bottleneck.
+- **Use the process tree view in htop** (press F5) — this shows parent-child relationships, useful for understanding which script launched which subprocess.
+- **Sort by CPU% or MEM%** — this helps you find the most resource-hungry processes quickly.
+- **For GPU-based AI workloads**, remember that top and htop show CPU and RAM only — use **nvidia-smi** for GPU metrics.
+
+---
+
+## ✅ Key Takeaways
+
+- **top** and **htop** are your first tools for checking system health.
+- **Load average** tells you if the CPU is overloaded (compare to core count).
+- **CPU%** shows how much processor time a process uses.
+- **MEM%** shows how much RAM a process consumes.
+- **Process states** (R, S, D, Z) reveal what a process is doing right now.
+- For AI workloads, high **wa** (iowait) or many **D** state processes indicate storage bottlenecks.
+- Always check both CPU and memory — AI workloads often stress both.
+
+---
+
+*Next step: Practice running **top** and **htop** on a Linux machine. Watch how the numbers change when you start a simple Python script that loops. This hands-on experience will make these concepts concrete.*

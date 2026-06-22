@@ -1,0 +1,114 @@
+# 34.3d NVIDIA DGX Cloud: NVIDIA-managed AI supercomputing as a subscription service
+
+#### 🏷️ The Virtualization and Cloud — Extending AI Infrastructure Beyond Bare Metal > 34 Cloud AI Infrastructure — AWS, Azure, GCP, and Oracle > 34.3 Managed AI Platforms
+
+---
+
+## 🌐 Context Introduction
+
+Building and managing AI supercomputing infrastructure is complex and expensive. Engineers often face challenges with hardware procurement, cluster setup, networking, and ongoing maintenance. NVIDIA DGX Cloud solves this by offering **fully managed AI supercomputing as a subscription service**. Instead of buying and operating your own DGX systems on-premises, you access NVIDIA's powerful AI infrastructure through the cloud, paying only for what you use. This allows engineers to focus on developing and training AI models rather than managing hardware.
+
+---
+
+## ⚙️ What Is NVIDIA DGX Cloud?
+
+NVIDIA DGX Cloud is a **subscription-based AI supercomputing service** fully managed by NVIDIA. It provides access to NVIDIA's latest DGX systems, including high-performance GPUs, networking, and software stack, all hosted in the cloud.
+
+Key characteristics:
+- **Fully managed**: NVIDIA handles hardware provisioning, maintenance, and software updates.
+- **Subscription model**: Pay a monthly or annual fee based on the number of DGX nodes you need.
+- **Instant access**: No waiting for hardware procurement or setup.
+- **Integrated software**: Comes pre-installed with NVIDIA AI Enterprise, including frameworks like TensorFlow, PyTorch, and NVIDIA NeMo.
+
+---
+
+## 🛠️ How It Works
+
+1. **Subscription**: You subscribe to a DGX Cloud plan through NVIDIA or a cloud partner (e.g., Oracle Cloud Infrastructure).
+2. **Provisioning**: NVIDIA provisions dedicated DGX nodes in a secure, multi-tenant cloud environment.
+3. **Access**: You connect to your DGX Cloud cluster via SSH, NVIDIA Base Command, or your preferred AI development tools.
+4. **Training**: Run your AI workloads (training, inference, data processing) on the managed infrastructure.
+5. **Scaling**: Scale up or down based on demand — add more DGX nodes during peak training and reduce during idle periods.
+6. **Billing**: Pay only for the time your nodes are active, with no upfront hardware costs.
+
+---
+
+## 📊 Key Features
+
+| Feature | Description |
+|---------|-------------|
+| 🚀 **High-Performance GPUs** | Access to NVIDIA H100 or A100 GPUs with NVLink and NVSwitch for fast inter-GPU communication |
+| 🌐 **Low-Latency Networking** | NVIDIA Quantum InfiniBand for high-speed data transfer between nodes |
+| 🧩 **Pre-Installed AI Software** | NVIDIA AI Enterprise, CUDA, cuDNN, TensorRT, and popular frameworks |
+| 🔒 **Security & Isolation** | Dedicated nodes with network isolation and data encryption |
+| 📈 **Elastic Scaling** | Add or remove DGX nodes dynamically based on workload needs |
+| 🛡️ **Managed Maintenance** | NVIDIA handles hardware failures, software patches, and upgrades |
+| 💰 **Predictable Pricing** | Subscription-based with no hidden costs for hardware or support |
+
+---
+
+## 🕵️ When to Use DGX Cloud
+
+DGX Cloud is ideal for:
+
+- **Rapid prototyping**: Quickly spin up AI infrastructure without procurement delays.
+- **Burst workloads**: Handle peak training demands without over-provisioning on-premises hardware.
+- **Small to medium teams**: Avoid the overhead of managing dedicated AI clusters.
+- **Hybrid deployments**: Combine DGX Cloud with on-premises DGX systems for flexible capacity.
+- **Proof-of-concept projects**: Test new AI models or frameworks before committing to large-scale infrastructure.
+
+---
+
+## 📈 Comparison: DGX Cloud vs. On-Premises DGX Systems
+
+| Aspect | DGX Cloud (Subscription) | On-Premises DGX |
+|--------|--------------------------|-----------------|
+| **Upfront Cost** | None (subscription only) | High (hardware purchase) |
+| **Setup Time** | Minutes to hours | Weeks to months |
+| **Maintenance** | NVIDIA-managed | Your team handles |
+| **Scalability** | Elastic (add/remove nodes) | Fixed (hardware limited) |
+| **Control** | Less (NVIDIA manages) | Full control |
+| **Security** | Cloud provider + NVIDIA | Your own data center |
+| **Best For** | Flexibility, speed, variable workloads | Long-term, predictable workloads |
+
+---
+
+## 🧩 Example Workflow
+
+Here’s a typical workflow for an engineer using DGX Cloud:
+
+1. **Subscribe**: Sign up for DGX Cloud through NVIDIA or a partner.
+2. **Create a cluster**: Use the NVIDIA Base Command platform to define a cluster with 4 DGX H100 nodes.
+3. **Upload data**: Transfer your training dataset to the cloud storage attached to your cluster.
+4. **Launch training**: Submit a training job using a pre-configured PyTorch container.
+5. **Monitor**: Track GPU utilization, memory, and training progress via the Base Command dashboard.
+6. **Scale**: Add 2 more DGX nodes mid-training to speed up convergence.
+7. **Stop**: After training completes, decommission the cluster to stop billing.
+
+---
+
+## ✅ Benefits for New Engineers
+
+- **No hardware expertise required**: You don’t need to know how to rack servers or configure InfiniBand.
+- **Focus on AI, not infrastructure**: Spend time on model development, data preparation, and experimentation.
+- **Learn with best practices**: NVIDIA’s managed environment ensures optimal GPU utilization and software compatibility.
+- **Cost-effective for learning**: Pay only for what you use — ideal for experimenting with large-scale AI training.
+
+---
+
+## 🚧 Considerations
+
+- **Internet dependency**: Requires stable, high-bandwidth internet connection for data transfer.
+- **Data sovereignty**: Data resides in the cloud — ensure compliance with your organization’s data policies.
+- **Vendor lock-in**: Workloads are optimized for NVIDIA hardware and software.
+- **Cost management**: Monitor usage to avoid unexpected bills during idle periods.
+
+---
+
+## 📚 Summary
+
+NVIDIA DGX Cloud is a **fully managed AI supercomputing subscription service** that removes the complexity of building and maintaining AI infrastructure. Engineers can access world-class DGX systems, scale elastically, and pay only for what they use. It’s an excellent choice for teams that want to accelerate AI development without the upfront investment and operational burden of on-premises hardware.
+
+---
+
+*Next step: Explore NVIDIA Base Command to understand how to manage your DGX Cloud clusters.*

@@ -1,0 +1,127 @@
+# 28.1c Three technologies compared: Time-Slicing vs MPS vs MIG — the decision framework
+
+#### 🏷️ The Cluster Orchestration — Managing the GPU Fleet at Scale > 28 Advanced GPU Resource Management — MIG, MPS, and Time-Slicing > 28.1 The Wasted Compute Problem — Why One Job per GPU Is Inefficient
+
+---
+
+## 🧠 Context Introduction
+
+When you run only one job per GPU, you often leave compute capacity on the table. Many AI workloads — especially during inference or small-batch training — don't fully utilize the GPU's memory or compute cores. This is called the **wasted compute problem**.
+
+NVIDIA offers three main technologies to share a single GPU among multiple workloads:
+
+1. **Time-Slicing**
+2. **MPS (Multi-Process Service)**
+3. **MIG (Multi-Instance GPU)**
+
+Each solves the problem differently, and choosing the right one depends on your workload characteristics, isolation requirements, and hardware generation. This guide gives you a simple decision framework.
+
+---
+
+## ⚙️ Technology 1: Time-Slicing
+
+**What it does:** Time-Slicing divides the GPU's compute time into small slices. Each job gets a turn to use the full GPU for a short period, then yields to the next job.
+
+**Key characteristics:**
+- All jobs share the same GPU memory (no memory isolation)
+- Jobs see the full GPU but only get a fraction of compute time
+- No hardware changes required — works on all NVIDIA GPUs
+- Best for **interactive or latency-tolerant** workloads
+
+**When to use:**
+- You have many small, short-lived inference requests
+- You don't care about strict performance guarantees
+- Your jobs are not memory-intensive
+
+**When to avoid:**
+- You need guaranteed memory isolation between jobs
+- Your workloads are sensitive to latency spikes (e.g., real-time AI)
+
+---
+
+## 🛠️ Technology 2: MPS (Multi-Process Service)
+
+**What it does:** MPS allows multiple CUDA processes to share the GPU's compute resources more efficiently by batching their kernel launches together. It improves utilization without time-slicing overhead.
+
+**Key characteristics:**
+- Processes share GPU memory (no isolation)
+- Better compute utilization than Time-Slicing for small kernels
+- Works on all NVIDIA GPUs (with CUDA support)
+- Best for **compute-bound, small-batch** workloads
+
+**When to use:**
+- You have many small CUDA kernels that underutilize the GPU
+- You want higher throughput than Time-Slicing for training
+- You can tolerate shared memory (no isolation needed)
+
+**When to avoid:**
+- You need strict memory isolation between users or tenants
+- Your workloads have large memory footprints that could collide
+
+---
+
+## 🕵️ Technology 3: MIG (Multi-Instance GPU)
+
+**What it does:** MIG physically partitions a single GPU into multiple isolated GPU instances. Each instance has its own dedicated memory, cache, and compute units — as if you had multiple smaller GPUs.
+
+**Key characteristics:**
+- **Hardware-level isolation** — memory and compute are fully separated
+- Each instance appears as a separate GPU to the OS
+- Only available on **NVIDIA A100, A30, H100, H200, and newer** GPUs
+- Best for **multi-tenant, security-sensitive** environments
+
+**When to use:**
+- You need guaranteed performance and memory isolation between jobs
+- You are running multiple users or tenants on the same GPU
+- Your workloads fit within a single MIG slice (e.g., 1/7th of an A100)
+
+**When to avoid:**
+- Your workloads need the full GPU memory or compute (MIG slices are smaller)
+- You are using older GPUs (e.g., V100, T4) that don't support MIG
+
+---
+
+## 📊 Comparison Table
+
+| Feature | Time-Slicing | MPS | MIG |
+|---|---|---|---|
+| **Memory Isolation** | ❌ None | ❌ None | ✅ Full |
+| **Compute Isolation** | ❌ Shared | ❌ Shared | ✅ Dedicated |
+| **Hardware Required** | Any NVIDIA GPU | Any NVIDIA GPU | A100, A30, H100, H200+ |
+| **Best For** | Latency-tolerant inference | Small-kernel throughput | Multi-tenant, security |
+| **Performance Overhead** | Medium (context switching) | Low (kernel batching) | Very low (hardware partition) |
+| **Ease of Setup** | Easy (no config) | Moderate (CUDA MPS daemon) | Complex (partition profiles) |
+
+---
+
+## 🧩 Decision Framework — Which One Should You Choose?
+
+Follow this simple decision tree:
+
+**Step 1: Do you need memory isolation between jobs?**
+- **Yes** → Go with **MIG** (if your GPU supports it)
+- **No** → Go to Step 2
+
+**Step 2: Are your workloads compute-bound with many small kernels?**
+- **Yes** → Try **MPS** for better throughput
+- **No** → Go to Step 3
+
+**Step 3: Do you have many small, short-lived inference jobs?**
+- **Yes** → Use **Time-Slicing** (simplest option)
+- **No** → Consider running one job per GPU (no sharing)
+
+**Special case:** If you have mixed workloads (e.g., one large training job + many small inference jobs), you can combine technologies. For example, use MIG to partition the GPU into two instances, then use Time-Slicing within one instance for inference jobs.
+
+---
+
+## ✅ Summary
+
+| Scenario | Recommended Technology |
+|---|---|
+| Multi-tenant cloud with security requirements | **MIG** |
+| High-throughput inference with many small requests | **Time-Slicing** |
+| Training with many small CUDA kernels | **MPS** |
+| Single user running multiple small jobs | **Time-Slicing** or **MPS** |
+| Need guaranteed performance per job | **MIG** |
+
+Remember: The best choice depends on your specific workload patterns, GPU hardware, and isolation needs. Start simple with Time-Slicing, then move to MPS or MIG as your requirements grow.

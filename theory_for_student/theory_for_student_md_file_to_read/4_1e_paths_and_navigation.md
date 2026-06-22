@@ -1,0 +1,109 @@
+# 4.1e Absolute vs. relative paths, and navigating with cd, ls, find, locate
+
+#### 🏷️ The Operating System Layer — Linux for AI Infrastructure Operators > 4 Core Linux Administration for AI Operators > 4.1 Navigating the Linux Filesystem
+
+## 🧭 Context Introduction
+
+When working with AI infrastructure, you will constantly interact with files — model weights, training datasets, configuration files, and logs. Understanding how to locate and move between these files is essential. This section covers two fundamental path types (absolute and relative) and four core commands that engineers use daily to navigate and search the Linux filesystem.
+
+---
+
+## ⚙️ Absolute vs. Relative Paths
+
+A **path** is simply the address of a file or directory on your system. There are two ways to write this address:
+
+### Absolute Paths
+- Start from the **root directory** (represented by a forward slash **/**).
+- Always begin with **/**.
+- Unambiguous — they point to the exact same location regardless of your current working directory.
+- Example: **/home/ai_user/datasets/training_data.csv**
+
+### Relative Paths
+- Start from your **current working directory**.
+- Do **not** begin with **/**.
+- Use special symbols:
+  - **.** (single dot) — refers to the current directory
+  - **..** (double dot) — refers to the parent directory
+  - **~** (tilde) — refers to your home directory
+- Example: If you are in **/home/ai_user**, the relative path **datasets/training_data.csv** points to the same file as the absolute path above.
+
+### Comparison Table
+
+| Feature | Absolute Path | Relative Path |
+|---------|---------------|---------------|
+| Starts with | **/** (root) | Current directory |
+| Context-dependent? | No | Yes |
+| Use case | Scripts, configuration files, system-wide references | Quick navigation, personal workflows |
+| Example | **/etc/nvidia/gpu_config.conf** | **../configs/gpu_config.conf** |
+
+---
+
+## 🛠️ Navigating with cd (Change Directory)
+
+The **cd** command is your primary tool for moving between directories.
+
+- **cd /absolute/path** — Moves you to an absolute path.
+- **cd relative/path** — Moves you to a relative path.
+- **cd ..** — Moves you up one directory level.
+- **cd ~** — Returns you to your home directory.
+- **cd -** — Switches you back to your previous directory.
+
+**Practical tip for AI work:** When you are in **/home/ai_user/projects** and need to access a dataset in **/home/ai_user/datasets**, you can use either:
+- Absolute: **cd /home/ai_user/datasets**
+- Relative: **cd ../datasets**
+
+---
+
+## 📂 Listing Files with ls
+
+The **ls** command shows you what is inside a directory. It is your "look around" tool.
+
+- **ls** — Lists files and directories in your current location.
+- **ls /absolute/path** — Lists contents of a specific directory without moving there.
+- **ls -l** — Shows a detailed list (file permissions, owner, size, modification date).
+- **ls -a** — Shows all files, including hidden ones (those starting with a dot).
+- **ls -lh** — Shows sizes in human-readable format (KB, MB, GB).
+- **ls -R** — Recursively lists all subdirectories and their contents.
+
+**Practical tip for AI work:** Use **ls -lh** to quickly see the size of model files or dataset archives before copying or moving them.
+
+---
+
+## 🕵️ Searching with find
+
+The **find** command searches for files and directories based on criteria like name, type, size, or modification time. It is powerful but can be slow on large filesystems.
+
+- **find /search/path -name "filename"** — Searches for a file by exact name.
+- **find /search/path -name "*.csv"** — Searches for all CSV files using a wildcard.
+- **find /search/path -type d -name "logs"** — Searches only for directories named "logs".
+- **find /search/path -size +100M** — Finds files larger than 100 megabytes.
+- **find /search/path -mtime -7** — Finds files modified in the last 7 days.
+
+**Practical tip for AI work:** Use **find /datasets -name "*.npy"** to locate all NumPy array files across your dataset directories.
+
+---
+
+## 🗺️ Quick Searching with locate
+
+The **locate** command is faster than **find** because it searches a pre-built database of filenames. However, this database is only updated periodically (usually daily).
+
+- **locate filename** — Searches the entire filesystem for any file or path containing "filename".
+- **locate -i filename** — Performs a case-insensitive search.
+- **locate "*.log"** — Finds all files ending with **.log**.
+
+**Important:** If you just created a file, **locate** may not find it until the database is updated. You can manually update the database with **sudo updatedb** (requires administrator privileges).
+
+**Practical tip for AI work:** Use **locate nvidia-smi** to quickly find the location of the NVIDIA System Management Interface tool on any system.
+
+---
+
+## ✅ Summary
+
+| Command | Purpose | Best Use Case |
+|---------|---------|---------------|
+| **cd** | Move between directories | Daily navigation |
+| **ls** | List directory contents | Inspecting files and folders |
+| **find** | Search filesystem by criteria | Finding specific files by name, size, or date |
+| **locate** | Quick filename search | Fast lookups when you know part of the filename |
+
+**Key takeaway:** Master absolute paths for scripts and automation (they never break), and use relative paths for quick manual navigation. Use **find** when you need precision, and **locate** when you need speed.

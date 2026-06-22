@@ -1,0 +1,139 @@
+# 31.4e The complete observability stack: node_exporter + dcgm-exporter + Prometheus + Grafana
+
+#### 🏷️ The Virtualization and Cloud — Extending AI Infrastructure Beyond Bare Metal > 31 Cluster-Wide Telemetry — DCGM, Prometheus, and Grafana > 31.4 Grafana — Visualizing Cluster Health
+
+Welcome, new engineers! This topic introduces the **complete observability stack** for monitoring AI infrastructure. Think of it as a toolkit that collects, stores, and visualizes data from your servers and NVIDIA GPUs. By the end of this guide, you'll understand how these four components work together to give you a clear picture of cluster health.
+
+---
+
+## 🌱 Context: Why This Stack Matters
+
+AI workloads are resource-hungry. GPUs run hot, memory fills up, and CPUs can spike. Without visibility, you're flying blind. This stack provides:
+- **Real-time metrics** from servers (CPU, memory, disk) and GPUs (temperature, utilization, memory usage).
+- **Centralized storage** for historical data.
+- **Custom dashboards** to spot trends and issues.
+
+The four components are:
+1. **node_exporter** — Collects server-level metrics.
+2. **dcgm-exporter** — Collects NVIDIA GPU metrics.
+3. **Prometheus** — Stores and queries all metrics.
+4. **Grafana** — Visualizes data in dashboards.
+
+---
+
+## ⚙️ Component 1: node_exporter — Server Metrics Collector
+
+**node_exporter** runs on every server you want to monitor. It exposes system metrics like CPU load, memory usage, disk I/O, and network traffic.
+
+- **What it does**: Listens on port **9100** and serves metrics in a format Prometheus can scrape.
+- **Where it runs**: On each physical or virtual machine in your cluster.
+- **Key metrics it provides**:
+  - CPU utilization (user, system, idle)
+  - Memory usage (total, used, free)
+  - Disk space and I/O
+  - Network bytes sent/received
+
+**How it fits**: node_exporter is the "eyes" for your server hardware. Without it, you'd only see GPU data.
+
+---
+
+## 🖥️ Component 2: dcgm-exporter — GPU Metrics Collector
+
+**dcgm-exporter** is the NVIDIA-specific counterpart to node_exporter. It uses the **NVIDIA Data Center GPU Manager (DCGM)** to expose GPU metrics.
+
+- **What it does**: Listens on port **9400** and serves GPU metrics.
+- **Key metrics it provides**:
+  - GPU temperature (in Celsius)
+  - GPU utilization percentage
+  - Memory usage (total, used, free)
+  - Power consumption (watts)
+  - PCIe bandwidth and errors
+
+**Why it's critical**: AI workloads depend on GPUs. dcgm-exporter tells you if a GPU is overheating, underperforming, or running out of memory.
+
+---
+
+## 📊 Component 3: Prometheus — Metrics Database & Query Engine
+
+**Prometheus** is the central brain of the stack. It scrapes metrics from node_exporter and dcgm-exporter at regular intervals (e.g., every 15 seconds) and stores them in a time-series database.
+
+- **What it does**:
+  - Pulls metrics from exporters via HTTP.
+  - Stores data with timestamps.
+  - Allows you to query metrics using **PromQL** (Prometheus Query Language).
+- **Key features**:
+  - Alerting rules (e.g., send an alert if GPU temperature exceeds 85°C).
+  - Retention policies (how long to keep historical data).
+  - Service discovery (automatically finds new exporters).
+
+**How it fits**: Prometheus is the "memory" of your observability stack. It holds all the data that Grafana will later visualize.
+
+---
+
+## 🎨 Component 4: Grafana — Visualization & Dashboards
+
+**Grafana** connects to Prometheus and turns raw metrics into beautiful, interactive dashboards. You can create charts, graphs, and tables to monitor cluster health at a glance.
+
+- **What it does**:
+  - Queries Prometheus using PromQL.
+  - Renders dashboards with panels (e.g., line graphs, gauges, heatmaps).
+  - Supports alerts and annotations.
+- **Key features**:
+  - Pre-built dashboards for node_exporter and dcgm-exporter.
+  - Custom dashboard creation (drag-and-drop).
+  - User authentication and permissions.
+
+**How it fits**: Grafana is the "face" of your observability stack. It's what you and your team will look at daily.
+
+---
+
+## 🛠️ How the Stack Works Together
+
+Here's the data flow, step by step:
+
+1. **node_exporter** and **dcgm-exporter** run on each server, collecting metrics.
+2. **Prometheus** scrapes these exporters at regular intervals (e.g., every 15 seconds).
+3. Prometheus stores the metrics in its time-series database.
+4. **Grafana** connects to Prometheus as a data source.
+5. You build dashboards in Grafana to visualize the metrics.
+
+**Visual flow** (text-based):
+```
+Server 1: node_exporter (port 9100) + dcgm-exporter (port 9400)
+         ↓
+Prometheus (scrapes both exporters)
+         ↓
+Grafana (queries Prometheus, displays dashboards)
+```
+
+---
+
+## 📋 Comparison Table: Exporters vs. Prometheus vs. Grafana
+
+| Component | Role | Port (Default) | Data Type |
+|-----------|------|----------------|-----------|
+| **node_exporter** | Collects server metrics | 9100 | CPU, memory, disk, network |
+| **dcgm-exporter** | Collects GPU metrics | 9400 | GPU temp, utilization, power |
+| **Prometheus** | Stores and queries metrics | 9090 | Time-series data |
+| **Grafana** | Visualizes metrics | 3000 | Dashboards, graphs, alerts |
+
+---
+
+## 🕵️ Common Use Cases
+
+- **Monitoring GPU health**: Check if any GPU is overheating or underperforming.
+- **Capacity planning**: Track memory and CPU usage over weeks to predict when you'll need more resources.
+- **Alerting**: Set up Prometheus alerts for critical thresholds (e.g., GPU memory > 90%).
+- **Debugging**: When an AI job fails, look at Grafana dashboards to see if a GPU spiked in temperature or ran out of memory.
+
+---
+
+## ✅ Key Takeaways for New Engineers
+
+- **node_exporter** and **dcgm-exporter** are lightweight agents that expose metrics.
+- **Prometheus** is the central database that stores everything.
+- **Grafana** is the visual layer that makes data understandable.
+- Together, they form a complete observability stack for AI infrastructure.
+- Start with pre-built dashboards (available in Grafana's library) before building custom ones.
+
+You now have a solid foundation in the complete observability stack. As you gain experience, you'll learn to tune scrape intervals, write PromQL queries, and create sophisticated alerting rules. Happy monitoring!

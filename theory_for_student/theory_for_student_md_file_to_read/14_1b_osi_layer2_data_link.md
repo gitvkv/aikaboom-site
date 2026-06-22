@@ -1,0 +1,114 @@
+# 14.1b Layer 2 (Data Link): Ethernet frames, MAC addresses, and switches
+
+#### 🏷️ The AI Data Center Networking — Moving Petabytes Without Latency > 14 Enterprise Networking Baseline > 14.1 The OSI Model — A Conceptual Framework for Network Communication
+
+Welcome to Layer 2 of the OSI model — the Data Link layer. If Layer 1 (Physical) is about sending raw bits over a cable, Layer 2 is where those bits become organized, addressable data that can travel between devices on the same local network. For anyone starting in AI infrastructure, understanding Layer 2 is essential because it's the foundation for how servers, storage, and GPUs communicate inside a data center rack or cluster.
+
+---
+
+## 🌐 Context: Why Layer 2 Matters in AI Infrastructure
+
+In an AI data center, you might have hundreds of servers connected to high-speed switches. Before any AI workload can start, those servers need to discover each other, send data reliably, and avoid collisions. Layer 2 handles all of this. It uses **MAC addresses** to identify devices and **Ethernet frames** to package data. **Switches** are the key hardware that forwards these frames intelligently.
+
+---
+
+## ⚙️ Ethernet Frames — The Data Package
+
+An Ethernet frame is the structured container that carries data across a local network. Think of it like a shipping box with a label.
+
+### 🧩 Frame Structure (Simplified)
+
+- **Preamble** — A short signal to synchronize timing between sender and receiver.
+- **Destination MAC Address** — The hardware address of the intended receiver.
+- **Source MAC Address** — The hardware address of the sender.
+- **EtherType** — Indicates what kind of data is inside (e.g., IPv4, IPv6, ARP).
+- **Payload** — The actual data being sent (e.g., a piece of an AI training dataset).
+- **Frame Check Sequence (FCS)** — A checksum to detect errors during transmission.
+
+### 📏 Key Points
+
+- Frames are **variable in size**, typically between 64 and 1518 bytes (standard Ethernet).
+- In AI data centers, **jumbo frames** (up to 9000 bytes) are often used to reduce overhead when moving large datasets.
+- Frames are **not routable** across different networks — they only work within the same broadcast domain (a single LAN segment).
+
+---
+
+## 🕵️ MAC Addresses — The Hardware Identity
+
+A **MAC (Media Access Control) address** is a unique identifier burned into every network interface card (NIC) at the factory. It's like a serial number for your network hardware.
+
+### 🔑 MAC Address Format
+
+- **48 bits** long, usually written as 12 hexadecimal characters.
+- Example: `00:1A:2B:3C:4D:5E`
+- The first 6 hex digits represent the **Organizationally Unique Identifier (OUI)** — the manufacturer.
+- The last 6 hex digits are the **device-specific** part.
+
+### 🧠 Important Notes
+
+- MAC addresses are **flat** — they don't have a hierarchy like IP addresses.
+- They are **permanent** (though they can be spoofed or overridden in software).
+- In AI infrastructure, engineers often use MAC addresses to:
+  - Identify which physical port a server is connected to.
+  - Configure port security on switches.
+  - Troubleshoot connectivity issues at the hardware level.
+
+---
+
+## 🛠️ Switches — The Intelligent Forwarding Engine
+
+A **switch** is a Layer 2 device that connects multiple devices (servers, storage, GPUs) on the same network. Unlike a hub (which blindly repeats data to all ports), a switch learns which MAC addresses are on which ports and forwards frames only where they need to go.
+
+### 🔄 How a Switch Works
+
+1. **Learning** — When a frame arrives, the switch records the source MAC address and the port it came from in a **MAC address table**.
+2. **Forwarding** — The switch looks up the destination MAC address in its table. If found, it sends the frame only to that specific port.
+3. **Flooding** — If the destination MAC is unknown, the switch sends the frame to all ports (except the one it came from).
+4. **Filtering** — The switch drops frames that are meant for devices on the same port (no need to forward).
+
+### 📊 Comparison: Hub vs. Switch vs. Router
+
+| Feature | Hub (Layer 1) | Switch (Layer 2) | Router (Layer 3) |
+|---------|---------------|------------------|------------------|
+| Address used | None | MAC address | IP address |
+| Forwarding behavior | Broadcasts to all ports | Forwards to specific port | Routes between networks |
+| Collision domain | Single (all ports share) | Per port (each port is separate) | Per network |
+| Use in AI data center | Rarely used | Core device for rack-level connectivity | Used for inter-rack or inter-cluster traffic |
+
+---
+
+## 🔗 Putting It All Together: A Simple Example
+
+Imagine two AI training servers, **Server A** (MAC: AA:BB:CC:DD:EE:01) and **Server B** (MAC: AA:BB:CC:DD:EE:02), connected to the same switch.
+
+1. Server A wants to send a small batch of training data to Server B.
+2. It creates an Ethernet frame with:
+   - Destination MAC: AA:BB:CC:DD:EE:02
+   - Source MAC: AA:BB:CC:DD:EE:01
+   - Payload: the training data chunk
+3. The frame travels to the switch.
+4. The switch checks its MAC address table and sees that MAC AA:BB:CC:DD:EE:02 is on Port 2.
+5. The switch forwards the frame **only** to Port 2.
+6. Server B receives the frame, checks the destination MAC, and processes the data.
+
+This process happens millions of times per second in a busy AI cluster.
+
+---
+
+## 🧪 Practical Tips for New Engineers
+
+- **Check MAC addresses** when troubleshooting connectivity — a mismatch can indicate a bad cable, wrong port, or NIC failure.
+- **Use jumbo frames** carefully — all devices on the same Layer 2 segment must support the same MTU (Maximum Transmission Unit) size.
+- **Watch for MAC flooding** — if a switch's MAC address table fills up, it may fall back to flooding all frames, causing performance degradation.
+- **Understand VLANs** — in larger AI data centers, VLANs (Virtual LANs) are used to segment Layer 2 traffic logically, even on the same physical switch.
+
+---
+
+## ✅ Summary
+
+- **Layer 2** is the Data Link layer, responsible for reliable communication between directly connected devices.
+- **Ethernet frames** are the structured data units that carry payloads across a LAN.
+- **MAC addresses** are hardware-level identifiers that uniquely identify each network interface.
+- **Switches** intelligently forward frames based on MAC addresses, enabling efficient communication within a network segment.
+
+Mastering these basics will give you a solid foundation for understanding how AI workloads move data inside the data center — and how to keep that movement fast and reliable.

@@ -1,0 +1,120 @@
+# 19.3e Namespaces, controllers, and queue pairs in NVMe-oF architecture
+
+#### 🏷️ The AI Data Center Networking — Moving Petabytes Without Latency > 19 Enterprise Storage Architectures for AI > 19.3 NVMe over Fabrics (NVMe-oF) — Networked Storage Without Compromise
+
+---
+
+## 🧭 Context Introduction
+
+When you connect storage over a network using NVMe over Fabrics (NVMe-oF), the architecture relies on three fundamental building blocks: **namespaces**, **controllers**, and **queue pairs**. Think of these as the plumbing, the faucet, and the water flow for your high-speed storage. For new engineers, understanding how these pieces fit together is essential to troubleshooting performance issues, configuring storage targets, and scaling AI workloads that demand low latency and high throughput.
+
+---
+
+## ⚙️ What Are Namespaces?
+
+A **namespace** is a logical block of storage that appears to a host as a single, addressable storage device. It is similar to a logical unit number (LUN) in traditional SAN storage, but with NVMe-specific optimizations.
+
+- **Key characteristics:**
+  - Each namespace has a unique **Namespace ID (NSID)**.
+  - A single NVMe controller can manage multiple namespaces.
+  - Namespaces can be formatted with different block sizes (e.g., 512 bytes, 4 KB).
+  - In AI workloads, you might dedicate one namespace per GPU node for model checkpoints.
+
+- **Example scenario:** An NVMe-oF target exposes four namespaces — one for training data, one for model weights, one for logs, and one for temporary scratch space.
+
+---
+
+## 🛠️ What Are Controllers?
+
+A **controller** is the logical entity that manages access to namespaces. It handles commands from hosts (initiators) and coordinates data transfers. In NVMe-oF, controllers exist on the **target side** (the storage system).
+
+- **Key characteristics:**
+  - Each controller has a unique **Controller ID**.
+  - Controllers manage **admin queues** (for setup and management) and **I/O queues** (for data transfers).
+  - Multiple controllers can share the same set of namespaces for load balancing.
+  - Controllers enforce access control — only authorized hosts can connect.
+
+- **Important distinction:** In NVMe-oF, the host sees a **virtual controller** that represents its connection to the target. The target may have many physical controllers behind the scenes.
+
+---
+
+## 🕵️ What Are Queue Pairs?
+
+A **queue pair (QP)** is the communication channel between a host and a controller. It consists of two queues:
+- **Submission Queue (SQ):** Where the host places commands (read, write, etc.).
+- **Completion Queue (CQ):** Where the controller places completion statuses.
+
+- **Key characteristics:**
+  - Each queue pair is identified by a **Queue Pair Number (QPN)**.
+  - Multiple queue pairs can exist per connection for parallel I/O.
+  - In NVMe-oF over RDMA (e.g., InfiniBand or RoCE), queue pairs map directly to RDMA queue pairs.
+  - The number of queue pairs affects parallelism — more QPs can mean better throughput for multi-threaded AI workloads.
+
+- **Example:** A host with 4 CPU cores might create 4 queue pairs to the target, allowing each core to submit I/O independently.
+
+---
+
+## 📊 Comparison Table: Namespaces vs. Controllers vs. Queue Pairs
+
+| Component | Role | Scope | Example in AI Context |
+|-----------|------|-------|-----------------------|
+| **Namespace** | Logical storage unit | Storage capacity | A 10 TB namespace for training dataset |
+| **Controller** | Command handler and access manager | Connection endpoint | One controller per GPU server rack |
+| **Queue Pair** | I/O communication channel | Data path | 8 queue pairs for parallel model checkpoint writes |
+
+---
+
+## 🔄 How They Work Together
+
+Here is the flow of a typical NVMe-oF read operation:
+
+1. **Host** opens a connection to the target using a **controller**.
+2. **Host** creates one or more **queue pairs** for that controller.
+3. **Host** places a read command in the **submission queue** of a queue pair.
+4. **Controller** picks up the command, reads data from the appropriate **namespace**.
+5. **Controller** places the completion status in the **completion queue**.
+6. **Host** retrieves the completion and the data.
+
+- **Key insight:** The namespace is *what* you read/write, the controller is *who* manages it, and the queue pair is *how* the command travels.
+
+---
+
+## 🧪 Practical Configuration Example (For Reference)
+
+Below is a simplified example of how an NVMe-oF target might be configured using the **nvmetcli** tool. This is for reference only — do not run this without understanding your environment.
+
+```text
+# Create a namespace with ID 1, backed by a block device
+nvmetcli "add /ports/1/subsystems/nvme-subsystem/namespaces/1"
+nvmetcli "set /ports/1/subsystems/nvme-subsystem/namespaces/1/device /dev/nvme0n1"
+nvmetcli "set /ports/1/subsystems/nvme-subsystem/namespaces/1/enable 1"
+
+# Create a controller with queue pair limits
+nvmetcli "set /ports/1/subsystems/nvme-subsystem/attr/allow_any_host 1"
+nvmetcli "set /ports/1/subsystems/nvme-subsystem/attr/queue_size 128"
+```
+
+📤 **Output:** The target now exposes one namespace with a queue depth of 128 commands per queue pair.
+
+---
+
+## ✅ Key Takeaways for New Engineers
+
+- **Namespaces** are your storage volumes — think of them as virtual drives.
+- **Controllers** are the traffic cops — they manage who can access what.
+- **Queue pairs** are the lanes on the highway — more lanes mean more parallel traffic.
+- For AI workloads, you typically want **multiple queue pairs** (e.g., 8–16) to keep GPUs fed with data.
+- Always check the **queue depth** and **number of queue pairs** when diagnosing performance issues in NVMe-oF.
+
+---
+
+## 📚 Further Learning Path
+
+- Explore how **RDMA** (InfiniBand or RoCE) maps to NVMe-oF queue pairs.
+- Practice configuring an NVMe-oF target using **nvmetcli** or **targetcli**.
+- Monitor queue pair utilization with tools like **nvme list** and **perf**.
+- Understand how **NVMe-oF multipathing** uses multiple controllers for redundancy.
+
+---
+
+*This guide is part of the NVIDIA-Certified Associate: AI Infrastructure and Operations curriculum. Focus on the logical relationships first — the hardware details will make more sense once you grasp the architecture.*

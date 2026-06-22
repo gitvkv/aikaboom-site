@@ -1,0 +1,95 @@
+# 36.2b MIG partitioning: profile selection for given workload scenarios
+
+#### 🏷️ The Exam Preparation & Certification Mastery > 36 NCA-AIIO Blueprint Deep Dive — Domain-by-Domain Analysis > 36.2 High-Frequency Exam Topics — What the Blueprint Emphasizes
+
+---
+
+## 🧭 Context Introduction
+
+Multi-Instance GPU (MIG) partitioning is a powerful NVIDIA technology that allows a single physical GPU (like the A100 or H100) to be split into multiple smaller, isolated GPU instances. Each instance has its own dedicated memory, cache, and compute units. For engineers new to AI infrastructure, understanding how to select the right MIG profile for different workload scenarios is critical — it directly impacts resource utilization, cost efficiency, and workload performance. This guide breaks down MIG profile selection in simple, practical terms.
+
+---
+
+## ⚙️ What Is a MIG Profile?
+
+A MIG profile defines how a GPU is divided. Each profile specifies:
+- **Number of compute instances** (GPC slices)
+- **Amount of dedicated memory** per instance
+- **Number of memory channels** per instance
+
+Common MIG profiles on an A100 80GB GPU include:
+
+- **1g.5gb** — 1 compute slice, 5 GB memory (smallest profile)
+- **2g.10gb** — 2 compute slices, 10 GB memory
+- **3g.20gb** — 3 compute slices, 20 GB memory
+- **4g.20gb** — 4 compute slices, 20 GB memory
+- **7g.40gb** — 7 compute slices, 40 GB memory (largest profile)
+
+Each profile is identified by its **g** (compute slice count) and **gb** (memory size).
+
+---
+
+## 📊 How to Select a MIG Profile for a Workload
+
+Profile selection depends on three key workload characteristics:
+
+### 🎯 1. Memory Footprint
+- **Small models (e.g., BERT-base, ResNet-50):** Typically need 2–8 GB. Use **1g.5gb** or **2g.10gb**.
+- **Medium models (e.g., BERT-large, GPT-2):** Need 10–20 GB. Use **3g.20gb** or **4g.20gb**.
+- **Large models (e.g., GPT-3, LLaMA-65B):** Need 40+ GB. Use **7g.40gb** or full GPU.
+
+### ⚡ 2. Compute Demand
+- **Inference workloads:** Often need less compute. A **1g.5gb** or **2g.10gb** profile may suffice.
+- **Training workloads:** Require more compute. Use **3g.20gb**, **4g.20gb**, or **7g.40gb**.
+- **Batch processing:** Higher batch sizes need more compute slices. Choose larger profiles.
+
+### 🔄 3. Isolation Requirements
+- **Multi-tenant environments:** Each tenant needs isolated resources. Use separate MIG instances.
+- **Single workload with multiple models:** Partition GPU to run different models concurrently without interference.
+
+---
+
+## 🛠️ Workload Scenario Examples
+
+| Scenario | Workload Type | Recommended Profile | Reasoning |
+|----------|--------------|---------------------|-----------|
+| Real-time inference for a small NLP model | Inference | **1g.5gb** | Low memory, low compute, fast response needed |
+| Batch inference for multiple small models | Inference | **2g.10gb** or **3g.20gb** | Moderate memory, parallel execution |
+| Training a medium-sized vision model | Training | **4g.20gb** | Higher compute and memory for gradient updates |
+| Fine-tuning a large language model (LLM) | Training | **7g.40gb** | Large memory footprint, high compute demand |
+| Running two separate inference services | Mixed | Two **2g.10gb** instances | Isolated resources, no interference |
+| Development and testing | Mixed | **1g.5gb** or **2g.10gb** | Low cost, sufficient for small experiments |
+
+---
+
+## 🕵️ Practical Decision Flow
+
+When selecting a MIG profile, follow this simple decision tree:
+
+1. **Check model memory requirement** — Use tools like **nvidia-smi** or profiling libraries to measure peak memory usage.
+2. **Determine compute needs** — Is it inference (low) or training (high)?
+3. **Consider concurrency** — How many workloads will run simultaneously?
+4. **Match to available profiles** — Choose the smallest profile that meets all requirements.
+5. **Test and adjust** — Monitor utilization and resize if needed.
+
+---
+
+## ✅ Key Takeaways for New Engineers
+
+- **Start small** — Use **1g.5gb** for testing and development.
+- **Match memory first** — The model must fit in the instance's memory.
+- **Don't over-provision** — Larger profiles waste resources if not needed.
+- **Isolation is automatic** — MIG instances are fully isolated; no workload can access another's memory.
+- **Profiles are fixed** — You cannot customize memory/compute ratios; choose from predefined profiles.
+
+---
+
+## 📚 Final Exam Tip
+
+For the NCA-AIIO exam, remember:
+- **1g.5gb** = smallest, for lightweight inference
+- **7g.40gb** = largest single MIG instance, for heavy training
+- **Multiple instances** = good for multi-tenant or multi-model deployments
+- **Profile selection is a trade-off** between isolation, utilization, and workload requirements
+
+Always ask: *"Does the workload fit in memory? Does it need all that compute?"* If yes to both, pick the larger profile. If not, pick the smallest that works.

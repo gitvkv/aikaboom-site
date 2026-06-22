@@ -1,0 +1,164 @@
+# 9.1e Tensor shapes, strides, and contiguity in memory
+
+#### 🏷️ The Mathematical Imperative — Why AI Demands Specialized Hardware > 9 The Mathematics of Deep Learning — Tensors, Operations & Numerical Precision > 9.1 Data Structures in Deep Learning
+
+When working with deep learning frameworks like PyTorch or TensorFlow, engineers often focus on tensor values and shapes. However, understanding **how tensors are laid out in memory** is critical for performance optimization, debugging, and avoiding subtle bugs. This section introduces three fundamental concepts: shapes, strides, and memory contiguity.
+
+---
+
+## 📐 What Is a Tensor Shape?
+
+A tensor's **shape** defines its dimensionality and the size of each dimension. It tells you how many elements exist along each axis.
+
+- A 1D tensor (vector) with 6 elements has shape **(6,)**
+- A 2D tensor (matrix) with 2 rows and 3 columns has shape **(2, 3)**
+- A 3D tensor (e.g., a batch of RGB images) might have shape **(32, 3, 224, 224)** — 32 images, 3 color channels, 224x224 pixels each
+
+**Key point:** Shape describes the logical structure, not the physical memory layout.
+
+---
+
+## 🧭 What Are Strides?
+
+**Strides** define how many memory positions you must skip to move one step along each dimension. Strides are expressed in number of elements (not bytes).
+
+- For a contiguous 2D tensor of shape **(2, 3)**, the strides are **(3, 1)**
+  - Moving one row forward skips 3 elements
+  - Moving one column forward skips 1 element
+
+- For a 3D tensor of shape **(2, 3, 4)**, contiguous strides would be **(12, 4, 1)**
+  - Moving along dimension 0 skips 12 elements (3 × 4)
+  - Moving along dimension 1 skips 4 elements
+  - Moving along dimension 2 skips 1 element
+
+**Why strides matter:** They allow frameworks to create "views" of tensors without copying data. For example, transposing a matrix simply swaps strides instead of rearranging elements in memory.
+
+---
+
+## 🔗 Contiguity in Memory
+
+A tensor is **contiguous** when its elements are stored in a single, uninterrupted block of memory in row-major order (C-style layout). This is the default layout in most deep learning frameworks.
+
+**Contiguous tensor characteristics:**
+- Elements are stored sequentially in memory
+- Strides follow the formula: `stride[i] = shape[i+1] * stride[i+1]`
+- Operations like `.view()` or `.reshape()` work without copying data
+- Hardware (GPUs) can access contiguous memory much faster
+
+**Non-contiguous tensors** arise from operations like:
+- Transposing (`.T` or `.transpose()`)
+- Slicing with non-unit steps
+- Certain indexing operations
+
+Non-contiguous tensors still store valid data, but accessing elements requires jumping around in memory, which is slower.
+
+---
+
+## 🕵️ How to Check Contiguity
+
+In PyTorch, you can check if a tensor is contiguous using:
+
+**For reference:**
+```python
+import torch
+
+tensor_a = torch.randn(2, 3)
+print(tensor_a.is_contiguous())
+```
+
+📤 **Output:** **True**
+
+**For reference:**
+```python
+tensor_b = tensor_a.T  # Transpose
+print(tensor_b.is_contiguous())
+```
+
+📤 **Output:** **False**
+
+To make a non-contiguous tensor contiguous, call `.contiguous()`:
+
+**For reference:**
+```python
+tensor_c = tensor_b.contiguous()
+print(tensor_c.is_contiguous())
+```
+
+📤 **Output:** **True**
+
+---
+
+## 📊 Comparison: Contiguous vs. Non-Contiguous Tensors
+
+| Feature | Contiguous Tensor | Non-Contiguous Tensor |
+|---|---|---|
+| **Memory layout** | Sequential, single block | Scattered, multiple blocks |
+| **Access speed** | Fast (cache-friendly) | Slower (random access) |
+| **View operations** | Supported without copy | May require copy |
+| **GPU performance** | Optimal | Degraded |
+| **Common cause** | Default creation | Transpose, slicing, permute |
+
+---
+
+## ⚙️ Practical Example: Strides in Action
+
+Consider a 2D tensor with shape **(3, 4)**:
+
+**For reference:**
+```python
+import torch
+
+x = torch.arange(12).reshape(3, 4)
+print("Shape:", x.shape)
+print("Strides:", x.stride())
+print(x)
+```
+
+📤 **Output:**
+**Shape: torch.Size([3, 4])**
+**Strides: (4, 1)**
+**tensor([[ 0,  1,  2,  3],**
+**        [ 4,  5,  6,  7],**
+**        [ 8,  9, 10, 11]])**
+
+Now transpose it:
+
+**For reference:**
+```python
+y = x.T
+print("Shape:", y.shape)
+print("Strides:", y.stride())
+print(y)
+```
+
+📤 **Output:**
+**Shape: torch.Size([4, 3])**
+**Strides: (1, 4)**
+**tensor([[ 0,  4,  8],**
+**        [ 1,  5,  9],**
+**        [ 2,  6, 10],**
+**        [ 3,  7, 11]])**
+
+Notice that the strides swapped from **(4, 1)** to **(1, 4)**. The data in memory did not move — only the interpretation changed. This is why transposing is fast but creates a non-contiguous tensor.
+
+---
+
+## 🛠️ Why This Matters for Engineers
+
+- **Performance tuning:** Operations on contiguous tensors run 2-10x faster on GPUs
+- **Memory efficiency:** Understanding strides helps avoid unnecessary data copies
+- **Debugging:** Shape mismatches and stride-related bugs are common in complex models
+- **Custom kernels:** When writing CUDA or custom operations, you must handle strides explicitly
+
+**Simple rule of thumb:** If you perform a reshape, transpose, or slice, check if the result is contiguous. If not, and you need maximum performance, call `.contiguous()` to create a fresh memory layout.
+
+---
+
+## ✅ Key Takeaways
+
+- **Shape** = logical dimensions of a tensor
+- **Strides** = number of elements to skip per dimension step
+- **Contiguity** = whether elements are stored sequentially in memory
+- Non-contiguous tensors are slower but avoid copying data
+- Use `.is_contiguous()` to check and `.contiguous()` to fix
+- Most deep learning operations prefer contiguous input for optimal speed

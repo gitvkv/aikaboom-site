@@ -1,0 +1,211 @@
+/* Overrides to support 100% full-screen reading width (no max-width cap) */
+.wy-nav-content {
+    max-width: 100% !important;
+}
+
+/* Left sidebar title single-line truncation with ellipsis (...) */
+.wy-menu-vertical li a {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+/* Custom tag styling for categories below the main title */
+.lesson-tags {
+    margin-bottom: 25px;
+    margin-top: -10px;
+}
+.lesson-tag {
+    display: inline-block;
+    background-color: #f1f3f5;
+    color: #495057;
+    padding: 4px 10px;
+    margin-right: 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: 600;
+    border: 1px solid #dee2e6;
+}
+
+/* Interactive "Mark as Complete" Button */
+.completion-btn {
+    display: inline-flex;
+    align-items: center;
+    background-color: #2980b9;
+    color: #ffffff !important;
+    border: none;
+    padding: 8px 16px;
+    font-size: 0.9em;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    user-select: none;
+}
+.completion-btn:hover {
+    background-color: #216f9e;
+}
+.completion-btn:active {
+    transform: scale(0.98);
+}
+.completion-btn.completed {
+    background-color: #2ecc71;
+}
+.completion-btn.completed:hover {
+    background-color: #27ae60;
+}
+.completion-btn svg {
+    margin-right: 8px;
+    fill: currentColor;
+    width: 16px;
+    height: 16px;
+}
+
+/* Progress Bar (Module Roadmaps) */
+.progress-container {
+    background-color: #e9ecef;
+    border-radius: 6px;
+    height: 24px;
+    width: 100%;
+    margin-bottom: 25px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #ced4da;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.progress-bar {
+    background-color: #2ecc71;
+    height: 100%;
+    width: 0%;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.85em;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Roadmap timeline checkboxes */
+.roadmap-badge {
+    font-size: 1.25em;
+    margin-right: 8px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+}
+.roadmap-badge.completed {
+    color: #2ecc71;
+}
+.roadmap-badge.incomplete {
+    color: #adb5bd;
+}
+
+/* Progress Backup/Restore utility widget style */
+.progress-utility-widget {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.progress-utility-widget h4 {
+    margin-top: 0 !important;
+    margin-bottom: 10px !important;
+}
+.widget-btn {
+    background-color: #6c757d;
+    color: white !important;
+    border: none;
+    padding: 6px 12px;
+    font-size: 0.85em;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-right: 10px;
+    text-decoration: none !important;
+}
+.widget-btn:hover {
+    background-color: #5a6268;
+}
+.widget-btn-restore {
+    background-color: #17a2b8;
+}
+.widget-btn-restore:hover {
+    background-color: #138496;
+}
+input[type="file"]#restore-file-input {
+    display: none;
+}
+
+/* --- COLLAPSIBLE SIDEBAR ACCORDION MENU --- */
+/* Hide all top-level module lists by default */
+.wy-menu-vertical > p.caption + ul {
+    display: none;
+}
+
+/* Show module list when expanded */
+.wy-menu-vertical > p.caption + ul.expanded {
+    display: block;
+}
+
+/* Style for module captions to show clickability and state */
+.wy-menu-vertical p.caption {
+    position: relative;
+    padding-left: 24px !important;
+    cursor: pointer;
+    user-select: none;
+}
+
+.wy-menu-vertical p.caption,
+.wy-menu-vertical p.caption span {
+    color: #abb2b9 !important; /* Muted slate grey color by default */
+    transition: color 0.2s ease;
+}
+
+/* Hover state: light up in Tech Teal to show clickability */
+.wy-menu-vertical p.caption:hover,
+.wy-menu-vertical p.caption:hover span {
+    color: #1abc9c !important;
+}
+
+.wy-menu-vertical p.caption::before {
+    content: "▸";
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.25s ease, color 0.2s ease;
+    color: #abb2b9;
+    font-weight: bold;
+}
+
+.wy-menu-vertical p.caption:hover::before {
+    color: #1abc9c;
+}
+
+/* Expanded module state: Tech Teal color */
+.wy-menu-vertical p.caption.expanded,
+.wy-menu-vertical p.caption.expanded span {
+    color: #1abc9c !important; /* Modern Tech Teal for active module */
+}
+
+.wy-menu-vertical p.caption.expanded::before {
+    transform: translateY(-50%) rotate(90deg);
+    color: #1abc9c !important;
+}
+
+/* Style for left top section of panel (search & brand area) */
+.wy-side-nav-search {
+    background-color: #27ae60 !important;
+}
+
+.wy-side-nav-search > a, 
+.wy-side-nav-search > a:visited, 
+.wy-side-nav-search > a:hover, 
+.wy-side-nav-search > a:active {
+    color: #000000 !important;
+}

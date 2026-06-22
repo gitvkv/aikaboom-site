@@ -1,0 +1,94 @@
+# 26.1c What Kubernetes automates: placement, health-checking, scaling, networking, storage
+
+#### 🏷️ The Cluster Orchestration — Managing the GPU Fleet at Scale > 26 Kubernetes Fundamentals — Container Orchestration from Scratch > 26.1 Why Kubernetes Exists — The Problem of Scale
+
+---
+
+## 🧭 Context Introduction
+
+When you run AI workloads — like training a large language model or serving inference requests — you quickly realize that managing containers manually becomes impossible at scale. You cannot keep track of which GPU node should run which job, whether a container has crashed, or how to route network traffic between dozens of model replicas.
+
+Kubernetes solves this by **automating five critical tasks** that engineers would otherwise have to do by hand. Let's break each one down simply.
+
+---
+
+## ⚙️ 1. Placement — Deciding Where Workloads Run
+
+Kubernetes automatically decides which server (node) in your cluster should run each container (pod). This is called **scheduling**.
+
+- The **scheduler** looks at each pod's resource requirements (CPU, memory, GPU).
+- It checks which nodes have available capacity.
+- It places the pod on the best-fit node.
+- If a node fails, Kubernetes moves the pod to a healthy node automatically.
+
+**Why it matters for AI:** You can request specific GPU types (e.g., NVIDIA A100) and Kubernetes will only place your pod on nodes that have that GPU available.
+
+---
+
+## 🕵️ 2. Health-Checking — Ensuring Containers Stay Alive
+
+Kubernetes constantly monitors your running containers and automatically fixes problems.
+
+- **Liveness probes** check if a container is still running. If it hangs or crashes, Kubernetes restarts it.
+- **Readiness probes** check if a container is ready to accept traffic. If not, Kubernetes stops sending requests to it.
+- **Startup probes** give slow-starting containers (like large AI models) extra time to initialize before health checks begin.
+
+**Why it matters for AI:** Long training jobs can hang or crash silently. Kubernetes detects this and restarts the job without human intervention.
+
+---
+
+## 📊 3. Scaling — Adding or Removing Replicas Automatically
+
+Kubernetes can increase or decrease the number of running pod copies based on demand.
+
+- **Horizontal scaling** adds more pod replicas when CPU/memory usage is high, and removes them when usage drops.
+- **Vertical scaling** adjusts the resources (CPU, memory) assigned to existing pods.
+- You can set **minimum and maximum** replica counts to control costs.
+
+**Why it matters for AI:** Inference workloads experience traffic spikes. Kubernetes automatically spins up more model replicas during peak hours and scales down at night.
+
+---
+
+## 🌐 4. Networking — Connecting Containers and External Traffic
+
+Kubernetes creates a flat, virtual network so all pods can communicate with each other, regardless of which physical node they run on.
+
+- Every pod gets its own **IP address**.
+- **Services** provide a stable endpoint (DNS name) that routes traffic to healthy pods.
+- **Ingress controllers** manage external HTTP/HTTPS traffic into the cluster.
+- **Network policies** control which pods can talk to each other (security).
+
+**Why it matters for AI:** Your training job on one GPU node can seamlessly send data to a preprocessing job on another node, all without manual network configuration.
+
+---
+
+## 💾 5. Storage — Attaching Persistent Data to Containers
+
+Kubernetes manages storage so that data survives container restarts and can be shared across pods.
+
+- **Persistent Volumes (PVs)** are storage resources provisioned by an administrator (e.g., network-attached storage, cloud disks).
+- **Persistent Volume Claims (PVCs)** are requests for storage by a pod.
+- Kubernetes automatically binds claims to available volumes.
+- **Storage classes** define different types of storage (fast SSD for training, cheaper HDD for backups).
+
+**Why it matters for AI:** Model weights, training datasets, and checkpoints must persist even if a pod crashes. Kubernetes ensures storage is attached, detached, and reattached automatically.
+
+---
+
+## 📋 Quick Comparison Table
+
+| Automation Area | What It Does | AI Workload Example |
+|----------------|--------------|---------------------|
+| ⚙️ **Placement** | Picks the right node for each pod | Ensures GPU-intensive pods land on GPU nodes |
+| 🕵️ **Health-checking** | Monitors and restarts failed containers | Auto-restarts a crashed training job |
+| 📊 **Scaling** | Adds/removes pod replicas based on load | Spins up more inference servers during high traffic |
+| 🌐 **Networking** | Connects pods and routes traffic | Allows model replicas to communicate with a database |
+| 💾 **Storage** | Attaches persistent data to pods | Keeps model checkpoints safe across restarts |
+
+---
+
+## 🎯 Key Takeaway
+
+Kubernetes automates the **five hardest operational tasks** in running containerized AI workloads at scale. Instead of manually deciding where to run jobs, checking if they're alive, adjusting capacity, configuring networks, and managing disks — Kubernetes does all of this automatically based on rules you define.
+
+For a new engineer, think of Kubernetes as a **smart facility manager** for your AI infrastructure: it handles placement, health, scaling, networking, and storage so you can focus on building and improving your models.

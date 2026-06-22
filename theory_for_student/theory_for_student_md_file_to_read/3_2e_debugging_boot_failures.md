@@ -1,0 +1,106 @@
+# 3.2e Debugging boot failures: reading systemd logs and kernel ring buffer (dmesg)
+
+#### 🏷️ The Operating System Layer — Linux for AI Infrastructure Operators > 3 Linux System Fundamentals — The OS From the Ground Up > 3.2 The Linux Boot Process — From Power-On to Login Prompt
+
+When an AI server fails to boot, the system becomes unresponsive or stuck at a black screen. For new engineers, this can be intimidating, but Linux provides two powerful tools to understand what went wrong: **systemd logs** (for user-space services) and the **kernel ring buffer** (for hardware and driver-level issues). This section teaches you how to read these logs to diagnose boot failures.
+
+---
+
+## 🧠 Context: Why Boot Failures Happen in AI Infrastructure
+
+AI workloads depend on specialized hardware (GPUs, NVLink, high-speed networking). Boot failures often stem from:
+- **Driver issues** — NVIDIA drivers failing to load for GPUs.
+- **Kernel panics** — Critical errors in the Linux kernel (e.g., memory corruption).
+- **Service timeouts** — systemd services (like networking or storage) failing to start.
+- **Hardware misconfiguration** — Faulty RAM, PCIe devices, or power supplies.
+
+The key is to capture logs **before** the system fully boots or crashes. Both **systemd logs** and **dmesg** persist across reboots, so you can review them after a failed boot attempt.
+
+---
+
+## ⚙️ Tool 1: The Kernel Ring Buffer (dmesg)
+
+The kernel ring buffer stores messages from the Linux kernel itself. It captures hardware initialization, driver loading, and critical errors that occur early in the boot process.
+
+### 📌 What dmesg Shows
+- Hardware detection (CPU, RAM, PCIe devices, GPUs).
+- Driver loading and failures (e.g., NVIDIA driver errors).
+- Kernel panics and oops messages.
+- Storage device recognition (NVMe, SATA).
+- Network interface initialization.
+
+### 🕵️ How to Read dmesg After a Failed Boot
+- **Access via recovery mode** — Boot into a recovery shell (e.g., from GRUB) and run the command to view the ring buffer.
+- **Access from a live USB** — Boot from a Linux live USB, mount the root filesystem, and read the saved kernel log file.
+- **Look for error patterns** — Search for keywords like **"failed"**, **"error"**, **"panic"**, **"NVRM"** (NVIDIA driver), or **"OOM"** (out of memory).
+
+### 📊 Common dmesg Errors for AI Servers
+
+| Error Keyword | Likely Cause | Next Step |
+|---------------|--------------|-----------|
+| **NVRM: failed to initialize** | NVIDIA driver mismatch or GPU hardware issue | Check driver version, reseat GPU |
+| **PCIe Bus Error** | PCIe link training failure | Reseat PCIe cards, check slot |
+| **Kernel panic - not syncing** | Critical kernel fault | Check RAM, CPU, or driver conflict |
+| **Out of memory** | Insufficient RAM for kernel | Add swap or reduce memory load |
+| **ACPI BIOS Error** | Firmware compatibility issue | Update BIOS/UEFI |
+
+---
+
+## 🛠️ Tool 2: systemd Logs (journalctl)
+
+systemd is the init system that starts all user-space services after the kernel boots. Its logs (stored in the **journal**) record every service attempt, failure, and timeout.
+
+### 📌 What systemd Logs Show
+- Service start/stop events (e.g., **sshd**, **nvidia-persistenced**, **networking**).
+- Service failures with error codes.
+- Boot-time service dependencies (e.g., a service waiting for a GPU to initialize).
+- User login attempts and session failures.
+
+### 🕵️ How to Read systemd Logs After a Failed Boot
+- **From recovery mode** — Boot into a single-user shell and use the journalctl command with the **--boot** flag to view logs from the last failed boot.
+- **From a live USB** — Mount the root partition and access the journal files directly.
+- **Filter by priority** — Look only for **error** or **critical** messages to avoid noise.
+
+### 📊 Common systemd Log Patterns for AI Servers
+
+| Log Message | Likely Cause | Next Step |
+|-------------|--------------|-----------|
+| **Failed to start NVIDIA Persistence Daemon** | GPU driver not loaded | Check dmesg for driver errors |
+| **Timed out waiting for device /dev/nvidia0** | GPU not enumerated | Reseat GPU, check power cables |
+| **dependency failed for Network** | Network interface missing | Check NIC drivers and cables |
+| **Unit sshd.service entered failed state** | SSH daemon crashed | Check SSH config, port conflicts |
+
+---
+
+## 🧩 Comparison: When to Use Which Tool
+
+| Scenario | Use dmesg | Use systemd logs |
+|----------|-----------|------------------|
+| Server shows black screen immediately after power-on | ✅ Primary tool | ❌ Not yet available |
+| Server boots to GRUB but hangs before login | ✅ Check kernel errors | ❌ systemd not started |
+| Server boots partially, then services fail | ❌ Kernel may be fine | ✅ Primary tool |
+| GPU not detected by OS | ✅ Check PCIe and driver messages | ❌ GPU service will fail |
+| Networking or SSH fails after boot | ❌ Kernel sees NIC | ✅ Check network service logs |
+
+---
+
+## 🧪 Practical Debugging Workflow for New Engineers
+
+1. **Attempt a normal boot** — Observe where it fails (black screen, GRUB menu, service timeout).
+2. **Boot into recovery mode** — From GRUB, select the **recovery** option (often labeled "Advanced options").
+3. **Check dmesg first** — Look for hardware errors, especially GPU and PCIe messages.
+4. **Check systemd logs** — Review service failures with priority **error** or **critical**.
+5. **Cross-reference** — If dmesg shows a GPU error, check systemd logs for the NVIDIA service failure.
+6. **Search for known fixes** — Common errors often have documented solutions (e.g., driver reinstall, BIOS update).
+
+---
+
+## ✅ Summary
+
+- **dmesg** is your first stop for hardware and kernel-level boot failures.
+- **systemd logs** (journalctl) cover service-level failures after the kernel boots.
+- Both tools are accessible from recovery mode or a live USB.
+- Focus on **error** and **critical** messages to avoid information overload.
+- For AI infrastructure, pay special attention to GPU, PCIe, and memory-related errors.
+
+Mastering these two tools will help you quickly identify whether a boot failure is caused by hardware, drivers, or misconfigured services — saving hours of troubleshooting time.

@@ -1,0 +1,90 @@
+# 26.3b Deployments: declarative Pod management with rolling updates and rollbacks
+
+#### 🏷️ The Cluster Orchestration — Managing the GPU Fleet at Scale > 26 Kubernetes Fundamentals — Container Orchestration from Scratch > 26.3 Core Kubernetes Objects for AI Workloads
+
+When you run AI workloads on a Kubernetes cluster, you need a reliable way to manage your application containers (Pods) without manual intervention. A **Deployment** is a Kubernetes object that gives you a declarative way to define the desired state of your Pods — meaning you tell Kubernetes *what* you want, and it handles *how* to get there. This is especially important for AI infrastructure because training jobs and inference services must stay running even during updates.
+
+---
+
+## ⚙️ What is a Deployment?
+
+A Deployment is a higher-level abstraction that manages ReplicaSets and Pods. Instead of creating individual Pods by hand, you define a Deployment YAML file that describes:
+
+- Which container image to use (e.g., your AI model server)
+- How many replicas (copies) of the Pod should run
+- Update strategy (how to roll out new versions)
+- Rollback behavior (how to revert to a previous version)
+
+**Key benefit:** Deployments make Pod management **declarative** — you update the YAML file, and Kubernetes automatically reconciles the cluster to match your specification.
+
+---
+
+## 🛠️ How Declarative Pod Management Works
+
+With a Deployment, you never directly manipulate Pods. Instead, you:
+
+- **Define** the desired state in a YAML file
+- **Apply** that file to the cluster
+- **Let Kubernetes** create, scale, or update Pods to match
+
+For example, if you want 3 replicas of an AI inference container, you specify **replicas: 3** in your Deployment YAML. If a Pod crashes, Kubernetes automatically creates a new one to maintain the count.
+
+---
+
+## 🔄 Rolling Updates — Updating Without Downtime
+
+When you need to update your AI application (e.g., deploy a new model version), a **rolling update** gradually replaces old Pods with new ones. This ensures your service remains available during the transition.
+
+**How it works:**
+- Kubernetes creates new Pods with the updated image
+- It terminates old Pods only after new ones are healthy
+- You control the speed using **maxSurge** and **maxUnavailable** parameters
+
+**Rolling update behavior:**
+
+| Parameter | Purpose | Typical AI Workload Value |
+|-----------|---------|---------------------------|
+| **maxSurge** | How many extra Pods can be created above desired count | 25% (allows 1 extra Pod for 4-replica deployment) |
+| **maxUnavailable** | How many Pods can be unavailable during update | 25% (keeps at least 3 of 4 replicas running) |
+| **minReadySeconds** | How long a new Pod must be healthy before considered ready | 30-60 seconds (for model loading time) |
+
+---
+
+## ⏪ Rollbacks — Reverting to a Previous Version
+
+Sometimes an update causes issues — maybe the new model has higher latency or crashes under load. Deployments store revision history, allowing you to **rollback** to a previous stable version.
+
+**Rollback workflow:**
+1. You apply a new Deployment YAML with an updated container image
+2. Kubernetes starts the rolling update
+3. If you detect problems, you trigger a rollback
+4. Kubernetes reverts to the previous ReplicaSet configuration
+
+**Revision history:** By default, Kubernetes keeps the last 10 revisions. You can adjust this with **revisionHistoryLimit**.
+
+---
+
+## 📊 Comparison: Manual Pod Management vs. Deployments
+
+| Aspect | Manual Pod Management | Deployments |
+|--------|----------------------|-------------|
+| **Pod creation** | Create each Pod individually | Define desired state once |
+| **Scaling** | Manually add/remove Pods | Change **replicas** value |
+| **Updates** | Delete old Pods, create new ones (downtime) | Rolling update (zero downtime) |
+| **Failure recovery** | No automatic recovery | Auto-recreates failed Pods |
+| **Rollback** | Manual re-creation of old Pods | One command to revert |
+| **Best for** | Testing, one-off jobs | Production AI services |
+
+---
+
+## 🕵️ Key Concepts for AI Workloads
+
+- **Stateless applications:** Deployments work best for stateless AI services (inference APIs, preprocessing pipelines). For stateful workloads (databases, model storage), use StatefulSets.
+- **GPU considerations:** When using GPU nodes, ensure your Deployment's Pod template includes resource requests for **nvidia.com/gpu**.
+- **Readiness probes:** Always define a readiness probe in your Deployment so Kubernetes knows when your AI model is actually ready to serve requests (not just when the container starts).
+
+---
+
+## ✅ Summary
+
+Deployments give you a powerful, declarative way to manage Pods in your AI infrastructure. By using rolling updates, you can deploy new model versions without interrupting service. And with built-in rollback capabilities, you can quickly recover from problematic updates. This makes Deployments the standard choice for running production AI workloads on Kubernetes.

@@ -1,0 +1,85 @@
+# 4.1d /proc — process and kernel information; /sys — hardware and driver sysfs interface
+
+#### 🏷️ The Operating System Layer — Linux for AI Infrastructure Operators > 4 Core Linux Administration for AI Operators > 4.1 Navigating the Linux Filesystem
+
+---
+
+### 🌱 Context Introduction
+
+When you work with AI infrastructure, you often need to understand what is happening inside the Linux system — how much memory is being used, which processes are running, or what hardware is connected. Two special filesystems, **/proc** and **/sys**, give you a window into the kernel and hardware. They are not regular folders with files stored on disk; instead, they are virtual filesystems that provide real-time information about the system's state.
+
+For new engineers, think of **/proc** as the "process and kernel dashboard" and **/sys** as the "hardware and driver control panel." Learning to read these files will help you troubleshoot performance issues, monitor AI workloads, and understand how your GPU, CPU, and memory are being utilized.
+
+---
+
+### ⚙️ /proc — The Process and Kernel Information Filesystem
+
+The **/proc** filesystem is a virtual directory that contains information about running processes and kernel parameters. Each running process has its own subdirectory named after its Process ID (PID). The files inside these directories are not actual files — they are generated on the fly by the kernel when you read them.
+
+**Key files and directories in /proc:**
+
+- **/proc/cpuinfo** — Displays detailed information about each CPU core, including model name, cache size, and flags (e.g., support for AVX instructions used in AI workloads).
+- **/proc/meminfo** — Shows memory usage statistics, including total RAM, free memory, buffers, and swap usage. Critical for checking if your AI model fits in memory.
+- **/proc/loadavg** — Provides the system load average over 1, 5, and 15 minutes. High load can indicate CPU contention during model training.
+- **/proc/uptime** — Shows how long the system has been running and how much time the CPU has spent idle.
+- **/proc/[PID]/** — Each process gets a directory. Inside, you find files like **status** (process state, memory usage), **cmdline** (command that started the process), and **fd/** (open file descriptors).
+
+**How to use /proc for AI operations:**
+
+- Check memory pressure before launching a large model by reading **/proc/meminfo**.
+- Verify that your GPU driver processes are running by looking at **/proc/[PID]/status** for process names like "nvidia-persistenced."
+- Monitor CPU core usage by examining **/proc/stat** for context switches and interrupts.
+
+---
+
+### 🛠️ /sys — The Hardware and Driver sysfs Interface
+
+The **/sys** filesystem (sysfs) exposes information about hardware devices, drivers, and kernel objects in a structured, hierarchical way. Unlike **/proc**, which focuses on processes and kernel parameters, **/sys** is all about the physical and logical devices connected to your system.
+
+**Key directories and files in /sys:**
+
+- **/sys/class/** — Groups devices by their function. For example, **/sys/class/net/** contains network interfaces, **/sys/class/gpu/** contains GPU devices, and **/sys/class/block/** contains storage devices.
+- **/sys/block/** — Contains block devices (disks, SSDs). Each device has subdirectories like **queue/** for I/O scheduling parameters.
+- **/sys/bus/** — Shows devices organized by bus type (PCI, USB, etc.). The **/sys/bus/pci/** directory is especially important for identifying NVIDIA GPUs.
+- **/sys/devices/** — The full device tree, showing how devices are connected on the system. This is where you find detailed hardware topology.
+- **/sys/module/** — Contains parameters for kernel modules. For AI, you might look at **/sys/module/nvidia/** for driver version and settings.
+
+**How to use /sys for AI operations:**
+
+- Locate your GPU by exploring **/sys/class/gpu/** or **/sys/bus/pci/devices/**.
+- Check if a device driver is loaded by looking at the **driver** symlink inside a device directory.
+- Adjust power management settings for storage or network devices by writing to files in **/sys/class/.../device/power/**.
+
+---
+
+### 📊 Comparison Table: /proc vs /sys
+
+| Feature | /proc | /sys |
+|---------|-------|------|
+| **Primary purpose** | Process and kernel information | Hardware and driver information |
+| **Content type** | Running processes, kernel parameters, memory stats | Device topology, driver bindings, hardware attributes |
+| **Typical use for AI** | Monitor memory, CPU load, process states | Identify GPUs, check driver status, view PCI topology |
+| **File structure** | Flat with numbered PID directories | Hierarchical by device class, bus, and topology |
+| **Writable files** | Some kernel parameters (e.g., **/proc/sys/**) | Many device and driver parameters (e.g., power control) |
+| **Real-time nature** | Yes — values change as processes run | Yes — reflects current hardware state |
+| **Example file** | **/proc/meminfo** | **/sys/class/gpu/device** |
+
+---
+
+### 🕵️ Practical Tips for New Engineers
+
+- **Never edit files in /proc or /sys unless you are certain** — some files control critical kernel behavior. A wrong write can crash the system.
+- **Use these files for read-only monitoring first** — get comfortable with reading **/proc/cpuinfo** and **/sys/class/gpu/** before attempting any changes.
+- **Combine /proc and /sys for full visibility** — for example, check **/proc/meminfo** for available memory and **/sys/class/gpu/.../memory** for GPU memory.
+- **Remember they are virtual** — these files do not take up disk space. They are generated by the kernel when you access them.
+- **For AI workloads, focus on these key files:**
+  - **/proc/meminfo** — to check if you have enough RAM for your model.
+  - **/proc/loadavg** — to see if the CPU is overloaded.
+  - **/sys/class/gpu/** — to find and verify your NVIDIA GPU.
+  - **/sys/bus/pci/devices/** — to see all PCI devices including GPUs and NVMe drives.
+
+---
+
+### ✅ Summary
+
+The **/proc** and **/sys** filesystems are essential tools for any engineer working with AI infrastructure. **/proc** gives you a live view of processes and kernel statistics, while **/sys** provides a structured map of hardware and drivers. By learning to read these virtual files, you can diagnose memory issues, verify GPU availability, monitor CPU load, and understand the hardware topology of your AI servers. Start by exploring these directories with read-only commands, and you will quickly build the intuition needed to manage AI workloads effectively.

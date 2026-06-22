@@ -1,0 +1,156 @@
+# 23.3h Registry operations: docker pull, push, tag, and using private registries
+
+#### 🏷️ The Nvidia Software Stack — Bridging Silicon and Python > 23 Containerization Fundamentals — Docker from First Principles > 23.3 Docker Mastery for AI Infrastructure
+
+---
+
+## 🌐 Context Introduction
+
+When working with AI workloads, you will frequently need to share container images — whether it's a base image with NVIDIA CUDA drivers, a custom model serving environment, or a training pipeline. Container registries are the central storage and distribution system for these images. This section covers the four fundamental registry operations that every engineer must know: pulling, pushing, tagging, and working with private registries.
+
+---
+
+## ⚙️ What is a Container Registry?
+
+A container registry is a storage repository for Docker images. Think of it like GitHub for code, but for container images. Common registries include:
+
+- **Docker Hub** — the default public registry
+- **NVIDIA NGC** — NVIDIA's curated registry for AI/ML containers
+- **Amazon ECR, Google Container Registry, Azure Container Registry** — cloud provider registries
+- **Private registries** — self-hosted or organization-specific repositories
+
+---
+
+## 🏷️ Tagging Images — The Foundation of Registry Operations
+
+Tagging is how you label an image with a specific version or variant. A tag typically follows this structure:
+
+**registry/namespace/image-name:tag**
+
+For example:
+- **nvcr.io/nvidia/cuda:12.2-runtime** — pulls from NVIDIA's registry
+- **mycompany/my-model:v1.0** — your own image with a version tag
+- **python:3.10-slim** — official Python image from Docker Hub
+
+### Key tagging rules:
+- If no registry is specified, Docker assumes **Docker Hub**
+- If no tag is specified, Docker uses **latest** by default
+- Tags are mutable — you can overwrite them (use with caution in production)
+- Common tag strategies: **v1.0**, **latest**, **stable**, **sha-abc123**
+
+---
+
+## 📥 Docker Pull — Downloading Images
+
+**docker pull** downloads an image from a registry to your local machine. This is the first step before running any container.
+
+### Common scenarios for AI engineers:
+- Pulling NVIDIA CUDA base images for model training
+- Downloading pre-built model serving containers (e.g., Triton Inference Server)
+- Getting lightweight Python images for custom AI applications
+
+### What happens during a pull:
+1. Docker contacts the registry
+2. It downloads the image layers (like downloading a ZIP file in pieces)
+3. Layers are cached locally for faster future pulls
+4. The image becomes available to run with **docker run**
+
+---
+
+## 📤 Docker Push — Uploading Images
+
+**docker push** uploads a local image to a registry so others can pull it. This is essential for sharing custom AI environments across your team.
+
+### Typical AI workflow:
+1. Build a custom image with your AI framework, dependencies, and model code
+2. Tag it appropriately
+3. Push it to your team's private registry
+4. Other engineers pull and run the exact same environment
+
+### Important notes:
+- You must be authenticated to the registry before pushing
+- Only the layers that changed are uploaded (incremental uploads)
+- Never push images containing sensitive data (API keys, passwords)
+
+---
+
+## 🔐 Using Private Registries
+
+Private registries require authentication. This is critical for organizations that need to control access to proprietary AI models, custom CUDA configurations, or sensitive training data.
+
+### Authentication process:
+1. **docker login** to authenticate with credentials
+2. The login creates a configuration file stored locally
+3. Subsequent pushes and pulls to that registry use stored credentials
+4. For CI/CD pipelines, use access tokens instead of passwords
+
+### Why use private registries for AI:
+- **Security** — control who can access your custom AI containers
+- **Compliance** — meet data governance requirements
+- **Version control** — maintain strict versioning of AI environments
+- **Performance** — local or cloud private registries are faster than public ones
+
+---
+
+## 📊 Comparison: Public vs Private Registries
+
+| Feature | Public Registry (Docker Hub) | Private Registry (NVIDIA NGC, ECR) |
+|---------|------------------------------|-------------------------------------|
+| **Access** | Anyone can pull | Requires authentication |
+| **Security** | Publicly visible | Controlled access |
+| **Speed** | Variable, depends on network | Often faster within cloud/on-prem |
+| **Cost** | Free with limits | Usually paid, but more reliable |
+| **Use case** | Open-source images, learning | Proprietary AI models, enterprise |
+| **NVIDIA example** | nvidia/cuda:12.2 | nvcr.io/nvidia/tritonserver:24.01 |
+
+---
+
+## 🛠️ Practical Workflow for AI Engineers
+
+### Step 1: Pull a base image
+Pull an NVIDIA CUDA image from NGC:
+**docker pull nvcr.io/nvidia/cuda:12.2-runtime-ubuntu22.04**
+
+### Step 2: Build your custom AI image
+Create a Dockerfile that adds your model code and dependencies, then build:
+**docker build -t my-ai-model:v1.0 .**
+
+### Step 3: Tag for your private registry
+Add your registry prefix to the image name:
+**docker tag my-ai-model:v1.0 myregistry.mycompany.com/ai-team/my-ai-model:v1.0**
+
+### Step 4: Authenticate to your private registry
+**docker login myregistry.mycompany.com** (then enter credentials)
+
+### Step 5: Push to your private registry
+**docker push myregistry.mycompany.com/ai-team/my-ai-model:v1.0**
+
+### Step 6: Other team members pull and run
+**docker pull myregistry.mycompany.com/ai-team/my-ai-model:v1.0**
+**docker run myregistry.mycompany.com/ai-team/my-ai-model:v1.0**
+
+---
+
+## 🕵️ Common Pitfalls for New Engineers
+
+- **Forgetting to tag before push** — Docker will try to push to Docker Hub by default
+- **Using latest tag in production** — it's mutable and can cause inconsistencies
+- **Not logging in first** — private registries will reject unauthenticated pushes
+- **Pushing large images** — AI images can be 10+ GB; optimize with multi-stage builds
+- **Confusing registry URLs** — always double-check the full image name syntax
+
+---
+
+## ✅ Key Takeaways
+
+- **Tagging** is how you organize and version your AI container images
+- **Pull** downloads images; **push** uploads them
+- **Private registries** are essential for secure, controlled AI deployments
+- Always authenticate before pushing to private registries
+- Use descriptive tags (version numbers, dates) instead of just **latest**
+
+---
+
+## 📚 Next Steps
+
+Practice the workflow above with a simple Python image. Then try pulling an NVIDIA CUDA image from NGC and inspect its layers. Understanding these registry operations will be your daily routine when managing AI infrastructure.

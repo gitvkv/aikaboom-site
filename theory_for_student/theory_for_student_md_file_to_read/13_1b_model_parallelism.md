@@ -1,0 +1,128 @@
+# 13.1b Model Parallelism: distributing layers across GPUs when one GPU is too small
+
+#### 🏷️ The Nvidia GPU Architecture — The Silicon at the Heart of AI Infrastructure > 13 Multi-GPU Interconnects — Scaling Beyond One GPU > 13.1 Why Multi-GPU Communication Is Critical for AI Training
+
+---
+
+## 🧠 Context Introduction
+
+Modern AI models, like large language models (LLMs) or vision transformers, can have billions of parameters. Even the most powerful single GPU (e.g., NVIDIA H100 with 80GB of memory) may not be enough to hold the entire model. When a model is too large for one GPU, engineers need a way to split the model across multiple GPUs. This is where **Model Parallelism** comes in.
+
+Model Parallelism is a technique where different layers of a neural network are placed on different GPUs. Think of it like assembling a car on an assembly line — each worker (GPU) handles a specific part of the process, and the partially completed car (data) moves from one worker to the next.
+
+---
+
+## ⚙️ How Model Parallelism Works
+
+In Model Parallelism, the neural network is **split by layers** across multiple GPUs. Each GPU holds a subset of the model's layers and performs its part of the computation before passing the intermediate results to the next GPU.
+
+**Key concept:**
+- **One GPU** holds layers 1–5
+- **Second GPU** holds layers 6–10
+- **Third GPU** holds layers 11–15
+- Data flows sequentially through these GPUs
+
+This is different from **Data Parallelism**, where each GPU holds a complete copy of the model and processes different batches of data simultaneously.
+
+---
+
+## 🛠️ When to Use Model Parallelism
+
+| Scenario | Why Model Parallelism Helps |
+|----------|---------------------------|
+| Model is too large for one GPU's memory | Splits the model so each GPU only stores a portion |
+| Model has very large layers (e.g., embedding layers) | Distributes memory-heavy layers across GPUs |
+| Training very deep networks | Reduces memory pressure on individual GPUs |
+| Inference on large models | Allows running models that wouldn't fit on a single GPU |
+
+---
+
+## 📊 Simple Example: A 12-Layer Model on 3 GPUs
+
+Imagine a neural network with 12 layers. With Model Parallelism across 3 GPUs:
+
+- **GPU 0** → Layers 1, 2, 3, 4
+- **GPU 1** → Layers 5, 6, 7, 8
+- **GPU 2** → Layers 9, 10, 11, 12
+
+**Data flow:**
+1. Input data enters GPU 0
+2. GPU 0 processes layers 1–4
+3. Intermediate result is sent to GPU 1 via NVLink or PCIe
+4. GPU 1 processes layers 5–8
+5. Intermediate result is sent to GPU 2
+6. GPU 2 processes layers 9–12
+7. Final output is produced
+
+---
+
+## 🕵️ Challenges with Model Parallelism
+
+While Model Parallelism solves the memory problem, it introduces new challenges:
+
+- **Communication overhead** — GPUs must wait for data from the previous GPU before they can start working
+- **GPU utilization imbalance** — Only one GPU is active at a time (pipeline bubbles)
+- **Complexity** — Engineers must manually decide how to split layers
+- **Scaling limitations** — Adding more GPUs doesn't always speed up training linearly
+
+---
+
+## 🔄 Pipeline Parallelism: An Improvement
+
+A more efficient version of Model Parallelism is **Pipeline Parallelism**. Instead of one GPU waiting for the previous one to finish, multiple micro-batches of data are processed in a staggered pipeline.
+
+**Example with 3 GPUs and 3 micro-batches:**
+
+- **Time 1:** GPU 0 processes micro-batch 1 (layers 1–4)
+- **Time 2:** GPU 0 processes micro-batch 2 (layers 1–4) AND GPU 1 processes micro-batch 1 (layers 5–8)
+- **Time 3:** GPU 0 processes micro-batch 3, GPU 1 processes micro-batch 2, GPU 2 processes micro-batch 1
+
+This keeps all GPUs busy most of the time, improving overall throughput.
+
+---
+
+## 🧩 How Engineers Implement Model Parallelism
+
+Engineers typically use frameworks that handle the complexity of splitting models across GPUs:
+
+**For PyTorch:**
+- Use **torch.nn.DataParallel** (simpler, but limited)
+- Use **torch.distributed.pipeline.sync.Pipe** for pipeline parallelism
+- Use **FairScale** or **Megatron-LM** for advanced model parallelism
+
+**For TensorFlow:**
+- Use **tf.distribute.MirroredStrategy** for data parallelism
+- Use custom layer placement with **tf.device('/GPU:0')** and **tf.device('/GPU:1')**
+
+---
+
+## 💡 Real-World Analogy
+
+Think of Model Parallelism like a **factory assembly line**:
+
+- Each worker (GPU) has a specific task (set of layers)
+- The product (data) moves from worker to worker
+- If one worker is slow, the whole line slows down
+- Adding more workers (GPUs) can help, but only if the tasks can be split efficiently
+
+---
+
+## ✅ Key Takeaways for New Engineers
+
+- **Model Parallelism** splits a neural network across multiple GPUs by layers
+- It is essential when a single GPU cannot hold the entire model
+- **Pipeline Parallelism** is a more efficient version that keeps GPUs busy
+- Communication between GPUs (via NVLink or PCIe) is critical for performance
+- Frameworks like PyTorch and TensorFlow provide tools to implement this
+- Model Parallelism is often combined with Data Parallelism for maximum efficiency (called **3D Parallelism**)
+
+---
+
+## 📚 Next Steps
+
+As you continue learning about AI Infrastructure, you will encounter:
+- **Tensor Parallelism** — splitting individual layers across GPUs
+- **3D Parallelism** — combining Data, Model, and Tensor Parallelism
+- **NVLink and NVSwitch** — high-speed interconnects that make multi-GPU communication faster
+
+Understanding Model Parallelism is your first step toward scaling AI workloads beyond a single GPU.

@@ -1,0 +1,130 @@
+# 2.2f Direct Liquid Cooling (DLC): cold plates, coolant distribution units (CDUs), and manifolds
+
+#### 🏷️ The Physical Realm — Data Center Foundations & Hardware Architecture > 2 Data Center Facility Operations > 2.2 Thermal Management — Keeping Petaflops Cool
+
+---
+
+## 🌡️ Context: Why Direct Liquid Cooling Matters
+
+Modern AI workloads generate enormous heat. When NVIDIA GPUs run at full power for training large language models or running inference, traditional air cooling (fans and air conditioning) simply cannot remove heat fast enough. **Direct Liquid Cooling (DLC)** brings coolant directly to the hottest components — the GPUs and CPUs — to carry heat away far more efficiently than air ever could. This is how modern AI data centers keep their hardware running safely at peak performance.
+
+---
+
+## ⚙️ What is Direct Liquid Cooling (DLC)?
+
+DLC is a thermal management method where a liquid coolant flows through a closed loop system to absorb heat directly from electronic components. The three key hardware pieces you need to understand are:
+
+- **Cold Plates** — Attached directly to hot components (like GPUs)
+- **Coolant Distribution Units (CDUs)** — The "heart" of the system that pumps and regulates coolant
+- **Manifolds** — The plumbing that connects everything together
+
+---
+
+## 🛠️ Cold Plates — The Heat Absorbers
+
+Cold plates are metal blocks (usually copper or aluminum) that mount directly on top of high-heat components like NVIDIA GPUs. They contain internal channels through which liquid coolant flows.
+
+**How they work:**
+- The cold plate sits flush against the GPU or CPU, often with a thin layer of thermal paste or pad between them
+- As the GPU generates heat, the cold plate absorbs it through conduction
+- Coolant flowing through the internal channels picks up that heat and carries it away
+- The now-warm coolant exits the cold plate and heads toward the CDU
+
+**Key points for new engineers:**
+- Cold plates are custom-designed for specific GPU models (e.g., NVIDIA H100 or A100)
+- They must be installed with precise pressure — too loose causes poor heat transfer, too tight can damage components
+- Multiple cold plates can be connected in series (one after another) or parallel (all at once) depending on system design
+
+---
+
+## 🕵️ Coolant Distribution Units (CDUs) — The System Heart
+
+The CDU is the central control unit for the entire liquid cooling loop. Think of it as a combination of a pump, heat exchanger, and smart controller.
+
+**What a CDU does:**
+- **Pumps** coolant through the entire loop (cold plates → manifolds → back to CDU)
+- **Regulates** coolant temperature and flow rate
+- **Filters** the coolant to remove particles that could clog channels
+- **Monitors** for leaks, pressure changes, and temperature anomalies
+- **Exchanges heat** with the facility's secondary cooling loop (building chillers or cooling towers)
+
+**Two main types of CDU loops:**
+
+| Loop Type | Description | Example Use Case |
+|-----------|-------------|------------------|
+| **Primary Loop** | Coolant flows directly through cold plates inside the server | High-density GPU clusters |
+| **Secondary Loop** | Facility water cools the CDU's heat exchanger, which then cools the primary loop | Large data centers with existing chilled water systems |
+
+**For reference:**
+```
+CDU → Manifold → Cold Plate (GPU) → Manifold → CDU
+```
+
+📤 **Output:** The coolant temperature typically rises by 10–20°C as it passes through the cold plates.
+
+---
+
+## 🔧 Manifolds — The Plumbing Network
+
+Manifolds are distribution blocks that split a single coolant supply line into multiple paths, then recombine the return lines. They act like a "traffic controller" for coolant flow.
+
+**Key roles of manifolds:**
+- **Supply manifold** — Distributes cool coolant from the CDU to each cold plate
+- **Return manifold** — Collects warm coolant from each cold plate and sends it back to the CDU
+- **Balancing** — Ensures each cold plate receives equal flow (critical for consistent cooling across all GPUs)
+
+**Common manifold configurations:**
+- **Row manifolds** — Serve an entire rack of servers
+- **Rack manifolds** — Serve one server rack
+- **Server manifolds** — Serve individual servers within a rack
+
+**For reference:**
+```
+CDU → Supply Manifold → [Cold Plate 1] [Cold Plate 2] [Cold Plate 3] → Return Manifold → CDU
+```
+
+📤 **Output:** Each cold plate receives approximately equal flow rate (e.g., 1–2 liters per minute per GPU).
+
+---
+
+## 📊 Comparison: DLC vs. Traditional Air Cooling
+
+| Feature | Direct Liquid Cooling | Air Cooling |
+|---------|----------------------|-------------|
+| **Heat removal efficiency** | 10–20x better than air | Limited by air density |
+| **GPU temperature** | Typically 50–65°C | Typically 70–85°C |
+| **Noise level** | Very quiet (pumps only) | Loud (many fans) |
+| **Power usage** | Lower fan power, but pump power needed | High fan power |
+| **Complexity** | More plumbing and leak risk | Simpler to install |
+| **Maintenance** | Requires coolant checks and filter changes | Fan replacements only |
+
+---
+
+## 🔄 How It All Works Together — A Simple Flow
+
+1. **CDU pumps** cool liquid through the supply manifold
+2. **Supply manifold** distributes coolant to each cold plate on each GPU
+3. **Cold plates** absorb heat from the GPUs, warming the coolant
+4. **Warm coolant** exits cold plates into the return manifold
+5. **Return manifold** collects all warm coolant and sends it back to the CDU
+6. **CDU** removes the heat (via heat exchanger) and recirculates the now-cool liquid back to step 1
+
+---
+
+## ✅ Key Takeaways for New Engineers
+
+- **DLC is essential** for modern AI hardware — air cooling cannot keep up with GPU heat output
+- **Cold plates** are the direct interface between coolant and hot components
+- **CDUs** are the brains and brawn — they pump, filter, monitor, and regulate the entire system
+- **Manifolds** ensure every GPU gets equal coolant flow
+- **Leak prevention** is critical — always check fittings, hoses, and connections during installation and maintenance
+- **Coolant quality matters** — use only approved coolants (typically deionized water with corrosion inhibitors)
+
+---
+
+## 📚 Further Learning Path
+
+- Study NVIDIA's DLC reference designs for H100 and B200 GPU systems
+- Learn about coolant types (dielectric vs. non-dielectric) and their trade-offs
+- Understand leak detection methods (sensor cables, humidity monitors, pressure drop sensing)
+- Practice reading CDU monitoring dashboards for flow rate, temperature, and pressure metrics

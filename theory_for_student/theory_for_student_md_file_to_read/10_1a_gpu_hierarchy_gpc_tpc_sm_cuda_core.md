@@ -1,0 +1,163 @@
+# 10.1a GPU Die → GPC → TPC → SM → CUDA Core: the complete hierarchy
+
+#### 🏷️ The Nvidia GPU Architecture — The Silicon at the Heart of AI Infrastructure > 10 GPU Microarchitecture — Inside an NVIDIA Data Center GPU > 10.1 The GPU Architecture Hierarchy — From Die to Thread
+
+Welcome, new engineers! This topic breaks down the physical and logical structure of an NVIDIA GPU, from the largest component (the die) down to the smallest processing unit (the CUDA Core). Understanding this hierarchy is essential for grasping how AI workloads are executed in parallel across thousands of cores.
+
+---
+
+## 🧠 Context: Why This Matters
+
+When you run an AI model on a GPU, you are not just using a single processor. You are orchestrating work across a massive, organized hierarchy of compute units. Each level has a specific role, and knowing this structure helps you:
+- Understand performance bottlenecks
+- Optimize kernel launches
+- Debug memory and thread issues
+- Appreciate why certain workloads run faster on specific GPU generations
+
+---
+
+## 📊 The Hierarchy at a Glance
+
+Think of the GPU as a city. The **die** is the entire city. **GPCs** are neighborhoods. **TPCs** are blocks. **SMs** are buildings. **CUDA Cores** are the individual workers inside each building.
+
+| Level | Full Name | Analogy | Key Role |
+|-------|-----------|---------|----------|
+| **Die** | GPU Die | The entire city | The complete silicon chip |
+| **GPC** | Graphics Processing Cluster | A neighborhood | Groups TPCs and shared resources |
+| **TPC** | Texture Processing Cluster | A city block | Contains two SMs and texture units |
+| **SM** | Streaming Multiprocessor | A building | Executes thread blocks and warps |
+| **CUDA Core** | CUDA Core | A worker | Executes a single arithmetic instruction per clock |
+
+---
+
+## ⚙️ Level 1: GPU Die
+
+The **die** is the physical piece of silicon that contains all GPU components. It is the largest and most expensive part of the GPU.
+
+- The die is manufactured using advanced fabrication processes (e.g., 5nm, 4nm).
+- It contains all GPCs, memory controllers, caches, and interconnects.
+- The die size directly impacts cost, power consumption, and performance.
+- For data center GPUs (like the H100 or A100), the die is designed for maximum compute density and memory bandwidth.
+
+---
+
+## 🏘️ Level 2: GPC (Graphics Processing Cluster)
+
+A **GPC** is a major subdivision of the die. It groups multiple TPCs together with shared resources.
+
+- Each GPC contains:
+  - Several TPCs (typically 4–8 depending on the GPU generation)
+  - A raster engine (for graphics workloads)
+  - Shared L1 cache and register file resources
+- GPCs are largely independent — they can process different workloads in parallel.
+- In AI workloads, GPCs help distribute tensor operations across the chip.
+
+---
+
+## 🏗️ Level 3: TPC (Texture Processing Cluster)
+
+A **TPC** sits between the GPC and the SM. It is a mid-level grouping that includes:
+
+- **Two SMs** (Streaming Multiprocessors)
+- **Texture units** (for texture filtering and sampling)
+- **Shared L1 cache** (divided between the two SMs)
+
+Key points about TPCs:
+- They are the smallest unit that can be powered down independently for power savings.
+- Texture units are less critical for pure AI workloads but still used for certain operations.
+- The TPC structure helps balance compute and memory access.
+
+---
+
+## 🏢 Level 4: SM (Streaming Multiprocessor)
+
+The **SM** is the core execution unit of the GPU. This is where the real work happens.
+
+- Each SM contains:
+  - Multiple CUDA Cores (typically 64–128 per SM)
+  - Tensor Cores (for matrix math in AI)
+  - Warp schedulers (manage groups of 32 threads)
+  - Shared memory (fast, on-chip memory for thread cooperation)
+  - Register file (fastest memory, per-thread)
+  - L0 instruction cache
+- SMs execute **warps** — groups of 32 threads that run in lockstep.
+- The number of SMs determines the total parallelism of the GPU.
+
+**Example:** An H100 GPU has 132 SMs, each with 128 CUDA Cores and 4 Tensor Cores.
+
+---
+
+## 🧑‍💻 Level 5: CUDA Core
+
+A **CUDA Core** is the smallest processing unit in the GPU. It executes a single arithmetic or logic operation per clock cycle.
+
+- Each CUDA Core can perform:
+  - Integer arithmetic (INT32)
+  - Floating-point arithmetic (FP32)
+  - Logic operations (AND, OR, XOR)
+- CUDA Cores are grouped into **warps** (32 threads) within an SM.
+- They are **not** independent processors — they share the SM's instruction unit and register file.
+- For AI workloads, CUDA Cores handle general-purpose operations while **Tensor Cores** handle matrix multiplications.
+
+---
+
+## 🕵️ How It All Works Together
+
+Here is a simplified flow of how a kernel executes:
+
+1. **Host CPU** launches a kernel on the GPU.
+2. The **GPC** receives the workload and distributes it to its **TPCs**.
+3. Each **TPC** passes work to its two **SMs**.
+4. The **SM** schedules **warps** (32 threads) onto its **CUDA Cores**.
+5. Each **CUDA Core** executes one instruction per clock for its assigned thread.
+
+**Visual analogy:**
+- Die = Factory
+- GPC = Production floor
+- TPC = Assembly line
+- SM = Workstation
+- CUDA Core = Worker at the workstation
+
+---
+
+## 📈 Practical Implications for Engineers
+
+Understanding this hierarchy helps you:
+
+- **Optimize thread block sizes:** Match thread blocks to SM resources (shared memory, registers).
+- **Avoid occupancy limits:** Too many registers per thread reduces the number of active warps per SM.
+- **Choose the right GPU:** More SMs and CUDA Cores generally mean faster AI training.
+- **Debug performance:** Use NVIDIA tools like **nvidia-smi** and **Nsight** to monitor SM utilization.
+
+**For reference:**
+```
+nvidia-smi --query-gpu=name,memory.total,compute_cap --format=csv
+```
+📤 **Output:**  
+`NVIDIA H100 80GB HBM3, 81920 MiB, 9.0`
+
+---
+
+## 🧪 Quick Self-Check
+
+1. **Q:** What is the largest component in the GPU hierarchy?  
+   **A:** The GPU die.
+
+2. **Q:** How many SMs are in a TPC?  
+   **A:** Two.
+
+3. **Q:** What is a warp?  
+   **A:** A group of 32 threads that execute in lockstep on an SM.
+
+4. **Q:** What is the difference between a CUDA Core and a Tensor Core?  
+   **A:** A CUDA Core handles general arithmetic; a Tensor Core handles matrix multiply-accumulate operations for AI.
+
+---
+
+## 🧭 Next Steps
+
+Now that you understand the physical hierarchy, the next topic will explore how threads are organized and scheduled across this structure — from **grids** and **blocks** down to **warps** and **threads**. This is where the abstract programming model meets the silicon reality.
+
+---
+
+*Keep this hierarchy in mind as you design and optimize AI workloads. The best engineers think in terms of SMs, warps, and memory hierarchies — not just code.*

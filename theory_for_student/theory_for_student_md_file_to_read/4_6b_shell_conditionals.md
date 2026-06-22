@@ -1,0 +1,240 @@
+# 4.6b Conditionals: if/elif/else, test expressions, and compound conditions
+
+#### 🏷️ The Operating System Layer — Linux for AI Infrastructure Operators > 4 Core Linux Administration for AI Operators > 4.6 Bash Scripting for Infrastructure Automation
+
+## 🧭 Introduction
+
+In AI infrastructure operations, your scripts often need to make decisions based on system states — like checking if a GPU is available, verifying disk space, or confirming that a model file exists. Conditionals are the decision-making tools that allow your Bash scripts to respond intelligently to different situations. This section covers the fundamental conditional structures: **if/elif/else**, **test expressions**, and **compound conditions**.
+
+---
+
+## ⚙️ The Basic if Statement
+
+The simplest conditional checks a condition and runs commands only if that condition is true.
+
+- The structure follows this pattern: **if** a condition is true, **then** execute these commands, and close with **fi**.
+- The condition is placed inside square brackets with spaces around them.
+- Example structure: **if [ condition ]; then** followed by commands on the next line, then **fi** to close.
+
+**For reference:**
+```
+if [ -f "/models/llama2.bin" ]
+then
+    echo "Model file exists"
+fi
+```
+📤 Output: **Model file exists** (if the file is present)
+
+---
+
+## 🔀 Adding else and elif
+
+When you need multiple decision paths, use **else** for the fallback and **elif** for additional conditions.
+
+- **else** runs when the if condition is false.
+- **elif** (else if) lets you check another condition before reaching else.
+- You can chain multiple **elif** statements together.
+- Always end the entire block with **fi**.
+
+**For reference:**
+```
+gpu_count=4
+
+if [ $gpu_count -ge 8 ]
+then
+    echo "High-performance GPU cluster"
+elif [ $gpu_count -ge 4 ]
+then
+    echo "Standard GPU configuration"
+else
+    echo "Insufficient GPU resources"
+fi
+```
+📤 Output: **Standard GPU configuration**
+
+---
+
+## 🧪 Test Expressions
+
+Test expressions are the conditions you place inside the square brackets. They check files, strings, and numbers.
+
+### 📁 File Test Operators
+These check properties of files and directories:
+
+- **-f file** — checks if a file exists and is a regular file
+- **-d directory** — checks if a directory exists
+- **-s file** — checks if a file exists and is not empty
+- **-r file** — checks if a file is readable
+- **-w file** — checks if a file is writable
+- **-x file** — checks if a file is executable
+
+### 🔢 Numeric Comparison Operators
+Use these to compare numbers:
+
+| Operator | Meaning |
+|----------|---------|
+| **-eq** | Equal to |
+| **-ne** | Not equal to |
+| **-gt** | Greater than |
+| **-lt** | Less than |
+| **-ge** | Greater than or equal to |
+| **-le** | Less than or equal to |
+
+### 🔤 String Comparison Operators
+Use these to compare text:
+
+| Operator | Meaning |
+|----------|---------|
+| **=** | Strings are equal |
+| **!=** | Strings are not equal |
+| **-z** | String is empty (zero length) |
+| **-n** | String is not empty |
+
+**For reference:**
+```
+model_name="llama2"
+model_size=7
+
+if [ -z "$model_name" ]
+then
+    echo "No model specified"
+elif [ $model_size -gt 10 ]
+then
+    echo "Large model detected"
+else
+    echo "Model: $model_name, Size: ${model_size}B"
+fi
+```
+📤 Output: **Model: llama2, Size: 7B**
+
+---
+
+## 🔗 Compound Conditions with AND and OR
+
+Sometimes you need to check multiple conditions at once. Use logical operators to combine them.
+
+### Using && (AND)
+Both conditions must be true for the overall condition to be true.
+
+- Syntax: **[[ condition1 && condition2 ]]**
+- Example: Check if a file exists **AND** is readable.
+
+**For reference:**
+```
+if [[ -f "/data/training_set.csv" && -r "/data/training_set.csv" ]]
+then
+    echo "Training data is available and readable"
+fi
+```
+📤 Output: **Training data is available and readable**
+
+### Using || (OR)
+At least one condition must be true for the overall condition to be true.
+
+- Syntax: **[[ condition1 || condition2 ]]**
+- Example: Check if either a file or a backup file exists.
+
+**For reference:**
+```
+if [[ -f "/models/current.pt" || -f "/models/backup.pt" ]]
+then
+    echo "Model checkpoint found"
+fi
+```
+📤 Output: **Model checkpoint found**
+
+### Combining AND and OR
+You can nest these for complex logic using parentheses.
+
+**For reference:**
+```
+if [[ ( $gpu_count -ge 4 && $memory_gb -ge 64 ) || $cluster_mode == "high_perf" ]]
+then
+    echo "Environment meets minimum requirements"
+fi
+```
+📤 Output: **Environment meets minimum requirements**
+
+---
+
+## 🛠️ Practical AI Infrastructure Examples
+
+### Example 1: Checking GPU Availability
+This script checks if NVIDIA GPUs are detected and if enough are available.
+
+**For reference:**
+```
+gpu_count=$(nvidia-smi --query-gpu=count --format=csv,noheader 2>/dev/null)
+
+if [ -z "$gpu_count" ]
+then
+    echo "No NVIDIA GPUs detected"
+elif [ $gpu_count -eq 0 ]
+then
+    echo "GPUs present but unavailable"
+elif [ $gpu_count -ge 4 ]
+then
+    echo "Sufficient GPUs for distributed training"
+else
+    echo "Only $gpu_count GPU(s) available"
+fi
+```
+📤 Output: **Sufficient GPUs for distributed training** (if 4+ GPUs are detected)
+
+### Example 2: Validating Model Directory Structure
+Check that required directories exist before running a training job.
+
+**For reference:**
+```
+if [[ -d "/models" && -d "/data" && -d "/logs" ]]
+then
+    echo "All required directories exist"
+elif [ ! -d "/models" ]
+then
+    echo "Missing /models directory"
+elif [ ! -d "/data" ]
+then
+    echo "Missing /data directory"
+else
+    echo "Missing /logs directory"
+fi
+```
+📤 Output: **All required directories exist** (if all three directories are present)
+
+---
+
+## 🕵️ Common Pitfalls and Best Practices
+
+### ❌ Common Mistakes
+- **Forgetting spaces inside brackets**: **if[$var -eq 1]** is wrong — always use **if [ $var -eq 1 ]**
+- **Using single brackets for compound conditions**: Use double brackets **[[ ]]** for && and || operators
+- **Not quoting string variables**: Always use **"$variable"** to handle empty strings safely
+- **Mixing numeric and string operators**: Use **-eq** for numbers, **=** for strings
+
+### ✅ Best Practices
+- Always test your conditions with both true and false scenarios
+- Use **elif** instead of nested if statements for cleaner code
+- Add comments to explain complex compound conditions
+- Test for error conditions first (e.g., missing files) before proceeding
+- Use **exit 1** inside conditionals to stop scripts on critical failures
+
+---
+
+## 📊 Quick Reference Table
+
+| Conditional Type | Syntax | Use Case |
+|-----------------|--------|----------|
+| Simple if | **if [ condition ]; then ... fi** | Single decision |
+| if-else | **if [ condition ]; then ... else ... fi** | Two-way decision |
+| if-elif-else | **if [ c1 ]; then ... elif [ c2 ]; then ... else ... fi** | Multiple decisions |
+| AND compound | **[[ c1 && c2 ]]** | Both must be true |
+| OR compound | **[[ c1 \|\| c2 ]]** | At least one true |
+| File test | **if [ -f "$file" ]; then ... fi** | Check file existence |
+| Numeric test | **if [ $val -gt 10 ]; then ... fi** | Compare numbers |
+| String test | **if [ "$str" = "value" ]; then ... fi** | Compare strings |
+
+---
+
+## ✅ Summary
+
+Conditionals are the backbone of intelligent scripting in AI infrastructure. With **if/elif/else**, you can create decision trees that respond to system states. **Test expressions** let you check files, numbers, and strings. **Compound conditions** with **&&** and **||** allow for sophisticated logic in a single line. Practice writing conditionals that handle real scenarios like GPU checks, disk space monitoring, and model validation — these skills will be essential as you automate AI infrastructure operations.

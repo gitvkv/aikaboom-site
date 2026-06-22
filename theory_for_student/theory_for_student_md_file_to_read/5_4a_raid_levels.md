@@ -1,0 +1,113 @@
+# 5.4a RAID 0, 1, 5, 6, 10: performance and redundancy trade-offs
+
+#### 🏷️ The Operating System Layer — Linux for AI Infrastructure Operators > 5 Storage & Resource Management for AI Workloads > 5.4 RAID — Redundancy and Performance for AI Storage
+
+## 📘 Context Introduction
+
+When building storage for AI workloads, engineers must balance two competing needs: **speed** (performance) and **safety** (redundancy). RAID (Redundant Array of Independent Disks) is a technology that combines multiple physical drives into a single logical unit. Different RAID levels offer different trade-offs between how fast data can be read/written and how well the system can survive a drive failure. For AI training pipelines, losing data or suffering slow I/O can be equally costly — so understanding these trade-offs is essential.
+
+---
+
+## ⚙️ What is RAID?
+
+RAID allows multiple hard drives or SSDs to work together. The key concepts are:
+
+- **Striping**: Splitting data across multiple drives for speed.
+- **Mirroring**: Copying data identically across drives for redundancy.
+- **Parity**: Using mathematical calculations to reconstruct data after a failure.
+
+Each RAID level uses a different combination of these techniques.
+
+---
+
+## 📊 RAID Levels at a Glance
+
+| RAID Level | Minimum Drives | Redundancy | Performance Benefit | Capacity Efficiency | Best For |
+|------------|----------------|------------|---------------------|---------------------|----------|
+| **RAID 0** | 2 | None | Excellent (read + write) | 100% | Temporary scratch space, non-critical data |
+| **RAID 1** | 2 | High (mirror) | Good read, moderate write | 50% | OS drives, critical databases |
+| **RAID 5** | 3 | Single drive failure | Good read, moderate write | (n-1)/n | General-purpose storage |
+| **RAID 6** | 4 | Two drive failures | Good read, slower write | (n-2)/n | Large capacity, high reliability |
+| **RAID 10** | 4 (even) | High (mirror + stripe) | Excellent read + write | 50% | High-performance databases, AI model storage |
+
+---
+
+## 🕵️ Detailed Breakdown of Each RAID Level
+
+### 🚀 RAID 0 — Striping (Performance Only)
+
+- **How it works**: Data is split into blocks and written across all drives simultaneously.
+- **Performance**: Excellent — both reads and writes benefit from parallel access.
+- **Redundancy**: **None**. If one drive fails, all data is lost.
+- **Capacity**: 100% usable space (all drives contribute).
+- **AI Use Case**: Temporary scratch space for intermediate training data that can be regenerated. **Never** use for permanent model checkpoints or datasets.
+
+### 🛡️ RAID 1 — Mirroring (Redundancy Only)
+
+- **How it works**: Every piece of data is written identically to two (or more) drives.
+- **Performance**: Reads can be faster (data read from both drives simultaneously). Writes are slightly slower (must write to both).
+- **Redundancy**: Excellent — the array survives one drive failure per mirrored pair.
+- **Capacity**: Only 50% usable (half the total raw capacity).
+- **AI Use Case**: Operating system drives, critical configuration files, or small but irreplaceable datasets.
+
+### ⚖️ RAID 5 — Striping with Single Parity
+
+- **How it works**: Data and parity information are striped across all drives. Parity allows reconstruction if one drive fails.
+- **Performance**: Reads are fast (parallel access). Writes are slower due to parity calculation overhead.
+- **Redundancy**: Survives **one** drive failure.
+- **Capacity**: (n-1)/n — for 4 drives, you get 75% usable space.
+- **AI Use Case**: Good balance for general-purpose storage where write speed is not the primary bottleneck.
+
+### 🔒 RAID 6 — Striping with Double Parity
+
+- **How it works**: Similar to RAID 5 but with two sets of parity data.
+- **Performance**: Reads are still good. Writes are significantly slower due to double parity calculations.
+- **Redundancy**: Survives **two** simultaneous drive failures.
+- **Capacity**: (n-2)/n — for 6 drives, you get 66% usable space.
+- **AI Use Case**: Large storage arrays where rebuild time is long and the risk of a second failure during rebuild is real. Good for archival AI datasets.
+
+### 🏆 RAID 10 — Stripe of Mirrors (Best of Both Worlds)
+
+- **How it works**: Drives are first paired into mirrored sets (RAID 1), then those pairs are striped together (RAID 0).
+- **Performance**: Excellent for both reads and writes — no parity overhead.
+- **Redundancy**: High — can survive multiple drive failures as long as no single mirrored pair loses both drives.
+- **Capacity**: 50% usable (same as RAID 1).
+- **AI Use Case**: **Recommended for AI workloads** where both performance and data safety matter — model checkpoints, active training datasets, and inference serving storage.
+
+---
+
+## 🛠️ Performance vs. Redundancy Trade-off Summary
+
+- **RAID 0** gives maximum speed but zero safety. Use only for disposable data.
+- **RAID 1** gives maximum safety but half the capacity. Best for small critical data.
+- **RAID 5** offers a good balance but suffers on write-heavy workloads.
+- **RAID 6** adds extra safety at the cost of write performance and capacity.
+- **RAID 10** delivers the best combination of speed and safety for AI pipelines, though at 50% capacity cost.
+
+---
+
+## 🧠 Key Takeaway for AI Infrastructure
+
+In AI workflows, **RAID 10** is often the preferred choice because:
+
+- Training reads and writes benefit from striping.
+- Model checkpoints are protected by mirroring.
+- No parity calculation overhead means consistent performance.
+
+For large-scale archival storage of raw datasets that are rarely modified, **RAID 6** may be more cost-effective due to better capacity efficiency.
+
+---
+
+## 📌 Quick Decision Guide
+
+| If you need... | Choose... |
+|----------------|-----------|
+| Maximum speed, data can be lost | RAID 0 |
+| Maximum safety, small capacity | RAID 1 |
+| Balance of speed and capacity | RAID 5 |
+| Large arrays, high reliability | RAID 6 |
+| Speed + safety for AI workloads | RAID 10 |
+
+---
+
+*Understanding these trade-offs helps engineers design storage that keeps AI pipelines running fast while protecting valuable training data and model artifacts.*

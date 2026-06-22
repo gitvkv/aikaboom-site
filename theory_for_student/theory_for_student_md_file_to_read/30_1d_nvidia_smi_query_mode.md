@@ -1,0 +1,88 @@
+# 30.1d nvidia-smi -q: exhaustive GPU information dump
+
+#### 🏷️ The Virtualization and Cloud — Extending AI Infrastructure Beyond Bare Metal > 30 GPU Diagnostics and nvidia-smi Mastery > 30.1 nvidia-smi — The Primary GPU Management Tool
+
+---
+
+## 🧠 Context Introduction
+
+When you're managing AI infrastructure, you often need to know *everything* about your GPUs — not just whether they're running, but their exact temperature, memory usage, power draw, PCIe link speed, and even the driver version. The **nvidia-smi -q** command (short for "query") gives you a complete, exhaustive dump of every detectable detail about every NVIDIA GPU in your system. Think of it as the "full medical report" for your GPUs.
+
+For new engineers, this command is your best friend when debugging performance issues, verifying hardware health, or preparing a system for production AI workloads.
+
+---
+
+## ⚙️ What Does "Exhaustive" Mean?
+
+Unlike the standard **nvidia-smi** command (which shows a compact, real-time dashboard), the **-q** flag outputs a *verbose* text report covering:
+
+- **GPU identity** — model name, serial number, PCI bus ID
+- **Clocks** — current and maximum GPU, memory, and video clocks
+- **Temperature** — GPU core, memory, and hotspot temperatures
+- **Power** — current draw, power limits, and thermal thresholds
+- **Memory** — total, used, free, and reserved memory
+- **PCIe** — link generation, width, and throughput
+- **Processes** — which applications are using the GPU
+- **Driver and CUDA version** — software stack details
+
+---
+
+## 📊 Key Sections of the Output
+
+When you run **nvidia-smi -q**, the output is organized into labeled sections. Here are the most important ones for a new engineer:
+
+| Section | What It Tells You | Why It Matters |
+|---------|-------------------|----------------|
+| **GPU UUID** | Unique identifier for each GPU | Helps track specific cards across reboots |
+| **FB Memory Usage** | Framebuffer (VRAM) usage | Critical for AI model sizing |
+| **Clocks** | Current GPU/memory clock speeds | Indicates if GPU is throttling |
+| **Temperature** | GPU core and memory temps | Overheating causes performance loss |
+| **Power Readings** | Instantaneous power draw | High draw may indicate thermal issues |
+| **PCIe Link** | Current PCIe generation and width | Bottleneck for data transfer |
+| **Processes** | List of running GPU processes | Identifies which app is using memory |
+
+---
+
+## 🛠️ How to Interpret Common Findings
+
+- **High temperature (above 85°C)** — The GPU may be thermal throttling. Check fans, airflow, or cooling.
+- **Low PCIe link width (e.g., x4 instead of x16)** — The GPU is not seated properly or the slot is limited.
+- **Memory usage near 100%** — Your AI model or workload is VRAM-bound. Consider model optimization or a larger GPU.
+- **Power limit below maximum** — The system may be power-capped. Check BIOS or power supply settings.
+- **No processes listed** — The GPU is idle. Good for validation before deploying a new workload.
+
+---
+
+## 🕵️ When to Use This Command
+
+- **Before deploying a new AI model** — Verify memory and compute capacity.
+- **After hardware changes** — Confirm PCIe link speed and GPU recognition.
+- **During performance troubleshooting** — Check for throttling, power limits, or driver mismatches.
+- **For inventory and documentation** — Capture full GPU specs for system records.
+
+---
+
+## 📋 Practical Example (For Reference)
+
+For reference, here is how you would typically invoke the command:
+
+```
+nvidia-smi -q
+```
+
+📤 Output: A multi-page text report starting with GPU identity, then clocks, temperature, power, memory, PCIe details, and finally running processes. Each GPU is separated by a divider line.
+
+---
+
+## 🧩 Common Variations
+
+- **nvidia-smi -q -d MEMORY** — Shows only memory-related information
+- **nvidia-smi -q -d TEMPERATURE** — Shows only temperature data
+- **nvidia-smi -q -i 0** — Queries only GPU index 0 (first GPU)
+- **nvidia-smi -q -x** — Outputs the same data in XML format (useful for scripting)
+
+---
+
+## ✅ Summary
+
+The **nvidia-smi -q** command is your exhaustive diagnostic tool for NVIDIA GPUs. It reveals every hardware and software detail in a single, structured report. For new engineers, mastering this command means you can quickly assess GPU health, identify bottlenecks, and make informed decisions about AI workload placement. Use it early and often — it will save you hours of guesswork.

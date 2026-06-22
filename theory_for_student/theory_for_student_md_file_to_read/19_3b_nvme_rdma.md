@@ -1,0 +1,153 @@
+# 19.3b NVMe/RDMA: NVMe over InfiniBand or RoCEv2 — sub-10μs latency
+
+#### 🏷️ The AI Data Center Networking — Moving Petabytes Without Latency > 19 Enterprise Storage Architectures for AI > 19.3 NVMe over Fabrics (NVMe-oF) — Networked Storage Without Compromise
+
+---
+
+## 🧠 Context Introduction
+
+When you train large AI models, the storage system must deliver data to GPUs faster than the GPUs can process it. Traditional storage networks (like iSCSI or NFS over Ethernet) introduce too much delay — often hundreds of microseconds. For AI workloads, this latency creates "GPU starvation," where expensive compute sits idle waiting for data.
+
+**NVMe over Fabrics (NVMe-oF)** solves this by extending the ultra-fast NVMe protocol across a network. When combined with **RDMA** (Remote Direct Memory Access), data moves directly from storage to GPU memory without involving the CPU. The result? **Sub-10 microsecond (μs) latency** — fast enough to keep even the most demanding AI pipelines fed.
+
+This topic covers the two dominant RDMA transports for NVMe-oF: **InfiniBand** and **RoCEv2** (RDMA over Converged Ethernet version 2).
+
+---
+
+## ⚙️ What is NVMe over Fabrics (NVMe-oF)?
+
+NVMe-oF is a protocol specification that allows NVMe commands to be sent over a network fabric instead of being limited to a local PCIe bus.
+
+- **Local NVMe** — Directly attached SSD, latency ~3-5μs
+- **NVMe-oF** — Networked SSD, latency ~5-10μs (with RDMA)
+- **Traditional NAS/SAN** — Networked SSD, latency ~100-1000μs
+
+The key enabler is **RDMA**, which bypasses the operating system kernel and copies data directly from the storage device into application memory (or GPU memory).
+
+---
+
+## 🛠️ The Two RDMA Transports: InfiniBand vs. RoCEv2
+
+Both InfiniBand and RoCEv2 provide RDMA capabilities, but they differ in hardware, cost, and deployment complexity.
+
+| Feature | InfiniBand | RoCEv2 |
+|---------|------------|--------|
+| **Network Type** | Dedicated, lossless fabric | Standard Ethernet (with lossless enhancements) |
+| **Latency** | ~1-2μs (lowest) | ~3-5μs (very low) |
+| **Hardware Required** | InfiniBand HCA + switch | Standard NIC with RoCE support + DCB-enabled switch |
+| **Cost** | Higher (specialized hardware) | Lower (uses existing Ethernet) |
+| **Ecosystem** | NVIDIA Mellanox (dominant) | Broad vendor support |
+| **Congestion Control** | Built-in (hardware-level) | Requires PFC + ECN (software/hardware combo) |
+| **Common Use Case** | HPC clusters, large AI training | Enterprise AI, cloud deployments |
+
+---
+
+## 📊 How Sub-10μs Latency is Achieved
+
+The journey to sub-10μs latency involves three critical components working together:
+
+### 1. 🚀 RDMA (Remote Direct Memory Access)
+- Data moves directly from the storage controller's memory to the GPU's memory
+- No CPU involvement for data copying
+- No kernel context switches
+- Result: **~80% reduction in software overhead**
+
+### 2. 🔗 Lossless Network Fabric
+- Both InfiniBand and RoCEv2 require a lossless network
+- Packet drops cause retransmissions, destroying latency guarantees
+- InfiniBand achieves this natively
+- RoCEv2 uses **Priority Flow Control (PFC)** and **Explicit Congestion Notification (ECN)**
+
+### 3. 🧩 NVMe-oF Protocol Optimization
+- NVMe command queues are mapped directly to RDMA queues
+- Each I/O operation uses a single round-trip (no protocol handshaking)
+- Command submission and completion happen in hardware
+
+---
+
+## 🕵️ InfiniBand Deep Dive
+
+InfiniBand is a purpose-built, high-speed, low-latency interconnect technology.
+
+**Key characteristics:**
+- **HCA (Host Channel Adapter)** — The InfiniBand equivalent of a NIC
+- **Subnet Manager** — Centralized fabric management (replaces ARP/DHCP)
+- **Virtual Lanes (VLs)** — Traffic isolation for different data types
+- **Credit-based flow control** — Prevents packet drops at the hardware level
+
+**Typical deployment for NVMe-oF:**
+- Storage server with NVMe SSDs connected via InfiniBand HCA
+- InfiniBand switch (e.g., NVIDIA Quantum or ConnectX series)
+- Compute nodes with InfiniBand HCA connected to GPUs via NVLink or PCIe
+
+**Latency profile:**
+- End-to-end NVMe-oF over InfiniBand: **~5-8μs**
+- Raw InfiniBand RDMA latency: **~1-2μs**
+
+---
+
+## 🕵️ RoCEv2 Deep Dive
+
+RoCEv2 wraps RDMA packets inside standard Ethernet frames (UDP/IP). This allows RDMA to run on existing Ethernet infrastructure, but requires careful network tuning.
+
+**Key characteristics:**
+- **DCB (Data Center Bridging)** — Set of IEEE standards for lossless Ethernet
+- **PFC (Priority Flow Control)** — Pause frames to prevent buffer overflow
+- **ECN (Explicit Congestion Notification)** — Marks packets to signal congestion before drops occur
+- **NIC offload** — Modern NICs handle RDMA in hardware
+
+**Critical configuration requirements:**
+- All switches in the path must support DCB
+- PFC must be enabled on the storage VLAN
+- ECN thresholds must be tuned for the workload
+- Jumbo frames (9000 MTU) are strongly recommended
+
+**Latency profile:**
+- End-to-end NVMe-oF over RoCEv2: **~7-10μs**
+- Raw RoCEv2 RDMA latency: **~3-5μs**
+
+---
+
+## 🛠️ Practical Considerations for Engineers
+
+### When to choose InfiniBand
+- Building a dedicated AI cluster from scratch
+- Maximum performance is required (sub-5μs storage access)
+- Budget allows for specialized hardware
+- You need deterministic, predictable latency
+
+### When to choose RoCEv2
+- You already have a 100GbE or higher Ethernet fabric
+- You need to share the network with other traffic (with proper isolation)
+- Cost is a significant constraint
+- You have experience with Ethernet QoS and DCB configuration
+
+### Common pitfalls to avoid
+- **Mixing RDMA and non-RDMA traffic on the same VLAN** — Causes PFC storms and performance collapse
+- **Insufficient buffer allocation on switches** — RoCEv2 requires deep buffers for lossless operation
+- **Ignoring GPU-to-NIC topology** — PCIe lanes and NUMA affinity matter for latency
+- **Using default Linux kernel RDMA settings** — Tuning is required for sub-10μs targets
+
+---
+
+## 📈 Real-World Performance Expectations
+
+| Scenario | Typical Latency | Throughput per Link |
+|----------|----------------|---------------------|
+| Local NVMe SSD | 3-5μs | 7 GB/s (PCIe 4.0 x4) |
+| NVMe-oF over InfiniBand (HDR100) | 5-8μs | 12.5 GB/s |
+| NVMe-oF over RoCEv2 (100GbE) | 7-10μs | 11.5 GB/s |
+| NVMe-oF over RoCEv2 (200GbE) | 7-10μs | 23 GB/s |
+| Traditional iSCSI over 25GbE | 100-300μs | 2.5 GB/s |
+
+---
+
+## ✅ Summary
+
+- **NVMe-oF + RDMA** is the only way to achieve sub-10μs storage access over a network
+- **InfiniBand** offers the lowest latency but requires dedicated hardware
+- **RoCEv2** provides similar performance on standard Ethernet with proper tuning
+- Both technologies eliminate CPU overhead, keeping GPUs fed with data
+- Sub-10μs latency is achievable in production with careful design and configuration
+
+For AI infrastructure, this means your storage network is no longer the bottleneck — the GPUs can access data almost as fast as if it were locally attached.

@@ -1,0 +1,115 @@
+# 17.3d ibstat, ibstatus, iblinkinfo: verifying IB link state and fabric topology
+
+#### 🏷️ The AI Data Center Networking — Moving Petabytes Without Latency > 17 InfiniBand Architecture — The Gold Standard for AI Cluster Networking > 17.3 Subnet Management — The Brain of the InfiniBand Fabric
+
+Welcome to the world of InfiniBand (IB) fabric verification. As a new engineer stepping into AI infrastructure, you'll quickly learn that an InfiniBand network is the backbone of high-performance computing (HPC) and AI clusters. Think of it as a super-fast highway connecting thousands of GPUs. But even the best highway needs regular checks to ensure all lanes are open and traffic flows smoothly. This section introduces three essential command-line tools — **ibstat**, **ibstatus**, and **iblinkinfo** — that help you inspect the health of your InfiniBand links and understand the overall fabric topology.
+
+---
+
+## ⚙️ Why Verify IB Link State and Fabric Topology?
+
+Before diving into the tools, let's understand why this matters. In an AI cluster, every GPU communicates with others using InfiniBand. If a single cable is loose, a port is down, or a switch is misconfigured, training jobs can slow down or fail entirely. Verifying link state and topology helps you:
+
+- **Detect physical issues** — like a disconnected or faulty cable.
+- **Confirm expected topology** — ensuring all nodes and switches are connected as designed.
+- **Troubleshoot performance problems** — identifying links running at lower speeds or with errors.
+- **Plan maintenance** — knowing which components are active or inactive.
+
+---
+
+## 🛠️ Tool 1: ibstat — Quick Port Status at a Glance
+
+**ibstat** is your go-to tool for a fast snapshot of InfiniBand adapter (HCA) ports on a single server. It shows whether a port is active, its link speed, and width.
+
+**What it tells you:**
+- **State:** Active, Down, or Initializing.
+- **Physical state:** LinkUp, LinkDown, or Polling.
+- **Rate:** Speed of the link (e.g., 40 Gb/s, 100 Gb/s, 200 Gb/s).
+- **Port number:** Which physical port on the HCA is being checked.
+
+**How to use it (conceptually):**
+- Run **ibstat** on any node with an InfiniBand adapter.
+- The output lists each port with its current state and link details.
+
+**Example output (bolded inline):**
+📤 Output: **Port 1: State: Active, Physical state: LinkUp, Rate: 200 (4X EDR), Base lid: 2, LMC: 0, SM lid: 1, Capability mask: 0x2651e848, Port GUID: 0x248a070300a1b2c3**
+
+---
+
+## 📊 Tool 2: ibstatus — Human-Readable Link Summary
+
+**ibstatus** is similar to **ibstat** but presents the information in a more user-friendly, verbose format. It's ideal for engineers who want a clear, readable summary without parsing raw data.
+
+**What it tells you:**
+- **Device name:** e.g., mlx5_0.
+- **Port number:** e.g., 1.
+- **Link layer:** InfiniBand.
+- **Active speed and width:** e.g., 200 Gb/sec (4X EDR).
+- **State:** Active or Down.
+
+**How to use it (conceptually):**
+- Run **ibstatus** on a node.
+- The output groups information by device and port.
+
+**Example output (bolded inline):**
+📤 Output: **Infiniband device 'mlx5_0' port 1 status: default gid: fe80::248a:0700:300a:1b2c, base lid: 2, sm lid: 1, state: 4: ACTIVE, phys state: 5: LinkUp, rate: 200 Gb/sec (4X EDR)**
+
+---
+
+## 🕵️ Tool 3: iblinkinfo — Full Fabric Topology and Link Details
+
+**iblinkinfo** is the most powerful of the three. It queries the entire InfiniBand fabric (via the Subnet Manager) and shows you every link between switches and nodes. This is your fabric map.
+
+**What it tells you:**
+- **All active links** in the fabric.
+- **Port connections** — which switch port connects to which node port.
+- **Link speed and width** for each connection.
+- **Errors** — if a link has CRC errors or other issues.
+
+**How to use it (conceptually):**
+- Run **iblinkinfo** from any node in the fabric.
+- The output lists every link, one per line, with source and destination.
+
+**Example output (bolded inline):**
+📤 Output: **Switch 0x248a070300a1b2c3 port 1 -> HCA 0x248a070300a1b2c4 port 1 (Active, 200 Gb/sec, 4X EDR)**
+
+---
+
+## 🔍 Comparison Table: When to Use Each Tool
+
+| Tool | Best For | Output Style | Scope |
+|------|----------|--------------|-------|
+| **ibstat** | Quick local port check | Compact, raw | Single node |
+| **ibstatus** | Readable local status | Verbose, human-friendly | Single node |
+| **iblinkinfo** | Full fabric topology | Detailed, link-by-link | Entire fabric |
+
+---
+
+## 🧪 Practical Workflow for a New Engineer
+
+Here's a simple approach to using these tools when you suspect a problem or want to verify the fabric:
+
+1. **Start locally** — Run **ibstatus** on the node experiencing issues. Check if the port is **Active** and the speed matches expectations (e.g., 200 Gb/sec).
+2. **Check all ports** — Run **ibstat** on the same node to confirm port numbers and physical state.
+3. **Zoom out to the fabric** — Run **iblinkinfo** to see the full topology. Look for any links showing **Down** or **Initializing** state.
+4. **Compare with design** — Verify that the topology matches your cluster's cabling plan. Missing links often indicate disconnected cables or failed switches.
+
+---
+
+## 🚨 Common Issues You Might Spot
+
+- **Link is Down** — Check physical cable connection, replace cable, or reseat the HCA.
+- **Link speed is lower than expected** — Example: expecting 200 Gb/sec but seeing 100 Gb/sec. This could mean a bad cable, mismatched transceivers, or a port configured to a lower speed.
+- **Missing links in iblinkinfo** — A switch or node might be powered off, or the Subnet Manager hasn't discovered it yet.
+- **CRC errors** — Indicates signal integrity issues. Try replacing the cable or cleaning the optical connectors.
+
+---
+
+## ✅ Key Takeaways
+
+- **ibstat** and **ibstatus** are your first responders for checking local InfiniBand port health.
+- **iblinkinfo** gives you the big picture — the entire fabric topology and link status.
+- Always verify both local and fabric-wide status when troubleshooting.
+- A healthy AI cluster relies on every InfiniBand link being **Active** and running at the correct speed.
+
+With these tools, you can confidently inspect and verify the InfiniBand fabric that powers your AI workloads. Happy troubleshooting!

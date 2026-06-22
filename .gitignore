@@ -1,0 +1,26 @@
+# MkDocs generated folders
+site/
+.sass-cache/
+
+# Python cache & virtualenv
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+ENV/
+
+# OS/Editor temporary files
+.DS_Store
+Thumbs.db
+.~lock.*
+.vscode/
+.idea/
+
+# Local environment variables (keys/secrets)
+.env
+.env.*
+
+# Note: theory_for_student/ and generate_md_from_prompts.py are kept in the private backup repository.
+

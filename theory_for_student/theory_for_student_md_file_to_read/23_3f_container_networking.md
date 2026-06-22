@@ -1,0 +1,122 @@
+# 23.3f Networking: bridge, host, and none modes — choosing for performance
+
+#### 🏷️ The Nvidia Software Stack — Bridging Silicon and Python > 23 Containerization Fundamentals — Docker from First Principles > 23.3 Docker Mastery for AI Infrastructure
+
+When you run a container in Docker, you must decide how it connects to the network. For AI workloads — especially those using NVIDIA GPUs and high-speed data transfers — the choice between **bridge**, **host**, and **none** modes directly impacts latency, throughput, and overall performance. This guide explains each mode in plain terms and helps you choose the right one for your AI infrastructure.
+
+---
+
+## 🌐 Context: Why Networking Mode Matters for AI
+
+AI training and inference often involve:
+- Moving large datasets (e.g., images, video, or text corpora) into containers.
+- Communicating between multiple containers (e.g., distributed training with NCCL).
+- Accessing GPUs with minimal overhead.
+
+The networking mode determines how a container sees the host's network stack. A poor choice can add latency, reduce bandwidth, or introduce security risks. Let's break down the three options.
+
+---
+
+## ⚙️ Bridge Mode — The Default, Balanced Choice
+
+**What it does:**  
+Docker creates a private virtual network inside the host. Each container gets its own IP address on this bridge network. Containers can talk to each other and to the outside world through port mapping (e.g., mapping container port 8080 to host port 8080).
+
+**When to use it for AI:**
+- You need multiple containers running isolated workloads on the same host.
+- You want standard security (containers cannot see each other's traffic by default).
+- You are prototyping or running inference services that do not require extreme network performance.
+
+**Performance considerations:**
+- Adds a small layer of NAT (Network Address Translation) overhead.
+- Best for workloads where network speed is not the bottleneck (e.g., CPU-bound inference).
+
+**Example scenario:**  
+You run two containers — one for a model server and one for a preprocessing pipeline. Bridge mode keeps them isolated but allows communication via a shared Docker network.
+
+---
+
+## 🚀 Host Mode — Maximum Performance, Minimal Isolation
+
+**What it does:**  
+The container shares the host's network stack directly. It uses the host's IP address and ports — no virtual network, no NAT. The container "sees" the host's network interfaces as if it were a regular process.
+
+**When to use it for AI:**
+- You need the lowest possible latency (e.g., real-time inference, high-frequency trading models).
+- You are using NCCL (NVIDIA Collective Communications Library) for multi-GPU or multi-node training — host mode avoids virtual network overhead that can slow down GPU-to-GPU communication.
+- You want to bind directly to host ports without port mapping.
+
+**Performance considerations:**
+- Zero network virtualization overhead — best raw throughput.
+- No port mapping means you must manage port conflicts manually.
+- Reduced security isolation — the container can access all host network interfaces.
+
+**Example scenario:**  
+You are training a large language model across 8 GPUs on a single node using NCCL. Host mode ensures that GPU-to-GPU traffic bypasses Docker's virtual bridge, giving you near-native performance.
+
+---
+
+## 🔇 None Mode — Complete Isolation, No Networking
+
+**What it does:**  
+The container has no network interfaces at all — no loopback, no external connectivity. It is completely isolated from the network.
+
+**When to use it for AI:**
+- You are running a fully offline workload (e.g., processing data that is already mounted as a volume).
+- You need maximum security — the container cannot send or receive any network traffic.
+- You are testing or debugging a model that does not require any network access.
+
+**Performance considerations:**
+- No network overhead because there is no network.
+- Ideal for batch jobs where all input/output happens through files or shared volumes.
+
+**Example scenario:**  
+You have a container that runs a one-time data cleaning script on a mounted dataset. No network access is needed, so "none" mode eliminates any risk of accidental data exfiltration.
+
+---
+
+## 📊 Comparison Table: Bridge vs. Host vs. None
+
+| Feature | Bridge Mode | Host Mode | None Mode |
+|---|---|---|---|
+| **Network isolation** | High (containers isolated) | Low (shares host network) | Complete (no network) |
+| **Performance overhead** | Small (NAT) | None (direct host access) | None (no network) |
+| **Port mapping required** | Yes | No | N/A |
+| **Best for AI workloads** | Multi-container services, inference APIs | Distributed training, real-time inference | Offline batch processing, security testing |
+| **Security** | Good (default) | Reduced (container sees host interfaces) | Maximum (no network access) |
+| **NCCL performance** | Moderate (virtual bridge adds latency) | Excellent (bypasses virtualization) | Not applicable |
+
+---
+
+## 🛠️ How to Choose: A Simple Decision Flow
+
+1. **Does your container need to talk to anything?**
+   - **No** → Use **none** mode (e.g., offline data processing).
+   - **Yes** → Go to step 2.
+
+2. **Is network performance critical for your AI workload?**
+   - **No** (e.g., simple API calls, web UI) → Use **bridge** mode.
+   - **Yes** (e.g., multi-GPU training, real-time inference) → Go to step 3.
+
+3. **Do you need security isolation between containers on the same host?**
+   - **Yes** → Use **bridge** mode (accept the small performance trade-off).
+   - **No** → Use **host** mode for maximum performance.
+
+---
+
+## 🕵️ Quick Performance Tips for AI Engineers
+
+- **For NCCL-based distributed training:** Always prefer **host mode**. The virtual bridge in bridge mode can add microsecond-level delays that compound across thousands of GPU-to-GPU messages.
+- **For inference services behind a load balancer:** **Bridge mode** is usually fine. The overhead is negligible compared to model inference time.
+- **For security-sensitive workloads:** Use **bridge mode** or **none mode**. Host mode exposes the host's network stack, which can be a risk in multi-tenant environments.
+- **For debugging network issues:** Start with **bridge mode** (default). If you see unexpected latency, switch to **host mode** to rule out Docker networking overhead.
+
+---
+
+## ✅ Summary
+
+- **Bridge mode** is the safe, default choice — good for most AI services and multi-container setups.
+- **Host mode** is the performance king — essential for distributed training and latency-sensitive inference.
+- **None mode** is the isolation specialist — perfect for offline, security-hardened batch jobs.
+
+Choose based on your workload's need for speed, security, and simplicity. For AI infrastructure, the rule of thumb is: *start with bridge, switch to host when performance matters, and use none when you need total isolation.*

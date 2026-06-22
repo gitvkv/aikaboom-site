@@ -1,0 +1,95 @@
+# 12.2d NVL (NVLink) form factor: Blackwell's multi-chip modules (MCM design)
+
+#### 🏷️ The Nvidia GPU Architecture — The Silicon at the Heart of AI Infrastructure > 12 NVIDIA GPU Generations & Form Factors > 12.2 Data Center GPU Form Factors
+
+## 📖 Context Introduction
+
+NVIDIA's Blackwell architecture represents a major leap in GPU design for AI workloads. One of its most significant innovations is the **multi-chip module (MCM)** approach, where two large GPU dies are connected together using NVLink (NVL) technology within a single physical package. This design allows engineers to think of the Blackwell GPU not as a single chip, but as two powerful processors working seamlessly as one.
+
+For new engineers, understanding the NVL form factor is critical because it changes how you plan power delivery, cooling, and interconnects in an AI data center. Instead of managing multiple separate GPUs, you now have a single, larger GPU that behaves like two tightly coupled units.
+
+---
+
+## ⚙️ What is an MCM Design?
+
+A **multi-chip module (MCM)** means that multiple silicon dies are packaged together inside one physical GPU housing. In Blackwell's case:
+
+- **Two GPU dies** are placed side-by-side on a single substrate.
+- **NVLink bridges** connect the dies internally at extremely high speeds.
+- The system sees the MCM as **one logical GPU**, not two separate ones.
+
+This is different from older designs where each GPU was a single monolithic die.
+
+---
+
+## 🧩 Key Features of Blackwell's NVL Form Factor
+
+- **Dual-die architecture**: Two GPU dies (each roughly the size of a previous-generation GPU) are combined.
+- **High-bandwidth internal NVLink**: The dies communicate over a dedicated, high-speed NVLink connection inside the package.
+- **Unified memory pool**: Both dies share a single memory address space, so data does not need to be copied between them.
+- **Increased compute density**: More CUDA cores, Tensor Cores, and memory bandwidth in the same physical footprint.
+- **Simplified system design**: Engineers can treat one Blackwell GPU as a single node, reducing cabling and complexity.
+
+---
+
+## 📊 Comparison: Monolithic vs. MCM GPU Design
+
+| Feature | Monolithic GPU (e.g., H100) | Blackwell MCM (NVL Form Factor) |
+|---------|-----------------------------|----------------------------------|
+| Number of dies | 1 | 2 |
+| Internal interconnect | None needed | NVLink bridge inside package |
+| Memory architecture | Single memory pool | Unified shared memory pool |
+| Physical size | Single die | Two dies on one substrate |
+| Compute capacity | Fixed per die | Double the compute per package |
+| Cooling complexity | Standard | Requires careful thermal management for two dies |
+| System view | One GPU | One logical GPU |
+
+---
+
+## 🛠️ How NVLink Works Inside the MCM
+
+NVLink is NVIDIA's high-speed interconnect technology. In Blackwell's MCM design:
+
+- **Internal NVLink lanes** run directly between the two dies on the package substrate.
+- These lanes operate at **1.8 TB/s** or higher, depending on the configuration.
+- The connection is **low-latency** and **coherent**, meaning both dies can access the same data without delays.
+- Engineers do not need to configure external cables or switches for the die-to-die link — it is built into the package.
+
+---
+
+## 🕵️ Practical Implications for Engineers
+
+When working with Blackwell GPUs in an AI infrastructure, keep these points in mind:
+
+- **Power delivery**: The MCM draws more power than a single-die GPU. Ensure your power supply units (PSUs) and cabling can handle the higher wattage.
+- **Cooling**: Two dies generate more heat in a concentrated area. Liquid cooling or advanced air cooling may be required.
+- **Software transparency**: The GPU appears as a single device to the operating system and AI frameworks (e.g., PyTorch, TensorFlow). No special configuration is needed to use both dies.
+- **Memory management**: Because memory is unified, you do not need to manually split data between dies. The GPU driver handles it automatically.
+- **Failure handling**: If one die fails, the entire MCM GPU is typically considered failed. Redundancy must be planned at the node or cluster level.
+
+---
+
+## 🔍 Example: Identifying a Blackwell MCM GPU
+
+To check if a system has a Blackwell MCM GPU, you can use the **nvidia-smi** command. The output will show a single GPU with a large memory capacity (e.g., 192 GB) and a high number of CUDA cores.
+
+For reference:
+```
+nvidia-smi
+```
+
+📤 Output: The output will list one GPU with a name like "NVIDIA Blackwell B200" and show memory and compute statistics that reflect the combined capacity of both dies.
+
+---
+
+## ✅ Summary
+
+- Blackwell's NVL form factor uses an **MCM design** with two GPU dies connected by internal NVLink.
+- This design **doubles compute and memory** in a single package without increasing physical footprint.
+- Engineers must account for **higher power and cooling** requirements.
+- The system sees the MCM as **one GPU**, simplifying software and deployment.
+- Understanding this form factor is essential for planning modern AI infrastructure at scale.
+
+---
+
+*Next topic in this series: 12.2e — NVIDIA Grace Hopper Superchip and its form factor implications.*

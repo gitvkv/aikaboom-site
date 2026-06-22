@@ -1,0 +1,73 @@
+# 6.1d Bonding and teaming: aggregating multiple interfaces for redundancy and bandwidth
+
+#### 🏷️ The Operating System Layer — Linux for AI Infrastructure Operators > 6 Linux Networking & Security Hardening > 6.1 Linux Network Interface Configuration
+
+---
+
+## 🌐 Context Introduction
+
+When managing AI infrastructure, network reliability and performance are critical. A single network interface can become a bottleneck or a single point of failure — if that cable breaks or the switch port fails, your AI training job or data transfer stops. **Bonding** (also called *teaming* in some contexts) solves this by combining two or more physical network interfaces into one logical interface. This provides **redundancy** (if one link fails, traffic continues over the others) and **increased bandwidth** (traffic can be distributed across multiple links).
+
+Think of it like having multiple lanes on a highway: if one lane is closed, traffic still flows on the others, and during normal operation, more cars can travel simultaneously.
+
+---
+
+## ⚙️ How Bonding Works
+
+- Bonding creates a single virtual network interface (e.g., **bond0**) that represents the group of physical interfaces (e.g., **eth0** and **eth1**).
+- The Linux kernel handles the distribution of traffic across the member interfaces based on a configured **mode**.
+- The bonded interface gets its own IP address, MAC address, and routing rules — the physical interfaces behind it become transparent to the network.
+- Bonding is configured using the **bonding kernel module** and can be managed via configuration files or tools like **nmcli** (NetworkManager command-line tool).
+
+---
+
+## 🛠️ Common Bonding Modes
+
+Different modes offer different trade-offs between redundancy, bandwidth, and compatibility with network switches. Here are the most relevant ones for AI infrastructure:
+
+| Mode | Name | Redundancy | Bandwidth Increase | Switch Requirement |
+|------|------|------------|-------------------|-------------------|
+| **mode=0** | Round-robin | ✅ Yes | ✅ Yes (full aggregation) | Requires switch support (LACP or static trunking) |
+| **mode=1** | Active-backup | ✅ Yes | ❌ No (only one active link) | No special switch config needed |
+| **mode=4** | 802.3ad (LACP) | ✅ Yes | ✅ Yes (full aggregation) | Requires LACP-capable switch |
+| **mode=6** | Adaptive load balancing | ✅ Yes | ✅ Yes (outbound only) | No special switch config needed |
+
+- **Mode 1 (Active-backup)** is the simplest for redundancy: one interface is active, the other is standby. If the active link fails, the standby takes over.
+- **Mode 4 (LACP)** is the most common for AI workloads requiring both redundancy and maximum bandwidth. It uses the Link Aggregation Control Protocol to negotiate with the switch.
+- **Mode 0** sends packets in round-robin order across all interfaces, but requires the switch to be configured for the same aggregation group.
+
+---
+
+## 📊 Redundancy vs. Bandwidth — What Matters for AI?
+
+- **Redundancy** is critical for long-running AI training jobs. A single network failure should not interrupt data streaming or checkpoint saving.
+- **Bandwidth** aggregation helps when moving large datasets (e.g., training data, model checkpoints) between storage and compute nodes.
+- For AI infrastructure, **Mode 4 (LACP)** is often preferred because it provides both benefits and is standards-based, ensuring compatibility with enterprise switches.
+- **Mode 1** is useful for simpler setups where bandwidth is not the bottleneck but uptime is essential.
+
+---
+
+## 🕵️ Verifying Bonding Configuration
+
+After setting up a bond, you can verify its status using standard Linux tools:
+
+- Check the bond's status by reading the **/proc/net/bonding/bond0** file. This shows the active interfaces, link status, and mode.
+- Use **ip link show** to see the bond interface and its member interfaces. The bond will appear as a separate interface with its own state.
+- Use **ip addr show bond0** to confirm the IP address is assigned to the bond, not to the individual physical interfaces.
+- Monitor link failures by checking the **carrier** status of each member interface. If a physical link drops, the bond should automatically fail over.
+
+---
+
+## 🧩 Key Considerations for AI Infrastructure
+
+- **Switch configuration must match** the bonding mode. For Mode 4, the switch ports must be configured in an LACP port channel. For Mode 1, no switch changes are needed.
+- **Naming consistency** is important. Use predictable interface names (e.g., **eno1**, **eno2**) or rename them to something meaningful like **eth0** and **eth1** to avoid confusion.
+- **Testing failover** is essential. After configuring bonding, physically unplug one cable and verify that traffic continues without interruption. Use a continuous ping or iperf test to validate.
+- **Monitoring** should include bond status. Set up alerts for when a member interface goes down, so you know you are running on reduced redundancy.
+- **Performance tuning** may be needed. Some bonding modes distribute traffic based on MAC addresses or IP hashes, which can cause uneven load. Test with your actual AI traffic patterns.
+
+---
+
+## ✅ Summary
+
+Bonding and teaming are fundamental techniques for building resilient, high-performance network connections in AI infrastructure. By aggregating multiple physical interfaces, you protect against hardware failures and increase available bandwidth for data-intensive workloads. Choose the mode that matches your switch capabilities and operational needs — **Mode 1** for simple redundancy, **Mode 4** for full aggregation with LACP. Always verify the configuration with real failover tests before putting the system into production.

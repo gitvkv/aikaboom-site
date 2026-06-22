@@ -1,0 +1,90 @@
+# 38.4c Exam registration: Pearson VUE scheduling, policies, and accommodation requests
+
+When you're ready to take the NVIDIA-Certified Associate exam, the registration process is handled through Pearson VUE, a global testing network. This section walks you through how to schedule your exam, understand the key policies, and request accommodations if needed. Think of this as your step-by-step guide to getting from study mode to exam day without surprises.
+
+---
+
+#### 🏷️ The Exam Preparation & Certification Mastery > 38 Reference Appendices and Quick-Reference Guides > 38.4 Recommended Learning Resources and Certification Next Steps
+
+---
+
+## 📅 Scheduling Your Exam via Pearson VUE
+
+Once you have purchased your exam voucher from NVIDIA, you will schedule your appointment directly through the Pearson VUE website. Here is how the process works:
+
+- **Create or log in** to your Pearson VUE account using the same email address you used for your NVIDIA certification profile.
+- **Enter your exam code** or search for "NVIDIA-Certified Associate: AI Infrastructure and Operations" in the exam catalog.
+- **Select a test center** or choose the **online proctored** option if you prefer to take the exam from home.
+- **Pick a date and time** that works for you. Availability varies by location and time zone.
+- **Confirm your appointment** and save the confirmation email. You will receive a reminder 24 hours before your exam.
+
+> **Important:** You must schedule your exam within the validity period of your voucher. Vouchers typically expire 12 months from the date of purchase.
+
+---
+
+## ⚙️ Key Scheduling Policies to Know
+
+Understanding the rules around scheduling, rescheduling, and cancellation will save you time and money. Here are the most important policies:
+
+- **Rescheduling:** You can reschedule your exam up to **24 hours before** your appointment start time without penalty. After that, you forfeit your exam fee.
+- **Cancellation:** Same rule applies — cancel at least 24 hours in advance to avoid losing your voucher.
+- **Late arrival:** If you arrive more than 15 minutes late to a test center, you may be denied entry and lose your exam fee.
+- **Online proctoring:** You must check in 15 minutes early. Late check-in may result in cancellation.
+- **Identification:** You must present a valid, government-issued photo ID that matches the name on your Pearson VUE account. No exceptions.
+- **Personal items:** No phones, watches, bags, or notes are allowed in the testing area. Lockers are provided at test centers.
+
+| Policy Area | Test Center | Online Proctored |
+|-------------|-------------|------------------|
+| Check-in window | 15 minutes before start | 15 minutes before start |
+| Reschedule deadline | 24 hours before | 24 hours before |
+| ID requirement | Physical photo ID | Physical photo ID (shown to camera) |
+| Allowed breaks | No breaks during exam | One 5-minute break (timer keeps running) |
+| Environment check | Not applicable | Room scan required |
+
+---
+
+## 🕊️ Accommodation Requests
+
+If you have a disability or medical condition that requires adjustments to the standard testing environment, Pearson VUE provides accommodations under their **ADA-compliant policy**. The process is straightforward but requires advance planning.
+
+- **Submit your request** at least **30 days before** your desired exam date. Late requests may not be processed in time.
+- **Provide documentation** from a qualified professional (doctor, therapist, or specialist) that describes your condition and the specific accommodation needed.
+- **Common accommodations** include:
+  - Extended testing time (e.g., time and a half)
+  - Separate testing room
+  - Screen reader or magnification software
+  - Breaks as needed
+  - Wheelchair-accessible workstation
+- **How to submit:** Log in to your Pearson VUE account, navigate to the "Accommodations" section, and upload your documentation. You will receive a confirmation within 5–7 business days.
+- **Approval validity:** Once approved, your accommodation is valid for the duration of your certification program. You do not need to reapply for each exam attempt.
+
+> **Note:** Accommodations are confidential. Pearson VUE does not share your medical information with NVIDIA or any third party.
+
+---
+
+## ✅ Final Checklist Before Exam Day
+
+Use this quick list to make sure you are fully prepared:
+
+- ✅ Confirm your exam date, time, and location (or online proctoring link).
+- ✅ Charge your laptop if taking the exam online (and test your webcam and microphone).
+- ✅ Have your government-issued photo ID ready.
+- ✅ Review the **NVIDIA Candidate Agreement** — you will be asked to accept it before the exam starts.
+- ✅ Clear your workspace of any unauthorized materials (books, notes, phones, smartwatches).
+- ✅ Plan to arrive early (or log in early for online exams).
+
+---
+
+## 📞 Getting Help
+
+If you encounter any issues during registration or need to update your appointment, contact Pearson VUE support directly:
+
+- **Phone:** Available on the Pearson VUE website based on your region
+- **Live chat:** Accessible from your Pearson VUE account dashboard
+- **Email:** Response within 1–2 business days
+
+For accommodation-related questions, you can also reach out to the **NVIDIA Certification Team** at **certification@nvidia.com** for guidance before submitting your request.
+
+---
+
+*You have done the hard work of learning the material. Now, with a clear understanding of the registration process, you can walk into exam day with confidence.*

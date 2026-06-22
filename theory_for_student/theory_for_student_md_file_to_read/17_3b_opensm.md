@@ -1,0 +1,132 @@
+# 17.3b OpenSM: the open-source subnet manager for InfiniBand
+
+#### 🏷️ The AI Data Center Networking — Moving Petabytes Without Latency > 17 InfiniBand Architecture — The Gold Standard for AI Cluster Networking > 17.3 Subnet Management — The Brain of the InfiniBand Fabric
+
+---
+
+## 🌐 Context Introduction
+
+In an InfiniBand network, devices like switches, host channel adapters (HCAs), and cables form a high-speed fabric. But without a **subnet manager**, this fabric is just a collection of disconnected parts. The subnet manager is the "brain" that discovers all devices, assigns addresses, computes optimal paths, and keeps the network running smoothly.
+
+**OpenSM** is the open-source implementation of this critical component. It is the default subnet manager used in most InfiniBand clusters, including many AI and high-performance computing (HPC) environments. Understanding OpenSM helps engineers troubleshoot connectivity issues, optimize performance, and maintain fabric health.
+
+---
+
+## ⚙️ What Does OpenSM Do?
+
+OpenSM performs several essential tasks to keep an InfiniBand fabric operational:
+
+- **🔍 Fabric Discovery** — Scans the network to find all switches, HCAs, and links.
+- **🏷️ Address Assignment** — Assigns a unique Local Identifier (LID) to every port in the fabric.
+- **🗺️ Path Computation** — Calculates the best routes between every pair of endpoints using routing algorithms.
+- **📡 Forwarding Table Programming** — Installs routing rules into switch forwarding tables.
+- **🔄 Fault Handling** — Detects link failures, switch reboots, or device removals, and recomputes paths dynamically.
+- **📊 Fabric Monitoring** — Provides status and statistics about the fabric state.
+
+---
+
+## 🛠️ How OpenSM Works
+
+OpenSM runs as a **master subnet manager** on one node in the fabric. It communicates with all devices using InfiniBand management datagrams (MADs). The process follows a continuous loop:
+
+1. **Discovery Phase** — OpenSM sends queries to find all active ports and switches.
+2. **Sweep Phase** — It periodically re-scans the fabric to detect changes (default every 5 seconds).
+3. **Routing Phase** — It computes paths using a selected routing algorithm.
+4. **Programming Phase** — It updates switch forwarding tables with the new routes.
+
+If the master OpenSM fails, a **standby** OpenSM on another node can take over automatically, ensuring high availability.
+
+---
+
+## 📊 Routing Algorithms in OpenSM
+
+OpenSM supports multiple routing algorithms, each suited for different network topologies and workloads:
+
+| Algorithm | Description | Best For |
+|-----------|-------------|----------|
+| **Min Hop** | Chooses the shortest path between endpoints | Simple, small fabrics |
+| **Up/Down** | Avoids deadlocks by restricting turns in the fabric | Larger, irregular topologies |
+| **DOR (Dimension Order Routing)** | Routes in a fixed order of dimensions | Regular mesh or torus topologies |
+| **LASH** | Uses layered routing to avoid deadlocks | Complex, multi-path fabrics |
+| **Fat Tree** | Optimized for tree-based topologies | AI clusters using fat-tree designs |
+
+For most AI workloads, the **Fat Tree** or **Up/Down** algorithms are recommended because they balance load and avoid congestion.
+
+---
+
+## 🕵️ Common OpenSM Operations
+
+Engineers interact with OpenSM primarily through its management tools. Here are typical tasks:
+
+### 🔄 Starting OpenSM
+
+To start OpenSM on a node, engineers run the OpenSM daemon. It will automatically discover the fabric and begin management.
+
+**For reference:**
+```
+opensm -g <GUID> --port <port_number>
+```
+
+📤 **Output:** OpenSM starts and prints a message like: *"OpenSM 5.8.3 started on port 1, GUID 0x2c90300a1b2c"*
+
+### 📡 Checking Fabric Status
+
+To view the current state of the fabric, including all discovered devices and links, use the fabric management tool.
+
+**For reference:**
+```
+ibstatus
+```
+
+📤 **Output:** Shows a list of all active ports, their LIDs, link speeds, and states (e.g., *"LinkUp: Active, Speed: 200Gb/s (HDR)"*)
+
+### 🗺️ Viewing Routing Tables
+
+To see how OpenSM has programmed the forwarding tables in a switch, use the switch management command.
+
+**For reference:**
+```
+ibswitches
+```
+
+📤 **Output:** Lists all switches in the fabric with their LIDs, number of ports, and firmware versions.
+
+### 🔍 Troubleshooting Connectivity
+
+If a node cannot communicate, check the subnet manager logs or query the fabric for missing devices.
+
+**For reference:**
+```
+ibnetdiscover
+```
+
+📤 **Output:** A detailed topology map showing all connections between switches and HCAs. Missing devices indicate a physical or configuration issue.
+
+---
+
+## 🧠 Key Concepts for New Engineers
+
+- **Master vs. Standby** — Only one OpenSM instance is active (master) at a time. Others wait in standby mode.
+- **Sweep Interval** — The time between fabric re-scans. Default is 5 seconds, but can be adjusted for faster fault recovery.
+- **Routing Engine** — The component that computes paths. Changing the routing algorithm requires restarting OpenSM.
+- **GUID (Globally Unique Identifier)** — Every InfiniBand device has a unique 64-bit GUID. OpenSM uses this to identify devices.
+- **LID (Local Identifier)** — A 16-bit address assigned by OpenSM to each port. Used for packet forwarding within the subnet.
+
+---
+
+## 🚨 Common Issues and Solutions
+
+| Issue | Likely Cause | Quick Fix |
+|-------|--------------|-----------|
+| Nodes not visible in fabric | OpenSM not running or sweep missed | Restart OpenSM or check logs |
+| High latency or packet loss | Suboptimal routing algorithm | Switch to Fat Tree or Up/Down |
+| OpenSM fails to start | Port or GUID conflict | Verify the port is active and GUID is correct |
+| Fabric instability after cable change | OpenSM needs to re-sweep | Wait for next sweep or force a manual sweep |
+
+---
+
+## ✅ Summary
+
+OpenSM is the essential software that brings an InfiniBand fabric to life. It handles device discovery, address assignment, path computation, and fault recovery — all without manual intervention. For engineers new to AI infrastructure, understanding OpenSM's role and basic operations is the first step toward managing high-performance networks confidently.
+
+Remember: if the fabric is slow or devices are missing, always check that OpenSM is running and using the correct routing algorithm for your topology.

@@ -1,0 +1,156 @@
+# 29.2d Converting Docker/NGC containers to Apptainer format
+
+#### 🏷️ The Cluster Orchestration — Managing the GPU Fleet at Scale > 29 Traditional HPC Schedulers — Slurm and Apptainer > 29.2 Apptainer (Singularity) — HPC-Native Containerization
+
+---
+
+## 🌐 Context Introduction
+
+In High-Performance Computing (HPC) environments, security and performance are critical. While Docker containers are popular in cloud and development settings, they require root privileges to run — which is a security risk in shared HPC clusters. **Apptainer** (formerly known as Singularity) solves this by allowing containers to run as a non-root user, making it the standard container runtime for HPC and Slurm-based GPU clusters.
+
+NVIDIA GPU Cloud (NGC) provides pre-built Docker containers optimized for AI workloads. This topic explains how engineers can convert those Docker/NGC containers into Apptainer format for use in HPC environments.
+
+---
+
+## ⚙️ Why Convert Docker/NGC Containers to Apptainer?
+
+- **Security**: Apptainer runs containers without root privileges, which is mandatory in multi-user HPC clusters.
+- **Performance**: Apptainer integrates natively with NVIDIA GPUs and InfiniBand, providing near-native performance.
+- **Portability**: Apptainer images are single files (`.sif` format), making them easy to transfer and cache.
+- **Slurm Compatibility**: Apptainer is the preferred container runtime for Slurm job submissions in HPC.
+
+---
+
+## 🛠️ Key Concepts Before Conversion
+
+| Concept | Docker/NGC | Apptainer |
+|---------|------------|-----------|
+| Image format | Layers, tar archives | Single `.sif` file |
+| Runtime | Requires daemon (dockerd) | Daemonless, runs as user |
+| GPU support | `--gpus` flag | `--nv` flag |
+| Root required | Yes (by default) | No |
+| Image registry | Docker Hub, NGC | Can pull from Docker registries |
+
+---
+
+## 🕵️ The Conversion Process Overview
+
+The conversion from Docker/NGC to Apptainer format involves these steps:
+
+1. **Pull the Docker/NGC image** from a registry (like NGC or Docker Hub)
+2. **Convert the image** into Apptainer's SIF (Singularity Image Format)
+3. **Verify the converted image** runs correctly with GPU support
+
+---
+
+## 📦 Step-by-Step: Pulling and Converting
+
+### Step 1: Pull the Docker/NGC Image
+
+Use Apptainer's pull command to download a Docker-based image directly. Apptainer can pull from any OCI-compliant registry, including NGC.
+
+For reference:
+```
+apptainer pull docker://nvcr.io/nvidia/pytorch:24.01-py3
+```
+
+📤 Output: A file named **pytorch_24.01-py3.sif** is created in your current directory.
+
+---
+
+### Step 2: Convert an Existing Local Docker Image
+
+If you already have a Docker image stored locally, you can convert it using the Docker daemon.
+
+For reference:
+```
+apptainer build my_container.sif docker-daemon://my_image:latest
+```
+
+📤 Output: A new SIF file named **my_container.sif** is created.
+
+---
+
+### Step 3: Verify the Converted Image
+
+Check that the SIF file is valid and inspect its metadata.
+
+For reference:
+```
+apptainer inspect my_container.sif
+```
+
+📤 Output: Displays labels, environment variables, and runscript information from the original Docker image.
+
+---
+
+## 🚀 Running the Converted Apptainer Container
+
+Once converted, you can run the container with GPU support using the `--nv` flag.
+
+For reference:
+```
+apptainer run --nv my_container.sif
+```
+
+📤 Output: The container starts and executes its default runscript (e.g., Python shell for PyTorch images).
+
+---
+
+## 🧪 Testing GPU Access Inside the Container
+
+To confirm that the converted container can access NVIDIA GPUs:
+
+For reference:
+```
+apptainer exec --nv my_container.sif nvidia-smi
+```
+
+📤 Output: Shows the GPU status and driver information, identical to running nvidia-smi on the host.
+
+---
+
+## 📁 Working with NGC Containers Specifically
+
+NGC containers often include:
+- Pre-installed CUDA and cuDNN libraries
+- Optimized frameworks (PyTorch, TensorFlow, etc.)
+- Multi-architecture support (x86_64, ARM)
+
+When pulling from NGC, use the full URI format:
+
+For reference:
+```
+apptainer pull docker://nvcr.io/nvidia/tensorflow:24.01-tf2-py3
+```
+
+📤 Output: A SIF file named **tensorflow_24.01-tf2-py3.sif** is created.
+
+---
+
+## 🧹 Best Practices for New Engineers
+
+- **Always use `--nv`** when running GPU workloads — without it, the container won't see GPUs.
+- **Cache your SIF files** in a shared location (e.g., `/scratch/containers/`) to avoid repeated pulls.
+- **Test interactively first** using `apptainer shell --nv my_container.sif` before submitting batch jobs.
+- **Check disk space** — SIF files can be large (10-20 GB for full NGC containers).
+- **Use version tags** (e.g., `24.01-py3`) instead of `latest` to ensure reproducibility.
+
+---
+
+## ⚠️ Common Pitfalls and Solutions
+
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| Permission denied | Docker daemon not running | Use `docker://` URI instead of `docker-daemon://` |
+| GPU not detected | Missing `--nv` flag | Add `--nv` to all Apptainer commands |
+| Slow pull times | Large image size | Use `--disable-cache` or pull during off-peak hours |
+| Missing libraries | Incompatible base image | Use NGC containers specifically built for your CUDA version |
+
+---
+
+## ✅ Summary
+
+Converting Docker/NGC containers to Apptainer format is a straightforward process that enables secure, high-performance AI workloads on HPC clusters. By using Apptainer's `pull` and `build` commands, engineers can transform any Docker-based container into a portable SIF file that runs without root privileges and integrates seamlessly with Slurm schedulers and NVIDIA GPUs.
+
+This conversion is a foundational skill for managing AI infrastructure at scale — ensuring that your GPU fleet operates efficiently, securely, and consistently across diverse HPC environments.

@@ -1,0 +1,101 @@
+# 10.1b Graphics Processing Clusters (GPCs): high-level partitions of the GPU
+
+#### 🏷️ The Nvidia GPU Architecture — The Silicon at the Heart of AI Infrastructure > 10 GPU Microarchitecture — Inside an NVIDIA Data Center GPU > 10.1 The GPU Architecture Hierarchy — From Die to Thread
+
+## 🧭 Context Introduction
+
+When you look at an NVIDIA data center GPU (like the H100 or A100), you're not looking at a single, simple processor. Instead, you're looking at a highly organized silicon city. The **Graphics Processing Cluster (GPC)** is the first major "neighborhood" in that city. Think of a GPC as a **high-level partition** of the GPU die — it's the largest building block that groups together many smaller processing units. Understanding GPCs helps you grasp how the GPU scales its massive parallel compute power for AI workloads.
+
+---
+
+## ⚙️ What is a Graphics Processing Cluster (GPC)?
+
+A **GPC** is a self-contained, high-level partition of the GPU that contains a fixed set of resources. Each GPC operates independently and can execute its own set of tasks.
+
+- Each GPC contains:
+  - One **Raster Engine** (for graphics workloads)
+  - Multiple **Texture Processing Clusters (TPCs)** or **Streaming Multiprocessor (SM) clusters** (for compute)
+  - Dedicated **L1 cache** and **shared memory** resources
+- GPCs are the **first level of parallelism** in the GPU hierarchy — the GPU die is divided into multiple GPCs.
+- All GPCs on a GPU are identical in structure, enabling balanced workload distribution.
+
+---
+
+## 📊 GPC vs. Other GPU Hierarchy Levels
+
+To see where GPCs fit, here's a simple hierarchy from largest to smallest:
+
+| Level | Name | What It Contains | Analogy |
+|-------|------|------------------|---------|
+| 🏢 | **GPU Die** | All GPCs, memory controllers, interconnects | The entire city |
+| 🏘️ | **GPC** | Multiple SMs, L1 cache, raster engine | A neighborhood |
+| 🏠 | **SM (Streaming Multiprocessor)** | CUDA cores, warp schedulers, registers | A single house |
+| 🧑‍🤝‍🧑 | **Warp** | 32 threads executing together | A family inside the house |
+| 🧑 | **Thread** | Single instruction stream | One person |
+
+---
+
+## 🛠️ Why GPCs Matter for AI Infrastructure
+
+For engineers working with AI infrastructure, GPCs are important because:
+
+- **Workload isolation**: Different AI models or training jobs can be assigned to different GPCs, preventing interference.
+- **Scalability**: More GPCs on a GPU means more parallel processing capacity — directly impacting training speed for large models.
+- **Memory locality**: Data stays within a GPC's cache hierarchy, reducing latency for frequently accessed weights and activations.
+- **Fault tolerance**: If one GPC has a hardware issue, the GPU can often continue operating with reduced performance by disabling that GPC.
+
+---
+
+## 🕵️ How GPCs Work in Practice
+
+When you launch a CUDA kernel (a function that runs on the GPU):
+
+1. The **GPU scheduler** breaks your work into thread blocks.
+2. These thread blocks are assigned to **available SMs** within a GPC.
+3. Each GPC processes its assigned thread blocks independently using its own:
+   - L1 cache
+   - Shared memory
+   - Register file
+4. Results from all GPCs are combined at the end via the GPU's memory interconnect.
+
+**Key point**: You don't directly control which GPC runs your code — the GPU driver and hardware scheduler handle this automatically. But knowing this structure helps you optimize your AI workloads.
+
+---
+
+## 📈 GPC Count in Modern NVIDIA Data Center GPUs
+
+Here's a quick reference for common GPUs you'll encounter:
+
+| GPU Model | Number of GPCs | Purpose |
+|-----------|----------------|---------|
+| **NVIDIA A100** | 8 GPCs | General AI training and inference |
+| **NVIDIA H100** | 9 GPCs | Large language models, scientific computing |
+| **NVIDIA V100** | 6 GPCs | Legacy AI workloads |
+
+---
+
+## 🔍 Key Takeaway for New Engineers
+
+- **GPCs are the top-level organizational unit** inside a GPU die.
+- They enable **massive parallelism** by allowing many independent compute units to work simultaneously.
+- For AI workloads, more GPCs generally means **higher throughput** for training and inference.
+- You don't need to program for GPCs directly — but understanding them helps you:
+  - Diagnose performance bottlenecks
+  - Choose the right GPU for your workload
+  - Understand NVIDIA's GPU architecture documentation
+
+---
+
+## 🧪 Simple Analogy
+
+Imagine a **factory floor** with multiple **assembly lines** (GPCs). Each assembly line has its own set of **workstations** (SMs) and **toolboxes** (caches). The factory manager (GPU scheduler) sends batches of products (thread blocks) to whichever assembly line is free. All assembly lines work in parallel, and the final products are collected at the shipping dock (memory).
+
+---
+
+## 📚 Next Steps
+
+- Explore how **SMs** (the next level down) execute threads
+- Learn about **warp scheduling** within an SM
+- Understand how **memory hierarchy** (L1, L2, HBM) connects to GPCs
+
+> 💡 **Pro tip**: When reading NVIDIA architecture whitepapers, always check the GPC count — it's a quick way to gauge the GPU's raw compute capacity for AI workloads.

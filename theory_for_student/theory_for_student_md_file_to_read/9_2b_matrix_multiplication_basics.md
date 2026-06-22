@@ -1,0 +1,121 @@
+# 9.2b Dot products, matrix-vector, and batched matrix multiplication
+
+#### 🏷️ The Mathematical Imperative — Why AI Demands Specialized Hardware > 9 The Mathematics of Deep Learning — Tensors, Operations & Numerical Precision > 9.2 Matrix Multiplication — The Core Operation of Every Neural Network
+
+---
+
+## 🧭 Context Introduction
+
+Before diving into AI infrastructure, it's essential to understand the three fundamental operations that power every neural network: **dot products**, **matrix-vector multiplication**, and **batched matrix multiplication**. These operations are the mathematical building blocks behind everything from a single neuron's computation to the massive parallel processing required for training large language models.
+
+For new engineers, think of these operations as the "assembly line" of AI computation — each one builds on the previous, and understanding them helps you grasp why GPUs and specialized hardware are so critical.
+
+---
+
+## ⚙️ Dot Products — The Atomic Unit of Neural Networks
+
+A **dot product** is the simplest operation that combines two vectors to produce a single number (a scalar). It's the fundamental computation inside every neuron.
+
+**How it works:**
+- You have two vectors of equal length (e.g., a row of input data and a row of weights)
+- Multiply each corresponding pair of numbers
+- Sum all those products together
+
+**Why it matters for AI infrastructure:**
+- A single neuron computes a dot product between its input vector and its weight vector
+- A single forward pass through a layer involves thousands of dot products
+- GPUs are designed to perform thousands of dot products simultaneously
+
+**Real-world analogy:** Imagine you have a shopping list (weights) and prices (inputs). The dot product tells you the total cost — multiply each item's price by its quantity, then add everything up.
+
+---
+
+## 📊 Matrix-Vector Multiplication — Scaling Up to One Layer
+
+**Matrix-vector multiplication** is what happens when you process one input through an entire neural network layer. It's essentially a collection of dot products performed together.
+
+**The structure:**
+- A **matrix** (rows and columns) represents all the weights for a layer
+- A **vector** represents a single input sample
+- The result is a new vector representing the layer's output
+
+**Key insight for engineers:**
+- Each row of the weight matrix performs a dot product with the input vector
+- The number of rows equals the number of neurons in the layer
+- This operation transforms an input of size N into an output of size M
+
+**Performance consideration:**
+- Memory access patterns matter — matrices are stored in row-major or column-major order
+- Efficient matrix-vector multiplication requires good cache utilization
+- This is why GPUs have large caches and high memory bandwidth
+
+---
+
+## 🛠️ Batched Matrix Multiplication — The Workhorse of Training
+
+**Batched matrix multiplication** (often called "batching") is where AI infrastructure truly shines. Instead of processing one input at a time, you process many inputs simultaneously.
+
+**How batching works:**
+- Instead of one vector, you have a matrix of inputs (batch size × input features)
+- Instead of one output vector, you get a matrix of outputs (batch size × output features)
+- The mathematical operation is the same, but performed on many examples at once
+
+**Why batching is critical:**
+- Maximizes hardware utilization (keeps all GPU cores busy)
+- Enables efficient memory transfers (move larger chunks of data at once)
+- Improves training stability (gradients are averaged over more examples)
+
+**Typical batch sizes in practice:**
+- Small batch: 8–32 samples (common for fine-tuning)
+- Medium batch: 64–256 samples (standard training)
+- Large batch: 512–4096+ samples (distributed training)
+
+---
+
+## 🔍 Comparison Table — When to Use Each Operation
+
+| Operation | Input | Output | Typical Use Case | Hardware Impact |
+|-----------|-------|--------|------------------|-----------------|
+| **Dot Product** | Two vectors (1D) | Single scalar | Single neuron computation | Minimal — but happens millions of times |
+| **Matrix-Vector** | Matrix (2D) + Vector (1D) | Vector (1D) | Single inference pass | Moderate — memory bandwidth limited |
+| **Batched Matrix** | Two matrices (2D) | Matrix (2D) | Training batches, large-scale inference | High — compute bound, fully utilizes hardware |
+
+---
+
+## 🕵️ Real-World Infrastructure Implications
+
+**For GPU selection:**
+- Tensor Cores on NVIDIA GPUs are specifically optimized for batched matrix multiplication
+- The operation is so important that modern GPUs have dedicated hardware for it (e.g., NVIDIA's Tensor Cores in Volta, Turing, Ampere, and Hopper architectures)
+
+**For memory planning:**
+- A single batched matrix multiplication can consume gigabytes of VRAM
+- Example: A batch of 1024 samples, each with 4096 features, multiplied by a weight matrix of size 4096×4096 requires roughly 128 MB for inputs and 128 MB for outputs (at FP32 precision)
+
+**For performance tuning:**
+- Matrix dimensions should ideally be multiples of 8, 16, or 32 to align with GPU memory access patterns
+- This is why neural network architectures often use layer sizes like 512, 1024, 2048, or 4096
+
+---
+
+## 🧪 Simple Mental Model for New Engineers
+
+Think of these operations as different levels of a factory assembly line:
+
+1. **Dot product** = One worker assembling one component
+2. **Matrix-vector** = One assembly line processing one product
+3. **Batched matrix** = Multiple assembly lines running in parallel, processing many products at once
+
+The goal of AI infrastructure is to make Level 3 as efficient as possible — because that's where the real work happens during training.
+
+---
+
+## ✅ Key Takeaways
+
+- **Dot products** are the atomic unit — every neural network operation breaks down to these
+- **Matrix-vector multiplication** scales dot products to process one input through a full layer
+- **Batched matrix multiplication** is the dominant operation in training and large-scale inference
+- **Hardware specialization** (GPUs, Tensor Cores) exists primarily to accelerate batched matrix multiplication
+- **Memory and data layout** are just as important as raw compute speed for these operations
+
+Understanding these three operations gives you the foundation to reason about why AI infrastructure is designed the way it is — from GPU architecture to memory hierarchies to distributed training strategies.

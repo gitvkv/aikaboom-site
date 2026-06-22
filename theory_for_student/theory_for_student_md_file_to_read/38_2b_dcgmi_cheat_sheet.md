@@ -1,0 +1,115 @@
+# 38.2b dcgmi cheat sheet: field IDs, health checks, and job monitoring commands
+
+#### 🏷️ The Exam Preparation & Certification Mastery > 38 Reference Appendices and Quick-Reference Guides > 38.2 Command Quick Reference
+
+Welcome, new engineer! This guide introduces you to the **dcgmi** (Data Center GPU Manager Interface) tool, which is essential for managing and monitoring NVIDIA GPUs in AI infrastructure. You'll learn how to use field IDs for targeted data collection, run health checks to verify GPU status, and monitor jobs effectively. Think of dcgmi as your command-line dashboard for keeping GPUs healthy and workloads running smoothly.
+
+---
+
+## ⚙️ What is dcgmi?
+
+**dcgmi** is a command-line utility that comes with NVIDIA's Data Center GPU Manager (DCGM). It allows engineers to:
+- Query real-time GPU metrics (like temperature, memory usage, power)
+- Run diagnostic health checks
+- Monitor long-running AI training or inference jobs
+- Set up alerts and policies for GPU clusters
+
+Key concept: **Field IDs** are numeric codes that represent specific GPU metrics (e.g., field ID 100 = GPU temperature). Using field IDs helps you fetch only the data you need, reducing overhead.
+
+---
+
+## 📊 Field IDs: Your GPU Metric Shortcuts
+
+Field IDs let you ask dcgmi for specific information without getting flooded with all data. Here are common field IDs you'll use:
+
+- **100** – GPU temperature (in Celsius)
+- **110** – GPU utilization percentage
+- **150** – Memory utilization percentage
+- **155** – Used memory (in MB)
+- **200** – Power draw (in Watts)
+- **250** – PCIe throughput (in MB/s)
+- **300** – GPU clock speed (in MHz)
+- **400** – Memory clock speed (in MHz)
+- **500** – Fan speed (in RPM)
+
+**How to use them:** When you run dcgmi commands, you specify these IDs to get only the metrics you care about. For example, to check temperature and utilization, you'd reference field IDs 100 and 110.
+
+---
+
+## 🛠️ Health Checks: Verifying GPU Status
+
+Health checks are automated diagnostics that test your GPUs for common issues. dcgmi runs a series of tests and reports pass/fail results.
+
+**Three main health check levels:**
+
+| Level | What It Tests | When to Use |
+|-------|---------------|-------------|
+| 🟢 **Quick** | Basic connectivity and power | Daily checks or before starting a job |
+| 🟡 **Medium** | Memory, temperature, and clocks | Weekly maintenance |
+| 🔴 **Long** | Full stress test (memory, compute, bandwidth) | After hardware changes or troubleshooting |
+
+**Common health check results and what they mean:**
+- **PASS** – GPU is healthy and ready for work
+- **WARN** – Minor issue detected (e.g., slightly high temperature) – monitor closely
+- **FAIL** – Critical problem (e.g., memory error) – stop workloads and investigate
+
+**Pro tip:** Always run a **Quick** health check before launching a long training job. It catches obvious problems early.
+
+---
+
+## 🕵️ Job Monitoring Commands
+
+Job monitoring helps you watch GPU performance during AI training or inference. dcgmi can track metrics over time and alert you to issues.
+
+**Key monitoring capabilities:**
+
+- **Real-time stats:** See current GPU utilization, memory, temperature, and power for all GPUs in a system
+- **Historical data:** Record metrics to a file for later analysis (useful for debugging performance drops)
+- **Job-specific monitoring:** Associate metrics with a specific process or job ID
+
+**What to watch for during monitoring:**
+- **GPU utilization below 80%** – Your job might be bottlenecked by CPU or data loading
+- **Temperature above 85°C** – Risk of thermal throttling (GPU slows down to cool off)
+- **Memory usage near 100%** – Your model or batch size may be too large
+- **Power draw below rated TDP** – GPU is not fully utilized
+
+**Example monitoring workflow:**
+1. Start your AI training job
+2. Run dcgmi to start recording metrics every 5 seconds
+3. After 30 minutes, check the recorded data for anomalies
+4. If you see high temperature, reduce the workload or improve cooling
+
+---
+
+## 📋 Quick Reference Table: Common dcgmi Tasks
+
+| Task | What You Do | Expected Output |
+|------|-------------|-----------------|
+| Check all GPU health | Run a health check command | **📤 Output:** PASS for each GPU |
+| Get temperature for GPU 0 | Query field ID 100 for GPU 0 | **📤 Output:** 45 C |
+| Monitor all GPUs every 2 seconds | Start a monitoring session with 2-second intervals | **📤 Output:** Live table of metrics updating every 2 seconds |
+| Save metrics to a file | Start recording with a filename | **📤 Output:** Data saved to specified file |
+| Stop monitoring | Send an interrupt signal (Ctrl+C) | **📤 Output:** Monitoring stopped |
+
+---
+
+## 🚨 Troubleshooting Common Issues
+
+| Issue | Likely Cause | Solution |
+|-------|--------------|----------|
+| Health check shows FAIL | Hardware problem (memory, power) | Stop all jobs, contact IT support |
+| Field ID returns "N/A" | GPU is in low-power mode or not initialized | Run a small workload to wake the GPU |
+| Monitoring shows 0% utilization | Job is not using GPU (CPU-only code) | Check your code for GPU acceleration |
+| Temperature warning | Overheating or poor airflow | Reduce workload, check fans, clean vents |
+
+---
+
+## ✅ Final Tips for New Engineers
+
+- **Start with health checks** – Always verify GPU health before running expensive jobs
+- **Use field IDs sparingly** – Only request the metrics you need to reduce system load
+- **Monitor during the first 10 minutes** – Most issues appear early in a job
+- **Save logs** – Keep monitoring data for post-job analysis
+- **Practice with a single GPU first** – Master dcgmi on one GPU before managing clusters
+
+Remember: dcgmi is your friend. It gives you visibility into what your GPUs are doing, helping you catch problems before they crash your training runs. Happy monitoring!

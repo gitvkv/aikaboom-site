@@ -1,0 +1,93 @@
+# 24.2c Using --gpus all, --gpus 2, --gpus 'device=0,1': selecting GPUs per container
+
+#### 🏷️ The Nvidia Software Stack — Bridging Silicon and Python > 24 GPU-Accelerated Containers — The NVIDIA Container Toolkit > 24.2 NVIDIA Container Toolkit — The Right Way to Expose GPUs
+
+---
+
+## 🔍 Context Introduction
+
+When you run a container with GPU acceleration, you need to tell the container which GPUs it can use. The NVIDIA Container Toolkit provides three main ways to select GPUs: giving all available GPUs, specifying a number of GPUs, or picking specific GPU devices by their IDs. This topic explains each method so you can choose the right one for your workload.
+
+---
+
+## ⚙️ The Three GPU Selection Methods
+
+Each method serves a different purpose depending on how much control you need over GPU allocation.
+
+- **`--gpus all`** — Exposes every GPU on the host system to the container. Use this when you want maximum GPU availability and don't need to reserve GPUs for other containers.
+- **`--gpus 2`** — Gives the container access to any two GPUs. The system automatically picks which two GPUs to assign. This is useful when you need a specific number of GPUs but don't care which physical devices are used.
+- **`--gpus 'device=0,1'`** — Selects exact GPU devices by their index numbers (starting from 0). Use this when you need specific GPUs, for example, to isolate workloads on particular hardware or to avoid GPUs that are already busy.
+
+---
+
+## 📊 Comparison Table: When to Use Each Method
+
+| Method | Best Use Case | GPU Selection Control | Risk of Overlapping GPUs |
+|--------|---------------|----------------------|--------------------------|
+| `--gpus all` | Single-container systems or testing | None — all GPUs given | High — other containers may conflict |
+| `--gpus 2` | Balanced workloads with multiple containers | Low — system chooses | Low — system avoids conflicts |
+| `--gpus 'device=0,1'` | Critical workloads needing specific hardware | Full control | None — you explicitly assign |
+
+---
+
+## 🛠️ How GPU Selection Works Under the Hood
+
+When you use any of these options, the NVIDIA Container Toolkit performs these steps:
+
+1. **Query the host** — It checks which GPUs are available on the system using the NVIDIA driver.
+2. **Filter the list** — Based on your selection (`all`, a number, or specific devices), it creates a subset of GPUs.
+3. **Inject environment variables** — It sets the **`NVIDIA_VISIBLE_DEVICES`** environment variable inside the container with the selected GPU IDs.
+4. **Mount GPU devices** — It makes the corresponding GPU device files available inside the container.
+
+For example, if you use **`--gpus 'device=0,1'`**, the toolkit sets **`NVIDIA_VISIBLE_DEVICES=0,1`** inside the container. The container's applications then see only GPU 0 and GPU 1.
+
+---
+
+## 🕵️ Verifying GPU Selection Inside a Container
+
+After starting a container with any GPU selection method, you can confirm which GPUs are visible by running a simple check inside the container.
+
+**For reference:**
+```
+nvidia-smi
+```
+
+📤 **Output:** Shows only the GPUs you selected. For example, with **`--gpus 'device=0,1'`**, you will see only GPU 0 and GPU 1 in the output, even if the host has four GPUs.
+
+You can also check the environment variable directly:
+
+**For reference:**
+```
+echo $NVIDIA_VISIBLE_DEVICES
+```
+
+📤 **Output:** Displays the GPU IDs assigned to the container, such as **`0,1`** or **`all`** or **`2`** (meaning two GPUs were assigned, but the actual IDs are hidden).
+
+---
+
+## 🧠 Best Practices for New Engineers
+
+- **Start with `--gpus all` for learning** — It is the simplest option and lets you explore GPU-accelerated containers without worrying about device selection.
+- **Use `--gpus 2` for shared systems** — When multiple engineers run containers on the same host, let the system balance GPU assignments automatically.
+- **Reserve specific GPUs with `--gpus 'device=...'` for critical jobs** — If you have a long-running training job, pin it to specific GPUs so other containers do not interfere.
+- **Always verify with `nvidia-smi` inside the container** — This confirms your GPU selection worked correctly and prevents surprises during execution.
+
+---
+
+## ⚠️ Common Mistakes to Avoid
+
+- **Assuming `--gpus 2` gives you GPU 0 and GPU 1** — It gives any two GPUs, not necessarily the first two. The system picks based on availability.
+- **Using `--gpus all` on a shared host** — This can cause GPU memory conflicts and slow down other engineers' workloads.
+- **Forgetting to check GPU IDs before using `--gpus 'device=...'`** — Always run **`nvidia-smi`** on the host first to see which GPU indices exist and which are free.
+
+---
+
+## 📝 Summary
+
+| Selection Method | What It Does | When to Use |
+|------------------|--------------|-------------|
+| `--gpus all` | Gives every GPU to the container | Single-container hosts or quick tests |
+| `--gpus 2` | Gives any two GPUs automatically | Shared systems with balanced workloads |
+| `--gpus 'device=0,1'` | Gives exactly GPU 0 and GPU 1 | Critical jobs needing specific hardware |
+
+By mastering these three GPU selection methods, you gain precise control over how containers access NVIDIA GPUs — a foundational skill for AI infrastructure and operations.

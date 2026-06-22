@@ -1,0 +1,151 @@
+# 26.3f ConfigMaps and Secrets: externalizing configuration and credentials from containers
+
+#### 🏷️ The Cluster Orchestration — Managing the GPU Fleet at Scale > 26 Kubernetes Fundamentals — Container Orchestration from Scratch > 26.3 Core Kubernetes Objects for AI Workloads
+
+---
+
+## 🧠 Context Introduction
+
+When you run AI workloads in Kubernetes, your containers often need two types of information to work properly:
+
+1. **Configuration data** — like model paths, batch sizes, or logging levels
+2. **Sensitive credentials** — like API keys for cloud storage, database passwords, or NVIDIA GPU Cloud (NGC) API tokens
+
+Hardcoding these values inside your container images is a bad practice. It makes your images inflexible, insecure, and hard to update. Instead, Kubernetes provides two special objects — **ConfigMaps** and **Secrets** — that let you externalize this data and inject it into your containers at runtime.
+
+This approach is essential for AI infrastructure because:
+- You can reuse the same container image across different environments (dev, test, production)
+- You can rotate credentials without rebuilding images
+- You can manage configurations centrally for large GPU fleets
+
+---
+
+## ⚙️ What Are ConfigMaps?
+
+ConfigMaps are Kubernetes objects designed to store **non-sensitive, plain-text configuration data**. Think of them as a key-value store that your containers can read from.
+
+### Key Characteristics:
+- Store data as key-value pairs or entire configuration files
+- Data is stored in plain text (not encrypted)
+- Ideal for environment variables, command-line arguments, or configuration files
+- Can be created from literal values, files, or directories
+
+### Common Use Cases for AI Workloads:
+- Model serving parameters (batch size, timeout values)
+- Logging configuration (log level, output format)
+- Storage paths (where to find training data)
+- Feature flags for A/B testing models
+
+---
+
+## 🔒 What Are Secrets?
+
+Secrets are similar to ConfigMaps but designed specifically for **sensitive data**. They store information that should not be exposed in plain text.
+
+### Key Characteristics:
+- Store sensitive data like passwords, API keys, and tokens
+- Data is base64-encoded (not encrypted by default — encryption requires additional configuration)
+- Can be mounted as files or exposed as environment variables
+- Kubernetes restricts access to Secrets through RBAC (Role-Based Access Control)
+
+### Common Use Cases for AI Workloads:
+- NVIDIA GPU Cloud (NGC) API keys for pulling container images
+- Cloud storage credentials (AWS S3, Google Cloud Storage, Azure Blob)
+- Database connection strings for model metadata storage
+- Inference endpoint authentication tokens
+
+---
+
+## 🛠️ How ConfigMaps and Secrets Work
+
+Both objects follow the same pattern:
+
+1. **Create** the ConfigMap or Secret object in your Kubernetes cluster
+2. **Reference** it in your Pod or Deployment specification
+3. **Inject** the data into your container as either:
+   - Environment variables
+   - Mounted files in a volume
+
+### 📊 Comparison: ConfigMaps vs Secrets
+
+| Feature | ConfigMap | Secret |
+|---------|-----------|--------|
+| Data type | Plain text (non-sensitive) | Sensitive data (passwords, keys) |
+| Encoding | Plain text | Base64-encoded |
+| Encryption at rest | No (unless cluster-wide encryption is enabled) | Optional (via EncryptionConfiguration) |
+| Size limit | 1 MiB per ConfigMap | 1 MiB per Secret |
+| Use case | Configuration files, env vars | Credentials, tokens, certificates |
+| RBAC control | Yes | Yes (recommended to restrict access) |
+
+---
+
+## 🧪 Practical Example: Externalizing Configuration for an AI Training Job
+
+Imagine you have a training container that needs:
+- A model batch size (configuration)
+- An NGC API key (credential)
+
+### Step 1: Create the ConfigMap for Configuration
+
+You would create a ConfigMap with key-value pairs for your training parameters. For example, a ConfigMap named **training-config** might contain:
+- Key: **BATCH_SIZE** with value **32**
+- Key: **LEARNING_RATE** with value **0.001**
+- Key: **EPOCHS** with value **10**
+
+### Step 2: Create the Secret for Credentials
+
+You would create a Secret named **ngc-credentials** containing:
+- Key: **NGC_API_KEY** with your actual API key value (base64-encoded)
+
+### Step 3: Reference Both in Your Pod Specification
+
+In your Pod or Deployment YAML, you would:
+- Add an **envFrom** section to load all keys from the ConfigMap as environment variables
+- Add an **env** section to load the specific secret key as an environment variable
+- Or mount them as files if your application reads configuration from files
+
+### Step 4: Run Your Container
+
+When the container starts, it automatically has access to:
+- **BATCH_SIZE=32** (from ConfigMap)
+- **LEARNING_RATE=0.001** (from ConfigMap)
+- **EPOCHS=10** (from ConfigMap)
+- **NGC_API_KEY=<your-api-key>** (from Secret)
+
+Your application code simply reads these environment variables — no hardcoded values needed.
+
+---
+
+## 🕵️ Best Practices for AI Infrastructure
+
+### For ConfigMaps:
+- Keep ConfigMaps environment-specific (dev, staging, production)
+- Use descriptive key names that match your application's expected variable names
+- Consider using YAML or JSON files stored in ConfigMaps for complex configurations
+- Version your ConfigMaps when configuration changes significantly
+
+### For Secrets:
+- **Never** commit Secret definitions to version control (use tools like Helm Secrets, Sealed Secrets, or External Secrets Operator)
+- Use Kubernetes RBAC to restrict which pods and users can access Secrets
+- Rotate credentials regularly (especially for cloud storage and NGC)
+- Consider using a dedicated secrets management solution (HashiCorp Vault, AWS Secrets Manager) for production
+- Enable encryption at rest for Secrets in your cluster
+
+### For AI Workloads Specifically:
+- Store model paths and dataset locations in ConfigMaps so you can switch between datasets without rebuilding images
+- Keep inference server configuration (port, model name, device mapping) in ConfigMaps
+- Store cloud storage credentials (S3 access keys, GCS service account JSON) as Secrets
+- Use ConfigMaps for hyperparameter configurations that change between experiments
+
+---
+
+## ✅ Summary
+
+ConfigMaps and Secrets are fundamental Kubernetes objects that help you externalize configuration and credentials from your container images. For AI infrastructure engineers managing GPU fleets, this separation is critical because:
+
+- **ConfigMaps** handle non-sensitive configuration like model parameters and environment settings
+- **Secrets** handle sensitive data like API keys and passwords
+- Both can be injected as environment variables or mounted as files
+- This approach makes your containers portable, secure, and easier to manage at scale
+
+By using ConfigMaps and Secrets properly, you can build AI workloads that are flexible across environments, secure by design, and ready for production deployment on Kubernetes clusters.

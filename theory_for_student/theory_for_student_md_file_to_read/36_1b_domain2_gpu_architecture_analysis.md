@@ -1,0 +1,152 @@
+# 36.1b Domain 2 analysis: GPU Architecture and Systems — exam-critical hardware specs
+
+#### 🏷️ The Exam Preparation & Certification Mastery > 36 NCA-AIIO Blueprint Deep Dive — Domain-by-Domain Analysis > 36.1 Official Exam Blueprint Domain Breakdown and Weightings
+
+---
+
+## 🧭 Context Introduction
+
+Welcome to the GPU Architecture and Systems section of the NCA-AIIO exam. This domain focuses on the hardware specifications that make NVIDIA GPUs uniquely suited for AI workloads. As a new engineer, you don't need to design GPUs — but you *do* need to understand what makes them tick, especially when selecting hardware for training or inference tasks. This guide breaks down the exam-critical specs into simple, memorable concepts.
+
+---
+
+## ⚙️ Core GPU Architecture Concepts
+
+### What is a GPU Architecture?
+- A GPU architecture is the underlying design of how compute units, memory, and interconnects are organized on the chip.
+- Each generation (e.g., Volta, Turing, Ampere, Hopper) introduces improvements in performance, efficiency, and AI-specific features.
+
+### Key Architectural Components
+- **CUDA Cores**: The basic processing units for parallel computations. More cores = higher throughput for matrix operations.
+- **Tensor Cores**: Specialized hardware for mixed-precision matrix multiply-accumulate operations — the heart of deep learning acceleration.
+- **RT Cores**: Ray tracing cores (less critical for AI, but present in consumer GPUs).
+- **Memory Hierarchy**: Registers, L1 cache, L2 cache, and HBM (High Bandwidth Memory) — each level trades speed for capacity.
+
+---
+
+## 📊 Exam-Critical Hardware Specs Breakdown
+
+| Spec | What It Measures | Why It Matters for AI |
+|------|------------------|-----------------------|
+| **Memory Bandwidth (GB/s)** | How fast data moves between GPU memory and compute units | Higher bandwidth reduces data bottlenecks during training |
+| **Memory Capacity (GB)** | Total VRAM available | Larger models (e.g., LLMs) require more memory to fit in a single GPU |
+| **Tensor Core Count** | Number of Tensor Cores per SM (Streaming Multiprocessor) | Directly impacts mixed-precision training speed |
+| **FP32 / TF32 / FP16 / INT8 Performance (TFLOPS)** | Theoretical peak floating-point operations per second | Higher TFLOPS = faster matrix multiplications |
+| **Interconnect (NVLink / NVSwitch)** | Bandwidth between GPUs in a multi-GPU setup | Critical for scaling models across multiple GPUs |
+| **TDP (Thermal Design Power)** | Maximum power consumption under load | Affects cooling requirements and data center power budgets |
+
+---
+
+## 🕵️ Deep Dive: Memory Bandwidth vs. Memory Capacity
+
+### Memory Bandwidth (GB/s)
+- Think of this as the *speed* of the data highway between GPU memory and compute cores.
+- **Exam tip**: For training large models, bandwidth is often the bottleneck — not compute power.
+- Example: H100 SXM has ~3.35 TB/s bandwidth, while A100 SXM has ~2.0 TB/s.
+
+### Memory Capacity (GB)
+- Think of this as the *size* of the parking lot — how much data can you store on the GPU at once?
+- **Exam tip**: If your model + optimizer states + batch data exceed VRAM, you must use techniques like gradient checkpointing or model parallelism.
+- Example: H100 offers 80 GB HBM2e; A100 offers 40 GB or 80 GB variants.
+
+---
+
+## 🛠️ Tensor Cores and Mixed Precision
+
+### What Are Tensor Cores?
+- Dedicated hardware units that perform fused multiply-add operations in a single clock cycle.
+- They support multiple precision modes: FP16, BF16, TF32, INT8, INT4.
+
+### Why Mixed Precision Matters
+- Training in FP16 or BF16 is 2–8x faster than FP32 on Tensor Cores.
+- **Exam tip**: The Volta architecture introduced Tensor Cores; Ampere added support for TF32 and INT8; Hopper added FP8 and Transformer Engine.
+
+### Key Precision Formats
+- **FP32**: Standard 32-bit float — highest accuracy, slowest.
+- **TF32**: 19-bit mantissa (truncated FP32) — default in Ampere+ for easy drop-in acceleration.
+- **FP16 / BF16**: 16-bit floats — common for training with loss scaling.
+- **INT8 / INT4**: Integer formats — used for inference quantization.
+
+---
+
+## 🔗 Interconnect Technologies: NVLink and NVSwitch
+
+### NVLink
+- A high-speed point-to-point interconnect between GPUs.
+- **Exam tip**: NVLink provides 5–10x more bandwidth than PCIe Gen4/5.
+- Example: A100 NVLink offers 600 GB/s bidirectional bandwidth per GPU.
+
+### NVSwitch
+- A fully connected switch that allows all GPUs in a node to communicate at full NVLink speed.
+- **Exam tip**: NVSwitch is used in DGX systems (e.g., DGX A100, DGX H100) to create a single unified GPU memory space.
+
+### Comparison: PCIe vs. NVLink
+
+| Feature | PCIe Gen4 x16 | NVLink (A100) |
+|---------|---------------|---------------|
+| Bandwidth (bidirectional) | 32 GB/s | 600 GB/s |
+| Latency | Higher | Lower |
+| Use Case | General I/O | GPU-to-GPU communication |
+
+---
+
+## 🧠 GPU Generations: What to Know for the Exam
+
+### Volta (V100)
+- Introduced Tensor Cores (first generation).
+- 640 Tensor Cores per GPU.
+- 32 GB HBM2 memory.
+- 900 GB/s memory bandwidth.
+
+### Turing (T4)
+- Consumer-grade Tensor Cores (second generation).
+- 320 Tensor Cores per GPU.
+- 16 GB GDDR6 memory.
+- 320 GB/s memory bandwidth.
+- **Exam tip**: T4 is optimized for inference, not training.
+
+### Ampere (A100)
+- Third-gen Tensor Cores with TF32 and INT8 support.
+- 432 Tensor Cores per GPU.
+- 40 GB or 80 GB HBM2e memory.
+- 2.0 TB/s memory bandwidth (SXM version).
+- **Exam tip**: A100 is the most common data center GPU for training in 2023–2024.
+
+### Hopper (H100)
+- Fourth-gen Tensor Cores with FP8 and Transformer Engine.
+- 528 Tensor Cores per GPU.
+- 80 GB HBM2e memory.
+- 3.35 TB/s memory bandwidth.
+- **Exam tip**: Transformer Engine automatically handles mixed precision for transformer-based models.
+
+---
+
+## 📈 How to Read a GPU Spec Sheet (Exam Strategy)
+
+When you see a GPU spec on the exam, focus on these three numbers:
+
+1. **Memory Bandwidth** — Is it high enough for the workload?
+2. **Tensor Core TFLOPS (FP16/BF16)** — This is the real compute power for AI.
+3. **Memory Capacity** — Can the model fit?
+
+**Example scenario**: You need to train a 70B parameter LLM. Which GPU is best?
+- **Answer**: H100 with 80 GB memory and 3.35 TB/s bandwidth, because the model requires high memory and bandwidth for efficient training.
+
+---
+
+## ✅ Quick Exam Checklist
+
+- ✅ Know the difference between CUDA Cores and Tensor Cores.
+- ✅ Understand that memory bandwidth is often the bottleneck for training.
+- ✅ Recognize that Tensor Cores accelerate mixed-precision operations.
+- ✅ Remember that NVLink is for GPU-to-GPU communication, NVSwitch is for full-mesh connectivity.
+- ✅ Be able to compare V100, A100, and H100 on memory, bandwidth, and Tensor Core count.
+- ✅ Know that T4 is inference-focused, while A100/H100 are training-focused.
+
+---
+
+## 📚 Final Study Tip
+
+> "Don't memorize every number — memorize the *relationships*. If bandwidth doubles, training time halves (assuming no other bottlenecks). If memory capacity is insufficient, you must use model parallelism or gradient checkpointing."
+
+Good luck with your exam preparation! 🚀

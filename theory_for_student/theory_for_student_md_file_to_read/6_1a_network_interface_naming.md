@@ -1,0 +1,116 @@
+# 6.1a Network interface naming: ens3, eth0, ib0 — predictable naming and exceptions
+
+#### 🏷️ The Operating System Layer — Linux for AI Infrastructure Operators > 6 Linux Networking & Security Hardening > 6.1 Linux Network Interface Configuration
+
+---
+
+## 🌐 Context Introduction
+
+When you first connect to an AI server or GPU cluster, one of the first things you'll notice is the network interface names. You might see names like **eth0**, **ens3**, **ib0**, or even **eno1**. These aren't random — they follow specific naming conventions designed to make network interfaces predictable, especially in modern Linux systems.
+
+For engineers working with AI infrastructure, understanding these names is critical because:
+- AI workloads often require high-speed networking (e.g., InfiniBand for GPU-to-GPU communication).
+- You'll need to identify which interface connects to which network (management, data, storage).
+- Configuration files (like **/etc/netplan/*.yaml** or **/etc/network/interfaces**) rely on these names.
+
+This topic covers the three most common naming schemes you'll encounter: **eth0** (legacy), **ens3** (predictable), and **ib0** (InfiniBand).
+
+---
+
+## ⚙️ Why Interface Naming Matters
+
+In older Linux systems, network interfaces were named based on the order they were detected by the kernel. This meant:
+- **eth0** was the first Ethernet card found.
+- **eth1** was the second, and so on.
+
+This approach was simple but unreliable — if you added or removed hardware, the names could change, breaking network configurations. Modern systems use **predictable network interface naming** to solve this.
+
+---
+
+## 🧩 The Three Common Naming Schemes
+
+### 🔹 **eth0** — Legacy (Traditional) Naming
+- **What it is:** The original naming scheme based on kernel detection order.
+- **When you'll see it:** On older systems (pre-2009) or systems where predictable naming is disabled.
+- **Example:** **eth0**, **eth1**, **eth2**
+- **Risk:** Names can change after hardware changes (e.g., adding a new NIC).
+
+### 🔹 **ens3** — Predictable Naming (Modern Linux)
+- **What it is:** Names derived from hardware topology (firmware/BIOS information).
+- **How it works:** The name encodes the physical location of the NIC:
+  - **en** = Ethernet
+  - **s** = Hotplug slot index (e.g., **s3** means slot 3)
+  - Other variants: **eno1** (onboard device 1), **enp2s0** (PCI bus 2, slot 0)
+- **When you'll see it:** Default on most modern Linux distributions (Ubuntu 16.04+, RHEL/CentOS 7+, SLES 12+).
+- **Example:** **ens3**, **eno1**, **enp2s0f0**
+- **Benefit:** Names stay the same even if you move the NIC to a different slot.
+
+### 🔹 **ib0** — InfiniBand Naming
+- **What it is:** Names for InfiniBand (IB) high-speed interconnects, commonly used in AI clusters for GPU-to-GPU communication (e.g., NVIDIA NVLink, Mellanox ConnectX).
+- **How it works:** **ib** prefix followed by a number (e.g., **ib0**, **ib1**).
+- **When you'll see it:** On GPU servers with InfiniBand adapters (common in DGX systems, HGX platforms).
+- **Example:** **ib0**, **ib1**, **ibP133p0s0** (predictable InfiniBand naming)
+- **Key point:** InfiniBand is not Ethernet — it's a separate protocol for low-latency, high-bandwidth data transfer.
+
+---
+
+## 📊 Comparison Table: eth0 vs. ens3 vs. ib0
+
+| Feature | **eth0** (Legacy) | **ens3** (Predictable) | **ib0** (InfiniBand) |
+|---------|-------------------|------------------------|----------------------|
+| **Naming source** | Kernel detection order | Firmware/BIOS topology | InfiniBand adapter index |
+| **Predictability** | Unpredictable | Predictable (hardware-based) | Predictable (adapter order) |
+| **Common use case** | Older systems, VMs | Modern servers, cloud instances | AI/ML clusters, HPC |
+| **Example in AI infra** | Rare — legacy only | Management network (e.g., SSH) | GPU-to-GPU data transfer |
+| **Protocol** | Ethernet | Ethernet | InfiniBand (RDMA) |
+| **Risk of name change** | High (hardware changes) | Low | Low |
+
+---
+
+## 🕵️ Exceptions and Edge Cases
+
+Even with predictable naming, you may encounter exceptions:
+
+### ❗ **Virtual Machines (VMs) and Cloud Instances**
+- In cloud environments (AWS, GCP, Azure), VMs often use **ens3** or **eth0** depending on the hypervisor.
+- Example: An AWS EC2 instance might show **eth0** even though it's a modern system — this is because the hypervisor emulates legacy hardware.
+
+### ❗ **PCIe Hotplug and Renaming**
+- Some systems allow you to rename interfaces manually using **udev** rules. This can override predictable naming.
+- Example: An engineer might rename **ens3** to **eth0** for compatibility with legacy scripts.
+
+### ❗ **InfiniBand Partitioning**
+- InfiniBand adapters can be partitioned into multiple virtual interfaces (e.g., **ib0**, **ib0.8001**). The **.8001** suffix indicates a partition key.
+- This is common in multi-tenant AI clusters where different users share the same physical IB fabric.
+
+### ❗ **Bonding and Teaming**
+- When you combine multiple interfaces (e.g., **bond0**), the underlying physical interfaces (like **ens3** and **ens4**) are hidden behind the bond name.
+- You'll see **bond0** in **ip link** output instead of the individual names.
+
+---
+
+## 🛠️ How to Identify Your Interface Names
+
+To see which naming scheme your system uses, look at the output of:
+
+- **ip link show** — Lists all network interfaces with their current names.
+- **dmesg | grep -i eth** — Shows kernel messages about interface detection.
+- **cat /sys/class/net/*/device/uevent** — Displays hardware topology for each interface.
+
+For reference, here's a typical command sequence:
+
+```bash
+ip link show
+```
+📤 Output: **1: lo: <LOOPBACK,UP,LOWER_UP> ... 2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> ... 3: ib0: <BROADCAST,MULTICAST,UP,LOWER_UP> ...**
+
+---
+
+## ✅ Summary for New Engineers
+
+- **eth0** = Old, unreliable naming — avoid relying on it in modern AI infrastructure.
+- **ens3** (or **eno1**, **enp2s0**) = Modern predictable naming — use this for Ethernet management networks.
+- **ib0** = InfiniBand naming — critical for GPU-to-GPU communication in AI clusters.
+- **Exceptions** exist in VMs, cloud instances, and bonded interfaces — always verify with **ip link show**.
+
+When configuring AI infrastructure, always check the actual interface names on the system rather than assuming they follow a standard pattern. This simple habit will save you hours of debugging network issues later.

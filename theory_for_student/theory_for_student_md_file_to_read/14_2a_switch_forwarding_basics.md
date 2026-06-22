@@ -1,0 +1,121 @@
+# 14.2a How a network switch works: MAC address tables and frame forwarding
+
+#### 🏷️ The AI Data Center Networking — Moving Petabytes Without Latency > 14 Enterprise Networking Baseline > 14.2 Ethernet Fundamentals — Switching, VLANs, and IP Routing
+
+---
+
+## 🧭 Context Introduction
+
+In an AI data center, network switches are the silent workhorses that move data between servers, storage systems, and GPUs. Unlike a simple hub that blindly repeats every signal, a switch is intelligent — it learns which devices are connected to which ports and forwards frames only where they need to go. This reduces congestion and keeps AI training jobs running smoothly.
+
+For a new engineer, understanding how a switch builds its **MAC address table** and uses it for **frame forwarding** is the first step to troubleshooting network issues and designing efficient AI infrastructure.
+
+---
+
+## ⚙️ What is a MAC Address Table?
+
+A **MAC address table** (also called a Content Addressable Memory or CAM table) is a database stored inside a switch. It maps:
+
+- **MAC address** — the unique hardware address of a device's network interface
+- **Port number** — the physical port on the switch where that device is connected
+- **VLAN ID** — the virtual LAN segment the device belongs to (covered in a later section)
+
+### How the Table is Built (Learning Process)
+
+1. **Initial state** — The table is empty.
+2. **First frame arrives** — A device sends a frame. The switch reads the **source MAC address** from the frame header.
+3. **Learning** — The switch records: *"MAC address AA:BB:CC:DD:EE:FF is on port 1"*.
+4. **Aging** — Entries have a timer (typically 300 seconds). If no frames are received from that MAC, the entry is removed to keep the table current.
+
+> 💡 **Key point:** The switch learns MAC addresses passively — it never asks devices for their MAC. It simply listens to traffic.
+
+---
+
+## 🕵️ How Frame Forwarding Works
+
+When a frame arrives at a switch port, the switch performs a simple three-step decision:
+
+### Step 1: Learn
+- Record the **source MAC address** and port into the MAC table (if not already present).
+
+### Step 2: Lookup
+- Check the **destination MAC address** against the MAC table.
+
+### Step 3: Forward or Flood
+- **Known unicast** — If the destination MAC is in the table, forward the frame **only** to that specific port.
+- **Unknown unicast** — If the destination MAC is **not** in the table, flood the frame out **all ports** except the one it arrived on.
+- **Broadcast/multicast** — Always flood (except the incoming port).
+
+---
+
+## 📊 Comparison: Switch vs. Hub vs. Router
+
+| Feature | Network Switch | Hub | Router |
+|---------|---------------|-----|--------|
+| **Intelligence** | Learns MAC addresses | None (repeats everything) | Uses IP addresses |
+| **Forwarding decision** | Based on MAC table | No decision (flood all) | Based on routing table |
+| **Collision domains** | One per port | Single shared domain | One per interface |
+| **Used in AI DC for** | Server-to-server, GPU-to-storage | Rarely used | Connecting to WAN or subnets |
+
+---
+
+## 🛠️ Practical Example: Frame Flow in an AI Cluster
+
+Imagine a small AI training cluster with:
+
+- **Server A** (MAC: 00:11:22:33:44:AA) on switch port 1
+- **Server B** (MAC: 00:11:22:33:44:BB) on switch port 2
+- **Storage array** (MAC: 00:11:22:33:44:CC) on switch port 3
+
+### Scenario: Server A sends data to Storage
+
+1. Switch receives frame from port 1.
+2. Switch learns: *00:11:22:33:44:AA → port 1*.
+3. Switch looks up destination MAC (00:11:22:33:44:CC).
+4. If found in table → forward only to port 3.
+5. If not found → flood to ports 2 and 3.
+
+### Scenario: Storage replies to Server A
+
+1. Switch receives frame from port 3.
+2. Switch learns: *00:11:22:33:44:CC → port 3*.
+3. Destination MAC (00:11:22:33:44:AA) is already in table.
+4. Forward only to port 1.
+
+> ✅ **Result:** Only the necessary ports carry traffic. Port 2 (Server B) is not disturbed.
+
+---
+
+## 🔍 Why This Matters for AI Infrastructure
+
+In AI data centers, **latency is critical**. A poorly configured switch can cause:
+
+- **Flooding** — If MAC tables are too small, the switch floods frames, wasting bandwidth.
+- **MAC flapping** — If a device moves between ports (e.g., VM migration), the switch must re-learn quickly.
+- **Table exhaustion** — AI clusters can have thousands of MAC addresses. Enterprise switches support 32K–128K entries.
+
+### Common Troubleshooting Commands (for reference)
+
+For reference, here are typical commands used to inspect MAC tables on managed switches:
+
+```
+show mac address-table
+show mac address-table aging-time
+show mac address-table count
+```
+
+📤 Output: A list of MAC addresses, VLANs, and port assignments.
+
+---
+
+## ✅ Key Takeaways for New Engineers
+
+- A switch **learns** MAC addresses by reading source addresses in incoming frames.
+- It **forwards** frames intelligently — only to the port where the destination device lives.
+- **Unknown destinations** cause flooding, which wastes bandwidth in AI clusters.
+- MAC tables have a **finite size** and **aging timer** — both are important for performance tuning.
+- In AI data centers, minimizing flooding and ensuring fast table lookups directly impacts training job completion times.
+
+---
+
+> 🧠 **Remember:** Every time you see a slow AI training job, check if the network switch is flooding traffic unnecessarily — it might be a MAC table issue, not a GPU problem.

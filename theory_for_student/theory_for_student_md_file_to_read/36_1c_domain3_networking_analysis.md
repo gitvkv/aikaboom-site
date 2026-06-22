@@ -1,0 +1,131 @@
+# 36.1c Domain 3 analysis: Networking for AI — InfiniBand vs Ethernet decision trees
+
+#### 🏷️ The Exam Preparation & Certification Mastery > 36 NCA-AIIO Blueprint Deep Dive — Domain-by-Domain Analysis > 36.1 Official Exam Blueprint Domain Breakdown and Weightings
+
+---
+
+## 🌐 Context Introduction
+
+In AI infrastructure, the network is the backbone that connects compute nodes (GPUs) together. When training large AI models, data must move between GPUs at extremely high speeds and with very low latency. The two primary networking technologies for this are **InfiniBand** and **Ethernet**. This guide helps new engineers understand the differences, strengths, and decision-making process for choosing between them.
+
+---
+
+## ⚙️ Why Networking Matters for AI
+
+- AI training workloads (especially distributed training) require frequent data exchanges between GPUs.
+- Slow or congested networks create bottlenecks, increasing training time and reducing GPU utilization.
+- Key network performance metrics for AI:
+  - **Bandwidth** — amount of data transferred per second (e.g., 200 Gbps, 400 Gbps)
+  - **Latency** — time for a data packet to travel from source to destination
+  - **Packet loss** — dropped packets cause retransmissions, slowing everything down
+
+---
+
+## 🧠 InfiniBand Overview
+
+- **Purpose-built** for high-performance computing (HPC) and AI workloads.
+- Uses **Remote Direct Memory Access (RDMA)** — allows one GPU to directly read/write another GPU's memory without involving the CPU.
+- Extremely low latency (microseconds) and very high bandwidth.
+- Typically uses a **lossless** fabric — no packet drops.
+- Requires specialized hardware (InfiniBand switches, Host Channel Adapters or HCAs).
+
+---
+
+## 🌍 Ethernet Overview
+
+- The **universal** networking standard used in most data centers and offices.
+- Traditional Ethernet uses TCP/IP, which adds latency and CPU overhead.
+- Modern Ethernet for AI uses **RoCE (RDMA over Converged Ethernet)** — brings RDMA capabilities to Ethernet.
+- More flexible and widely available than InfiniBand.
+- Can be **lossy** (packet drops possible) or configured as **lossless** with Priority Flow Control (PFC).
+
+---
+
+## 📊 InfiniBand vs Ethernet — Comparison Table
+
+| Feature | InfiniBand | Ethernet (with RoCE) |
+|---------|------------|----------------------|
+| **Purpose** | Built for HPC/AI | General-purpose, adapted for AI |
+| **Latency** | Very low (sub-microsecond) | Low (but slightly higher than InfiniBand) |
+| **Bandwidth** | Up to 400 Gbps (and beyond) | Up to 400 Gbps (and beyond) |
+| **RDMA support** | Native (built-in) | Via RoCE (requires configuration) |
+| **Packet loss** | Lossless by design | Can be lossy; lossless requires PFC |
+| **Hardware cost** | Higher (specialized) | Lower (commodity switches) |
+| **Ecosystem maturity** | Mature in HPC/AI | Rapidly maturing for AI |
+| **Interoperability** | Limited to InfiniBand gear | Works with standard Ethernet gear |
+| **Management complexity** | Moderate | Moderate to high (with RoCE tuning) |
+
+---
+
+## 🕵️ Decision Tree — InfiniBand vs Ethernet
+
+Use the following decision points to guide your choice:
+
+### 1️⃣ What is the primary workload?
+
+- **Large-scale distributed training** (hundreds or thousands of GPUs) → **InfiniBand** is often preferred for its deterministic performance.
+- **Smaller clusters** (tens of GPUs) or mixed workloads (AI + traditional IT) → **Ethernet** may be more cost-effective.
+
+### 2️⃣ What is the latency requirement?
+
+- **Ultra-low latency** (e.g., model parallelism with frequent all-reduce operations) → **InfiniBand**.
+- **Moderate latency** acceptable (e.g., data parallelism with larger batch sizes) → **Ethernet** can work well.
+
+### 3️⃣ What is the budget?
+
+- **Higher budget** for specialized hardware → **InfiniBand**.
+- **Tighter budget** or need to reuse existing network gear → **Ethernet**.
+
+### 4️⃣ What is the existing infrastructure?
+
+- **Greenfield deployment** (building from scratch) → Either option works; InfiniBand is common in dedicated AI clusters.
+- **Brownfield deployment** (adding AI to an existing data center) → **Ethernet** is easier to integrate.
+
+### 5️⃣ What is the team's expertise?
+
+- **Team experienced with HPC/InfiniBand** → InfiniBand is a natural fit.
+- **Team more familiar with standard networking** → Ethernet (with RoCE) may be easier to adopt.
+
+---
+
+## 🛠️ Practical Decision Flowchart (Text Version)
+
+**Start here:**
+
+- Is the AI cluster **large** (100+ GPUs) and **dedicated** only to AI?
+  - Yes → Consider **InfiniBand**
+  - No → Go to next question
+
+- Is **ultra-low latency** critical for your model architecture?
+  - Yes → Consider **InfiniBand**
+  - No → Go to next question
+
+- Do you need to **share the network** with other data center services?
+  - Yes → **Ethernet** is more flexible
+  - No → Go to next question
+
+- Is **cost** a primary concern?
+  - Yes → **Ethernet** (commodity hardware)
+  - No → **InfiniBand** (performance optimized)
+
+---
+
+## 📈 Key Takeaway for the Exam
+
+- **InfiniBand** is the gold standard for performance but comes with higher cost and specialized hardware.
+- **Ethernet with RoCE** is catching up quickly and offers better flexibility and lower cost.
+- The decision depends on **scale, latency needs, budget, existing infrastructure, and team skills**.
+- Both technologies can deliver excellent AI training performance when properly configured.
+
+---
+
+## 🔍 Final Exam Tips
+
+- Know that **RDMA** is the key technology enabling fast GPU-to-GPU communication.
+- Understand that **InfiniBand** provides native RDMA, while **Ethernet** requires RoCE.
+- Remember that **packet loss** is a major enemy of AI networking — lossless fabrics are preferred.
+- Be aware that **NVIDIA's DGX systems** often use InfiniBand for maximum performance, but Ethernet options exist.
+
+---
+
+*This guide provides a foundation for understanding the InfiniBand vs Ethernet decision in AI infrastructure. For the exam, focus on the trade-offs and decision criteria rather than deep technical configuration details.*

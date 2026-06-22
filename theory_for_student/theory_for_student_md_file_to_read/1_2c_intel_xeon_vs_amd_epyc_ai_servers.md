@@ -1,0 +1,108 @@
+# 1.2c CPU architectures for AI servers: Intel Xeon Scalable vs AMD EPYC
+
+#### 🏷️ The Physical Realm — Data Center Foundations & Hardware Architecture > 1 What Is a Computer? Core Architecture for Absolute Beginners > 1.2 The CPU — The Brain of Any Computer
+
+When you build or operate an AI server, the CPU is the central coordinator. It handles data movement, preprocessing, and orchestration of GPU workloads. Two dominant families power modern AI servers: **Intel Xeon Scalable** and **AMD EPYC**. This guide breaks down their differences for new engineers entering the AI infrastructure field.
+
+---
+
+## 🧠 Context: Why CPU Choice Matters for AI
+
+While GPUs do the heavy lifting for model training and inference, the CPU is responsible for:
+- Loading and preprocessing datasets
+- Managing memory and PCIe lanes for GPU communication
+- Running the operating system and orchestration software (e.g., Kubernetes)
+- Handling network I/O for distributed training
+
+A mismatched CPU can bottleneck your entire AI pipeline, even with the best GPUs.
+
+---
+
+## ⚙️ Intel Xeon Scalable (4th Gen and newer)
+
+**Strengths for AI workloads:**
+- **Built-in AI accelerators** — Intel Advanced Matrix Extensions (AMX) speed up matrix multiplication for inference and small training tasks.
+- **High memory bandwidth** — Supports up to 8 channels of DDR5 memory per socket.
+- **Strong single-thread performance** — Good for latency-sensitive preprocessing tasks.
+- **Mature ecosystem** — Extensive support in enterprise software and virtualization.
+
+**Key specifications:**
+- Core count: Up to 60 cores per socket (Xeon Platinum)
+- PCIe lanes: Up to 80 lanes (PCIe 5.0)
+- Memory: DDR5-4800, up to 4 TB per socket
+- TDP: 150W–350W
+
+**Best for:** Mixed workloads where the CPU also handles inference, or when you need maximum memory bandwidth for large datasets.
+
+---
+
+## 🛠️ AMD EPYC (4th Gen, codename Genoa)
+
+**Strengths for AI workloads:**
+- **Higher core counts** — Up to 96 cores per socket, ideal for parallel preprocessing and multi-GPU orchestration.
+- **More PCIe lanes** — Up to 128 lanes (PCIe 5.0), allowing more GPUs and NVMe drives without switches.
+- **Lower total cost of ownership** — Often more cores per dollar than Intel.
+- **Excellent memory bandwidth** — 12 channels of DDR5 per socket.
+
+**Key specifications:**
+- Core count: Up to 96 cores per socket (EPYC 9654)
+- PCIe lanes: Up to 128 lanes (PCIe 5.0)
+- Memory: DDR5-4800, up to 6 TB per socket
+- TDP: 200W–400W
+
+**Best for:** GPU-heavy servers (4–8 GPUs) where PCIe lane count and core density matter most.
+
+---
+
+## 📊 Comparison Table: Intel Xeon Scalable vs AMD EPYC for AI Servers
+
+| Feature | Intel Xeon Scalable (4th Gen) | AMD EPYC (4th Gen) |
+|---------|-------------------------------|---------------------|
+| Max cores per socket | 60 | 96 |
+| PCIe 5.0 lanes | Up to 80 | Up to 128 |
+| Memory channels | 8 | 12 |
+| Max memory per socket | 4 TB | 6 TB |
+| Built-in AI acceleration | AMX (matrix math) | None (relies on GPU) |
+| Typical TDP | 150W–350W | 200W–400W |
+| Single-thread performance | Slightly better | Slightly lower |
+| Price per core | Higher | Lower |
+
+---
+
+## 🕵️ How to Choose for Your AI Server
+
+**Choose Intel Xeon Scalable when:**
+- You need built-in AI acceleration for inference on the CPU itself.
+- Your workload is mixed (CPU + GPU tasks) and benefits from strong single-thread performance.
+- You are constrained by power or cooling (lower TDP options available).
+
+**Choose AMD EPYC when:**
+- You are building a GPU-dense server (4+ GPUs) and need many PCIe lanes.
+- Your workload is highly parallel (data preprocessing, distributed training orchestration).
+- You want maximum core count per dollar.
+
+---
+
+## 🧪 Real-World Example: Two Server Configurations
+
+**Scenario A: Inference server with 2 GPUs**
+- CPU choice: Intel Xeon Silver 4410Y (12 cores, 80W TDP)
+- Reason: Lower power, good single-thread performance for real-time inference preprocessing.
+
+**Scenario B: Training server with 8 GPUs**
+- CPU choice: AMD EPYC 9654 (96 cores, 128 PCIe lanes)
+- Reason: Enough PCIe lanes to connect all GPUs directly, massive core count for data loading.
+
+---
+
+## ✅ Key Takeaways for New Engineers
+
+- The CPU is the **traffic cop** for your AI workload — don't ignore it.
+- **AMD EPYC** wins on core count and PCIe lanes (great for GPU-heavy servers).
+- **Intel Xeon** wins on built-in AI acceleration and single-thread performance.
+- Always match your CPU choice to your **GPU count** and **workload type**.
+- Check your server's **PCIe lane budget** — you need enough lanes for GPUs, storage, and networking.
+
+---
+
+*Next step: Explore how these CPUs pair with NVIDIA GPUs in a real server platform.*
