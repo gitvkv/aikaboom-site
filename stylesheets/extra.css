@@ -209,3 +209,28 @@ input[type="file"]#restore-file-input {
 .wy-side-nav-search > a:active {
     color: #000000 !important;
 }
+
+/* Start Learning CTA Button on Home Page */
+.start-learning-btn {
+    display: inline-block;
+    background-color: #27ae60; /* Brand green */
+    color: #ffffff !important;
+    padding: 12px 24px;
+    font-size: 1.1em;
+    font-weight: 700;
+    border-radius: 30px;
+    text-decoration: none !important;
+    margin: 20px 0;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.start-learning-btn:hover {
+    background-color: #2ecc71; /* Lighter green on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+.start-learning-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
