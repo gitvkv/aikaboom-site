@@ -273,7 +273,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     // This regex splits on sentence endings but keeps punctuation
                     const elementSentences = text.split(/(?<=[.!?])\s+/);
                     elementSentences.forEach(s => {
-                        const cleanSentence = s.trim();
+                        let cleanSentence = s.trim();
+                        try {
+                            // Strip emojis/pictographs
+                            cleanSentence = cleanSentence.replace(/\p{Extended_Pictographic}/gu, '');
+                        } catch (e) {
+                            // Fallback for older browsers
+                            cleanSentence = cleanSentence.replace(/[\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDC00-\uDFFF]/g, '');
+                        }
+                        // Clean up any double spaces left behind by stripped emojis
+                        cleanSentence = cleanSentence.replace(/\s+/g, ' ').trim();
+
                         if (cleanSentence.length > 1) {
                             sentences.push(cleanSentence);
                             paragraphsElements.push(node); // Map sentence to its DOM element for highlighting
