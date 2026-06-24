@@ -996,13 +996,22 @@ input[type="file"]#restore-file-input {
 }
 
 .mock-bp-row {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 2.5fr 1fr 1fr;
     padding: 10px 15px;
     font-size: 0.9em;
     border-bottom: 1px solid #e2e8f0;
     background-color: #ffffff;
 }
+
+.mock-bp-row span:nth-child(2) {
+    text-align: center;
+}
+
+.mock-bp-row span:last-child {
+    text-align: right;
+}
+
 
 .mock-bp-row.header {
     background-color: #f1f5f9;
