@@ -203,9 +203,12 @@ input[type="file"]#restore-file-input {
     color: #1abc9c !important;
 }
 
-/* Style for left top section of panel (search & brand area) */
+/* Style for left top section of panel (search & brand area) - Sticky to stay fixed on scroll */
 .wy-side-nav-search {
     background-color: #27ae60 !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000 !important;
 }
 
 .wy-side-nav-search > a, 
