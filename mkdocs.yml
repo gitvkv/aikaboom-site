@@ -11,9 +11,13 @@ markdown_extensions:
 extra_css:
     - stylesheets/extra.css
 extra_javascript:
+    - js/quiz_questions.js
+    - js/mock_test_questions.js
     - js/extra.js
 nav:
     - Home: index.md
+    - Practice Quiz: practice_quiz.md
+    - Exam Mock Test: mock_test.md
     - 1. Physical Realm:
         - Roadmap: 01_physical_realm/roadmap.md
         - 1 What Is a Computer? Core Architecture for Absolute Beginners:

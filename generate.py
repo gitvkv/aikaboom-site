@@ -294,6 +294,28 @@ Select any topic from the left sidebar to jump straight into a lesson, or click 
     index_path.write_text(index_content, encoding="utf-8")
     nav_tree.append({"Home": "index.md"})
     
+    # Write Practice Quiz placeholder
+    quiz_path = DOCS_DIR / "practice_quiz.md"
+    quiz_content = """# 🏆 NCA-AIIO Practice Exam Simulator
+
+Test your knowledge with this interactive 20-question practice simulator. Questions are designed to match the style, difficulty, and high-yield domains of the official NVIDIA-Certified Associate exam.
+
+<div id="quiz-container"></div>
+"""
+    quiz_path.write_text(quiz_content, encoding="utf-8")
+    nav_tree.append({"Practice Quiz": "practice_quiz.md"})
+    
+    # Write Exam Mock Test placeholder
+    mock_test_path = DOCS_DIR / "mock_test.md"
+    mock_test_content = """# 📝 NVIDIA NCA-AIIO Exam Mock Test Simulator
+
+Simulate the actual proctored exam experience. This simulator dynamically generates a randomized **50-question** exam from a high-quality pool of questions, aligned with the official weight distributions.
+
+<div id="mock-test-container"></div>
+"""
+    mock_test_path.write_text(mock_test_content, encoding="utf-8")
+    nav_tree.append({"Exam Mock Test": "mock_test.md"})
+    
     # Write CNAME for custom domain routing on GitHub Pages
     cname_path = DOCS_DIR / "CNAME"
     cname_path.write_text("aikaboom.com\n", encoding="utf-8")
@@ -468,6 +490,8 @@ Select any topic from the left sidebar to jump straight into a lesson, or click 
         "extra_css:",
         "    - stylesheets/extra.css",
         "extra_javascript:",
+        "    - js/quiz_questions.js",
+        "    - js/mock_test_questions.js",
         "    - js/extra.js",
         "nav:"
     ]
@@ -482,12 +506,20 @@ Select any topic from the left sidebar to jump straight into a lesson, or click 
     print("\nCopying static stylesheets and scripts...")
     dest_css = DOCS_DIR / "stylesheets" / "extra.css"
     dest_js = DOCS_DIR / "js" / "extra.js"
+    dest_quiz = DOCS_DIR / "js" / "quiz_questions.js"
+    dest_mock = DOCS_DIR / "js" / "mock_test_questions.js"
     
     dest_css.parent.mkdir(parents=True, exist_ok=True)
     dest_js.parent.mkdir(parents=True, exist_ok=True)
     
     shutil.copy2(THEME_SRC_DIR / "stylesheets" / "extra.css", dest_css)
     shutil.copy2(THEME_SRC_DIR / "js" / "extra.js", dest_js)
+    shutil.copy2(THEME_SRC_DIR / "js" / "quiz_questions.js", dest_quiz)
+    
+    # Copy mock test questions database if it exists
+    src_mock_path = THEME_SRC_DIR / "js" / "mock_test_questions.js"
+    if src_mock_path.exists():
+        shutil.copy2(src_mock_path, dest_mock)
     print("Assets successfully copied.")
     
     # Summary of Build
