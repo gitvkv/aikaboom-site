@@ -1,3 +1,8 @@
+/* Hide breadcrumbs navigation trail at the top of the reading panel */
+[aria-label="breadcrumbs navigation"] {
+    display: none !important;
+}
+
 /* Overrides to support 100% full-screen reading width (no max-width cap) */
 .wy-nav-content {
     max-width: 100% !important;
@@ -238,7 +243,7 @@ input[type="file"]#restore-file-input {
 .tts-player-container {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     gap: 15px;
     background-color: #f8f9fa;
     border: 1px solid #e2e8f0;
@@ -246,6 +251,10 @@ input[type="file"]#restore-file-input {
     padding: 10px 15px;
     margin-bottom: 20px;
     flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .tts-controls {
@@ -326,4 +335,86 @@ input[type="file"]#restore-file-input {
     border-left: 3px solid #1abc9c;
     padding-left: 8px;
     transition: background-color 0.3s ease, border-left-color 0.3s ease;
+}
+
+/* Tap-to-Jump interactive hover and cursor styles */
+.tts-jump-mode-active h1,
+.tts-jump-mode-active h2,
+.tts-jump-mode-active h3,
+.tts-jump-mode-active h4,
+.tts-jump-mode-active p,
+.tts-jump-mode-active li,
+.tts-jump-mode-active blockquote {
+    cursor: pointer !important;
+    transition: background-color 0.2s ease, outline 0.2s ease;
+}
+
+.tts-jump-mode-active h1:hover,
+.tts-jump-mode-active h2:hover,
+.tts-jump-mode-active h3:hover,
+.tts-jump-mode-active h4:hover,
+.tts-jump-mode-active p:hover,
+.tts-jump-mode-active li:hover,
+.tts-jump-mode-active blockquote:hover {
+    background-color: rgba(26, 188, 156, 0.04);
+    outline: 1px dashed rgba(26, 188, 156, 0.4);
+}
+
+/* Responsive TTS player styles for mobile screens */
+@media (max-width: 600px) {
+    .tts-player-container {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 8px 10px !important;
+        gap: 8px !important;
+    }
+    
+    .tts-controls {
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        flex-grow: 1 !important;
+        justify-content: space-between !important;
+        margin-right: 10px !important;
+    }
+    
+    .tts-btn-text {
+        display: none !important;
+    }
+    
+    .tts-btn {
+        flex: 1 !important;
+        max-width: 42px !important;
+        padding: 6px 0 !important;
+        justify-content: center !important;
+        min-width: 0 !important;
+    }
+    
+    .tts-btn-play {
+        min-width: 0 !important;
+    }
+    
+    .tts-speed-container {
+        display: flex !important;
+        align-items: center !important;
+        margin-left: auto !important;
+    }
+    
+    .tts-speed-container span {
+        display: none !important;
+    }
+    
+    .tts-speed-select {
+        padding: 4px 6px !important;
+        font-size: 0.9em !important;
+    }
+}
+
+/* Adjust sticky top offset for tablet/mobile screens where the top nav header is active */
+@media (max-width: 768px) {
+    .tts-player-container {
+        top: 50px !important;
+    }
 }
