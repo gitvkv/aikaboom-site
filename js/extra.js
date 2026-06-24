@@ -200,8 +200,11 @@ document.addEventListener("DOMContentLoaded", function () {
         ttsContainer.className = "tts-player-container";
         ttsContainer.innerHTML = `
             <div class="tts-controls">
-                <button class="tts-btn tts-btn-play" id="tts-play-btn">▶ Play</button>
-                <button class="tts-btn" id="tts-stop-btn" disabled>■ Stop</button>
+                <button class="tts-btn" id="tts-prev-btn" title="Previous Sentence">⏮</button>
+                <button class="tts-btn tts-btn-play" id="tts-play-btn">▶ <span class="tts-btn-text">Play</span></button>
+                <button class="tts-btn" id="tts-next-btn" title="Next Sentence">⏭</button>
+                <button class="tts-btn" id="tts-stop-btn" disabled>■ <span class="tts-btn-text">Stop</span></button>
+                <button class="tts-btn" id="tts-jump-btn" title="Toggle Tap-to-Jump Mode">🎯 <span class="tts-btn-text">Jump Mode</span></button>
             </div>
             <div class="tts-speed-container">
                 <span>Speed:</span>
@@ -212,7 +215,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     <option value="2" ${savedSpeed === "2" ? "selected" : ""}>2x</option>
                 </select>
             </div>
-            <div class="tts-status" id="tts-status">Speaker Idle</div>
         `;
 
         // Insert right after lesson tags
@@ -220,14 +222,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const playBtn = document.getElementById("tts-play-btn");
         const stopBtn = document.getElementById("tts-stop-btn");
+        const prevBtn = document.getElementById("tts-prev-btn");
+        const nextBtn = document.getElementById("tts-next-btn");
+        const jumpBtn = document.getElementById("tts-jump-btn");
         const speedSelect = document.getElementById("tts-speed");
-        const statusText = document.getElementById("tts-status");
+        const statusText = document.getElementById("tts-status") || {};
 
         let synth = window.speechSynthesis;
         let sentences = [];
         let currentSentenceIndex = 0;
         let isSpeaking = false;
         let isPaused = false;
+        let isJumpModeActive = false;
         let selectedVoice = null;
         let paragraphsElements = []; // Store references to highlight paragraphs
         let currentUtterance = null; // Store active utterance to clear event handlers during cancel
@@ -366,6 +372,80 @@ document.addEventListener("DOMContentLoaded", function () {
             synth.speak(utterance);
         }
 
+        function jumpToSentence(index) {
+            if (index >= 0 && index < sentences.length) {
+                currentSentenceIndex = index;
+                cancelCurrentSpeech();
+
+                // Force play from the selected sentence
+                isSpeaking = true;
+                isPaused = false;
+                playBtn.innerHTML = '⏸ <span class="tts-btn-text">Pause</span>';
+                playBtn.classList.add("active");
+                stopBtn.disabled = false;
+
+                if (isJumpModeActive) {
+                    statusText.textContent = "Reading (Jump Mode)...";
+                } else {
+                    statusText.textContent = "Reading...";
+                }
+
+                speakCurrentSentence();
+            }
+        }
+
+        function nextSentence() {
+            if (sentences.length === 0) {
+                prepareTextChunks();
+            }
+            if (sentences.length === 0) return;
+
+            if (currentSentenceIndex < sentences.length - 1) {
+                currentSentenceIndex++;
+                if (isSpeaking && !isPaused) {
+                    cancelCurrentSpeech();
+                    speakCurrentSentence();
+                } else {
+                    // Update highlight and scroll
+                    clearHighlights();
+                    const activeElement = paragraphsElements[currentSentenceIndex];
+                    if (activeElement) {
+                        activeElement.classList.add("tts-reading-highlight");
+                        const rect = activeElement.getBoundingClientRect();
+                        if (rect.top < 0 || rect.bottom > window.innerHeight) {
+                            activeElement.scrollIntoView({ behavior: "smooth", block: "center" });
+                        }
+                    }
+                }
+            }
+        }
+
+        function prevSentence() {
+            if (sentences.length === 0) {
+                prepareTextChunks();
+            }
+            if (sentences.length === 0) return;
+
+            if (currentSentenceIndex > 0) {
+                currentSentenceIndex--;
+                if (isSpeaking && !isPaused) {
+                    cancelCurrentSpeech();
+                    speakCurrentSentence();
+                } else {
+                    // Update highlight and scroll
+                    clearHighlights();
+                    const activeElement = paragraphsElements[currentSentenceIndex];
+                    if (activeElement) {
+                        activeElement.classList.add("tts-reading-highlight");
+                        const rect = activeElement.getBoundingClientRect();
+                        if (rect.top < 0 || rect.bottom > window.innerHeight) {
+                            activeElement.scrollIntoView({ behavior: "smooth", block: "center" });
+                        }
+                    }
+                }
+            }
+        }
+
         function startSpeech() {
             if (sentences.length === 0) {
                 prepareTextChunks();
@@ -379,12 +459,16 @@ document.addEventListener("DOMContentLoaded", function () {
             cancelCurrentSpeech(); // Stop any current reading safely
             isSpeaking = true;
             isPaused = false;
-            currentSentenceIndex = 0; // Always start fresh on Play click
             
-            playBtn.textContent = "⏸ Pause";
+            playBtn.innerHTML = '⏸ <span class="tts-btn-text">Pause</span>';
             playBtn.classList.add("active");
             stopBtn.disabled = false;
-            statusText.textContent = "Reading...";
+            
+            if (isJumpModeActive) {
+                statusText.textContent = "Reading (Jump Mode)...";
+            } else {
+                statusText.textContent = "Reading...";
+            }
 
             speakCurrentSentence();
         }
@@ -393,18 +477,28 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!synth) return;
             isPaused = true;
             synth.pause();
-            playBtn.textContent = "▶ Resume";
+            playBtn.innerHTML = '▶ <span class="tts-btn-text">Resume</span>';
             playBtn.classList.remove("active");
-            statusText.textContent = "Paused";
+            
+            if (isJumpModeActive) {
+                statusText.textContent = "Paused (Jump Mode)";
+            } else {
+                statusText.textContent = "Paused";
+            }
         }
 
         function resumeSpeech() {
             if (!synth) return;
             isPaused = false;
             synth.resume();
-            playBtn.textContent = "⏸ Pause";
+            playBtn.innerHTML = '⏸ <span class="tts-btn-text">Pause</span>';
             playBtn.classList.add("active");
-            statusText.textContent = "Reading...";
+            
+            if (isJumpModeActive) {
+                statusText.textContent = "Reading (Jump Mode)...";
+            } else {
+                statusText.textContent = "Reading...";
+            }
             
             // Web Speech API bug fallback: sometimes resume() doesn't fire correctly in Chrome
             // If the voice is still paused after 500ms, force-cancel and restart from active sentence
@@ -423,10 +517,15 @@ document.addEventListener("DOMContentLoaded", function () {
             clearHighlights();
             currentSentenceIndex = 0;
             
-            playBtn.textContent = "▶ Play";
+            playBtn.innerHTML = '▶ <span class="tts-btn-text">Play</span>';
             playBtn.classList.remove("active");
             stopBtn.disabled = true;
-            statusText.textContent = "Speaker Idle";
+            
+            if (isJumpModeActive) {
+                statusText.textContent = "🎯 Jump Mode Active: Tap any paragraph";
+            } else {
+                statusText.textContent = "Speaker Idle";
+            }
         }
 
         playBtn.addEventListener("click", function () {
@@ -441,6 +540,57 @@ document.addEventListener("DOMContentLoaded", function () {
 
         stopBtn.addEventListener("click", function () {
             stopSpeech();
+        });
+
+        prevBtn.addEventListener("click", function () {
+            prevSentence();
+        });
+
+        nextBtn.addEventListener("click", function () {
+            nextSentence();
+        });
+
+        jumpBtn.addEventListener("click", function () {
+            isJumpModeActive = !isJumpModeActive;
+            if (isJumpModeActive) {
+                jumpBtn.classList.add("active");
+                articleBody.classList.add("tts-jump-mode-active");
+                statusText.textContent = "🎯 Jump Mode Active: Tap any paragraph";
+            } else {
+                jumpBtn.classList.remove("active");
+                articleBody.classList.remove("tts-jump-mode-active");
+                if (isSpeaking && !isPaused) {
+                    statusText.textContent = "Reading...";
+                } else if (isSpeaking && isPaused) {
+                    statusText.textContent = "Paused";
+                } else {
+                    statusText.textContent = "Speaker Idle";
+                }
+            }
+        });
+
+        // Click handler on articleBody for Jump Mode
+        articleBody.addEventListener("click", function (event) {
+            if (!isJumpModeActive) return;
+
+            // Find the closest readable element
+            const targetElement = event.target.closest('h1, h2, h3, h4, p, li, blockquote');
+            if (targetElement && articleBody.contains(targetElement)) {
+                // Ignore clicks on links or buttons inside the element
+                if (event.target.tagName.toLowerCase() === 'a' || event.target.closest('a') || event.target.closest('button')) {
+                    return;
+                }
+
+                if (sentences.length === 0) {
+                    prepareTextChunks();
+                }
+
+                const targetIndex = paragraphsElements.indexOf(targetElement);
+                if (targetIndex !== -1) {
+                    event.preventDefault();
+                    jumpToSentence(targetIndex);
+                }
+            }
         });
 
         speedSelect.addEventListener("change", function () {
