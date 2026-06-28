@@ -483,6 +483,8 @@ Simulate the actual proctored exam experience. This simulator dynamically genera
         "theme:",
         "    name: readthedocs",
         "    highlightjs: true",
+        "    analytics:",
+        "        gtag: G-S6TG130NVW",
         "markdown_extensions:",
         "    - admonition",
         "    - toc:",

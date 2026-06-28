@@ -341,7 +341,6 @@ input[type="file"]#restore-file-input {
 }
 
 /* Tap-to-Jump interactive hover and cursor styles */
-.tts-jump-mode-active h1,
 .tts-jump-mode-active h2,
 .tts-jump-mode-active h3,
 .tts-jump-mode-active h4,
@@ -352,7 +351,6 @@ input[type="file"]#restore-file-input {
     transition: background-color 0.2s ease, outline 0.2s ease;
 }
 
-.tts-jump-mode-active h1:hover,
 .tts-jump-mode-active h2:hover,
 .tts-jump-mode-active h3:hover,
 .tts-jump-mode-active h4:hover,

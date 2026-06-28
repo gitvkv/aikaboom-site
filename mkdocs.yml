@@ -4,6 +4,8 @@ site_description: NVIDIA-Certified Associate AI Infrastructure and Operations St
 theme:
     name: readthedocs
     highlightjs: true
+    analytics:
+        gtag: G-S6TG130NVW
 markdown_extensions:
     - admonition
     - toc:
