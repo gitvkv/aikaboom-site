@@ -2182,6 +2182,20 @@
 </ul>
 <p>This prevents anyone on the network — including your IT department, internet service provider, or an attacker — from reading your traffic.</p>
 <hr />
+<h3 id="visual-representation-ssh-secure-connection-tunneling">📊 Visual Representation: SSH Secure Connection Tunneling<a class="headerlink" href="#visual-representation-ssh-secure-connection-tunneling" title="Permanent link">&para;</a></h3>
+<p>This diagram shows how a secure encrypted SSH tunnel is established over public networks using public-key cryptography.</p>
+<div class="mermaid">flowchart LR
+    Client["SSH Client"] --&gt;|Establish TCP Session| Network["Network Tunnel"]
+    Network --&gt;|Authenticate &amp; Key Exchange| Server["SSH Server (sshd)"]
+    Client --&gt;|"Encrypted Shell Session (AES/ChaCha)"| Server
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Client cpu;
+    class Server memory;
+    class Network system;</div>
 <h2 id="step-3-mac-ensuring-data-integrity">🛡️ Step 3: MAC — Ensuring Data Integrity<a class="headerlink" href="#step-3-mac-ensuring-data-integrity" title="Permanent link">&para;</a></h2>
 <p>Encryption alone doesn't prevent someone from <strong>modifying</strong> your data in transit. A <strong>Message Authentication Code (MAC)</strong> solves this.</p>
 <ul>
@@ -2260,9 +2274,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2181,16 +2181,29 @@
 </ol>
 <p>For example, if you use <strong><code>--gpus 'device=0,1'</code></strong>, the toolkit sets <strong><code>NVIDIA_VISIBLE_DEVICES=0,1</code></strong> inside the container. The container's applications then see only GPU 0 and GPU 1.</p>
 <hr />
+<h3 id="visual-representation-nvidia_visible_devices-gpu-filtering">📊 Visual Representation: NVIDIA_VISIBLE_DEVICES GPU Filtering<a class="headerlink" href="#visual-representation-nvidia_visible_devices-gpu-filtering" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how setting the NVIDIA_VISIBLE_DEVICES environment variable filters which physical GPUs are visible to a container.</p>
+<div class="mermaid">flowchart LR
+    Host["Host: GPU 0, GPU 1, GPU 2"] --&gt;|"NVIDIA_VISIBLE_DEVICES=0,2"| Filter{"Toolkit Filter"}
+    Filter --&gt; Container["Container: Sees GPU 0 &amp; GPU 2 (Excludes GPU 1)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Container cpu;
+    class Host memory;
+    class Filter system;</div>
 <h2 id="verifying-gpu-selection-inside-a-container">🕵️ Verifying GPU Selection Inside a Container<a class="headerlink" href="#verifying-gpu-selection-inside-a-container" title="Permanent link">&para;</a></h2>
 <p>After starting a container with any GPU selection method, you can confirm which GPUs are visible by running a simple check inside the container.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>nvidia-smi
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>nvidia-smi
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> Shows only the GPUs you selected. For example, with <strong><code>--gpus 'device=0,1'</code></strong>, you will see only GPU 0 and GPU 1 in the output, even if the host has four GPUs.</p>
 <p>You can also check the environment variable directly:</p>
-<p><strong>For reference:</strong></p>
-<pre><code>echo $NVIDIA_VISIBLE_DEVICES
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>echo $NVIDIA_VISIBLE_DEVICES
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> Displays the GPU IDs assigned to the container, such as <strong><code>0,1</code></strong> or <strong><code>all</code></strong> or <strong><code>2</code></strong> (meaning two GPUs were assigned, but the actual IDs are hidden).</p>
 <hr />
 <h2 id="best-practices-for-new-engineers">🧠 Best Practices for New Engineers<a class="headerlink" href="#best-practices-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2275,9 +2288,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

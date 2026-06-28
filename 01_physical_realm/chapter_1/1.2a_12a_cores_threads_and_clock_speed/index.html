@@ -2201,6 +2201,29 @@
 <p><strong>Scenario A</strong>: A 4-core CPU at 3.0 GHz with hyper-threading (8 threads) can handle 8 tasks at moderate speed.</p>
 <p><strong>Scenario B</strong>: A 2-core CPU at 4.5 GHz without hyper-threading (2 threads) handles 2 tasks very fast.</p>
 <p>For AI infrastructure, you often want <strong>more cores and threads</strong> (Scenario A) because AI workloads involve lots of parallel math.</p>
+<h3 id="visual-representation-cpu-core-and-thread-execution-model">📊 Visual Representation: CPU Core and Thread Execution Model<a class="headerlink" href="#visual-representation-cpu-core-and-thread-execution-model" title="Permanent link">&para;</a></h3>
+<p>This diagram illustrates how a clock generator drives a physical CPU core, which is split into logical threads to execute tasks like data preprocessing and batch inference in parallel.</p>
+<div class="mermaid">flowchart TD
+    Clock["Clock Generator (GHz)"]
+    Core["Physical CPU Core"]
+    T1["Logical Thread 1"]
+    T2["Logical Thread 2"]
+    TaskA["Task A: Data Preprocessing"]
+    TaskB["Task B: Batch Inference"]
+
+    Clock --&gt;|Drives cycles| Core
+    Core --&gt;|Divided via SMT/Hyper-Threading| T1
+    Core --&gt;|Divided via SMT/Hyper-Threading| T2
+    T1 --&gt;|Executes| TaskA
+    T2 --&gt;|Executes| TaskB
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Core cpu;
+    class T1,T2 memory;
+    class Clock,TaskA,TaskB system;</div>
 <hr />
 <h2 id="comparison-table-cores-vs-ghz">📊 Comparison Table: Cores vs. GHz<a class="headerlink" href="#comparison-table-cores-vs-ghz" title="Permanent link">&para;</a></h2>
 <table>
@@ -2288,9 +2311,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

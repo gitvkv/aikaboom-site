@@ -2180,6 +2180,18 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-nvidia-h100-sxm-vs-pcie-architectural-differences">📊 Visual Representation: NVIDIA H100 SXM vs. PCIe Architectural Differences<a class="headerlink" href="#visual-representation-nvidia-h100-sxm-vs-pcie-architectural-differences" title="Permanent link">&para;</a></h3>
+<p>This diagram contrasts the power and bandwidth characteristics of the SXM and PCIe form factors of the Hopper H100 GPU.</p>
+<div class="mermaid">flowchart LR
+    SXM["H100 SXM5 Form Factor"] --&gt;|Power: 700W| SXM_BW["NVLink Bandwidth: 900 GB/s"]
+    PCIe["H100 PCIe Form Factor"] --&gt;|Power: 350W| PCIe_BW["NVLink Bandwidth: 600 GB/s"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class SXM,PCIe cpu;
+    class SXM_BW,PCIe_BW memory;</div>
 <h2 id="detailed-breakdown-of-each-variant">🕵️ Detailed Breakdown of Each Variant<a class="headerlink" href="#detailed-breakdown-of-each-variant" title="Permanent link">&para;</a></h2>
 <h3 id="1-h100-sxm5-the-flagship">1️⃣ H100 SXM5 — The Flagship<a class="headerlink" href="#1-h100-sxm5-the-flagship" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2239,9 +2251,9 @@
 <hr />
 <h2 id="quick-reference-command-line-check-for-reference">🧪 Quick Reference: Command-Line Check (For Reference)<a class="headerlink" href="#quick-reference-command-line-check-for-reference" title="Permanent link">&para;</a></h2>
 <p>To identify which Hopper variant is installed in a system, use the NVIDIA System Management Interface (nvidia-smi).</p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-bash">nvidia-smi --query-gpu=name,memory.total,memory.bandwidth --format=csv
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>nvidia-smi<span class="w"> </span>--query-gpu<span class="o">=</span>name,memory.total,memory.bandwidth<span class="w"> </span>--format<span class="o">=</span>csv
+</code></pre></div></p>
 <p>📤 Output:<br />
 <strong>H100 SXM5, 81920 MiB, 3350 GB/s</strong><br />
 <strong>H100 PCIe, 81920 MiB, 2000 GB/s</strong><br />
@@ -2295,9 +2307,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2193,6 +2193,20 @@
 </ul>
 <p><strong>How engineers use them:</strong> You write C or Python code that calls these library functions. For instance, to create a custom packet filter, you would use <strong>libdoca_eth</strong> to capture packets and <strong>libdoca_flow</strong> to apply filtering rules. The libraries handle all the low-level DPU hardware interactions.</p>
 <hr />
+<h3 id="visual-representation-nvidia-doca-sdk-stack">📊 Visual Representation: NVIDIA DOCA SDK Stack<a class="headerlink" href="#visual-representation-nvidia-doca-sdk-stack" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the DOCA software stack, showing how DOCA APIs bridge user applications with hardware-accelerated DPU engines.</p>
+<div class="mermaid">flowchart LR
+    App["DOCA Application (Networking/Security)"] --&gt; API["DOCA Runtime APIs (e.g., DOCA Flow)"]
+    API --&gt; Driver["DPU Kernel Drivers"]
+    Driver --&gt; Hardware["BlueField ASIC Acceleration Engines"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class App cpu;
+    class API,Driver memory;
+    class Hardware system;</div>
 <h2 id="doca-services">🛠️ DOCA Services<a class="headerlink" href="#doca-services" title="Permanent link">&para;</a></h2>
 <p>DOCA services are background processes that run continuously on the DPU, managing infrastructure tasks automatically.</p>
 <h3 id="core-services">Core Services<a class="headerlink" href="#core-services" title="Permanent link">&para;</a></h3>
@@ -2309,9 +2323,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

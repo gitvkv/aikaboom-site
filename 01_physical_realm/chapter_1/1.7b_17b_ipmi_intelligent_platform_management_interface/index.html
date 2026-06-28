@@ -2156,6 +2156,30 @@
 <li><strong>SDR (Sensor Data Repository)</strong>: Contains information about all hardware sensors</li>
 <li><strong>FRU (Field Replaceable Unit)</strong>: Identifies hardware components (serial numbers, part numbers)</li>
 </ul>
+<h3 id="visual-representation-ipmi-client-bmc-architecture">📊 Visual Representation: IPMI Client-BMC Architecture<a class="headerlink" href="#visual-representation-ipmi-client-bmc-architecture" title="Permanent link">&para;</a></h3>
+<p>This diagram outlines the communication between an admin client using <code>ipmitool</code> and the target server's BMC, showing the protocols used and the internal subsystems queried.</p>
+<div class="mermaid">flowchart LR
+    Admin[Admin Console\nRuns ipmitool] --&gt;|UDP Port 623\nRMCP/RMCP+ Protocol| MgmtNIC[Dedicated Mgmt NIC]
+    MgmtNIC --&gt; BMC[BMC SoC]
+
+    subgraph Target Server [Target Server Hardware]
+        BMC &lt;--&gt; SDR[(Sensor Data Repository\nSDR)]
+        BMC &lt;--&gt; SEL[(System Event Log\nSEL)]
+        BMC &lt;--&gt; FRU[(Field Replaceable Unit\nFRU)]
+        BMC --&gt;|Chassis Control| Power[Power Relay / Fan PWM]
+    end
+
+    class Admin cpu;
+    class MgmtNIC system;
+    class BMC cpu;
+    class SDR memory;
+    class SEL memory;
+    class FRU memory;
+    class Power system;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;</div>
 <hr />
 <h2 id="ipmi-vs-traditional-in-band-management">📊 IPMI vs. Traditional In-Band Management<a class="headerlink" href="#ipmi-vs-traditional-in-band-management" title="Permanent link">&para;</a></h2>
 <table>
@@ -2279,9 +2303,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

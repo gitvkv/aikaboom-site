@@ -2165,6 +2165,20 @@
 </ul>
 <p><strong>The result:</strong> Downtime increases, AI training jobs are delayed, and engineers spend their time firefighting instead of building.</p>
 <hr />
+<h3 id="visual-representation-manual-multi-node-scaling-failures">📊 Visual Representation: Manual Multi-Node Scaling Failures<a class="headerlink" href="#visual-representation-manual-multi-node-scaling-failures" title="Permanent link">&para;</a></h3>
+<p>This flowchart demonstrates scaling limits: manual load balancing, IP tracking, and node failure restarts saturate administrative work.</p>
+<div class="mermaid">flowchart LR
+    ScaleUp["Scale to 100 Containers"] --&gt; IPTrack["1. Manual Port &amp; IP allocation conflicts"]
+    IPTrack --&gt; NodeFail["2. Host crashes (Manually restart containers)"]
+    NodeFail --&gt; Outage["Throughput Drop / Service Outages"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class IPTrack cpu;
+    class NodeFail memory;
+    class ScaleUp,Outage system;</div>
 <h2 id="the-upgrade-problem-updating-without-breaking-everything">🔄 The Upgrade Problem — Updating Without Breaking Everything<a class="headerlink" href="#the-upgrade-problem-updating-without-breaking-everything" title="Permanent link">&para;</a></h2>
 <p>AI workloads evolve constantly — new model versions, updated dependencies, or security patches require container updates. Doing this manually at scale is a nightmare.</p>
 <p><strong>Challenges with manual upgrades:</strong></p>
@@ -2282,9 +2296,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

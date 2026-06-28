@@ -2185,29 +2185,43 @@
 3. When the stripe count is reached, the pattern wraps back to OST 0.
 4. Each OST stores its chunk independently, allowing parallel reads.</p>
 <hr />
+<h3 id="visual-representation-lustre-file-striping-process">📊 Visual Representation: Lustre File Striping Process<a class="headerlink" href="#visual-representation-lustre-file-striping-process" title="Permanent link">&para;</a></h3>
+<p>This diagram shows how a large dataset file is striped across multiple Object Storage Targets to enable high-throughput parallel reads.</p>
+<div class="mermaid">flowchart LR
+    File["Large Dataset File (e.g. 100GB)"] --&gt;|Split into chunks| Striping{"Striping Engine"}
+    Striping --&gt;|Chunk 1| OST1["OST 1"]
+    Striping --&gt;|Chunk 2| OST2["OST 2"]
+    Striping --&gt;|Chunk 3| OST3["OST 3"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Striping cpu;
+    class File,OST1,OST2,OST3 memory;</div>
 <h2 id="checking-striping-configuration">🕵️ Checking Striping Configuration<a class="headerlink" href="#checking-striping-configuration" title="Permanent link">&para;</a></h2>
 <p>To see how a file is striped, engineers use the Lustre tool <strong>lfs</strong> (Lustre File System). Here is how you would check striping on a file:</p>
-<p><strong>For reference:</strong></p>
-<pre><code>lfs getstripe /path/to/your/file
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>lfs getstripe /path/to/your/file
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> This command shows the stripe count, stripe size, and a list of which OSTs hold each chunk of the file. For example, you might see output indicating a stripe count of 4, a stripe size of 1MB, and OST indices like 0, 1, 2, 3.</p>
 <p>To check the default striping for a directory:</p>
-<p><strong>For reference:</strong></p>
-<pre><code>lfs getstripe -d /path/to/directory
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>lfs getstripe -d /path/to/directory
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> This displays the default stripe count and stripe size that will be applied to any new files created in that directory.</p>
 <hr />
 <h2 id="setting-striping-for-ai-workloads">🎯 Setting Striping for AI Workloads<a class="headerlink" href="#setting-striping-for-ai-workloads" title="Permanent link">&para;</a></h2>
 <p>For AI training datasets, engineers typically want <strong>wide striping</strong> (high stripe count) to maximize parallel read throughput. Here is how to set it:</p>
 <p><strong>Setting default striping on a directory:</strong></p>
-<p><strong>For reference:</strong></p>
-<pre><code>lfs setstripe -c 8 -S 4M /path/to/dataset_directory
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>lfs setstripe -c 8 -S 4M /path/to/dataset_directory
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> No output on success. This sets the directory so that any new file created inside it will be striped across 8 OSTs with a stripe size of 4 megabytes.</p>
 <p><strong>Setting striping on a specific file at creation time:</strong></p>
-<p><strong>For reference:</strong></p>
-<pre><code>lfs setstripe -c 16 -S 1M /path/to/new_file.h5
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>lfs setstripe -c 16 -S 1M /path/to/new_file.h5
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> No output on success. The file will be striped across 16 OSTs with 1MB chunks.</p>
 <hr />
 <h2 id="best-practices-for-ai-engineers">🧠 Best Practices for AI Engineers<a class="headerlink" href="#best-practices-for-ai-engineers" title="Permanent link">&para;</a></h2>
@@ -2269,9 +2283,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2184,6 +2184,22 @@
 <li>✅ <strong>Linear scaling:</strong> Add more GPUs without degrading performance</li>
 </ul>
 <hr />
+<h3 id="visual-representation-rail-optimized-inter-switch-connectivity">📊 Visual Representation: Rail-Optimized Inter-Switch Connectivity<a class="headerlink" href="#visual-representation-rail-optimized-inter-switch-connectivity" title="Permanent link">&para;</a></h3>
+<p>This diagram details the rail-optimized network layout: GPUs at matching indexes across servers share dedicated switches to avoid inter-switch transit latency.</p>
+<div class="mermaid">flowchart LR
+    subgraph Servers["Symmetric Servers"]
+        S1_G1["Server 1: GPU 1"]
+        S2_G1["Server 2: GPU 1"]
+    end
+    S1_G1 --&gt;|Dedicated Rail 1| Switch1["Rail 1 Switch"]
+    S2_G1 --&gt;|Dedicated Rail 1| Switch1
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class S1_G1,S2_G1 cpu;
+    class Switch1 system;</div>
 <h2 id="rail-topology-vs-traditional-network-topologies">🕵️ Rail Topology vs. Traditional Network Topologies<a class="headerlink" href="#rail-topology-vs-traditional-network-topologies" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2235,11 +2251,11 @@
 <li>Total cables: <strong>8 rails × 64 servers = 512 cables</strong></li>
 </ul>
 <p><strong>Visual representation:</strong></p>
-<pre><code>Server 1 (GPU 0) ──── Cable ──── [Rail Switch 0] ──── Cable ──── Server 2 (GPU 0)
+<div class="highlight"><pre><span></span><code>Server 1 (GPU 0) ──── Cable ──── [Rail Switch 0] ──── Cable ──── Server 2 (GPU 0)
 Server 1 (GPU 1) ──── Cable ──── [Rail Switch 1] ──── Cable ──── Server 2 (GPU 1)
 Server 1 (GPU 2) ──── Cable ──── [Rail Switch 2] ──── Cable ──── Server 2 (GPU 2)
 ...and so on for all 8 GPUs
-</code></pre>
+</code></pre></div>
 <p>Each rail switch operates independently — they never talk to each other.</p>
 <hr />
 <h2 id="benefits-for-new-engineers">✅ Benefits for New Engineers<a class="headerlink" href="#benefits-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2299,9 +2315,11 @@ Server 1 (GPU 2) ──── Cable ──── [Rail Switch 2] ──── Ca
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

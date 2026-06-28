@@ -2223,6 +2223,38 @@
 </tr>
 </tbody>
 </table>
+<h3 id="visual-representation-suse-linux-enterprise-deployment-archetypes">📊 Visual Representation: SUSE Linux Enterprise Deployment Archetypes<a class="headerlink" href="#visual-representation-suse-linux-enterprise-deployment-archetypes" title="Permanent link">&para;</a></h3>
+<p>This diagram maps how the core SUSE Linux Enterprise operating system branches into two distinct specialized architectures depending on the enterprise workload requirements.</p>
+<div class="mermaid">flowchart TD
+    subgraph SLECore["SUSE Linux Enterprise (SLES) Core Operating System"]
+        direction TB
+        Core["Common Core: YaST, Zypper, AppArmor, Systemd"]
+    end
+
+    SLECore --&gt; HPCDir["HPC Deployment Path"]
+    SLECore --&gt; FinDir["Financial Deployment Path"]
+
+    subgraph HPCDir["HPC Deployment Path"]
+        direction TB
+        HPC_Ext["SUSE Linux Enterprise HPC"] --&gt; HPC_Tools["Warewulf &amp; Slurm (Scheduler)"]
+        HPC_Tools --&gt; HPC_Perf["MPI Parallelism &amp; High-Speed InfiniBand"]
+        HPC_Perf --&gt; HPC_HW["NVIDIA A100/H100 GPUs &amp; Lustre / GPFS"]
+    end
+
+    subgraph FinDir["Financial Deployment Path"]
+        direction TB
+        Fin_Ext["SLES Realtime &amp; High Availability"] --&gt; Fin_Tools["Live Patching &amp; AppArmor"]
+        Fin_Tools --&gt; Fin_Perf["Low-Latency Kernel &amp; High Availability Cluster"]
+        Fin_Perf --&gt; Fin_HW["Low-Latency NICs &amp; Redundant SSD Arrays"]
+    end
+
+    class HPC_HW,Fin_HW cpu;
+    class Core,HPC_Ext,Fin_Ext system;
+    class HPC_Tools,Fin_Tools,HPC_Perf,Fin_Perf memory;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;</div>
 <hr />
 <h2 id="key-tools-and-features-for-engineers">🕵️ Key Tools and Features for Engineers<a class="headerlink" href="#key-tools-and-features-for-engineers" title="Permanent link">&para;</a></h2>
 <h3 id="suse-linux-enterprise-server-sles-basics">🔧 SUSE Linux Enterprise Server (SLES) Basics<a class="headerlink" href="#suse-linux-enterprise-server-sles-basics" title="Permanent link">&para;</a></h3>
@@ -2232,14 +2264,14 @@
 <li><strong>SUSE Manager</strong>: A centralized tool for managing multiple SLE systems, patching, and compliance reporting.</li>
 </ul>
 <h3 id="important-packages-for-hpc-and-finance">📦 Important Packages for HPC and Finance<a class="headerlink" href="#important-packages-for-hpc-and-finance" title="Permanent link">&para;</a></h3>
-<p>For reference:</p>
-<pre><code>zypper install slurm
+<p>For reference:
+<div class="highlight"><pre><span></span><code>zypper install slurm
 zypper install mpi
 zypper install nvidia-driver-G06
 zypper install cuda-toolkit
 zypper install kernel-rt
 zypper install suse-hae
-</code></pre>
+</code></pre></div></p>
 <p>📤 Output: Each command installs the respective package for HPC or financial workloads.</p>
 <h3 id="security-hardening-steps">🛡️ Security Hardening Steps<a class="headerlink" href="#security-hardening-steps" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2295,9 +2327,11 @@ zypper install suse-hae
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

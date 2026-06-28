@@ -1989,6 +1989,8 @@
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#key-takeaway-for-engineers">🧠 Key Takeaway for Engineers</a>
     </li>
+    <li class="toctree-l4"><a class="reference internal" href="#visual-representation-nvidia-enterprise-gpu-specs-matrix">📊 Visual Representation: NVIDIA Enterprise GPU specs matrix</a>
+    </li>
     </ul>
                 </li>
                 <li class="toctree-l3"><a class="reference internal" href="../36.2b_362b_mig_partitioning/">36.2b MIG partitioning: profile selection for given workload scenarios</a>
@@ -2234,6 +2236,24 @@
 <li><strong>L40S</strong> is the specialist for inference and graphics — use it when you need efficiency and real-time performance.</li>
 </ul>
 <p>Choosing the right GPU comes down to understanding your workload's memory footprint, latency requirements, and budget. As you gain experience, you'll learn to match these architectures to specific job types, optimizing both performance and cost in your AI infrastructure.</p>
+<h3 id="visual-representation-nvidia-enterprise-gpu-specs-matrix">📊 Visual Representation: NVIDIA Enterprise GPU specs matrix<a class="headerlink" href="#visual-representation-nvidia-enterprise-gpu-specs-matrix" title="Permanent link">&para;</a></h3>
+<p>This diagram contrasts memory sizes, network speeds, and compute precision targets across modern enterprise GPU architectures.</p>
+<div class="mermaid">flowchart LR
+    subgraph H100["H100 Hopper"]
+        H100Spec["80GB HBM3 / DPX / Transformer Engine / NVLink v4"]
+    end
+    subgraph A100["A100 Ampere"]
+        A100Spec["80GB HBM2 / MIG / TF32 / NVLink v3"]
+    end
+    subgraph L40S["L40S Ada"]
+        L40SSpec["48GB GDDR6 / FP8 Tensor Cores / PCIe Gen4 Only"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class H100Spec,A100Spec,L40SSpec memory;</div>
               
             </div>
           </div><footer>
@@ -2273,9 +2293,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

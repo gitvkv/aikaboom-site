@@ -2184,6 +2184,19 @@
 </ul>
 <p>For Transformers, <strong>CSR</strong> is the most frequently used because it balances storage efficiency with computational speed.</p>
 <hr />
+<h3 id="visual-representation-cusparse-sparse-matrix-optimization">📊 Visual Representation: cuSPARSE sparse matrix optimization<a class="headerlink" href="#visual-representation-cusparse-sparse-matrix-optimization" title="Permanent link">&para;</a></h3>
+<p>This diagram displays cuSPARSE, managing memory footprint and math execution for sparse vector and matrix formats.</p>
+<div class="mermaid">flowchart LR
+    Sparse["Sparse Matrix (Mostly zeros)"] --&gt;|"Compressed Formats (CSR/CSC)"| cuSPARSE["cuSPARSE Library"]
+    cuSPARSE --&gt;|Optimized Math| GPUCores["GPU Execution Cores"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPUCores cpu;
+    class cuSPARSE memory;
+    class Sparse system;</div>
 <h2 id="how-cusparse-accelerates-transformer-inference">🕵️ How cuSPARSE Accelerates Transformer Inference<a class="headerlink" href="#how-cusparse-accelerates-transformer-inference" title="Permanent link">&para;</a></h2>
 <p>When you run a Transformer with sparse weights, the typical flow is:</p>
 <ol>
@@ -2205,8 +2218,8 @@
 <li><strong>PyTorch:</strong> The <code>torch.sparse</code> module can leverage cuSPARSE under the hood</li>
 <li><strong>cuBLAS:</strong> For mixed dense-sparse operations, cuBLAS can call cuSPARSE internally</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code># Conceptual Python example (not actual cuSPARSE API)
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code># Conceptual Python example (not actual cuSPARSE API)
 import torch
 
 # Create a sparse weight matrix (90% zeros)
@@ -2219,7 +2232,7 @@ sparse_csr = sparse_weights.to_sparse_csr()
 
 # Forward pass uses cuSPARSE SpMM
 output = torch.matmul(sparse_csr, input_tensor)
-</code></pre>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> The sparse multiplication runs ~10× faster than the dense version for 90% sparsity.</p>
 <hr />
 <h2 id="performance-considerations-for-engineers">📈 Performance Considerations for Engineers<a class="headerlink" href="#performance-considerations-for-engineers" title="Permanent link">&para;</a></h2>
@@ -2282,9 +2295,11 @@ output = torch.matmul(sparse_csr, input_tensor)
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

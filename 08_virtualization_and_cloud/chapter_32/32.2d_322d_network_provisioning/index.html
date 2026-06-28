@@ -2179,6 +2179,18 @@
 <li><strong>Monitoring</strong> — BCM continuously checks switch health and alerts on changes</li>
 </ol>
 <hr />
+<h3 id="visual-representation-bcm-multi-network-interface-provisioning">📊 Visual Representation: BCM Multi-Network interface provisioning<a class="headerlink" href="#visual-representation-bcm-multi-network-interface-provisioning" title="Permanent link">&para;</a></h3>
+<p>This diagram displays BCM network architecture, showing dedicated management and high-speed data networks.</p>
+<div class="mermaid">flowchart LR
+    Nodes["Cluster Nodes"] --&gt;|PXE / IPMI| Mgmt["Management network (1G/10G)"]
+    Nodes --&gt;|RoCE / IB RDMA| Data["High-speed data network (400G NDR)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Nodes cpu;
+    class Mgmt,Data memory;</div>
 <h2 id="fabric-setup-via-bcm">🌐 Fabric Setup via BCM<a class="headerlink" href="#fabric-setup-via-bcm" title="Permanent link">&para;</a></h2>
 <p>Fabric setup is about connecting all switches into a unified network. BCM handles this by:</p>
 <ul>
@@ -2286,9 +2298,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

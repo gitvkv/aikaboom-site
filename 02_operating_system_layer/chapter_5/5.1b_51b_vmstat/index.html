@@ -2229,6 +2229,23 @@
 <li><strong>free</strong> memory dropping while <strong>cache</strong> stays flat → memory leak or insufficient RAM</li>
 </ul>
 <hr />
+<h3 id="visual-representation-vmstat-resource-monitoring-points">📊 Visual Representation: vmstat Resource Monitoring Points<a class="headerlink" href="#visual-representation-vmstat-resource-monitoring-points" title="Permanent link">&para;</a></h3>
+<p>This diagram illustrates the flow of memory demands, swapping activity (si/so), and block I/O (bi/bo) monitored by the vmstat utility.</p>
+<div class="mermaid">flowchart LR
+    Workload["AI Workload / RAM Demand"] --&gt; RAM["System RAM (Active/Cached)"]
+    RAM --&gt;|Memory Pressure| SwapOut["Swap Out (so)"] --&gt; DiskSwap["Disk Swap Space"]
+    DiskSwap --&gt;|Memory Requested| SwapIn["Swap In (si)"] --&gt; RAM
+
+    RAM --&gt;|Buffer Cache Access| DiskIO["Storage Disk (bi/bo)"]
+    DiskIO --&gt;|Slow Storage| CPU_Wait["CPU I/O Wait (wa)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class CPU_Wait cpu;
+    class RAM,DiskSwap memory;
+    class Workload,SwapOut,SwapIn,DiskIO system;</div>
 <h2 id="practical-usage-pattern-for-ai-engineers">🛠️ Practical Usage Pattern for AI Engineers<a class="headerlink" href="#practical-usage-pattern-for-ai-engineers" title="Permanent link">&para;</a></h2>
 <p>To monitor your system in real time, you typically run vmstat with a delay interval. For example, to see statistics every 2 seconds:</p>
 <p><strong>Command format:</strong><br />
@@ -2303,9 +2320,11 @@ A table of columns (procs, memory, swap, io, system, cpu) updating every 2 secon
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

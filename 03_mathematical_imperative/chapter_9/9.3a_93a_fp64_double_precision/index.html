@@ -2161,6 +2161,20 @@
 - <strong>Mixed-precision training</strong> — Accumulating gradients in FP64 to prevent underflow
 - <strong>Scientific AI</strong> — Applications like physics-informed neural networks (PINNs) or computational fluid dynamics where high precision is required</p>
 <hr />
+<h3 id="visual-representation-double-precision-fp64-bit-breakdown">📊 Visual Representation: Double Precision (FP64) Bit Breakdown<a class="headerlink" href="#visual-representation-double-precision-fp64-bit-breakdown" title="Permanent link">&para;</a></h3>
+<p>This diagram details the bit allocations (1 sign bit, 11 exponent bits, 52 mantissa bits) of standard IEEE 754 Double Precision float formats.</p>
+<div class="mermaid">flowchart LR
+    Bit64["FP64 Word (64 Bits)"] --&gt; Sign["Sign (1 Bit)"]
+    Bit64 --&gt; Exp["Exponent (11 Bits)"]
+    Bit64 --&gt; Mantissa["Mantissa / Fraction (52 Bits)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Bit64 cpu;
+    class Exp,Mantissa memory;
+    class Sign system;</div>
 <h2 id="comparison-table-fp64-vs-other-common-formats">🕵️ Comparison Table: FP64 vs. Other Common Formats<a class="headerlink" href="#comparison-table-fp64-vs-other-common-formats" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2243,12 +2257,12 @@
 <hr />
 <h2 id="practical-example-checking-fp64-availability-on-an-nvidia-gpu">📈 Practical Example: Checking FP64 Availability on an NVIDIA GPU<a class="headerlink" href="#practical-example-checking-fp64-availability-on-an-nvidia-gpu" title="Permanent link">&para;</a></h2>
 <p>To verify if your GPU supports FP64 operations, you can use the NVIDIA System Management Interface (nvidia-smi) or a Python script.</p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-python">import torch
-print(torch.cuda.is_available())
-print(torch.cuda.get_device_name(0))
-print(&quot;FP64 support:&quot;, torch.cuda.get_device_capability(0))
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_name</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FP64 support:&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_capability</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+</code></pre></div></p>
 <p>📤 Output:<br />
 <strong>True</strong><br />
 <strong>NVIDIA A100-SXM4-80GB</strong><br />
@@ -2311,9 +2325,11 @@ print(&quot;FP64 support:&quot;, torch.cuda.get_device_capability(0))
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2195,21 +2195,33 @@
 <li><strong>Automatic sync</strong> — The GitOps operator detects the merge and applies changes to the live cluster</li>
 </ol>
 <hr />
+<h3 id="visual-representation-gitops-argocd-pull-reconcile-loop">📊 Visual Representation: GitOps ArgoCD pull reconcile loop<a class="headerlink" href="#visual-representation-gitops-argocd-pull-reconcile-loop" title="Permanent link">&para;</a></h3>
+<p>This flowchart shows how GitOps controllers monitor Git changes and apply configurations directly to Kubernetes APIs.</p>
+<div class="mermaid">flowchart LR
+    GitRepo["Git Repository (Source of Truth)"] --&gt;|Sync webhook| ArgoCD["ArgoCD GitOps Controller"]
+    ArgoCD --&gt;|Reconcile| APIServer["kube-apiserver API (Applies changes)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class ArgoCD cpu;
+    class GitRepo,APIServer memory;</div>
 <h2 id="real-world-example-adding-a-gpu-node">🕵️ Real-World Example: Adding a GPU Node<a class="headerlink" href="#real-world-example-adding-a-gpu-node" title="Permanent link">&para;</a></h2>
 <p>Here's how a typical GitOps workflow looks when adding a new GPU node to your AI cluster:</p>
 <p><strong>Step 1: You create a YAML file for the new node</strong></p>
-<p>For reference:</p>
-<pre><code class="language-yaml">apiVersion: cluster.nvidia.com/v1
-kind: Node
-metadata:
-  name: gpu-node-07
-spec:
-  gpuCount: 8
-  gpuModel: &quot;NVIDIA A100&quot;
-  cpuCores: 64
-  memoryGB: 512
-  network: &quot;100Gbps InfiniBand&quot;
-</code></pre>
+<p>For reference:
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster.nvidia.com/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Node</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gpu-node-07</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">gpuCount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
+<span class="w">  </span><span class="nt">gpuModel</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;NVIDIA</span><span class="nv"> </span><span class="s">A100&quot;</span>
+<span class="w">  </span><span class="nt">cpuCores</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">64</span>
+<span class="w">  </span><span class="nt">memoryGB</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512</span>
+<span class="w">  </span><span class="nt">network</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;100Gbps</span><span class="nv"> </span><span class="s">InfiniBand&quot;</span>
+</code></pre></div></p>
 <p><strong>Step 2: You commit this file to your Git repo</strong></p>
 <p>📤 Output: Commit message might be "Add GPU node 07 with 8x A100 for training workload"</p>
 <p><strong>Step 3: The GitOps operator detects the new file</strong></p>
@@ -2316,9 +2328,11 @@ spec:
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

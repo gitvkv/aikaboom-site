@@ -2160,6 +2160,17 @@
 </ul>
 <p><strong>Why engineers care</strong>: GDDR6 doubled bandwidth over GDDR5 while reducing power per bit. This means you can train larger models without overheating your data center.</p>
 <hr />
+<h3 id="visual-representation-gddr-generational-clock-and-voltage-progression">📊 Visual Representation: GDDR Generational Clock and Voltage Progression<a class="headerlink" href="#visual-representation-gddr-generational-clock-and-voltage-progression" title="Permanent link">&para;</a></h3>
+<p>This flowchart tracks the speed improvements, clock rates, and voltage reductions across GDDR5, GDDR6, and GDDR7 memory generations.</p>
+<div class="mermaid">flowchart LR
+    GDDR5["GDDR5 (8Gbps / 1.5V)"] --&gt; GDDR6["GDDR6 (16Gbps / 1.35V)"]
+    GDDR6 --&gt; GDDR7["GDDR7 (32Gbps / 1.2V / PAM3 Signaling)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GDDR5,GDDR6,GDDR7 memory;</div>
 <h2 id="gddr6x-the-speed-demon">🚀 GDDR6X — The Speed Demon<a class="headerlink" href="#gddr6x-the-speed-demon" title="Permanent link">&para;</a></h2>
 <p>GDDR6X is NVIDIA's latest innovation, debuting on the RTX 30 series (e.g., RTX 3080, 3090) and continuing in RTX 40 series.</p>
 <ul>
@@ -2299,9 +2310,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

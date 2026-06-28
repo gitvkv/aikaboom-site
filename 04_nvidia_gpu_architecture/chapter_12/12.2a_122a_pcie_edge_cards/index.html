@@ -2173,6 +2173,19 @@
 <p>⚠️ <strong>Warning</strong>: Never operate a passive-cooled GPU outside a server chassis with forced airflow. It will overheat in seconds.</p>
 </blockquote>
 <hr />
+<h3 id="visual-representation-pcie-edge-card-gpu-installation">📊 Visual Representation: PCIe Edge Card GPU Installation<a class="headerlink" href="#visual-representation-pcie-edge-card-gpu-installation" title="Permanent link">&para;</a></h3>
+<p>This diagram displays standard PCIe edge card installation on server motherboards, communicating via the PCIe slot bus.</p>
+<div class="mermaid">flowchart LR
+    GPU["PCIe GPU Edge Card"] --&gt;|Gold Finger Interface| Slot["Motherboard PCIe Slot"]
+    Slot --&gt;|PCIe Lanes x16| CPU["System CPU / PCH"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPU cpu;
+    class CPU memory;
+    class Slot system;</div>
 <h2 id="power-considerations-tdp-350w">🔋 Power Considerations (TDP ≤ 350W)<a class="headerlink" href="#power-considerations-tdp-350w" title="Permanent link">&para;</a></h2>
 <p><strong>TDP</strong> (Thermal Design Power) is the maximum heat the cooling system must dissipate. For these cards, it's <strong>350 watts or less</strong>.</p>
 <h3 id="power-delivery-comparison">📊 Power Delivery Comparison<a class="headerlink" href="#power-delivery-comparison" title="Permanent link">&para;</a></h3>
@@ -2321,9 +2334,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

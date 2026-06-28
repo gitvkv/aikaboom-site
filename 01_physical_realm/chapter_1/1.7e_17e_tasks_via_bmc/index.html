@@ -2206,6 +2206,26 @@
 - KVM-over-IP works even if the server has no operating system installed.
 - It requires a network connection to the BMC, not the server's main network.
 - Some BMCs support HTML5 viewers (no extra software needed), while others require Java or a dedicated client.</p>
+<h3 id="visual-representation-out-of-band-bmc-management-tasks">📊 Visual Representation: Out-of-Band BMC Management Tasks<a class="headerlink" href="#visual-representation-out-of-band-bmc-management-tasks" title="Permanent link">&para;</a></h3>
+<p>This diagram summarizes the four primary out-of-band management operations handled by the BMC and their direct effects on server hardware.</p>
+<div class="mermaid">flowchart TD
+    BMC[BMC Controller Interface] --&gt; Task1[Power Cycling]
+    BMC --&gt; Task2[Boot Order Management]
+    BMC --&gt; Task3[Sensor Monitoring]
+    BMC --&gt; Task4[KVM-over-IP Console]
+
+    Task1 --&gt;|Chassis Control| PowerRelay[PSU Relay: Hard/Soft Reset]
+    Task2 --&gt;|Firmware Override| UEFI[BIOS/UEFI Boot Order Settings]
+    Task3 --&gt;|Telemetry Query| Sensors[Fans, Temps, Volts Sensors]
+    Task4 --&gt;|Video Capture &amp; Input Injection| KVM[Direct Host Video &amp; Input Simulation]
+
+    class BMC cpu;
+    class Task1,Task2,Task3,Task4 system;
+    class PowerRelay,UEFI,Sensors,KVM system;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;</div>
 <hr />
 <h2 id="comparison-table-when-to-use-each-task">📋 Comparison Table — When to Use Each Task<a class="headerlink" href="#comparison-table-when-to-use-each-task" title="Permanent link">&para;</a></h2>
 <table>
@@ -2300,9 +2320,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

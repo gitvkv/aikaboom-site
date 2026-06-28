@@ -2280,6 +2280,37 @@
 </tr>
 </tbody>
 </table>
+<h3 id="visual-representation-power-redundancy-architectures-n1-vs-2n">📊 Visual Representation: Power Redundancy Architectures (N+1 vs. 2N)<a class="headerlink" href="#visual-representation-power-redundancy-architectures-n1-vs-2n" title="Permanent link">&para;</a></h3>
+<p>This diagram illustrates the physical wiring and source isolation differences between N+1 redundancy (shared power source) and 2N redundancy (isolated dual power paths).</p>
+<div class="mermaid">flowchart TD
+    subgraph NPlus1 "N+1 Redundancy: Shared Source"
+        SourceA[Single Power Source / PDU] --&gt; PSU1[Power Supply 1]
+        SourceA --&gt; PSU2[Power Supply 2]
+        SourceA --&gt; PSU3[Power Supply 3 (Backup)]
+        PSU1 --&gt; ServerLoad1[Server Logic &amp; GPUs]
+        PSU2 --&gt; ServerLoad1
+        PSU3 --&gt; ServerLoad1
+    end
+
+    subgraph TwoN "2N Redundancy: Isolated Sources"
+        SourceB1[Power Source A / PDU A] --&gt; PSU_A1[Power Supply A1]
+        SourceB1 --&gt; PSU_A2[Power Supply A2]
+        SourceB2[Power Source B / PDU B] --&gt; PSU_B1[Power Supply B1]
+        SourceB2 --&gt; PSU_B2[Power Supply B2]
+
+        PSU_A1 --&gt; ServerLoad2[Server Logic &amp; GPUs]
+        PSU_A2 --&gt; ServerLoad2
+        PSU_B1 --&gt; ServerLoad2
+        PSU_B2 --&gt; ServerLoad2
+    end
+
+    class SourceA,SourceB1,SourceB2 system;
+    class PSU1,PSU2,PSU3,PSU_A1,PSU_A2,PSU_B1,PSU_B2 memory;
+    class ServerLoad1,ServerLoad2 cpu;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;</div>
 <hr />
 <h2 id="how-to-identify-redundancy-in-a-server">🔌 How to Identify Redundancy in a Server<a class="headerlink" href="#how-to-identify-redundancy-in-a-server" title="Permanent link">&para;</a></h2>
 <p>For a new engineer, here is how you can check which configuration a server uses:</p>
@@ -2313,7 +2344,7 @@
 </ul>
 <hr />
 <h2 id="quick-reference-card">📝 Quick Reference Card<a class="headerlink" href="#quick-reference-card" title="Permanent link">&para;</a></h2>
-<pre><code>N+1 Configuration:
+<div class="highlight"><pre><span></span><code>N+1 Configuration:
   - N = Minimum PSUs needed
   - Install N+1 PSUs
   - All PSUs share load
@@ -2327,7 +2358,7 @@
   - Survives 1 PSU failure
   - Survives 1 circuit failure
   - Survives 1 UPS failure
-</code></pre>
+</code></pre></div>
 <hr />
 <p><em>Remember: Redundant power supplies are your first line of defense against unplanned downtime. Always design for the failure scenario that matters most to your workload.</em></p>
               
@@ -2369,9 +2400,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2183,8 +2183,8 @@
 <li><strong>StandardOutput</strong> and <strong>StandardError</strong> — Redirect logs to journald or a file.</li>
 </ul>
 <h3 id="example-structure-conceptual">📝 Example Structure (Conceptual)<a class="headerlink" href="#example-structure-conceptual" title="Permanent link">&para;</a></h3>
-<p>For reference:</p>
-<pre><code>[Unit]
+<p>For reference:
+<div class="highlight"><pre><span></span><code>[Unit]
 Description=AI Training Service for Model X
 After=network.target
 
@@ -2202,7 +2202,7 @@ StandardError=journal
 
 [Install]
 WantedBy=multi-user.target
-</code></pre>
+</code></pre></div></p>
 <p>📤 Output: When enabled and started, this service runs <strong>train.py</strong> as user <strong>aiuser</strong>, restarts automatically on failure, and logs all output to the systemd journal.</p>
 <hr />
 <h2 id="creating-a-watchdog-process-unit-file">🕵️ Creating a Watchdog Process Unit File<a class="headerlink" href="#creating-a-watchdog-process-unit-file" title="Permanent link">&para;</a></h2>
@@ -2216,8 +2216,8 @@ WantedBy=multi-user.target
 <li><strong>BindsTo</strong> — Optionally link the watchdog to the training service so they start/stop together.</li>
 </ul>
 <h3 id="example-structure-conceptual_1">📝 Example Structure (Conceptual)<a class="headerlink" href="#example-structure-conceptual_1" title="Permanent link">&para;</a></h3>
-<p>For reference:</p>
-<pre><code>[Unit]
+<p>For reference:
+<div class="highlight"><pre><span></span><code>[Unit]
 Description=Watchdog for AI Training Service
 BindsTo=ai-training.service
 After=ai-training.service
@@ -2234,7 +2234,7 @@ TimeoutStopSec=30
 
 [Install]
 WantedBy=multi-user.target
-</code></pre>
+</code></pre></div></p>
 <p>📤 Output: This watchdog starts after the <strong>ai-training.service</strong>, restarts on any exit, and limits restart attempts to 3 within 60 seconds.</p>
 <hr />
 <h2 id="comparison-training-service-vs-watchdog-service">📊 Comparison: Training Service vs. Watchdog Service<a class="headerlink" href="#comparison-training-service-vs-watchdog-service" title="Permanent link">&para;</a></h2>
@@ -2274,6 +2274,27 @@ WantedBy=multi-user.target
 </tr>
 </tbody>
 </table>
+<h3 id="visual-representation-training-service-watchdog-architecture">📊 Visual Representation: Training Service &amp; Watchdog Architecture<a class="headerlink" href="#visual-representation-training-service-watchdog-architecture" title="Permanent link">&para;</a></h3>
+<p>This block diagram illustrates how systemd co-manages a resource-heavy AI training service and its low-overhead health watchdog using systemd-specific bindings.</p>
+<div class="mermaid">flowchart TD
+    subgraph systemd["systemd Service Manager"]
+        direction TB
+        Trainer["ai-training.service\n- Run: train.py\n- Restart: on-failure\n- Env: CUDA_VISIBLE_DEVICES"]
+        Watchdog["ai-watchdog.service\n- Run: watchdog.sh\n- Restart: always\n- BindsTo: ai-training.service"]
+    end
+
+    Watchdog --&gt;|BindsTo &amp; Monitors| Trainer
+    Trainer --&gt;|Executes Compute on| GPU["NVIDIA GPU (CUDA Context)"]
+    Watchdog --&gt;|Logs Health to| Journald["systemd-journald Log Database"]
+    Trainer --&gt;|Logs Output to| Journald
+
+    class GPU cpu;
+    class Journald memory;
+    class Trainer,Watchdog system;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;</div>
 <hr />
 <h2 id="enabling-and-managing-your-custom-units">🚀 Enabling and Managing Your Custom Units<a class="headerlink" href="#enabling-and-managing-your-custom-units" title="Permanent link">&para;</a></h2>
 <p>Once you have written your unit files, you need to tell systemd about them and control their lifecycle.</p>
@@ -2337,9 +2358,11 @@ WantedBy=multi-user.target
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

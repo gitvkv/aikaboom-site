@@ -2171,6 +2171,20 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-storage-latency-components">📊 Visual Representation: Storage Latency Components<a class="headerlink" href="#visual-representation-storage-latency-components" title="Permanent link">&para;</a></h3>
+<p>This flowchart breaks down write latency: from the initial software system call down to physical NAND cell program operations.</p>
+<div class="mermaid">flowchart LR
+    App["Write Syscall"] --&gt; Driver["OS Device Driver (Queue latency)"]
+    Driver --&gt; Bus["PCIe Bus Transmission"]
+    Bus --&gt; Nand["NAND Flash Write (Cell Programming)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Driver cpu;
+    class App,Nand memory;
+    class Bus system;</div>
 <h2 id="what-causes-read-latency-in-ai-storage">🛠️ What Causes Read Latency in AI Storage?<a class="headerlink" href="#what-causes-read-latency-in-ai-storage" title="Permanent link">&para;</a></h2>
 <p>Several factors contribute to how long it takes to read data for inference:</p>
 <ul>
@@ -2184,9 +2198,9 @@
 <h2 id="how-to-measure-read-latency-for-inference">🕵️ How to Measure Read Latency for Inference<a class="headerlink" href="#how-to-measure-read-latency-for-inference" title="Permanent link">&para;</a></h2>
 <p>Engineers measure read latency using tools that time how long a storage read operation takes. A common approach is to simulate an inference request and record the time from request to data arrival.</p>
 <p><strong>Example measurement approach (for reference):</strong></p>
-<pre><code class="language-bash"># Simulate a small read from storage to measure latency
-time dd if=/path/to/model_weights.bin of=/dev/null bs=4k count=1
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="c1"># Simulate a small read from storage to measure latency</span>
+<span class="nb">time</span><span class="w"> </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>/path/to/model_weights.bin<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/null<span class="w"> </span><span class="nv">bs</span><span class="o">=</span>4k<span class="w"> </span><span class="nv">count</span><span class="o">=</span><span class="m">1</span>
+</code></pre></div>
 <p>📤 <strong>Output:</strong> real 0m0.002s (2 milliseconds) — this shows the read took 2 ms.</p>
 <p>For more precise measurements, engineers use specialized benchmarking tools that report latency in microseconds.</p>
 <hr />
@@ -2242,9 +2256,11 @@ time dd if=/path/to/model_weights.bin of=/dev/null bs=4k count=1
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

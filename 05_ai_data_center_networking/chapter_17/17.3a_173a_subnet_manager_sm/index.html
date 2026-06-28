@@ -2185,6 +2185,19 @@
 - A port can have multiple LIDs (for multipath routing), but one is the primary.
 - If the SM restarts, LIDs may change — which can break running applications.</p>
 <hr />
+<h3 id="visual-representation-subnet-manager-routing-table-generation">📊 Visual Representation: Subnet Manager Routing Table Generation<a class="headerlink" href="#visual-representation-subnet-manager-routing-table-generation" title="Permanent link">&para;</a></h3>
+<p>This flowchart displays how the InfiniBand Subnet Manager (SM) discovers network nodes, configures LIDs, and programs route tables.</p>
+<div class="mermaid">flowchart LR
+    SM["Subnet Manager (Active)"] --&gt; Discover["1. Discover Subnet Topology"]
+    Discover --&gt; Assign["2. Assign Local Identifier (LID) to ports"]
+    Assign --&gt; Program["3. Program Switch Forwarding Tables"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class SM cpu;
+    class Discover,Assign,Program system;</div>
 <h2 id="3-routing-table-computation-finding-the-best-paths">🛠️ 3. Routing Table Computation — Finding the Best Paths<a class="headerlink" href="#3-routing-table-computation-finding-the-best-paths" title="Permanent link">&para;</a></h2>
 <p>With the map and addresses ready, the SM calculates how data should flow between every pair of devices.</p>
 <ul>
@@ -2289,9 +2302,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

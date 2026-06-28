@@ -2174,6 +2174,20 @@ Each line contains six fields, separated by spaces or tabs:</p>
 - UUIDs (Universally Unique Identifiers) are permanent and tied to the filesystem itself.
 - To find a device's UUID: <strong>blkid /dev/sdb1</strong> (output: UUID="abc123...")</p>
 <hr />
+<h3 id="visual-representation-mounting-directory-tree-binding">📊 Visual Representation: Mounting Directory Tree Binding<a class="headerlink" href="#visual-representation-mounting-directory-tree-binding" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how a physical disk device partition is mapped to a mount point directory within the root file system tree.</p>
+<div class="mermaid">flowchart LR
+    Device["Disk Device (/dev/sdb1)"] --&gt;|mount command| MountPoint["Mount Point (/data/datasets)"]
+    Root["Root Directory (/)"] --&gt; MountPoint
+    fstab["/etc/fstab"] --&gt;|Automatic Mount| Device
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Device cpu;
+    class MountPoint,Root memory;
+    class fstab system;</div>
 <h2 id="persistent-mounts-surviving-reboots">🔄 Persistent Mounts — Surviving Reboots<a class="headerlink" href="#persistent-mounts-surviving-reboots" title="Permanent link">&para;</a></h2>
 <p>A <strong>persistent mount</strong> is a mount that is automatically recreated every time the system boots. This is achieved by adding an entry to <code>/etc/fstab</code>.</p>
 <p><strong>Why persistent mounts matter for AI:</strong>
@@ -2294,9 +2308,11 @@ Each line contains six fields, separated by spaces or tabs:</p>
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

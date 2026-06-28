@@ -2189,6 +2189,21 @@
 - <code>redis-cluster-2.redis.default.svc.cluster.local</code></p>
 <p>This stability means database applications can hardcode connection strings without worrying about Pod IP changes.</p>
 <hr />
+<h3 id="visual-representation-statefulset-ordered-identity-and-storage-bindings">📊 Visual Representation: StatefulSet Ordered Identity and Storage Bindings<a class="headerlink" href="#visual-representation-statefulset-ordered-identity-and-storage-bindings" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how StatefulSets bind unique ordinals and dedicated PersistentVolumeClaims to guarantee state preservation.</p>
+<div class="mermaid">flowchart LR
+    Stateful["StatefulSet Controller"] --&gt; Pod0["Pod-0 (Ordinal 0)"]
+    Stateful --&gt; Pod1["Pod-1 (Ordinal 1)"]
+    Pod0 --- PVC0["PVC-0 (Dedicated Disk)"]
+    Pod1 --- PVC1["PVC-1 (Dedicated Disk)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Pod0,Pod1 cpu;
+    class PVC0,PVC1 memory;
+    class Stateful system;</div>
 <h2 id="comparison-statefulset-vs-deployment">📊 Comparison: StatefulSet vs. Deployment<a class="headerlink" href="#comparison-statefulset-vs-deployment" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2235,8 +2250,8 @@
 <li><strong>Mount persistent storage</strong> — Each Pod gets its own PVC from the template.</li>
 <li><strong>Configure the database</strong> — Use the Pod's hostname (via environment variables or DNS) to set up replication.</li>
 </ol>
-<p><strong>For reference:</strong></p>
-<pre><code>apiVersion: v1
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>apiVersion: v1
 kind: Service
 metadata:
   name: mydb
@@ -2274,7 +2289,7 @@ spec:
       resources:
         requests:
           storage: 10Gi
-</code></pre>
+</code></pre></div></p>
 <p>📤 Output: When applied, three Pods (<code>mydb-0</code>, <code>mydb-1</code>, <code>mydb-2</code>) are created sequentially. Each Pod mounts its own 10GB persistent volume. The headless Service <code>mydb</code> allows Pods to discover each other via DNS.</p>
 <hr />
 <h2 id="key-takeaways-for-new-engineers">✅ Key Takeaways for New Engineers<a class="headerlink" href="#key-takeaways-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2340,9 +2355,11 @@ spec:
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

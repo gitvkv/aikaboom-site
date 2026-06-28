@@ -2193,16 +2193,28 @@
 <li><strong>Restart the DCGM-Exporter pods</strong> so they pick up the new configuration.</li>
 </ol>
 <hr />
+<h3 id="visual-representation-dcgm-exporter-metric-filter-csv-file">📊 Visual Representation: dcgm-exporter Metric filter CSV file<a class="headerlink" href="#visual-representation-dcgm-exporter-metric-filter-csv-file" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the metric configuration file structure used to filter which DCGM field IDs are exposed to Prometheus.</p>
+<div class="mermaid">flowchart LR
+    CSV["dcgm-metrics.csv File"] --&gt; Format["DCGM_FI_DEV_POWER_USAGE, gauge, power_draw"]
+    CSV --&gt; Format2["DCGM_FI_DEV_GPU_TEMP, gauge, temperature"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class CSV cpu;
+    class Format,Format2 memory;</div>
 <h2 id="example-selecting-only-key-metrics">🕵️ Example: Selecting Only Key Metrics<a class="headerlink" href="#example-selecting-only-key-metrics" title="Permanent link">&para;</a></h2>
 <p>Suppose you only want to monitor GPU utilization, memory usage, and temperature. Your custom ConfigMap would include only those three metrics.</p>
-<p>For reference:</p>
-<pre><code>- field_id: 100
+<p>For reference:
+<div class="highlight"><pre><span></span><code>- field_id: 100
   metric_name: DCGM_FI_DEV_GPU_UTIL
 - field_id: 150
   metric_name: DCGM_FI_DEV_MEM_COPY_UTIL
 - field_id: 155
   metric_name: DCGM_FI_DEV_GPU_TEMP
-</code></pre>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> After applying this ConfigMap, DCGM-Exporter will only report these three metrics to Prometheus, reducing data volume and simplifying your dashboards.</p>
 <hr />
 <h2 id="applying-changes-without-downtime">🔄 Applying Changes Without Downtime<a class="headerlink" href="#applying-changes-without-downtime" title="Permanent link">&para;</a></h2>
@@ -2261,9 +2273,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

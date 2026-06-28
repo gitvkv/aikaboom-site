@@ -2186,6 +2186,19 @@
 <li><strong>Speed</strong>: Modern NVIDIA GPUs use hardware-accelerated AllReduce via NVLink and NCCL</li>
 </ul>
 <hr />
+<h3 id="visual-representation-ring-all-reduce-communication-loop">📊 Visual Representation: Ring All-Reduce Communication Loop<a class="headerlink" href="#visual-representation-ring-all-reduce-communication-loop" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the Ring All-Reduce communication mechanism, showing how GPUs pass gradient chunks to adjacent devices in a ring to synchronize weights.</p>
+<div class="mermaid">flowchart LR
+    GPU1["GPU 1"] --&gt;|Send chunk A| GPU2["GPU 2"]
+    GPU2 --&gt;|Send chunk B| GPU3["GPU 3"]
+    GPU3 --&gt;|Send chunk C| GPU4["GPU 4"]
+    GPU4 --&gt;|Send chunk D| GPU1
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPU1,GPU2,GPU3,GPU4 cpu;</div>
 <h2 id="common-allreduce-algorithms">🕵️ Common AllReduce Algorithms<a class="headerlink" href="#common-allreduce-algorithms" title="Permanent link">&para;</a></h2>
 <p>Different algorithms exist to perform AllReduce efficiently. Here are the most common ones:</p>
 <table>
@@ -2255,25 +2268,25 @@
 <hr />
 <h2 id="practical-example-allreduce-in-action">🔧 Practical Example: AllReduce in Action<a class="headerlink" href="#practical-example-allreduce-in-action" title="Permanent link">&para;</a></h2>
 <p>For reference, here is a simplified Python example using <strong>NVIDIA's NCCL library</strong> (via PyTorch) to perform AllReduce on gradients:</p>
-<pre><code class="language-python">import torch
-import torch.distributed as dist
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.distributed</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dist</span>
 
-# Initialize the distributed environment
-dist.init_process_group(backend='nccl')
+<span class="c1"># Initialize the distributed environment</span>
+<span class="n">dist</span><span class="o">.</span><span class="n">init_process_group</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="s1">&#39;nccl&#39;</span><span class="p">)</span>
 
-# Each GPU has its own gradient tensor
-local_gradient = torch.tensor([0.2, 0.5, 0.3, 0.1])
+<span class="c1"># Each GPU has its own gradient tensor</span>
+<span class="n">local_gradient</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
 
-# Perform AllReduce (sum by default)
-dist.all_reduce(local_gradient, op=dist.ReduceOp.SUM)
+<span class="c1"># Perform AllReduce (sum by default)</span>
+<span class="n">dist</span><span class="o">.</span><span class="n">all_reduce</span><span class="p">(</span><span class="n">local_gradient</span><span class="p">,</span> <span class="n">op</span><span class="o">=</span><span class="n">dist</span><span class="o">.</span><span class="n">ReduceOp</span><span class="o">.</span><span class="n">SUM</span><span class="p">)</span>
 
-# Now every GPU has the sum of all gradients
-# To get the average, divide by the number of GPUs
-world_size = dist.get_world_size()
-average_gradient = local_gradient / world_size
+<span class="c1"># Now every GPU has the sum of all gradients</span>
+<span class="c1"># To get the average, divide by the number of GPUs</span>
+<span class="n">world_size</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">get_world_size</span><span class="p">()</span>
+<span class="n">average_gradient</span> <span class="o">=</span> <span class="n">local_gradient</span> <span class="o">/</span> <span class="n">world_size</span>
 
-print(f&quot;GPU {dist.get_rank()}: Average gradient = {average_gradient}&quot;)
-</code></pre>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GPU </span><span class="si">{</span><span class="n">dist</span><span class="o">.</span><span class="n">get_rank</span><span class="p">()</span><span class="si">}</span><span class="s2">: Average gradient = </span><span class="si">{</span><span class="n">average_gradient</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
 <p>📤 <strong>Output</strong>: Each GPU prints its rank and the same average gradient value (e.g., <code>GPU 0: Average gradient = tensor([0.275])</code>)</p>
 <hr />
 <h2 id="key-takeaways-for-new-engineers">🚀 Key Takeaways for New Engineers<a class="headerlink" href="#key-takeaways-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2326,9 +2339,11 @@ print(f&quot;GPU {dist.get_rank()}: Average gradient = {average_gradient}&quot;)
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

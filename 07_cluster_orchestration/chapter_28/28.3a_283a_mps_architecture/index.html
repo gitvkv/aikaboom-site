@@ -2212,6 +2212,20 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-multi-process-service-mps-control-server">📊 Visual Representation: Multi-Process Service (MPS) Control Server<a class="headerlink" href="#visual-representation-multi-process-service-mps-control-server" title="Permanent link">&para;</a></h3>
+<p>This diagram displays MPS: combining multiple application CUDA contexts into a single unified driver context to bypass overhead.</p>
+<div class="mermaid">flowchart LR
+    App1["CUDA Client App 1"] --&gt;|Submit instructions| MPSControl["MPS Control Daemon Server"]
+    App2["CUDA Client App 2"] --&gt;|Submit instructions| MPSControl
+    MPSControl --&gt;|Single Unified Context| GPUHardware["GPU Compute Engine"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class MPSControl cpu;
+    class GPUHardware memory;
+    class App1,App2 system;</div>
 <h2 id="when-to-use-mps-vs-other-options">🕵️ When to Use MPS vs. Other Options<a class="headerlink" href="#when-to-use-mps-vs-other-options" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
@@ -2296,9 +2310,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

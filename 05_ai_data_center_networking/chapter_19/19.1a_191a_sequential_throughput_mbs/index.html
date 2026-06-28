@@ -2177,8 +2177,8 @@
 <h2 id="how-to-measure-sequential-throughput">🛠️ How to Measure Sequential Throughput<a class="headerlink" href="#how-to-measure-sequential-throughput" title="Permanent link">&para;</a></h2>
 <p>You can measure sequential throughput using standard Linux tools. The key is to read a large file (or a large portion of a file) in one continuous pass.</p>
 <p><strong>For reference — example measurement command:</strong></p>
-<pre><code>dd if=/path/to/large/training/file of=/dev/null bs=1M count=1024
-</code></pre>
+<div class="highlight"><pre><span></span><code>dd if=/path/to/large/training/file of=/dev/null bs=1M count=1024
+</code></pre></div>
 <p><strong>📤 Output:</strong><br />
 <code>1073741824 bytes (1.1 GB, 1.0 GiB) copied, 2.345 s, 458 MB/s</code></p>
 <ul>
@@ -2190,6 +2190,18 @@
 <p>💡 <strong>Tip:</strong> Always test with a file size that matches your typical training batch size. If your GPU consumes 2 GB per batch, test with a 2 GB file.</p>
 </blockquote>
 <hr />
+<h3 id="visual-representation-sequential-storage-throughput-flow">📊 Visual Representation: Sequential Storage Throughput Flow<a class="headerlink" href="#visual-representation-sequential-storage-throughput-flow" title="Permanent link">&para;</a></h3>
+<p>This diagram displays sequential throughput execution, showing how large contiguous blocks are read from flash storage directly into host RAM.</p>
+<div class="mermaid">flowchart LR
+    Flash["Contiguous Block storage"] --&gt; Controller["SSD Flash Controller"]
+    Controller --&gt;|Direct Stream| HostRAM["Host System RAM"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Controller cpu;
+    class Flash,HostRAM memory;</div>
 <h2 id="what-affects-sequential-throughput-in-ai-infrastructure">🕵️ What Affects Sequential Throughput in AI Infrastructure<a class="headerlink" href="#what-affects-sequential-throughput-in-ai-infrastructure" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Storage media type</strong> — NVMe SSDs deliver 3–7 GB/s per drive; HDDs deliver 150–250 MB/s</li>
@@ -2258,9 +2270,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

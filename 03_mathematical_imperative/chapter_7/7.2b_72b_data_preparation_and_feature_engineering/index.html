@@ -2151,6 +2151,20 @@
 2. Tokenized: <em>["AI", "is", "powerful"]</em>
 3. Mapped to IDs: <em>[45, 12, 89]</em></p>
 <hr />
+<h3 id="visual-representation-feature-engineering-and-dataset-tokenization">📊 Visual Representation: Feature Engineering and Dataset Tokenization<a class="headerlink" href="#visual-representation-feature-engineering-and-dataset-tokenization" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how cleaned datasets are preprocessed through tokenization, normalization, and tensor encoding before execution.</p>
+<div class="mermaid">flowchart LR
+    Cleaned["Cleaned Text/Data"] --&gt; Tokenize["Tokenization &amp; Normalization"]
+    Tokenize --&gt; Tensor["Tensor Conversion (Padding/Masking)"]
+    Tensor --&gt; DataLoader["PyTorch DataLoader (Batching)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Tokenize cpu;
+    class Cleaned,Tensor memory;
+    class DataLoader system;</div>
 <h2 id="normalization-scaling-data-to-a-common-range">📊 Normalization — Scaling Data to a Common Range<a class="headerlink" href="#normalization-scaling-data-to-a-common-range" title="Permanent link">&para;</a></h2>
 <p>Normalization adjusts numerical values so they fall within a similar scale—typically between 0 and 1, or with a mean of 0 and standard deviation of 1. This prevents features with larger numeric ranges (e.g., income in thousands) from dominating features with smaller ranges (e.g., age in years).</p>
 <p><strong>Two common methods:</strong></p>
@@ -2189,26 +2203,26 @@
 <li><strong>Normalize</strong> (for numbers) — scale features to a common range</li>
 <li><strong>Feed into model</strong> — ready for training or inference</li>
 </ol>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-python"># Example: preprocessing, tokenization, and normalization in Python
-import pandas as pd
-from sklearn.preprocessing import MinMaxScaler
-from transformers import AutoTokenizer
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Example: preprocessing, tokenization, and normalization in Python</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinMaxScaler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoTokenizer</span>
 
-# Load raw data
-data = pd.DataFrame({'text': ['AI is cool', 'ML is fun'], 'value': [100, 250]})
+<span class="c1"># Load raw data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;AI is cool&#39;</span><span class="p">,</span> <span class="s1">&#39;ML is fun&#39;</span><span class="p">],</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">250</span><span class="p">]})</span>
 
-# Preprocessing: remove missing values
-data = data.dropna()
+<span class="c1"># Preprocessing: remove missing values</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 
-# Tokenization: convert text to token IDs
-tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
-tokens = tokenizer(data['text'].tolist(), padding=True, truncation=True)
+<span class="c1"># Tokenization: convert text to token IDs</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s1">&#39;bert-base-uncased&#39;</span><span class="p">)</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">padding</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">truncation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-# Normalization: scale numerical values to 0-1
-scaler = MinMaxScaler()
-data['value_normalized'] = scaler.fit_transform(data[['value']])
-</code></pre>
+<span class="c1"># Normalization: scale numerical values to 0-1</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;value_normalized&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;value&#39;</span><span class="p">]])</span>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> The data now contains cleaned text, token IDs, and normalized numerical values—ready for model training.</p>
 <hr />
 <h2 id="common-pitfalls-for-new-engineers">🕵️ Common Pitfalls for New Engineers<a class="headerlink" href="#common-pitfalls-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2286,9 +2300,11 @@ data['value_normalized'] = scaler.fit_transform(data[['value']])
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

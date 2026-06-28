@@ -2207,52 +2207,66 @@
 - Inference workloads (Pods can start independently)
 - Batch processing that tolerates partial execution</p>
 <hr />
+<h3 id="visual-representation-gang-scheduling-all-or-nothing-pod-bindings">📊 Visual Representation: Gang Scheduling All-or-Nothing pod bindings<a class="headerlink" href="#visual-representation-gang-scheduling-all-or-nothing-pod-bindings" title="Permanent link">&para;</a></h3>
+<p>This diagram displays Gang scheduling: suspending execution until the minimum pod replica count (minMember) is available in the queue.</p>
+<div class="mermaid">flowchart LR
+    Queue["Job Queue (Requested: 4 Worker Pods)"] --&gt; Check{"Is minMember (4) available?"}
+    Check --&gt;|No| Pending["Suspend all workers (Wait)"]
+    Check --&gt;|Yes| Schedule["Schedule all 4 Worker pods concurrently"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Check cpu;
+    class Schedule memory;
+    class Pending system;</div>
 <h2 id="implementing-gang-scheduling-in-kubernetes">🔧 Implementing Gang Scheduling in Kubernetes<a class="headerlink" href="#implementing-gang-scheduling-in-kubernetes" title="Permanent link">&para;</a></h2>
 <h3 id="option-1-volcano-scheduler-recommended-by-nvidia">Option 1: Volcano Scheduler (Recommended by NVIDIA)<a class="headerlink" href="#option-1-volcano-scheduler-recommended-by-nvidia" title="Permanent link">&para;</a></h3>
 <p>Volcano is a Kubernetes batch scheduling system that supports Gang scheduling natively.</p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-yaml">apiVersion: scheduling.volcano.sh/v1beta1
-kind: PodGroup
-metadata:
-  name: training-job-podgroup
-spec:
-  minMember: 8
-  queue: default
-</code></pre>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-yaml">apiVersion: batch.volcano.sh/v1alpha1
-kind: Job
-metadata:
-  name: nemo-training-job
-spec:
-  minAvailable: 8
-  schedulerName: volcano
-  tasks:
-    - replicas: 8
-      name: worker
-      template:
-        spec:
-          containers:
-            - name: nemo-worker
-              image: nvcr.io/nvidia/nemo:latest
-              resources:
-                limits:
-                  nvidia.com/gpu: 2
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">scheduling.volcano.sh/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PodGroup</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">training-job-podgroup</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">minMember</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
+<span class="w">  </span><span class="nt">queue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+</code></pre></div></p>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">batch.volcano.sh/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Job</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nemo-training-job</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">minAvailable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
+<span class="w">  </span><span class="nt">schedulerName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">volcano</span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">worker</span>
+<span class="w">      </span><span class="nt">template</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nemo-worker</span>
+<span class="w">              </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nvcr.io/nvidia/nemo:latest</span>
+<span class="w">              </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">                  </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> The job will only start when all 8 Pods (each requesting 2 GPUs) are scheduled.</p>
 <hr />
 <h3 id="option-2-nvidia-gpu-operator-with-mig-and-scheduling">Option 2: NVIDIA GPU Operator with MIG and Scheduling<a class="headerlink" href="#option-2-nvidia-gpu-operator-with-mig-and-scheduling" title="Permanent link">&para;</a></h3>
 <p>The NVIDIA GPU Operator integrates with Volcano or other schedulers to enable Gang scheduling for GPU workloads.</p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-yaml">apiVersion: nvidia.com/v1
-kind: ClusterPolicy
-metadata:
-  name: gpu-cluster-policy
-spec:
-  scheduling:
-    gangScheduling: enabled
-    scheduler: volcano
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nvidia.com/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterPolicy</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gpu-cluster-policy</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">scheduling</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">gangScheduling</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enabled</span>
+<span class="w">    </span><span class="nt">scheduler</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">volcano</span>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> Gang scheduling is enabled cluster-wide for GPU jobs.</p>
 <hr />
 <h2 id="testing-gang-scheduling-behavior">🧪 Testing Gang Scheduling Behavior<a class="headerlink" href="#testing-gang-scheduling-behavior" title="Permanent link">&para;</a></h2>
@@ -2262,9 +2276,9 @@ spec:
 <li><strong>Monitor job logs</strong> — look for simultaneous startup messages from all workers</li>
 <li><strong>Use kubectl</strong> to inspect Pod phases — no Pod should be in "Pending" while others are "Running"</li>
 </ol>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-bash">kubectl get podgroup training-job-podgroup -o yaml
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>podgroup<span class="w"> </span>training-job-podgroup<span class="w"> </span>-o<span class="w"> </span>yaml
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> Look for <code>status.phase: Running</code> and <code>status.running</code> equal to <code>minMember</code>.</p>
 <hr />
 <h2 id="common-pitfalls-and-troubleshooting">🚨 Common Pitfalls and Troubleshooting<a class="headerlink" href="#common-pitfalls-and-troubleshooting" title="Permanent link">&para;</a></h2>
@@ -2357,9 +2371,11 @@ spec:
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2128,7 +2128,6 @@
 </div>
 
 <p>When you work with AI infrastructure, you will frequently need to edit configuration files, review logs, or modify scripts directly on remote servers. Many of these servers run minimal Linux installations without graphical editors. <strong>Vim</strong> is the text editor you will encounter most often — it is powerful, lightweight, and available on virtually every Linux system. This section covers the absolute minimum Vim skills you need to survive: understanding its modes, navigating a file, inserting text, saving changes, and quitting.</p>
-<hr />
 <h2 id="understanding-vim-modes">🧭 Understanding Vim Modes<a class="headerlink" href="#understanding-vim-modes" title="Permanent link">&para;</a></h2>
 <p>Vim is a <strong>modal editor</strong>, meaning its behavior changes depending on which mode you are in. This is the most important concept to grasp. There are three essential modes:</p>
 <ul>
@@ -2217,10 +2216,25 @@
 <li>Type <strong>:wq</strong> and press <strong>Enter</strong> to save and quit.</li>
 </ol>
 <p>If you make a mistake and want to exit without saving, type <strong>:q!</strong> instead.</p>
+<h3 id="visual-representation-vim-mode-transitions">📊 Visual Representation: Vim Mode Transitions<a class="headerlink" href="#visual-representation-vim-mode-transitions" title="Permanent link">&para;</a></h3>
+<p>This horizontal flowchart shows how to transition between Vim's three primary operating modes (Normal, Insert, and Command-Line) and the keystrokes used to switch between them.</p>
+<div class="mermaid">flowchart LR
+    Normal["Normal Mode&lt;br&gt;(Navigation &amp; Commands)"] --&gt;|i / a / o| Insert["Insert Mode&lt;br&gt;(Text Editing)"]
+    Insert --&gt;|Esc| Normal
+    Normal --&gt;|:| Cmd["Command-Line Mode&lt;br&gt;(Save :w / Quit :q)"]
+    Cmd --&gt;|Esc / Enter| Normal
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Normal cpu;
+    class Insert memory;
+    class Cmd system;</div>
 <hr />
 <h2 id="quick-reference-card">🧭 Quick Reference Card<a class="headerlink" href="#quick-reference-card" title="Permanent link">&para;</a></h2>
 <p>For reference, here is a compact summary of the essential commands:</p>
-<pre><code>Normal Mode Navigation:
+<div class="highlight"><pre><span></span><code>Normal Mode Navigation:
   h j k l    — move left, down, up, right
   gg         — go to top of file
   G          — go to bottom of file
@@ -2237,7 +2251,7 @@ Save and Quit (from Normal Mode, type : then the command):
   :q         — quit
   :wq        — save and quit
   :q!        — quit without saving
-</code></pre>
+</code></pre></div>
 <p>📤 <strong>Output:</strong> No output is shown for these commands — Vim simply performs the action and returns to Normal Mode or exits.</p>
 <hr />
 <h2 id="final-tips-for-survival">🧭 Final Tips for Survival<a class="headerlink" href="#final-tips-for-survival" title="Permanent link">&para;</a></h2>
@@ -2286,9 +2300,11 @@ Save and Quit (from Normal Mode, type : then the command):
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

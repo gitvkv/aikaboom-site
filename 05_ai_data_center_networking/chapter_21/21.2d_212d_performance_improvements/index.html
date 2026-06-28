@@ -2175,6 +2175,19 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-gds-vs-standard-path-bandwidth-scaling">📊 Visual Representation: GDS vs. Standard Path Bandwidth Scaling<a class="headerlink" href="#visual-representation-gds-vs-standard-path-bandwidth-scaling" title="Permanent link">&para;</a></h3>
+<p>This diagram contrasts standard POSIX read bandwidth limits with the linear scaling throughput enabled by GDS.</p>
+<div class="mermaid">flowchart LR
+    POSIX["Standard POSIX Path"] --&gt;|Saturates at CPU limit| Bandwidth1["Max 10-15 GB/s"]
+    GDS["GPUDirect Storage (GDS)"] --&gt;|Scales with PCIe lanes| Bandwidth2["Max 50-90+ GB/s (Multi-NIC/SSD)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Bandwidth2 cpu;
+    class Bandwidth1 memory;
+    class POSIX,GDS system;</div>
 <h2 id="enabling-gds-in-your-environment">🛠️ Enabling GDS in Your Environment<a class="headerlink" href="#enabling-gds-in-your-environment" title="Permanent link">&para;</a></h2>
 <p>To achieve the 2x throughput improvement, engineers need to:</p>
 <ul>
@@ -2257,9 +2270,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

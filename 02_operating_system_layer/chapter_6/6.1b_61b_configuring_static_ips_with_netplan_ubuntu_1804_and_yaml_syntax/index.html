@@ -2219,9 +2219,24 @@
 - Storage arrays
 - Monitoring systems</p>
 <hr />
+<h3 id="visual-representation-netplan-configuration-and-application-flow">📊 Visual Representation: Netplan Configuration and Application Flow<a class="headerlink" href="#visual-representation-netplan-configuration-and-application-flow" title="Permanent link">&para;</a></h3>
+<p>This flowchart shows the Netplan architecture where a YAML configuration is generated and processed by netplan generate to configure network renderer daemons.</p>
+<div class="mermaid">flowchart LR
+    yaml["YAML Config&lt;br&gt;(/etc/netplan/*.yaml)"] --&gt; generate["netplan generate"]
+    generate --&gt; renderer{"netplan apply (Renderer)"}
+    renderer --&gt;|systemd-networkd| netd["systemd-networkd Daemon"]
+    renderer --&gt;|NetworkManager| nm["NetworkManager Daemon"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class renderer cpu;
+    class yaml memory;
+    class generate,netd,nm system;</div>
 <h2 id="example-netplan-configuration-for-a-static-ip">🧩 Example Netplan Configuration for a Static IP<a class="headerlink" href="#example-netplan-configuration-for-a-static-ip" title="Permanent link">&para;</a></h2>
 <p>Below is a reference example of a netplan YAML file that sets a static IP on an interface named <strong>ens33</strong>.</p>
-<pre><code>For reference:
+<div class="highlight"><pre><span></span><code>For reference:
 network:
   version: 2
   renderer: networkd
@@ -2235,7 +2250,7 @@ network:
         addresses:
           - 8.8.8.8
           - 8.8.4.4
-</code></pre>
+</code></pre></div>
 <p>📤 <strong>Output:</strong> After applying, the interface <strong>ens33</strong> will have the static IP <strong>192.168.1.100</strong> with a subnet mask of <strong>255.255.255.0</strong> (the <strong>/24</strong> notation), a default gateway of <strong>192.168.1.1</strong>, and DNS servers <strong>8.8.8.8</strong> and <strong>8.8.4.4</strong>.</p>
 <hr />
 <h2 id="breaking-down-the-yaml-keys">🔍 Breaking Down the YAML Keys<a class="headerlink" href="#breaking-down-the-yaml-keys" title="Permanent link">&para;</a></h2>
@@ -2322,9 +2337,11 @@ network:
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

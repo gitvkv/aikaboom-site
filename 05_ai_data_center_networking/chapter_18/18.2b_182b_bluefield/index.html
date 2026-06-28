@@ -2183,6 +2183,20 @@
 <li><strong>AI Acceleration</strong> — The DPU can pre-process data (e.g., decompress, filter) before sending it to GPUs</li>
 </ul>
 <hr />
+<h3 id="visual-representation-bluefield-3-dpu-hardware-layout">📊 Visual Representation: BlueField-3 DPU Hardware Layout<a class="headerlink" href="#visual-representation-bluefield-3-dpu-hardware-layout" title="Permanent link">&para;</a></h3>
+<p>This diagram details the BlueField-3 DPU, integrating ConnectX-7 network engines, 16 ARM A78AE processor cores, and DDR5 memory.</p>
+<div class="mermaid">flowchart LR
+    Ports["Dual 400Gb/s Ports"] --- CX7["ConnectX-7 Network Engine"]
+    CX7 --- ARM["16 x ARM Cortex-A78AE Cores"]
+    ARM --- DDR5["On-board DDR5 Memory"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class ARM,CX7 cpu;
+    class DDR5 memory;
+    class Ports system;</div>
 <h2 id="real-world-example-ai-training-cluster">🕵️ Real-World Example: AI Training Cluster<a class="headerlink" href="#real-world-example-ai-training-cluster" title="Permanent link">&para;</a></h2>
 <p>Imagine you have a server with 8 NVIDIA GPUs and one BlueField-3 DPU. Without the DPU:</p>
 <ul>
@@ -2283,9 +2297,11 @@ Use <strong>nvidia-smi</strong> to see DPU utilization, memory usage, and networ
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

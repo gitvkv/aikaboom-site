@@ -2291,6 +2291,40 @@ To restore it: <strong>systemctl unmask some-problematic-service</strong></p>
 </tr>
 </tbody>
 </table>
+<h3 id="visual-representation-systemd-service-state-transitions">📊 Visual Representation: systemd Service State Transitions<a class="headerlink" href="#visual-representation-systemd-service-state-transitions" title="Permanent link">&para;</a></h3>
+<p>This flowchart visualizes the state machine of a systemd unit as it transitions between active, inactive, enabled, disabled, and masked states under systemctl commands.</p>
+<div class="mermaid">flowchart TD
+    subgraph States["Service States"]
+        Indis["Inactive &amp; Disabled\n(Stopped, no boot-start)"]
+        Inen["Inactive &amp; Enabled\n(Stopped, will boot-start)"]
+        Actdis["Active &amp; Disabled\n(Running, no boot-start)"]
+        Acten["Active &amp; Enabled\n(Running, will boot-start)"]
+        Msk["Masked\n(Linked to /dev/null - permanently blocked)"]
+    end
+
+    Indis --&gt;|systemctl start| Actdis
+    Actdis --&gt;|systemctl stop| Indis
+
+    Indis --&gt;|systemctl enable| Inen
+    Inen --&gt;|systemctl disable| Indis
+
+    Actdis --&gt;|systemctl enable| Acten
+    Acten --&gt;|systemctl disable| Actdis
+
+    Inen --&gt;|systemctl start| Acten
+    Acten --&gt;|systemctl stop| Inen
+
+    Indis --&gt;|systemctl mask| Msk
+    Inen --&gt;|systemctl mask| Msk
+    Msk --&gt;|systemctl unmask| Indis
+
+    class Acten,Actdis cpu;
+    class Indis,Inen memory;
+    class Msk system;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;</div>
 <hr />
 <p><em>Master these six commands, and you will have full control over the services that power your AI infrastructure.</em></p>
               
@@ -2332,9 +2366,11 @@ To restore it: <strong>systemctl unmask some-problematic-service</strong></p>
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

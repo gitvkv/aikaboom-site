@@ -2188,19 +2188,19 @@
 <li><strong>Hyperparameters</strong>: Key-value pairs passed to your training script</li>
 </ul>
 <p><strong>Example configuration (for reference):</strong></p>
-<pre><code class="language-python">from sagemaker import Estimator
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sagemaker</span><span class="w"> </span><span class="kn">import</span> <span class="n">Estimator</span>
 
-estimator = Estimator(
-    image_uri='123456789012.dkr.ecr.us-west-2.amazonaws.com/my-custom-training:latest',
-    role='arn:aws:iam::123456789012:role/SageMakerRole',
-    instance_count=2,
-    instance_type='ml.p3.2xlarge',
-    output_path='s3://my-bucket/models/',
-    hyperparameters={'epochs': 10, 'batch-size': 32}
-)
+<span class="n">estimator</span> <span class="o">=</span> <span class="n">Estimator</span><span class="p">(</span>
+    <span class="n">image_uri</span><span class="o">=</span><span class="s1">&#39;123456789012.dkr.ecr.us-west-2.amazonaws.com/my-custom-training:latest&#39;</span><span class="p">,</span>
+    <span class="n">role</span><span class="o">=</span><span class="s1">&#39;arn:aws:iam::123456789012:role/SageMakerRole&#39;</span><span class="p">,</span>
+    <span class="n">instance_count</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.p3.2xlarge&#39;</span><span class="p">,</span>
+    <span class="n">output_path</span><span class="o">=</span><span class="s1">&#39;s3://my-bucket/models/&#39;</span><span class="p">,</span>
+    <span class="n">hyperparameters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;epochs&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;batch-size&#39;</span><span class="p">:</span> <span class="mi">32</span><span class="p">}</span>
+<span class="p">)</span>
 
-estimator.fit({'training': 's3://my-bucket/training-data/'})
-</code></pre>
+<span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">({</span><span class="s1">&#39;training&#39;</span><span class="p">:</span> <span class="s1">&#39;s3://my-bucket/training-data/&#39;</span><span class="p">})</span>
+</code></pre></div>
 <p>📤 <strong>Output</strong>: SageMaker creates a training job named like <strong>my-training-job-2025-04-10-14-30-00</strong> and logs progress to CloudWatch.</p>
 <hr />
 <h2 id="what-is-endpoint-deployment">📊 What Is Endpoint Deployment?<a class="headerlink" href="#what-is-endpoint-deployment" title="Permanent link">&para;</a></h2>
@@ -2239,6 +2239,20 @@ estimator.fit({'training': 's3://my-bucket/training-data/'})
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-amazon-sagemaker-training-job-pipeline">📊 Visual Representation: Amazon SageMaker training job pipeline<a class="headerlink" href="#visual-representation-amazon-sagemaker-training-job-pipeline" title="Permanent link">&para;</a></h3>
+<p>This flowchart maps out SageMaker training: pulling container images, mounting S3 dataset folders, and running training runs.</p>
+<div class="mermaid">flowchart LR
+    Submit["Submit SageMaker Training Job"] --&gt; Pull["1. Pull Docker Image &amp; Allocate GPU Node"]
+    Pull --&gt; Mount["2. Mount S3 dataset paths"]
+    Mount --&gt; Exec["3. Execute training &amp; upload checkpoints to S3"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Pull cpu;
+    class Mount memory;
+    class Submit,Exec system;</div>
 <h2 id="monitoring-and-managing-endpoints">🕵️ Monitoring and Managing Endpoints<a class="headerlink" href="#monitoring-and-managing-endpoints" title="Permanent link">&para;</a></h2>
 <p>Once deployed, endpoints require ongoing observation:</p>
 <ul>
@@ -2351,9 +2365,11 @@ estimator.fit({'training': 's3://my-bucket/training-data/'})
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

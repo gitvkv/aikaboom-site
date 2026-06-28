@@ -2198,6 +2198,22 @@
 - <strong>Up to 2x faster training</strong> on compatible hardware
 - <strong>No significant accuracy loss</strong> for most models</p>
 <hr />
+<h3 id="visual-representation-fp8-formats-e4m3-vs-e5m2">📊 Visual Representation: FP8 Formats: E4M3 vs. E5M2<a class="headerlink" href="#visual-representation-fp8-formats-e4m3-vs-e5m2" title="Permanent link">&para;</a></h3>
+<p>This diagram contrasts the two standard 8-bit float structures: E4M3 (best for weights/activations) and E5M2 (best for gradients).</p>
+<div class="mermaid">flowchart LR
+    subgraph E4M3["E4M3 Format (Higher Precision)"]
+        Word1["8-Bit FP8"] --&gt; E1["4 Exponent Bits"] --- M1["3 Mantissa Bits"]
+    end
+    subgraph E5M2["E5M2 Format (Higher Dynamic Range)"]
+        Word2["8-Bit FP8"] --&gt; E2["5 Exponent Bits"] --- M2["2 Mantissa Bits"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Word1,Word2 memory;
+    class E1,E2,M1,M2 system;</div>
 <h2 id="why-two-formats-the-precision-vs-range-tradeoff">🕵️ Why Two Formats? The Precision vs Range Tradeoff<a class="headerlink" href="#why-two-formats-the-precision-vs-range-tradeoff" title="Permanent link">&para;</a></h2>
 <p>Think of it like a camera lens:
 - <strong>E4M3</strong> is like a high-resolution lens with a narrow zoom range — great for close-up details
@@ -2216,7 +2232,7 @@
 <hr />
 <h2 id="example-fp8-in-action">🧪 Example: FP8 in Action<a class="headerlink" href="#example-fp8-in-action" title="Permanent link">&para;</a></h2>
 <p>For reference, here's how you might enable FP8 training in PyTorch using NVIDIA's Transformer Engine:</p>
-<pre><code>import transformer_engine.pytorch as te
+<div class="highlight"><pre><span></span><code>import transformer_engine.pytorch as te
 from transformer_engine.common.recipe import Format, DelayedScaling
 
 # Enable FP8 with automatic format selection
@@ -2228,7 +2244,7 @@ fp8_recipe = DelayedScaling(
 
 # Wrap your model with FP8 support
 model = te.Linear(in_features=512, out_features=256)
-</code></pre>
+</code></pre></div>
 <p><strong>📤 Output:</strong> The model now uses FP8 automatically during training, with no manual format switching required.</p>
 <hr />
 <h2 id="key-takeaways-for-new-engineers">🎯 Key Takeaways for New Engineers<a class="headerlink" href="#key-takeaways-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2288,9 +2304,11 @@ model = te.Linear(in_features=512, out_features=256)
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

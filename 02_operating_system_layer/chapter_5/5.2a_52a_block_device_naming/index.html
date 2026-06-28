@@ -2193,6 +2193,23 @@
 <li><strong>/dev/nvme1n1p1</strong> — first partition on the second NVMe drive</li>
 </ul>
 <hr />
+<h3 id="visual-representation-linux-block-device-naming-conventions">📊 Visual Representation: Linux Block Device Naming Conventions<a class="headerlink" href="#visual-representation-linux-block-device-naming-conventions" title="Permanent link">&para;</a></h3>
+<p>This diagram details the device path naming schemes for SCSI/SATA drives, NVMe drives, and legacy IDE disks in Linux.</p>
+<div class="mermaid">flowchart LR
+    dev["/dev/ (Devices)"] --&gt; SCSI["/dev/sdX (SATA/SCSI)"]
+    dev --&gt; NVMe["/dev/nvmeXnY (NVMe SSD)"]
+    dev --&gt; IDE["/dev/hdX (Legacy IDE)"]
+
+    SCSI --&gt; sdap1["/dev/sda1 (Partition 1)"]
+    NVMe --&gt; nvme0n1p1["/dev/nvme0n1p1 (Controller 0, Namespace 1, Partition 1)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class dev cpu;
+    class SCSI,NVMe,IDE memory;
+    class sdap1,nvme0n1p1 system;</div>
 <h2 id="comparison-table-sdx-vs-nvmex">🕵️ Comparison Table: sdX vs nvmeX<a class="headerlink" href="#comparison-table-sdx-vs-nvmex" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2273,14 +2290,14 @@
 <li>Another useful tool is <strong>fdisk -l</strong> (run with sudo) to list detailed partition tables for all disks.</li>
 </ul>
 <p>For reference, a typical <strong>lsblk</strong> output might look like:</p>
-<pre><code>NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+<div class="highlight"><pre><span></span><code>NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
 sda           8:0    0 465.8G  0 disk
 ├─sda1        8:1    0   512M  0 part /boot/efi
 ├─sda2        8:2    0   100G  0 part /
 └─sda3        8:3    0 365.3G  0 part /data
 nvme0n1     259:0    0   1.8T  0 disk
 └─nvme0n1p1 259:1    0   1.8T  0 part /fastdata
-</code></pre>
+</code></pre></div>
 <p>📤 Output: The output shows <strong>sda</strong> with three partitions and <strong>nvme0n1</strong> with one partition.</p>
 <hr />
 <h2 id="key-takeaways-for-new-engineers">✅ Key Takeaways for New Engineers<a class="headerlink" href="#key-takeaways-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2331,9 +2348,11 @@ nvme0n1     259:0    0   1.8T  0 disk
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

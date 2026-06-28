@@ -2126,7 +2126,6 @@
 </div>
 
 <p>When managing AI infrastructure, you'll frequently need to control who can read, write, or execute files and directories. This is critical for protecting model weights, training data, and configuration files. The three core commands for managing these permissions are <strong>chmod</strong> (change mode), <strong>chown</strong> (change owner), and <strong>chgrp</strong> (change group). This section explains how each works in simple, practical terms.</p>
-<hr />
 <h2 id="understanding-linux-permissions-basics">⚙️ Understanding Linux Permissions Basics<a class="headerlink" href="#understanding-linux-permissions-basics" title="Permanent link">&para;</a></h2>
 <p>Every file and directory in Linux has three permission categories:</p>
 <ul>
@@ -2175,6 +2174,20 @@
 <li><strong>chmod 644 training_data.csv</strong> — Owner gets 6 (4+2+0 = rw-), group gets 4 (r--), others gets 4 (r--)</li>
 <li><strong>chmod 700 private_key.pem</strong> — Owner gets full access (rwx), group and others get nothing (---)</li>
 </ul>
+<h3 id="visual-representation-file-attributes-administration-commands">📊 Visual Representation: File Attributes Administration Commands<a class="headerlink" href="#visual-representation-file-attributes-administration-commands" title="Permanent link">&para;</a></h3>
+<p>This flowchart summarizes how the three administration commands (<code>chmod</code>, <code>chown</code>, and <code>chgrp</code>) modify different aspects of file security and ownership attributes.</p>
+<div class="mermaid">flowchart LR
+    target["Target File:&lt;br&gt;model_weights.pt"] --&gt; chmod["chmod 640&lt;br&gt;(Modify Access Mode / Permissions)"]
+    target --&gt; chown["chown admin&lt;br&gt;(Change User Owner)"]
+    target --&gt; chgrp["chgrp gpu-users&lt;br&gt;(Change Group Owner)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class target cpu;
+    class chmod memory;
+    class chown,chgrp system;</div>
 <hr />
 <h2 id="chown-changing-file-owner">👤 chown — Changing File Owner<a class="headerlink" href="#chown-changing-file-owner" title="Permanent link">&para;</a></h2>
 <p><strong>chown</strong> changes which user owns a file or directory. This is important when transferring files between team members or setting up shared AI resources.</p>
@@ -2277,9 +2290,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

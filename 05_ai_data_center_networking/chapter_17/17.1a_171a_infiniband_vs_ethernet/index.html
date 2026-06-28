@@ -2203,6 +2203,22 @@
 - Additional hardware support</p>
 <p>InfiniBand achieves losslessness <strong>out of the box</strong> with no extra configuration.</p>
 <hr />
+<h3 id="visual-representation-infiniband-vs-ethernet-network-architecture">📊 Visual Representation: InfiniBand vs. Ethernet Network Architecture<a class="headerlink" href="#visual-representation-infiniband-vs-ethernet-network-architecture" title="Permanent link">&para;</a></h3>
+<p>This diagram contrasts Native InfiniBand (lossless, credit-based) with traditional Ethernet (lossy, collision/buffer drops).</p>
+<div class="mermaid">flowchart LR
+    subgraph IB["InfiniBand"]
+        C1["Credit-Based Flow Control"] --- L1["Lossless Fabric"]
+    end
+    subgraph Eth["Ethernet"]
+        C2["Buffer Drops / Retries"] --- L2["Lossy Fabric"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class C1,L1 cpu;
+    class C2,L2 memory;</div>
 <h2 id="practical-implications-for-ai-clusters">🛠️ Practical Implications for AI Clusters<a class="headerlink" href="#practical-implications-for-ai-clusters" title="Permanent link">&para;</a></h2>
 <h3 id="for-infiniband-channel-based-lossless">For InfiniBand (Channel-Based, Lossless)<a class="headerlink" href="#for-infiniband-channel-based-lossless" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2276,9 +2292,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

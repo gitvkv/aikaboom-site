@@ -2170,23 +2170,37 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-pod-spec-gpu-resource-request">📊 Visual Representation: Pod spec GPU resource Request<a class="headerlink" href="#visual-representation-pod-spec-gpu-resource-request" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how setting resources.limits.nvidia.com/gpu triggers the device plugin to expose specific GPU cards.</p>
+<div class="mermaid">flowchart LR
+    PodSpec["Pod Spec Resources"] --&gt; Limit["limits: nvidia.com/gpu: 1"]
+    Limit --&gt; Kubelet["kubelet Device Manager check"]
+    Kubelet --&gt;|Inject env| Env["NVIDIA_VISIBLE_DEVICES=gpu0"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Limit cpu;
+    class Kubelet memory;
+    class Env system;</div>
 <h2 id="real-world-example-training-a-large-model">📊 Real-World Example: Training a Large Model<a class="headerlink" href="#real-world-example-training-a-large-model" title="Permanent link">&para;</a></h2>
 <p>Imagine you are running a distributed training job for a large language model (LLM). Your training script expects 8 GPUs. Your pod specification would include:</p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-yaml">apiVersion: v1
-kind: Pod
-metadata:
-  name: llm-training-pod
-spec:
-  containers:
-  - name: trainer
-    image: nvidia/cuda:12.2-base
-    resources:
-      limits:
-        nvidia.com/gpu: 8
-      requests:
-        nvidia.com/gpu: 8
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llm-training-pod</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trainer</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nvidia/cuda:12.2-base</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
+<span class="w">      </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> The pod will only be scheduled on a node with at least 8 free GPUs. If no such node exists, the pod stays in <strong>Pending</strong> state.</p>
 <hr />
 <h2 id="common-pitfalls-for-new-engineers">🕵️ Common Pitfalls for New Engineers<a class="headerlink" href="#common-pitfalls-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2246,9 +2260,11 @@ spec:
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

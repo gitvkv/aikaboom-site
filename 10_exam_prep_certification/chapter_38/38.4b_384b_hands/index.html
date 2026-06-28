@@ -2159,6 +2159,19 @@
 </ul>
 <p>After setup, test that Docker can see your GPU by running a simple container that lists GPU devices.</p>
 <hr />
+<h3 id="visual-representation-hands-on-lab-gpu-configuration">📊 Visual Representation: Hands-On Lab GPU configuration<a class="headerlink" href="#visual-representation-hands-on-lab-gpu-configuration" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the hands-on lab stack: deploying the container toolkit inside local Linux environments to practice CLI commands.</p>
+<div class="mermaid">flowchart LR
+    Host["Linux Dev Server"] --&gt; Toolkit["NVIDIA Container Toolkit"]
+    Toolkit --&gt; Docker["Docker run --gpus all (Practice environment)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Toolkit cpu;
+    class Docker memory;
+    class Host system;</div>
 <h2 id="step-3-pull-and-run-a-practice-ai-container">🧪 Step 3: Pull and Run a Practice AI Container<a class="headerlink" href="#step-3-pull-and-run-a-practice-ai-container" title="Permanent link">&para;</a></h2>
 <p>Use a pre-built container from NVIDIA's catalog to validate your environment.</p>
 <ul>
@@ -2264,9 +2277,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

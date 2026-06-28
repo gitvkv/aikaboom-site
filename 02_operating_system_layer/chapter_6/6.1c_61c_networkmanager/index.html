@@ -2199,6 +2199,20 @@
 <li>Return to the main menu and select <strong>"Activate a connection"</strong> to apply changes immediately</li>
 </ol>
 <hr />
+<h3 id="visual-representation-networkmanager-control-interfaces">📊 Visual Representation: NetworkManager Control Interfaces<a class="headerlink" href="#visual-representation-networkmanager-control-interfaces" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how NetworkManager is controlled via CLI (nmcli) or GUI/TUI (nmtui) to modify active device connections.</p>
+<div class="mermaid">flowchart LR
+    nmcli["nmcli (Command Line)"] --&gt; NM["NetworkManager Daemon"]
+    nmtui["nmtui (Terminal UI)"] --&gt; NM
+    NM --&gt; Devices["Physical NICs / Connections"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NM cpu;
+    class Devices memory;
+    class nmcli,nmtui system;</div>
 <h2 id="comparison-nmcli-vs-nmtui">📊 Comparison: nmcli vs nmtui<a class="headerlink" href="#comparison-nmcli-vs-nmtui" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2319,9 +2333,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

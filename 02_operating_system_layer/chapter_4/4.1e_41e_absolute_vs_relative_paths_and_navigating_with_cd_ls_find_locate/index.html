@@ -2179,6 +2179,24 @@
 </tr>
 </tbody>
 </table>
+<h3 id="visual-representation-absolute-vs-relative-path-resolution">📊 Visual Representation: Absolute vs. Relative Path Resolution<a class="headerlink" href="#visual-representation-absolute-vs-relative-path-resolution" title="Permanent link">&para;</a></h3>
+<p>This flowchart contrasts absolute path resolution (starting from the system root <code>/</code>) and relative path resolution (originating from the current working directory).</p>
+<div class="mermaid">flowchart LR
+    subgraph AbsolutePath["Absolute Path (Starts from Root)"]
+        root["/ (Root)"] --&gt; home["home/"] --&gt; user["ai_user/"] --&gt; datasets["datasets/"] --&gt; fileA["training_data.csv"]
+    end
+
+    subgraph RelativePath["Relative Path (Starts from CWD)"]
+        cwd["Current Directory: /home/ai_user/projects/"] --&gt; parent[".. (Parent: /home/ai_user/)"] --&gt; datasetsRel["datasets/"] --&gt; fileB["training_data.csv"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class fileA,fileB cpu;
+    class datasets,datasetsRel memory;
+    class root,home,user,cwd,parent system;</div>
 <hr />
 <h2 id="navigating-with-cd-change-directory">🛠️ Navigating with cd (Change Directory)<a class="headerlink" href="#navigating-with-cd-change-directory" title="Permanent link">&para;</a></h2>
 <p>The <strong>cd</strong> command is your primary tool for moving between directories.</p>
@@ -2298,9 +2316,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

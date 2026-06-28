@@ -2128,7 +2128,6 @@
 <hr />
 <h2 id="context-introduction">🌱 Context Introduction<a class="headerlink" href="#context-introduction" title="Permanent link">&para;</a></h2>
 <p>When automating AI infrastructure tasks — such as spinning up GPU nodes, managing storage volumes, or scheduling model training jobs — you will constantly work with <strong>variables</strong>, <strong>quoting rules</strong>, and <strong>command substitution</strong> in Bash scripts. These three concepts form the foundation of writing reliable, repeatable automation scripts. Understanding them helps you avoid common pitfalls like missing file paths, broken variable expansions, or incorrect command outputs.</p>
-<hr />
 <h2 id="variables-in-bash">⚙️ Variables in Bash<a class="headerlink" href="#variables-in-bash" title="Permanent link">&para;</a></h2>
 <p>Variables store data that your script can reference and manipulate. Think of them as labeled containers for values like server names, file paths, or GPU counts.</p>
 <h3 id="key-points">🔑 Key Points<a class="headerlink" href="#key-points" title="Permanent link">&para;</a></h3>
@@ -2140,10 +2139,10 @@
 </ul>
 <h3 id="example-scenario">📝 Example Scenario<a class="headerlink" href="#example-scenario" title="Permanent link">&para;</a></h3>
 <p>For reference:</p>
-<pre><code class="language-bash">server_name=&quot;gpu-node-01&quot;
-gpu_count=8
-echo &quot;The server $server_name has ${gpu_count} GPUs&quot;
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nv">server_name</span><span class="o">=</span><span class="s2">&quot;gpu-node-01&quot;</span>
+<span class="nv">gpu_count</span><span class="o">=</span><span class="m">8</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;The server </span><span class="nv">$server_name</span><span class="s2"> has </span><span class="si">${</span><span class="nv">gpu_count</span><span class="si">}</span><span class="s2"> GPUs&quot;</span>
+</code></pre></div>
 <p>📤 Output: <strong>The server gpu-node-01 has 8 GPUs</strong></p>
 <hr />
 <h2 id="quoting-rules">🛡️ Quoting Rules<a class="headerlink" href="#quoting-rules" title="Permanent link">&para;</a></h2>
@@ -2181,12 +2180,12 @@ echo &quot;The server $server_name has ${gpu_count} GPUs&quot;
 </table>
 <h3 id="practical-examples">🧪 Practical Examples<a class="headerlink" href="#practical-examples" title="Permanent link">&para;</a></h3>
 <p>For reference:</p>
-<pre><code class="language-bash">model_name=&quot;Llama 3&quot;
-echo &quot;Model: $model_name&quot;
-echo 'Model: $model_name'
-echo &quot;Path: /home/user/my models&quot;
-echo &quot;Path: /home/user/my\ models&quot;
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nv">model_name</span><span class="o">=</span><span class="s2">&quot;Llama 3&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Model: </span><span class="nv">$model_name</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;Model: $model_name&#39;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Path: /home/user/my models&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Path: /home/user/my\ models&quot;</span>
+</code></pre></div>
 <p>📤 Output:
 - <strong>Model: Llama 3</strong>
 - <strong>Model: $model_name</strong>
@@ -2204,11 +2203,11 @@ echo &quot;Path: /home/user/my\ models&quot;
 <p>The command inside <strong>$()</strong> runs first, and its output replaces the entire <strong>$()</strong> expression. This output can then be assigned to a variable or used inline.</p>
 <h3 id="example-scenario_1">📝 Example Scenario<a class="headerlink" href="#example-scenario_1" title="Permanent link">&para;</a></h3>
 <p>For reference:</p>
-<pre><code class="language-bash">current_date=$(date +%Y-%m-%d)
-gpu_count=$(nvidia-smi --query-gpu=count --format=csv,noheader)
-echo &quot;Backup date: $current_date&quot;
-echo &quot;Number of GPUs: $gpu_count&quot;
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nv">current_date</span><span class="o">=</span><span class="k">$(</span>date<span class="w"> </span>+%Y-%m-%d<span class="k">)</span>
+<span class="nv">gpu_count</span><span class="o">=</span><span class="k">$(</span>nvidia-smi<span class="w"> </span>--query-gpu<span class="o">=</span>count<span class="w"> </span>--format<span class="o">=</span>csv,noheader<span class="k">)</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Backup date: </span><span class="nv">$current_date</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Number of GPUs: </span><span class="nv">$gpu_count</span><span class="s2">&quot;</span>
+</code></pre></div>
 <p>📤 Output:
 - <strong>Backup date: 2025-04-10</strong>
 - <strong>Number of GPUs: 8</strong></p>
@@ -2232,21 +2231,40 @@ echo &quot;Number of GPUs: $gpu_count&quot;
 <h2 id="putting-it-all-together">🧩 Putting It All Together<a class="headerlink" href="#putting-it-all-together" title="Permanent link">&para;</a></h2>
 <p>A typical AI infrastructure automation script might combine all three concepts:</p>
 <p>For reference:</p>
-<pre><code class="language-bash">#!/bin/bash
-set -u
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nb">set</span><span class="w"> </span>-u
 
-log_dir=&quot;/var/log/ai-jobs&quot;
-job_name=&quot;training-run-$(date +%s)&quot;
-gpu_available=$(nvidia-smi --query-gpu=index --format=csv,noheader | wc -l)
+<span class="nv">log_dir</span><span class="o">=</span><span class="s2">&quot;/var/log/ai-jobs&quot;</span>
+<span class="nv">job_name</span><span class="o">=</span><span class="s2">&quot;training-run-</span><span class="k">$(</span>date<span class="w"> </span>+%s<span class="k">)</span><span class="s2">&quot;</span>
+<span class="nv">gpu_available</span><span class="o">=</span><span class="k">$(</span>nvidia-smi<span class="w"> </span>--query-gpu<span class="o">=</span>index<span class="w"> </span>--format<span class="o">=</span>csv,noheader<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="k">)</span>
 
-echo &quot;Job: $job_name&quot;
-echo &quot;Log path: ${log_dir}/${job_name}.log&quot;
-echo &quot;Available GPUs: $gpu_available&quot;
-</code></pre>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Job: </span><span class="nv">$job_name</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Log path: </span><span class="si">${</span><span class="nv">log_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">job_name</span><span class="si">}</span><span class="s2">.log&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Available GPUs: </span><span class="nv">$gpu_available</span><span class="s2">&quot;</span>
+</code></pre></div>
 <p>📤 Output:
 - <strong>Job: training-run-1744320000</strong>
 - <strong>Log path: /var/log/ai-jobs/training-run-1744320000.log</strong>
 - <strong>Available GPUs: 8</strong></p>
+<h3 id="visual-representation-bash-parser-quoting-evaluation">📊 Visual Representation: Bash Parser Quoting Evaluation<a class="headerlink" href="#visual-representation-bash-parser-quoting-evaluation" title="Permanent link">&para;</a></h3>
+<p>This flowchart shows how the Bash parser processes string inputs differently based on whether they are enclosed in single quotes, double quotes, or command substitution blocks.</p>
+<div class="mermaid">flowchart LR
+    eval["Bash Parser evaluates input"]
+    eval --&gt; single["Single Quotes"]
+    eval --&gt; double["Double Quotes"]
+    eval --&gt; sub["Command Sub: $()"]
+
+    single --&gt;|Process| lit["Literal string (No expansion)&lt;br&gt;'$VAR' -&gt; '$VAR'"]
+    double --&gt;|Process| exp["Expand variables &amp; command sub&lt;br&gt;'$VAR' -&gt; value"]
+    sub --&gt;|Process| exec["Execute command &amp; return stdout&lt;br&gt;'$(date)' -&gt; Sun Jun 28"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class sub,exec cpu;
+    class double,exp memory;
+    class eval,single,lit system;</div>
 <hr />
 <h2 id="summary">📚 Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2296,9 +2314,11 @@ echo &quot;Available GPUs: $gpu_available&quot;
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

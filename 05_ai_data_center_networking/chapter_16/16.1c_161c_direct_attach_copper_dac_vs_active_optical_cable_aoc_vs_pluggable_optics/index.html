@@ -2202,6 +2202,18 @@
 <li><strong>Trade-off</strong>: Highest cost per link. More power consumption. Requires separate fiber cable and module.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-dac-vs-aoc-vs-discrete-transceiver-cabling">📊 Visual Representation: DAC vs. AOC vs. Discrete Transceiver Cabling<a class="headerlink" href="#visual-representation-dac-vs-aoc-vs-discrete-transceiver-cabling" title="Permanent link">&para;</a></h3>
+<p>This diagram contrasts Direct Attach Copper, Active Optical Cable, and discrete transceivers for different rack distance requirements.</p>
+<div class="mermaid">flowchart LR
+    Cabling["Cabling Selection"] --&gt; DAC["Passive DAC (Copper / Max 3m)"]
+    Cabling --&gt; AOC["Active AOC (Integrated fiber / Max 30m)"]
+    Cabling --&gt; Optics["Discrete Transceiver + Fiber patch (Max 10km)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class DAC,AOC,Optics memory;</div>
 <h2 id="real-world-ai-deployment-tips">🕵️ Real-World AI Deployment Tips<a class="headerlink" href="#real-world-ai-deployment-tips" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>For GPU-to-switch connections</strong> (within the same rack): Use <strong>DAC</strong> cables. They're cheap, low latency, and reliable.</li>
@@ -2265,9 +2277,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

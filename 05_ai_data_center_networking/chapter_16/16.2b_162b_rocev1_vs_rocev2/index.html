@@ -2208,6 +2208,24 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-roce-v1-l2-mac-vs-roce-v2-l3-ip-encapsulation">📊 Visual Representation: RoCE v1 L2 MAC vs. RoCE v2 L3 IP Encapsulation<a class="headerlink" href="#visual-representation-roce-v1-l2-mac-vs-roce-v2-l3-ip-encapsulation" title="Permanent link">&para;</a></h3>
+<p>This flowchart contrasts RoCE v1 (encapsulated directly in Layer 2 Ethernet) with RoCE v2 (encapsulated in UDP/IP packets, enabling Layer 3 routing).</p>
+<div class="mermaid">flowchart LR
+    subgraph RoCE_v1["RoCE v1 (Non-routable)"]
+        Header1["Ethernet MAC Header"] --- IB_Payload1["RDMA Payload"]
+    end
+    subgraph RoCE_v2["RoCE v2 (Routable)"]
+        Header2["Ethernet Header"] --- IP["IP Header"]
+        IP --- UDP["UDP Header"]
+        UDP --- IB_Payload2["RDMA Payload"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Header1,Header2 memory;
+    class IP,UDP system;</div>
 <h2 id="key-differences-explained-simply">🕵️ Key Differences Explained Simply<a class="headerlink" href="#key-differences-explained-simply" title="Permanent link">&para;</a></h2>
 <h3 id="1-routability-the-biggest-difference">1. <strong>Routability (The Biggest Difference)</strong><a class="headerlink" href="#1-routability-the-biggest-difference" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2327,9 +2345,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2217,6 +2217,23 @@
 <p><strong>How it works</strong>: The model runs attention multiple times in parallel, each with different learned weights. The outputs from all heads are concatenated and projected into a single representation.</p>
 <p><strong>Intuitive analogy</strong>: It's like having multiple experts analyze the same sentence — one looks at grammar, another at meaning, another at tone — then combining their insights.</p>
 <hr />
+<h3 id="visual-representation-transformer-encoder-decoder-blocks">📊 Visual Representation: Transformer Encoder-Decoder Blocks<a class="headerlink" href="#visual-representation-transformer-encoder-decoder-blocks" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the structural components of the standard Transformer block (Multi-Head Attention, Residual connections, and FFN).</p>
+<div class="mermaid">flowchart LR
+    Input["Input Tokens"] --&gt; Embed["Positional Embedding"]
+    Embed --&gt; MHA["Multi-Head Self-Attention"]
+    MHA --&gt; AddNorm1["Add &amp; LayerNorm"]
+    AddNorm1 --&gt; FFN["Feed-Forward Network (FFN)"]
+    FFN --&gt; AddNorm2["Add &amp; LayerNorm"]
+    AddNorm2 --&gt; Output["Logits / Probability"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class MHA,FFN cpu;
+    class Input,Embed,Output memory;
+    class AddNorm1,AddNorm2 system;</div>
 <h2 id="positional-encoding-why-order-matters">📐 Positional Encoding: Why Order Matters<a class="headerlink" href="#positional-encoding-why-order-matters" title="Permanent link">&para;</a></h2>
 <p>Attention processes all words in parallel, so it has no built-in sense of word order. To fix this, Transformers add <strong>positional encodings</strong> — unique signals that tell the model where each word sits in the sequence.</p>
 <ul>
@@ -2302,9 +2319,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

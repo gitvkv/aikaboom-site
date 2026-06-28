@@ -2198,6 +2198,19 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-all-to-all-scale-bottleneck-and-the-nvswitch-solution">📊 Visual Representation: All-to-All Scale Bottleneck and the NVSwitch Solution<a class="headerlink" href="#visual-representation-all-to-all-scale-bottleneck-and-the-nvswitch-solution" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how the direct-link GPU bottleneck (limited physical port boundaries) is resolved by routing links through NVSwitch ASICs.</p>
+<div class="mermaid">flowchart LR
+    Direct["Direct GPU-to-GPU Link"] --&gt;|Scale Bottleneck| Limit["Max 8 GPUs directly connected"]
+    Switch["NVSwitch Architecture"] --&gt;|Routing Plane| Scale["Scales up to 256+ GPUs coherently"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Scale cpu;
+    class Limit memory;
+    class Direct,Switch system;</div>
 <h2 id="how-nvswitch-works-in-practice">🛠️ How NVSwitch Works in Practice<a class="headerlink" href="#how-nvswitch-works-in-practice" title="Permanent link">&para;</a></h2>
 <h3 id="the-physical-setup">The Physical Setup<a class="headerlink" href="#the-physical-setup" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2284,9 +2297,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

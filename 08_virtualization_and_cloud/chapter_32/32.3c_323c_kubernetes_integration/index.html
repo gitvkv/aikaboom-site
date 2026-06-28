@@ -2187,6 +2187,20 @@
 <li><strong>Image Management</strong>: BCM manages the OS and driver images used to provision nodes. This ensures every node in the Kubernetes cluster has identical software stacks.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-bcm-kubernetes-cluster-bootstrap">📊 Visual Representation: BCM Kubernetes cluster bootstrap<a class="headerlink" href="#visual-representation-bcm-kubernetes-cluster-bootstrap" title="Permanent link">&para;</a></h3>
+<p>This flowchart shows how BCM deploys kubeadm to configure api-servers and join worker nodes automatically.</p>
+<div class="mermaid">flowchart LR
+    BCM["BCM Kubernetes wizard"] --&gt; Master["Configure K8s Control Plane nodes"]
+    Master --&gt;|Autogen join scripts| Join["Workers join (Kubelet active)"]
+    Join --&gt; Operator["Deploy NVIDIA GPU Operator"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Master cpu;
+    class Join memory;
+    class Operator system;</div>
 <h2 id="typical-workflow-bcm-kubernetes-in-action">🔄 Typical Workflow: BCM + Kubernetes in Action<a class="headerlink" href="#typical-workflow-bcm-kubernetes-in-action" title="Permanent link">&para;</a></h2>
 <ol>
 <li><strong>BCM discovers</strong> a pool of bare-metal servers in your data center.</li>
@@ -2275,9 +2289,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

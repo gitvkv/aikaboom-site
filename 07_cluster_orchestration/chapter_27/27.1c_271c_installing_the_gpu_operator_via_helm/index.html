@@ -2239,6 +2239,19 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-gpu-operator-helm-chart-deploy-flow">📊 Visual Representation: GPU Operator Helm Chart deploy flow<a class="headerlink" href="#visual-representation-gpu-operator-helm-chart-deploy-flow" title="Permanent link">&para;</a></h3>
+<p>This flowchart maps out Operator installation: deploying Helm charts and monitoring pod boots.</p>
+<div class="mermaid">flowchart LR
+    AddHelm["1. Add nvidia repository"] --&gt; DeployHelm["2. helm install gpu-operator"]
+    DeployHelm --&gt; WatchPods["3. kubectl get pods -n gpu-operator"]
+    WatchPods --&gt; Ready["4. Validator pod transitions to Completed"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class WatchPods cpu;
+    class AddHelm,DeployHelm,Ready system;</div>
 <h2 id="how-to-customize-valuesyaml">🗂️ How to Customize values.yaml<a class="headerlink" href="#how-to-customize-valuesyaml" title="Permanent link">&para;</a></h2>
 <p>When installing the GPU Operator, you pass your custom values.yaml to Helm. The typical workflow is:</p>
 <ol>
@@ -2248,7 +2261,7 @@
 <li><strong>Install using Helm</strong> with your custom file</li>
 </ol>
 <p>For reference, a minimal custom values.yaml for a cluster with pre-installed drivers might look like:</p>
-<pre><code>driver:
+<div class="highlight"><pre><span></span><code>driver:
   enabled: false
 
 toolkit:
@@ -2259,7 +2272,7 @@ devicePlugin:
 
 dcgmExporter:
   enabled: true
-</code></pre>
+</code></pre></div>
 <p>📤 Output: The Operator will skip driver installation but deploy the container toolkit, device plugin, and monitoring.</p>
 <hr />
 <h2 id="advanced-options-to-know">🧩 Advanced Options to Know<a class="headerlink" href="#advanced-options-to-know" title="Permanent link">&para;</a></h2>
@@ -2335,9 +2348,11 @@ dcgmExporter:
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

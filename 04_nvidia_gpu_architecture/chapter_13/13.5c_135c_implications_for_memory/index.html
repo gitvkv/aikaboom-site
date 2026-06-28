@@ -2190,6 +2190,18 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-memory-intensive-inference-in-grace-hopper">📊 Visual Representation: Memory-Intensive Inference in Grace Hopper<a class="headerlink" href="#visual-representation-memory-intensive-inference-in-grace-hopper" title="Permanent link">&para;</a></h3>
+<p>This diagram shows how Grace Hopper speeds up inference on massive LLM models by storing larger weights in Grace LPDDR5X and calling them into Hopper HBM3 as needed.</p>
+<div class="mermaid">flowchart LR
+    LPDDR5X["Host LPDDR5X Memory (Store Large Model Weights)"] --&gt;|"NVLink-C2C (900 GB/s)"| HBM3["Device HBM3 Memory (Active Activations)"]
+    HBM3 --&gt; TensorCores["Hopper Tensor Cores (Inference execution)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class TensorCores cpu;
+    class LPDDR5X,HBM3 memory;</div>
 <h2 id="implications-for-memory-intensive-inference">🕵️ Implications for Memory-Intensive Inference<a class="headerlink" href="#implications-for-memory-intensive-inference" title="Permanent link">&para;</a></h2>
 <h3 id="1-model-parallelism-becomes-efficient">1. 🧩 Model Parallelism Becomes Efficient<a class="headerlink" href="#1-model-parallelism-becomes-efficient" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2223,10 +2235,10 @@
 <li><strong>Profiling tools</strong>: Use <strong>Nsight Systems</strong> to monitor NVLink-C2C bandwidth utilization and detect any remaining bottlenecks.</li>
 <li><strong>Avoid CPU fallback</strong>: Design inference pipelines to keep all data movement on the GPU fabric.</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>nvidia-smi topo -m
-</code></pre>
-<p>📤 <strong>Output:</strong> Shows a matrix of GPU connections, where "NV" indicates NVLink-C2C links and "PIX" indicates PCIe.</p>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>nvidia-smi topo -m
+</code></pre></div>
+📤 <strong>Output:</strong> Shows a matrix of GPU connections, where "NV" indicates NVLink-C2C links and "PIX" indicates PCIe.</p>
 <hr />
 <h2 id="key-takeaways-for-new-engineers">✅ Key Takeaways for New Engineers<a class="headerlink" href="#key-takeaways-for-new-engineers" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2282,9 +2294,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

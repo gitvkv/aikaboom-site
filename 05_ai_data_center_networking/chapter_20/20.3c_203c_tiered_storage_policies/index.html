@@ -2206,6 +2206,21 @@
 <p>"If a dataset in the NVMe tier has zero reads for 14 consecutive days, and its total size exceeds 100 GB, migrate it to object storage. Keep a metadata pointer on NVMe for fast recall."</p>
 </blockquote>
 <hr />
+<h3 id="visual-representation-tiered-storage-lifecycle-policy">📊 Visual Representation: Tiered Storage Lifecycle Policy<a class="headerlink" href="#visual-representation-tiered-storage-lifecycle-policy" title="Permanent link">&para;</a></h3>
+<p>This flowchart maps out a tiered storage policy: shifting hot active training datasets to fast NVMe SSDs and cold files to object storage.</p>
+<div class="mermaid">flowchart LR
+    File["New Dataset Files"] --&gt; Check{"Access Frequency?"}
+    Check --&gt;|"Active (Hot)"| NVMe["NVMe Parallel FS Tier"]
+    Check --&gt;|"Inactive (Cold)"| Object["Cold S3 Object Storage Tier"]
+    NVMe --&gt;|Unused for 30 Days| Object
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Check cpu;
+    class NVMe,Object memory;
+    class File system;</div>
 <h2 id="what-happens-when-cold-data-is-needed-again">📦 What Happens When Cold Data Is Needed Again?<a class="headerlink" href="#what-happens-when-cold-data-is-needed-again" title="Permanent link">&para;</a></h2>
 <p>Tiered storage isn't a one-way trip. Most systems support <strong>recall</strong> or <strong>promotion</strong>:</p>
 <ul>
@@ -2290,9 +2305,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2174,6 +2174,20 @@
 <li><strong>slurmctld</strong> sends accounting data to <strong>slurmdbd</strong>, which stores it in the database.</li>
 </ol>
 <hr />
+<h3 id="visual-representation-slurm-workload-manager-architecture">📊 Visual Representation: Slurm Workload Manager Architecture<a class="headerlink" href="#visual-representation-slurm-workload-manager-architecture" title="Permanent link">&para;</a></h3>
+<p>This diagram displays Slurm components: the controller daemon (slurmctld) scheduling tasks down to compute host daemons (slurmd).</p>
+<div class="mermaid">flowchart LR
+    Client["Client CLI (sbatch / srun)"] --&gt;|1. Submit Job| Controller["slurmctld Controller Daemon"]
+    Controller --&gt;|2. Query database| DB["slurmdbd Accounting Daemon"]
+    Controller --&gt;|3. Schedule Job| Node["slurmd Compute Node Agent"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Controller cpu;
+    class Node,DB memory;
+    class Client system;</div>
 <h2 id="comparison-table-the-three-daemons">📋 Comparison Table: The Three Daemons<a class="headerlink" href="#comparison-table-the-three-daemons" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2302,9 +2316,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

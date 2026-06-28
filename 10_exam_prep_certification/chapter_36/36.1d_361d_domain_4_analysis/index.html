@@ -2214,6 +2214,19 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-hpc-storage-architecture-options">📊 Visual Representation: HPC Storage Architecture options<a class="headerlink" href="#visual-representation-hpc-storage-architecture-options" title="Permanent link">&para;</a></h3>
+<p>This diagram displays storage limits, showing how GPUDirect Storage links parallel filesystems directly to GPU nodes.</p>
+<div class="mermaid">flowchart LR
+    Filesystem["Parallel Storage (Lustre/WekaFS)"] --&gt; GDS["GPUDirect Storage (RDMA bypass)"]
+    GDS --&gt; GPUMem["GPU HBM Memory (Max IO throughput)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GDS cpu;
+    class GPUMem memory;
+    class Filesystem system;</div>
 <h2 id="common-exam-scenario-questions-and-how-to-answer">🕵️ Common Exam Scenario Questions (and How to Answer)<a class="headerlink" href="#common-exam-scenario-questions-and-how-to-answer" title="Permanent link">&para;</a></h2>
 <h3 id="question-1">Question 1:<a class="headerlink" href="#question-1" title="Permanent link">&para;</a></h3>
 <p><em>"Your team is training a large language model on 8 NVIDIA A100 GPUs. The dataset is 5TB of text files stored on NVMe SSDs. Training is slow because GPUs are idle waiting for data. What should you recommend?"</em></p>
@@ -2292,9 +2305,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

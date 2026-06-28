@@ -2148,14 +2148,14 @@
 <li>Interface state (UP/DOWN)</li>
 <li>Broadcast and scope information</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>ip addr show
-</code></pre>
-<p>📤 Output: Shows all interfaces with their IP addresses, MAC addresses, and operational status.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>ip addr show eth0
-</code></pre>
-<p>📤 Output: Shows details only for the eth0 interface.</p>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>ip addr show
+</code></pre></div>
+📤 Output: Shows all interfaces with their IP addresses, MAC addresses, and operational status.</p>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>ip addr show eth0
+</code></pre></div>
+📤 Output: Shows details only for the eth0 interface.</p>
 <p><strong>Key fields to understand:</strong>
 - <strong>inet</strong> — IPv4 address (e.g., 192.168.1.10/24)
 - <strong>inet6</strong> — IPv6 address
@@ -2167,18 +2167,18 @@
 <li><strong>ip link</strong> focuses on the <strong>data link layer</strong> (Layer 2) — the physical or virtual network interface itself.</li>
 <li>It replaces <strong>ifconfig</strong> for tasks like bringing interfaces up/down and viewing MAC addresses.</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>ip link show
-</code></pre>
-<p>📤 Output: Lists all interfaces with their MAC addresses, MTU size, and operational state.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>ip link set eth0 up
-</code></pre>
-<p>📤 Output: No output on success — brings the eth0 interface online.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>ip link set eth0 down
-</code></pre>
-<p>📤 Output: No output on success — takes the eth0 interface offline.</p>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>ip link show
+</code></pre></div>
+📤 Output: Lists all interfaces with their MAC addresses, MTU size, and operational state.</p>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>ip link set eth0 up
+</code></pre></div>
+📤 Output: No output on success — brings the eth0 interface online.</p>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>ip link set eth0 down
+</code></pre></div>
+📤 Output: No output on success — takes the eth0 interface offline.</p>
 <p><strong>Common use cases:</strong>
 - Checking if a cable is plugged in (look for <strong>state UP</strong>)
 - Resetting a network interface after configuration changes
@@ -2189,19 +2189,33 @@
 <li><strong>ip route</strong> replaces <strong>route -n</strong> for viewing and modifying the kernel routing table.</li>
 <li>It shows how packets are forwarded to different networks.</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>ip route show
-</code></pre>
-<p>📤 Output: Displays the routing table, including default gateway and directly connected networks.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>ip route add 10.0.0.0/8 via 192.168.1.1 dev eth0
-</code></pre>
-<p>📤 Output: No output on success — adds a static route to the 10.0.0.0/8 network via the gateway at 192.168.1.1.</p>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>ip route show
+</code></pre></div>
+📤 Output: Displays the routing table, including default gateway and directly connected networks.</p>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>ip route add 10.0.0.0/8 via 192.168.1.1 dev eth0
+</code></pre></div>
+📤 Output: No output on success — adds a static route to the 10.0.0.0/8 network via the gateway at 192.168.1.1.</p>
 <p><strong>Key routing concepts:</strong>
 - <strong>default via</strong> — The default gateway (used for traffic not matching other routes)
 - <strong>dev</strong> — The interface used to reach a network
 - <strong>proto kernel</strong> — Routes automatically added by the kernel when an interface gets an IP address</p>
 <hr />
+<h3 id="visual-representation-linux-routing-table-and-interface-lookup">📊 Visual Representation: Linux Routing Table and Interface Lookup<a class="headerlink" href="#visual-representation-linux-routing-table-and-interface-lookup" title="Permanent link">&para;</a></h3>
+<p>This flowchart maps out the decision routing logic of packet forwarding in Linux, querying the routing table to match gateway paths.</p>
+<div class="mermaid">flowchart LR
+    Packet["Packet Outgoing"] --&gt; Route{"Route Match?"}
+    Route --&gt;|Local Subnet| Direct["Direct Send via Device (e.g., eth0)"]
+    Route --&gt;|External Subnet| Gateway["Forward to Gateway (Default Route)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Route cpu;
+    class Packet memory;
+    class Direct,Gateway system;</div>
 <h2 id="comparison-table-old-vs-new">📊 Comparison Table: Old vs. New<a class="headerlink" href="#comparison-table-old-vs-new" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2327,9 +2341,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

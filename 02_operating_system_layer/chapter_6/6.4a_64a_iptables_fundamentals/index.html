@@ -2204,6 +2204,21 @@
 <li><strong>POSTROUTING chain</strong> — Alters packets after routing decisions.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-iptables-packet-processing-chains">📊 Visual Representation: iptables Packet Processing Chains<a class="headerlink" href="#visual-representation-iptables-packet-processing-chains" title="Permanent link">&para;</a></h3>
+<p>This flowchart maps out the packet processing path through netfilter tables and chains (PREROUTING, INPUT, FORWARD, OUTPUT, POSTROUTING).</p>
+<div class="mermaid">flowchart LR
+    Packet["Packet Incoming"] --&gt; Pre["PREROUTING Chain"]
+    Pre --&gt;|To Local System| Input["INPUT Chain"] --&gt; Local["Local Process"]
+    Pre --&gt;|To Other System| Forward["FORWARD Chain"] --&gt; Post["POSTROUTING Chain"] --&gt; Out["Packet Outgoing"]
+    Local --&gt; Output["OUTPUT Chain"] --&gt; Post
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Local cpu;
+    class Packet,Out memory;
+    class Pre,Input,Forward,Output,Post system;</div>
 <h2 id="rules-the-decision-makers">📜 Rules — The Decision Makers<a class="headerlink" href="#rules-the-decision-makers" title="Permanent link">&para;</a></h2>
 <p>A rule tells iptables what to do with a packet that matches certain criteria. Every rule has two parts:</p>
 <h3 id="1-matching-criteria-what-to-look-for">1️⃣ <strong>Matching criteria</strong> (what to look for)<a class="headerlink" href="#1-matching-criteria-what-to-look-for" title="Permanent link">&para;</a></h3>
@@ -2246,12 +2261,12 @@
 <li>Allow established connections (so responses can come back)</li>
 <li>Drop all other incoming traffic</li>
 </ul>
-<p>For reference:</p>
-<pre><code>iptables -A INPUT -p tcp --dport 22 -s 192.168.1.0/24 -j ACCEPT
+<p>For reference:
+<div class="highlight"><pre><span></span><code>iptables -A INPUT -p tcp --dport 22 -s 192.168.1.0/24 -j ACCEPT
 iptables -A INPUT -p tcp --dport 80 -s 192.168.1.0/24 -j ACCEPT
 iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -A INPUT -j DROP
-</code></pre>
+</code></pre></div></p>
 <p>📤 <strong>Output</strong>: The server now only accepts SSH and HTTP from the internal network. All other incoming traffic is silently dropped.</p>
 <hr />
 <h2 id="key-takeaways-for-new-engineers">🕵️ Key Takeaways for New Engineers<a class="headerlink" href="#key-takeaways-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2312,9 +2327,11 @@ iptables -A INPUT -j DROP
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

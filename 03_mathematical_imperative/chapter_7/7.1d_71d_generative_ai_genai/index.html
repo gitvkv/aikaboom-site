@@ -2189,6 +2189,22 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-generative-ai-pipeline-prompt-to-token-completion">📊 Visual Representation: Generative AI Pipeline: Prompt to Token Completion<a class="headerlink" href="#visual-representation-generative-ai-pipeline-prompt-to-token-completion" title="Permanent link">&para;</a></h3>
+<p>This flowchart details the autoregressive generation loop where input prompt tokens generate probability distributions to output subsequent text tokens.</p>
+<div class="mermaid">flowchart LR
+    Prompt["Input Prompt (Text/Context)"] --&gt; LLM["Autoregressive LLM Engine"]
+    LLM --&gt; Probs["Next-Token Probabilities"]
+    Probs --&gt; Sample["Sampling &amp; Selection"]
+    Sample --&gt; Token["Output Token"]
+    Token --&gt;|Append to Input| Prompt
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class LLM cpu;
+    class Probs,Token memory;
+    class Prompt,Sample system;</div>
 <h2 id="real-world-use-cases-for-engineers">🕵️ Real-World Use Cases for Engineers<a class="headerlink" href="#real-world-use-cases-for-engineers" title="Permanent link">&para;</a></h2>
 <p>As an engineer working with AI infrastructure, you'll encounter GenAI in these scenarios:</p>
 <ul>
@@ -2211,18 +2227,18 @@
 <hr />
 <h2 id="simple-example-text-generation-workflow">🔍 Simple Example: Text Generation Workflow<a class="headerlink" href="#simple-example-text-generation-workflow" title="Permanent link">&para;</a></h2>
 <p>Here's a basic example of how an engineer might interact with a GenAI model using Python. This is for reference only — you would run this on a server with an NVIDIA GPU.</p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-python">from transformers import pipeline
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">pipeline</span>
 
-# Load a small text generation model
-generator = pipeline(&quot;text-generation&quot;, model=&quot;gpt2&quot;)
+<span class="c1"># Load a small text generation model</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="s2">&quot;text-generation&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt2&quot;</span><span class="p">)</span>
 
-# Provide a prompt
-prompt = &quot;The future of AI infrastructure is&quot;
+<span class="c1"># Provide a prompt</span>
+<span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;The future of AI infrastructure is&quot;</span>
 
-# Generate text
-result = generator(prompt, max_length=50, num_return_sequences=1)
-</code></pre>
+<span class="c1"># Generate text</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">generator</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">num_return_sequences</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> A string like "The future of AI infrastructure is bright, with specialized hardware enabling faster training and more efficient inference."</p>
 <hr />
 <h2 id="key-takeaways-for-new-engineers">✅ Key Takeaways for New Engineers<a class="headerlink" href="#key-takeaways-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2282,9 +2298,11 @@ result = generator(prompt, max_length=50, num_return_sequences=1)
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

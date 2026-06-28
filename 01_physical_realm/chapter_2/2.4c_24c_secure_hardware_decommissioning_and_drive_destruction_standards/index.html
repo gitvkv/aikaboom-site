@@ -2202,6 +2202,32 @@
 </tr>
 </tbody>
 </table>
+<h3 id="visual-representation-drive-sanitization-decision-logic">📊 Visual Representation: Drive Sanitization Decision Logic<a class="headerlink" href="#visual-representation-drive-sanitization-decision-logic" title="Permanent link">&para;</a></h3>
+<p>This flowchart displays the technical routing decision for choosing an appropriate sanitization or physical destruction method based on the drive technology.</p>
+<div class="mermaid">flowchart LR
+    Start["Decommission Drive"] --&gt; Type{"Drive Type?"}
+
+    Type --&gt;|Magnetic HDD| HDD["Magnetic HDD"]
+    Type --&gt;|Flash SSD| SSD["Flash SSD"]
+    Type --&gt;|Self-Encrypting| SED["Self-Encrypting Drive (SED)"]
+
+    HDD --&gt;|Method 1| Degauss["Degaussing&lt;br&gt;(Destroys Media)"]
+    HDD --&gt;|Method 2| WipeH["Multi-pass Overwrite"]
+
+    SSD --&gt;|Method 1| Shred["Physical Shredding&lt;br&gt;(&lt; 2mm Particles)"]
+    SSD --&gt;|Method 2| WipeS["Secure Erase Software"]
+
+    SED --&gt;|Method 1| Crypto["Cryptographic Erase&lt;br&gt;(Delete Key)"]
+
+    Degauss &amp; WipeH &amp; Shred &amp; WipeS &amp; Crypto --&gt; Log["Document &amp; Log Serial&lt;br&gt;(Certificate of Destruction)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class SSD cpu;
+    class HDD,SED memory;
+    class Start,Type,Degauss,WipeH,Shred,WipeS,Crypto,Log system;</div>
 <hr />
 <h2 id="verification-and-certification">🕵️ Verification and Certification<a class="headerlink" href="#verification-and-certification" title="Permanent link">&para;</a></h2>
 <p>After destruction, engineers must verify that data is unrecoverable. Common verification methods include:</p>
@@ -2234,10 +2260,10 @@
 <li><strong>Secure Erase Software</strong> — Tools that perform multi-pass overwrites (e.g., <strong>nwipe</strong>, <strong>DBAN</strong>).</li>
 <li><strong>Cryptographic Erase Utilities</strong> — Built into some enterprise drives (e.g., <strong>hdparm</strong> for SEDs).</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>nwipe --method=zero --verify=on /dev/sda
-</code></pre>
-<p>📤 Output: <strong>Wipe completed successfully. Verification passed — no readable sectors found.</strong></p>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>nwipe --method=zero --verify=on /dev/sda
+</code></pre></div>
+📤 Output: <strong>Wipe completed successfully. Verification passed — no readable sectors found.</strong></p>
 <hr />
 <h2 id="best-practices-for-new-engineers">✅ Best Practices for New Engineers<a class="headerlink" href="#best-practices-for-new-engineers" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2289,9 +2315,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

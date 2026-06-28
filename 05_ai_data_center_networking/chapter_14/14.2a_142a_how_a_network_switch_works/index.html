@@ -2165,6 +2165,22 @@
 <li><strong>Broadcast/multicast</strong> — Always flood (except the incoming port).</li>
 </ul>
 <hr />
+<h3 id="visual-representation-layer-2-switch-mac-address-learning">📊 Visual Representation: Layer 2 Switch MAC Address Learning<a class="headerlink" href="#visual-representation-layer-2-switch-mac-address-learning" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how switches learn source MAC addresses and populate forwarding tables to direct packets to target ports.</p>
+<div class="mermaid">flowchart LR
+    Incoming["Incoming Packet (Src MAC: A)"] --&gt; Port["Switch Physical Port 1"]
+    Port --&gt; MACTable{"Store (MAC: A -&gt; Port 1)"}
+    MACTable --&gt; Lookup{"Lookup Dest MAC"}
+    Lookup --&gt;|Found| Forward["Forward to associated port"]
+    Lookup --&gt;|Not Found| Flood["Flood to all other ports"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class MACTable,Lookup cpu;
+    class Incoming,Forward memory;
+    class Flood system;</div>
 <h2 id="comparison-switch-vs-hub-vs-router">📊 Comparison: Switch vs. Hub vs. Router<a class="headerlink" href="#comparison-switch-vs-hub-vs-router" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2238,10 +2254,10 @@
 </ul>
 <h3 id="common-troubleshooting-commands-for-reference">Common Troubleshooting Commands (for reference)<a class="headerlink" href="#common-troubleshooting-commands-for-reference" title="Permanent link">&para;</a></h3>
 <p>For reference, here are typical commands used to inspect MAC tables on managed switches:</p>
-<pre><code>show mac address-table
+<div class="highlight"><pre><span></span><code>show mac address-table
 show mac address-table aging-time
 show mac address-table count
-</code></pre>
+</code></pre></div>
 <p>📤 Output: A list of MAC addresses, VLANs, and port assignments.</p>
 <hr />
 <h2 id="key-takeaways-for-new-engineers">✅ Key Takeaways for New Engineers<a class="headerlink" href="#key-takeaways-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2295,9 +2311,11 @@ show mac address-table count
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

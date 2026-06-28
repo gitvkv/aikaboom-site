@@ -2190,6 +2190,20 @@
 </ul>
 <p><strong>Example scenario:</strong> If you see 4 GPUs in a node, but only 2 are showing as available, you know that node can only accept half its normal workload. You might need to check what's consuming the other two GPUs.</p>
 <hr />
+<h3 id="visual-representation-bcm-node-health-checking">📊 Visual Representation: BCM Node Health checking<a class="headerlink" href="#visual-representation-bcm-node-health-checking" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how BCM periodically checks node health (temperatures, system services, logs) and reports status to dashboards.</p>
+<div class="mermaid">flowchart LR
+    NodeCheck["BCM Health Daemon"] --&gt; CPUChecks["CPU / RAM / Disk usage checks"]
+    NodeCheck --&gt; GPUChecks["nvidia-smi / NVLink check"]
+    NodeCheck --&gt; UI["BCM Dashboard (Healthy / Warning / Failed)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NodeCheck cpu;
+    class CPUChecks,GPUChecks memory;
+    class UI system;</div>
 <h2 id="job-history">📜 Job History<a class="headerlink" href="#job-history" title="Permanent link">&para;</a></h2>
 <p>Job history provides a <strong>complete record</strong> of every workload that has run on your cluster. This is essential for capacity planning, debugging failed jobs, and auditing usage.</p>
 <h3 id="what-job-history-includes">📋 What job history includes<a class="headerlink" href="#what-job-history-includes" title="Permanent link">&para;</a></h3>
@@ -2272,9 +2286,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

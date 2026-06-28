@@ -2163,6 +2163,21 @@
 <li><strong>OS-level Python modifications</strong>: Using <strong>apt install python3-xxx</strong> can overwrite Python packages managed by pip</li>
 </ul>
 <hr />
+<h3 id="visual-representation-python-dependency-conflicts">📊 Visual Representation: Python dependency conflicts<a class="headerlink" href="#visual-representation-python-dependency-conflicts" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how installing conflicting package versions directly into the host system namespace breaks package dependencies.</p>
+<div class="mermaid">flowchart LR
+    Host["Shared Host Namespace"] --&gt;|Install Package A| Lib1["PyTorch v2.0 (Requires NumPy 1.24)"]
+    Host --&gt;|Install Package B| Lib2["TensorFlow v2.12 (Requires NumPy 1.22)"]
+    Lib1 --- Conflict{"NumPy Version Conflict / Crash"}
+    Lib2 --- Conflict
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Conflict cpu;
+    class Lib1,Lib2 memory;
+    class Host system;</div>
 <h2 id="comparison-healthy-vs-broken-environment">📊 Comparison: Healthy vs. Broken Environment<a class="headerlink" href="#comparison-healthy-vs-broken-environment" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2264,9 +2279,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

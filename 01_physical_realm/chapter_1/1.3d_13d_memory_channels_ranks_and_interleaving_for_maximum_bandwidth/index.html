@@ -2233,6 +2233,45 @@
 <li>Half the lanes are empty → bandwidth is roughly halved.</li>
 <li>Your AI training could take <strong>twice as long</strong> for memory-bound operations.</li>
 </ul>
+<h3 id="visual-representation-memory-interleaving-and-channelrank-distribution">📊 Visual Representation: Memory Interleaving and Channel/Rank Distribution<a class="headerlink" href="#visual-representation-memory-interleaving-and-channelrank-distribution" title="Permanent link">&para;</a></h3>
+<p>This diagram illustrates how the memory controller splits an incoming data stream into chunks and interleaves them across multiple channels and memory ranks in parallel.</p>
+<div class="mermaid">flowchart TD
+    subgraph Controller["CPU / GPU Memory Controller"]
+        DataStream["Incoming Data Stream\n(Chunks: C1, C2, C3, C4, C5, C6...)"]
+        Mux["Channel Interleaving Logic"]
+        DataStream --&gt; Mux
+    end
+
+    subgraph Ch1["Memory Channel A"]
+        subgraph DIMM1["Dual-Rank DIMM"]
+            Rank_A1["Rank 0 (Memory Bank 0)"]
+            Rank_A2["Rank 1 (Memory Bank 1)"]
+        end
+    end
+
+    subgraph Ch2["Memory Channel B"]
+        subgraph DIMM2["Dual-Rank DIMM"]
+            Rank_B1["Rank 0 (Memory Bank 0)"]
+            Rank_B2["Rank 1 (Memory Bank 1)"]
+        end
+    end
+
+    Mux --&gt;|Chunk 1, 3, 5| Ch1
+    Mux --&gt;|Chunk 2, 4, 6| Ch2
+
+    Ch1 --&gt;|Rank Interleave| Rank_A1
+    Ch1 --&gt;|Rank Interleave| Rank_A2
+
+    Ch2 --&gt;|Rank Interleave| Rank_B1
+    Ch2 --&gt;|Rank Interleave| Rank_B2
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Controller,Mux cpu;
+    class Rank_A1,Rank_A2,Rank_B1,Rank_B2,DIMM1,DIMM2 memory;
+    class Ch1,Ch2,DataStream system;</div>
 <hr />
 <h2 id="quick-checklist-for-engineers">✅ Quick Checklist for Engineers<a class="headerlink" href="#quick-checklist-for-engineers" title="Permanent link">&para;</a></h2>
 <p>When configuring memory for AI systems:</p>
@@ -2314,9 +2353,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

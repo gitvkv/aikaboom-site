@@ -2189,6 +2189,18 @@
 <li>This eliminates the "PCIe bottleneck" that often limits AI workload performance</li>
 </ul>
 <hr />
+<h3 id="visual-representation-gh200-grace-hopper-superchip-interconnect">📊 Visual Representation: GH200 Grace Hopper Superchip Interconnect<a class="headerlink" href="#visual-representation-gh200-grace-hopper-superchip-interconnect" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the GH200 Grace Hopper Superchip, showing how the Grace CPU and Hopper GPU are connected via a bidirectional NVLink-C2C bus.</p>
+<div class="mermaid">flowchart LR
+    Grace["Grace CPU (LPDDR5X)"] --&gt;|"NVLink-C2C (900 GB/s)"| Hopper["Hopper GPU (HBM3)"]
+    Hopper --&gt;|Unified memory coherency| Grace
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Hopper cpu;
+    class Grace memory;</div>
 <h2 id="why-this-matters-for-ai-workloads">📊 Why This Matters for AI Workloads<a class="headerlink" href="#why-this-matters-for-ai-workloads" title="Permanent link">&para;</a></h2>
 <p>AI training and inference involve massive data movement. With traditional architectures, engineers spend significant time optimizing data transfers between CPU and GPU memory. The GH200 eliminates this overhead.</p>
 <p><strong>Real-world benefits:</strong></p>
@@ -2208,8 +2220,8 @@
 <li><strong>It supports NVIDIA's Grace Hopper architecture</strong>: This is the foundation for NVIDIA's next-generation DGX systems and HGX baseboards.</li>
 </ul>
 <p><strong>Example of how memory access works:</strong></p>
-<p>For reference:</p>
-<pre><code>// Traditional approach (PCIe) — requires explicit copy
+<p>For reference:
+<div class="highlight"><pre><span></span><code>// Traditional approach (PCIe) — requires explicit copy
 cpu_data = malloc(size);
 gpu_data = cudaMalloc(size);
 cudaMemcpy(gpu_data, cpu_data, size, cudaMemcpyHostToDevice);
@@ -2218,7 +2230,7 @@ cudaMemcpy(gpu_data, cpu_data, size, cudaMemcpyHostToDevice);
 // GH200 approach (unified memory) — no copy needed
 unified_data = cudaMallocManaged(size);
 // Both CPU and GPU can access unified_data directly
-</code></pre>
+</code></pre></div></p>
 <p>📤 <strong>Output</strong>: The GH200 version requires fewer lines of code and eliminates the performance cost of the copy operation.</p>
 <hr />
 <h2 id="where-does-the-gh200-fit-in-the-nvidia-portfolio">🧩 Where Does the GH200 Fit in the NVIDIA Portfolio?<a class="headerlink" href="#where-does-the-gh200-fit-in-the-nvidia-portfolio" title="Permanent link">&para;</a></h2>
@@ -2306,9 +2318,11 @@ unified_data = cudaMallocManaged(size);
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

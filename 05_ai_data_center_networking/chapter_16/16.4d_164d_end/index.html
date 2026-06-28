@@ -2193,6 +2193,19 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-end-to-end-congestion-monitoring-loop">📊 Visual Representation: End-to-End Congestion Monitoring Loop<a class="headerlink" href="#visual-representation-end-to-end-congestion-monitoring-loop" title="Permanent link">&para;</a></h3>
+<p>This diagram maps the complete end-to-end congestion loop, showing telemetry from switches to endpoints to throttle source transmission rates.</p>
+<div class="mermaid">flowchart LR
+    Telemetry["Switch Buffer Telemetry"] --&gt; Controller["DCQCN Congestion Engine"]
+    Controller --&gt;|Throttle Rate| Sender["GPU Node HCA Rate Limiter"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Controller cpu;
+    class Sender memory;
+    class Telemetry system;</div>
 <h2 id="key-components-in-the-e2e-cc-system">🛠️ Key Components in the E2E CC System<a class="headerlink" href="#key-components-in-the-e2e-cc-system" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Congestion Detection</strong> — Switches monitor buffer occupancy and mark packets when queues exceed a threshold</li>
@@ -2263,9 +2276,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

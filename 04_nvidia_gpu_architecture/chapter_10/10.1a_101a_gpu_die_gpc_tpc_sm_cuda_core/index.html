@@ -2219,6 +2219,20 @@
 - Texture units are less critical for pure AI workloads but still used for certain operations.
 - The TPC structure helps balance compute and memory access.</p>
 <hr />
+<h3 id="visual-representation-gpu-architectural-hierarchy">📊 Visual Representation: GPU Architectural Hierarchy<a class="headerlink" href="#visual-representation-gpu-architectural-hierarchy" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the hardware layout of NVIDIA GPUs, mapping how full chips contain multiple GPCs, which house TPCs, SMs, and individual compute cores.</p>
+<div class="mermaid">flowchart LR
+    GPU["Full GPU Chip"] --&gt; GPC["Graphics Processing Cluster (GPC)"]
+    GPC --&gt; TPC["Texture Processing Cluster (TPC)"]
+    TPC --&gt; SM["Streaming Multiprocessor (SM)"]
+    SM --&gt; Cores["CUDA Cores &amp; Tensor Cores"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Cores cpu;
+    class GPU,GPC,TPC,SM system;</div>
 <h2 id="level-4-sm-streaming-multiprocessor">🏢 Level 4: SM (Streaming Multiprocessor)<a class="headerlink" href="#level-4-sm-streaming-multiprocessor" title="Permanent link">&para;</a></h2>
 <p>The <strong>SM</strong> is the core execution unit of the GPU. This is where the real work happens.</p>
 <ul>
@@ -2270,10 +2284,10 @@
 <li><strong>Choose the right GPU:</strong> More SMs and CUDA Cores generally mean faster AI training.</li>
 <li><strong>Debug performance:</strong> Use NVIDIA tools like <strong>nvidia-smi</strong> and <strong>Nsight</strong> to monitor SM utilization.</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>nvidia-smi --query-gpu=name,memory.total,compute_cap --format=csv
-</code></pre>
-<p>📤 <strong>Output:</strong><br />
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>nvidia-smi --query-gpu=name,memory.total,compute_cap --format=csv
+</code></pre></div>
+📤 <strong>Output:</strong><br />
 <code>NVIDIA H100 80GB HBM3, 81920 MiB, 9.0</code></p>
 <hr />
 <h2 id="quick-self-check">🧪 Quick Self-Check<a class="headerlink" href="#quick-self-check" title="Permanent link">&para;</a></h2>
@@ -2339,9 +2353,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

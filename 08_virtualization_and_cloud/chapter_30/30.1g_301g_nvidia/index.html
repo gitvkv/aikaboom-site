@@ -2186,6 +2186,18 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-nvidia-smi-pmon-pid-process-mapping">📊 Visual Representation: nvidia-smi pmon PID Process mapping<a class="headerlink" href="#visual-representation-nvidia-smi-pmon-pid-process-mapping" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how pmon maps active host PIDs to GPU memory utilization, identifying process owners.</p>
+<div class="mermaid">flowchart LR
+    PID["Process PID: 1234 (PyTorch)"] --&gt; pmon["nvidia-smi pmon Check"]
+    pmon --&gt; GPU["Associated with GPU 0 (Allocates 12GB FB memory)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class pmon cpu;
+    class PID,GPU memory;</div>
 <h2 id="practical-use-cases-for-engineers">🛠️ Practical Use Cases for Engineers<a class="headerlink" href="#practical-use-cases-for-engineers" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Identifying resource hogs</strong> — When a GPU is running at 100% and you need to know which PID is responsible</li>
@@ -2252,9 +2264,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

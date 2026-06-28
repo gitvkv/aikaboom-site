@@ -2185,6 +2185,19 @@
 - <strong>Cooling:</strong> A cold plate or heatsink attaches directly to the OAM module.
 - <strong>Networking:</strong> OAM modules connect to each other via NVLink switches on the baseboard.</p>
 <hr />
+<h3 id="visual-representation-oam-open-accelerator-standard-modules">📊 Visual Representation: OAM open accelerator standard modules<a class="headerlink" href="#visual-representation-oam-open-accelerator-standard-modules" title="Permanent link">&para;</a></h3>
+<p>This diagram displays Open Accelerator Module (OAM) packaging, defining common physical dimensions and interconnect layouts for diverse server nodes.</p>
+<div class="mermaid">flowchart LR
+    OAM["OAM Accelerator Module"] --&gt;|Mezzanine Connector| UB["OAM Universal Baseboard (UBB)"]
+    UB --&gt;|High-Speed Interlinks| Cluster["Coherent Accelerator Network"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class OAM cpu;
+    class Cluster memory;
+    class UB system;</div>
 <h2 id="oam-vs-other-gpu-form-factors">🕵️ OAM vs. Other GPU Form Factors<a class="headerlink" href="#oam-vs-other-gpu-form-factors" title="Permanent link">&para;</a></h2>
 <p>To help you understand where OAM fits, here's a simple comparison:</p>
 <table>
@@ -2226,12 +2239,12 @@
 <li><strong>Connectors:</strong> A high-density edge connector on the bottom (like a large RAM stick).</li>
 <li><strong>Labeling:</strong> Look for "OAM" or "OCP Accelerator Module" on the module's sticker.</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>Example OAM module label:
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>Example OAM module label:
 Model: NVIDIA H100 OAM
 Power: 700W
 Interface: NVLink 4.0
-</code></pre>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> You would see this label on the side of the module inside the server chassis.</p>
 <hr />
 <h2 id="why-this-matters-for-new-engineers">🌟 Why This Matters for New Engineers<a class="headerlink" href="#why-this-matters-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2289,9 +2302,11 @@ Interface: NVLink 4.0
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2209,6 +2209,20 @@
 <li>Look for <strong>straggler nodes</strong> — one slow node holds up the entire job</li>
 </ul>
 <hr />
+<h3 id="visual-representation-gpu-utilization-drop-debug-path">📊 Visual Representation: GPU Utilization drop debug path<a class="headerlink" href="#visual-representation-gpu-utilization-drop-debug-path" title="Permanent link">&para;</a></h3>
+<p>This flowchart demonstrates debugging low GPU utilization: identifying IO storage bottlenecks vs. network latency.</p>
+<div class="mermaid">flowchart LR
+    Drop["GPU utilization drop detected"] --&gt; CheckIO["Check disk read wait speed (iostat)"]
+    CheckIO --&gt;|Storage Bottleneck| OptStorage["Optimize storage cache / Enable GDS"]
+    CheckIO --&gt;|Disk clean| CheckNet["Check network latency / NCCL ring errors"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class CheckIO cpu;
+    class OptStorage,CheckNet memory;
+    class Drop system;</div>
 <h2 id="common-fixes">🛠️ Common Fixes<a class="headerlink" href="#common-fixes" title="Permanent link">&para;</a></h2>
 <p>Once the root cause is identified, engineers apply targeted solutions:</p>
 <p><strong>For data loading bottlenecks:</strong>
@@ -2309,9 +2323,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

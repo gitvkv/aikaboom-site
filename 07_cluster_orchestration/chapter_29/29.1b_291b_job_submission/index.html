@@ -2204,6 +2204,20 @@
 - Use different hyperparameters
 - Run the same model on different data splits</p>
 <hr />
+<h3 id="visual-representation-slurm-sbatch-job-execution-flow">📊 Visual Representation: Slurm sbatch Job execution flow<a class="headerlink" href="#visual-representation-slurm-sbatch-job-execution-flow" title="Permanent link">&para;</a></h3>
+<p>This flowchart maps out Slurm batch submission: reading resources headers, entering queues, and executing scripts on worker nodes.</p>
+<div class="mermaid">flowchart LR
+    Submit["Submit sbatch script"] --&gt; Queue{"Queue check (Priority/Fairshare)"}
+    Queue --&gt; Allocated["Allocate Node Resource"]
+    Allocated --&gt; Exec["Execute script (srun steps)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Queue cpu;
+    class Exec memory;
+    class Submit,Allocated system;</div>
 <h2 id="putting-it-all-together-anatomy-of-an-sbatch-script">🧩 Putting It All Together — Anatomy of an sbatch Script<a class="headerlink" href="#putting-it-all-together-anatomy-of-an-sbatch-script" title="Permanent link">&para;</a></h2>
 <p>A typical sbatch script follows this structure:</p>
 <ol>
@@ -2213,8 +2227,8 @@
 <li><strong>Environment setup</strong> — activating conda environments, setting variables</li>
 <li><strong>Actual commands</strong> — your training script, data processing, etc.</li>
 </ol>
-<p>For reference:</p>
-<pre><code>#!/bin/bash
+<p>For reference:
+<div class="highlight"><pre><span></span><code>#!/bin/bash
 #SBATCH --job-name=cnn_training
 #SBATCH --output=logs/train_%j.out
 #SBATCH --error=logs/train_%j.err
@@ -2230,12 +2244,12 @@ module load cuda/11.8
 source activate my_env
 
 python train.py --epochs 50 --batch_size 32
-</code></pre>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> Slurm will create two log files (<code>train_12345.out</code> and <code>train_12345.err</code>) and run your training script on a node with 1 GPU.</p>
 <hr />
 <h2 id="example-job-array-for-hyperparameter-tuning">🧪 Example: Job Array for Hyperparameter Tuning<a class="headerlink" href="#example-job-array-for-hyperparameter-tuning" title="Permanent link">&para;</a></h2>
-<p>For reference:</p>
-<pre><code>#!/bin/bash
+<p>For reference:
+<div class="highlight"><pre><span></span><code>#!/bin/bash
 #SBATCH --job-name=hyperparam_search
 #SBATCH --array=0-4
 #SBATCH --output=logs/hp_%A_%a.out
@@ -2247,7 +2261,7 @@ learning_rates=(0.001 0.0005 0.0001 0.00005 0.00001)
 lr=${learning_rates[$SLURM_ARRAY_TASK_ID]}
 
 python train.py --lr $lr
-</code></pre>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> Five separate jobs will run, each with a different learning rate. The <code>%A</code> is replaced with the job array ID, <code>%a</code> with the task index.</p>
 <hr />
 <h2 id="quick-tips-for-new-engineers">✅ Quick Tips for New Engineers<a class="headerlink" href="#quick-tips-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2332,9 +2346,11 @@ python train.py --lr $lr
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

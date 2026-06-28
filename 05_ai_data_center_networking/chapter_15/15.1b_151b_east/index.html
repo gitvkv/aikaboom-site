@@ -2175,6 +2175,18 @@
 <li>A single slow link can delay <strong>all GPUs</strong> in the cluster.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-east-west-intra-cluster-node-to-node-traffic">📊 Visual Representation: East-West Intra-Cluster Node-to-Node Traffic<a class="headerlink" href="#visual-representation-east-west-intra-cluster-node-to-node-traffic" title="Permanent link">&para;</a></h3>
+<p>This diagram displays East-West data paths connecting multiple compute nodes in a parallel processing environment.</p>
+<div class="mermaid">flowchart LR
+    Node1["Server Node 1"] --&gt;|East-West| Node2["Server Node 2"]
+    Node2 --&gt;|East-West| Node3["Server Node 3"]
+    Node3 --&gt;|East-West| Node1
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Node1,Node2,Node3 cpu;</div>
 <h2 id="how-engineers-address-bandwidth-sensitivity">🛠️ How Engineers Address Bandwidth Sensitivity<a class="headerlink" href="#how-engineers-address-bandwidth-sensitivity" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Use high-bandwidth interconnects</strong>: NVIDIA NVLink, InfiniBand (200 Gbps or 400 Gbps), or high-speed Ethernet (RoCEv2).</li>
@@ -2244,9 +2256,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2156,8 +2156,8 @@
 <li><strong>Device sharing:</strong> Configures how multiple pods can share a single physical NIC (via SR-IOV or other methods).</li>
 </ul>
 <h3 id="example-of-how-it-looks-in-a-pod-spec">Example of how it looks in a pod spec:<a class="headerlink" href="#example-of-how-it-looks-in-a-pod-spec" title="Permanent link">&para;</a></h3>
-<p>For reference:</p>
-<pre><code>apiVersion: v1
+<p>For reference:
+<div class="highlight"><pre><span></span><code>apiVersion: v1
 kind: Pod
 metadata:
   name: rdma-pod
@@ -2170,9 +2170,22 @@ spec:
         nvidia.com/rdma: 1
       limits:
         nvidia.com/rdma: 1
-</code></pre>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> The pod is scheduled on a node with an available RDMA device, and the device is mounted inside the container.</p>
 <hr />
+<h3 id="visual-representation-nvidia-network-operator-control-loop">📊 Visual Representation: NVIDIA Network Operator Control Loop<a class="headerlink" href="#visual-representation-nvidia-network-operator-control-loop" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how the Network Operator automates Mellanox HCA drivers and RDMA CNI setups.</p>
+<div class="mermaid">flowchart LR
+    ClusterPolicy["Network Operator Config"] --&gt; OFED["Deploy MOFED Drivers (Host Kernel)"]
+    OFED --&gt; CNI["Configure SR-IOV CNI &amp; Multus"]
+    CNI --&gt; RDMA_Plugin["Deploy RDMA Device Plugin"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class ClusterPolicy cpu;
+    class OFED,CNI,RDMA_Plugin memory;</div>
 <h2 id="3-sr-iov-single-root-io-virtualization">🔌 3. SR-IOV (Single Root I/O Virtualization)<a class="headerlink" href="#3-sr-iov-single-root-io-virtualization" title="Permanent link">&para;</a></h2>
 <p>SR-IOV allows a single physical network interface (like a ConnectX-6 NIC) to appear as multiple virtual functions (VFs). Each VF can be assigned directly to a pod, giving it near-native performance.</p>
 <h3 id="what-the-network-operator-automates_2">What the Network Operator automates:<a class="headerlink" href="#what-the-network-operator-automates_2" title="Permanent link">&para;</a></h3>
@@ -2288,9 +2301,11 @@ spec:
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

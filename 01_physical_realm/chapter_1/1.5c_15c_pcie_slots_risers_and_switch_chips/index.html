@@ -2240,6 +2240,40 @@
 </tr>
 </tbody>
 </table>
+<h3 id="visual-representation-switched-pcie-gpu-topology">📊 Visual Representation: Switched PCIe GPU Topology<a class="headerlink" href="#visual-representation-switched-pcie-gpu-topology" title="Permanent link">&para;</a></h3>
+<p>This diagram shows how a CPU connects to multiple GPUs via PCIe switch chips, allowing fast, direct GPU-to-GPU communication that bypasses the CPU.</p>
+<div class="mermaid">flowchart TD
+    CPU[CPU / Root Complex] --&gt;|PCIe Link| SwitchA[PCIe Switch Chip A]
+    CPU --&gt;|PCIe Link| SwitchB[PCIe Switch Chip B]
+
+    SwitchA --&gt;|Direct Inter-Switch Link| SwitchB
+    SwitchB --&gt; SwitchA
+
+    SwitchA --&gt;|x16 Link| GPU0[NVIDIA GPU 0]
+    SwitchA --&gt;|x16 Link| GPU1[NVIDIA GPU 1]
+    SwitchA --&gt;|x16 Link| GPU2[NVIDIA GPU 2]
+    SwitchA --&gt;|x16 Link| GPU3[NVIDIA GPU 3]
+
+    SwitchB --&gt;|x16 Link| GPU4[NVIDIA GPU 4]
+    SwitchB --&gt;|x16 Link| GPU5[NVIDIA GPU 5]
+    SwitchB --&gt;|x16 Link| GPU6[NVIDIA GPU 6]
+    SwitchB --&gt;|x16 Link| GPU7[NVIDIA GPU 7]
+
+    class CPU cpu;
+    class SwitchA system;
+    class SwitchB system;
+    class GPU0 memory;
+    class GPU1 memory;
+    class GPU2 memory;
+    class GPU3 memory;
+    class GPU4 memory;
+    class GPU5 memory;
+    class GPU6 memory;
+    class GPU7 memory;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;</div>
 <hr />
 <h2 id="comparison-direct-vs-switched-gpu-connections">📊 Comparison: Direct vs. Switched GPU Connections<a class="headerlink" href="#comparison-direct-vs-switched-gpu-connections" title="Permanent link">&para;</a></h2>
 <table>
@@ -2350,9 +2384,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

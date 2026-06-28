@@ -2181,19 +2181,52 @@
 <li><strong>Multi-GPU training</strong>: In frameworks like NVIDIA NCCL, data must be transferred between GPUs. If GPUs are on different sockets, communication is slower.</li>
 </ul>
 <p><strong>Real-world impact</strong>: A 40% performance drop in AI training is common when NUMA is ignored.</p>
+<h3 id="visual-representation-numa-node-socket-locality-and-interconnect">📊 Visual Representation: NUMA Node Socket Locality and Interconnect<a class="headerlink" href="#visual-representation-numa-node-socket-locality-and-interconnect" title="Permanent link">&para;</a></h3>
+<p>This diagram shows the dual-socket NUMA architecture where CPU Socket 0 and 1 access their respective local RAM and GPUs at high speed, while inter-socket requests suffer from higher latency over the UPI/Infinity Fabric link.</p>
+<div class="mermaid">flowchart TB
+    subgraph Node0["NUMA Node 0 (Socket 0)"]
+        CPU0["CPU Socket 0"]:::cpu
+        RAM0["Local RAM Node 0"]:::memory
+        GPU0["GPU 0"]:::cpu
+        CPU0 --&gt;|Local Bus: Fast| RAM0
+        CPU0 --&gt;|PCIe Gen 5: Fast| GPU0
+    end
+
+    subgraph Node1["NUMA Node 1 (Socket 1)"]
+        CPU1["CPU Socket 1"]:::cpu
+        RAM1["Local RAM Node 1"]:::memory
+        GPU1["GPU 1"]:::cpu
+        CPU1 --&gt;|Local Bus: Fast| RAM1
+        CPU1 --&gt;|PCIe Gen 5: Fast| GPU1
+    end
+
+    %% Interconnect
+    CPU0 --&gt;|UPI / Infinity Fabric Inter-Socket Link Slower| CPU1
+
+    %% Remote Access Paths (dash/slower)
+    CPU0 -.-&gt;|Remote Access: High Latency| RAM1
+    CPU1 -.-&gt;|Remote Access: High Latency| RAM0
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class CPU0,CPU1,GPU0,GPU1 cpu;
+    class RAM0,RAM1 memory;
+    class Node0,Node1 system;</div>
 <hr />
 <h2 id="detecting-numa-issues">🕵️ Detecting NUMA Issues<a class="headerlink" href="#detecting-numa-issues" title="Permanent link">&para;</a></h2>
 <p>Engineers can check NUMA topology using simple tools. Here's how to see your system's NUMA layout:</p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-bash">numactl --hardware
-</code></pre>
-<p>📤 Output: Shows available NUMA nodes, their CPUs, and memory ranges. Example:</p>
-<pre><code>available: 2 nodes (0-1)
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>numactl<span class="w"> </span>--hardware
+</code></pre></div></p>
+<p>📤 Output: Shows available NUMA nodes, their CPUs, and memory ranges. Example:
+<div class="highlight"><pre><span></span><code>available: 2 nodes (0-1)
 node 0 cpus: 0-7
 node 0 size: 65536 MB
 node 1 cpus: 8-15
 node 1 size: 65536 MB
-</code></pre>
+</code></pre></div></p>
 <p>This tells you socket 0 has CPUs 0-7 with 64 GB local memory, and socket 1 has CPUs 8-15 with 64 GB local memory.</p>
 <hr />
 <h2 id="best-practices-for-ai-engineers">🧩 Best Practices for AI Engineers<a class="headerlink" href="#best-practices-for-ai-engineers" title="Permanent link">&para;</a></h2>
@@ -2254,9 +2287,11 @@ node 1 size: 65536 MB
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

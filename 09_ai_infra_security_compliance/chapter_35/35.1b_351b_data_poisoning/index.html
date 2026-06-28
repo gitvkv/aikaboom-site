@@ -2183,6 +2183,20 @@
 <li><strong>Trigger activates</strong> — when the attacker's specific condition is met, the model fails</li>
 </ol>
 <hr />
+<h3 id="visual-representation-training-data-poisoning-exploit">📊 Visual Representation: Training Data Poisoning exploit<a class="headerlink" href="#visual-representation-training-data-poisoning-exploit" title="Permanent link">&para;</a></h3>
+<p>This diagram displays data poisoning: how malicious training dataset injections degrade final model accuracy.</p>
+<div class="mermaid">flowchart LR
+    Attacker["Attacker injects bad samples"] --&gt; Dataset["Target Training Dataset"]
+    Dataset --&gt; TrainRun["GPU Pre-training / Fine-tuning"]
+    TrainRun --&gt; BadModel["Trained Model outputs wrong predictions"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Dataset cpu;
+    class TrainRun memory;
+    class Attacker,BadModel system;</div>
 <h2 id="real-world-impact-for-engineers">🛠️ Real-World Impact for Engineers<a class="headerlink" href="#real-world-impact-for-engineers" title="Permanent link">&para;</a></h2>
 <p>As an engineer managing AI infrastructure, data poisoning affects you in three key areas:</p>
 <ul>
@@ -2203,19 +2217,19 @@
 <hr />
 <h2 id="example-detecting-a-simple-label-flip">🔐 Example: Detecting a Simple Label Flip<a class="headerlink" href="#example-detecting-a-simple-label-flip" title="Permanent link">&para;</a></h2>
 <p>For reference, here is a Python snippet that checks for suspicious label distributions in a dataset:</p>
-<pre><code class="language-python">import pandas as pd
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-# Load your training dataset
-df = pd.read_csv('training_data.csv')
+<span class="c1"># Load your training dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;training_data.csv&#39;</span><span class="p">)</span>
 
-# Check label distribution
-label_counts = df['label'].value_counts()
+<span class="c1"># Check label distribution</span>
+<span class="n">label_counts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 
-# Flag if any label has unusually few samples
-for label, count in label_counts.items():
-    if count &lt; 10:
-        print(f&quot;WARNING: Label '{label}' has only {count} samples — possible poisoning&quot;)
-</code></pre>
+<span class="c1"># Flag if any label has unusually few samples</span>
+<span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">label_counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;WARNING: Label &#39;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&#39; has only </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> samples — possible poisoning&quot;</span><span class="p">)</span>
+</code></pre></div>
 <p>📤 Output:<br />
 <strong>WARNING: Label 'stop_sign' has only 3 samples — possible poisoning</strong></p>
 <hr />
@@ -2276,9 +2290,11 @@ for label, count in label_counts.items():
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2187,6 +2187,20 @@
 <li><strong>Mode 0</strong> sends packets in round-robin order across all interfaces, but requires the switch to be configured for the same aggregation group.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-network-interface-bonding-link-aggregation">📊 Visual Representation: Network Interface Bonding (Link Aggregation)<a class="headerlink" href="#visual-representation-network-interface-bonding-link-aggregation" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how multiple physical network interfaces are combined into a single logical bond interface for redundancy and higher throughput.</p>
+<div class="mermaid">flowchart LR
+    eth0["Physical NIC (eth0)"] --&gt; Bond["Logical Interface (bond0)"]
+    eth1["Physical NIC (eth1)"] --&gt; Bond
+    Bond --&gt; Switch["Data Center Switch"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Bond cpu;
+    class eth0,eth1 memory;
+    class Switch system;</div>
 <h2 id="redundancy-vs-bandwidth-what-matters-for-ai">📊 Redundancy vs. Bandwidth — What Matters for AI?<a class="headerlink" href="#redundancy-vs-bandwidth-what-matters-for-ai" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Redundancy</strong> is critical for long-running AI training jobs. A single network failure should not interrupt data streaming or checkpoint saving.</li>
@@ -2254,9 +2268,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

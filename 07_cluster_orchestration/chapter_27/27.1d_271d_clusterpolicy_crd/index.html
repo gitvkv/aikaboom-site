@@ -2184,6 +2184,19 @@
 </ul>
 <p>The ClusterPolicy is defined as a YAML file that you apply using <strong>kubectl apply -f</strong> (but remember, no code blocks here — just know it's a standard Kubernetes apply operation).</p>
 <hr />
+<h3 id="visual-representation-clusterpolicy-custom-resource-definition-crd-structure">📊 Visual Representation: ClusterPolicy Custom Resource Definition (CRD) structure<a class="headerlink" href="#visual-representation-clusterpolicy-custom-resource-definition-crd-structure" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the ClusterPolicy spec fields, controlling driver versions and validation options.</p>
+<div class="mermaid">flowchart LR
+    ClusterPolicy["ClusterPolicy CRD Spec"] --&gt; DriverSpec["driver.enabled / repository / version"]
+    ClusterPolicy --&gt; ToolkitSpec["toolkit.enabled / runtime"]
+    ClusterPolicy --&gt; DevicePluginSpec["devicePlugin.enabled / arguments"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class ClusterPolicy cpu;
+    class DriverSpec,ToolkitSpec,DevicePluginSpec memory;</div>
 <h2 id="key-fields-in-a-clusterpolicy">🕵️ Key Fields in a ClusterPolicy<a class="headerlink" href="#key-fields-in-a-clusterpolicy" title="Permanent link">&para;</a></h2>
 <p>Here are the most important fields you will encounter when reading or writing a ClusterPolicy:</p>
 <ul>
@@ -2258,9 +2271,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

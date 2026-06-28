@@ -2186,6 +2186,21 @@
 <li><strong>End-to-end data integrity</strong> — ensures no silent data corruption during long training runs</li>
 </ul>
 <hr />
+<h3 id="visual-representation-all-flash-array-afa-controller-redundancy">📊 Visual Representation: All-Flash Array (AFA) Controller Redundancy<a class="headerlink" href="#visual-representation-all-flash-array-afa-controller-redundancy" title="Permanent link">&para;</a></h3>
+<p>This diagram displays AFA architecture, showing redundant storage controllers managing SAS/NVMe SSD pools for host clusters.</p>
+<div class="mermaid">flowchart LR
+    HostCluster["Compute Host Cluster"] --&gt; ControllerA["Storage Controller A"]
+    HostCluster --&gt; ControllerB["Storage Controller B"]
+    ControllerA --- NVMePool["Shared NVMe SSD Pool"]
+    ControllerB --- NVMePool
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class ControllerA,ControllerB cpu;
+    class NVMePool memory;
+    class HostCluster system;</div>
 <h2 id="ai-use-cases-for-all-flash-arrays">🕵️ AI Use Cases for All-Flash Arrays<a class="headerlink" href="#ai-use-cases-for-all-flash-arrays" title="Permanent link">&para;</a></h2>
 <p>Here are the most common scenarios where AFAs shine in AI environments:</p>
 <h3 id="1-large-model-training-llms-vision-models">1. 🏋️ Large Model Training (LLMs, Vision Models)<a class="headerlink" href="#1-large-model-training-llms-vision-models" title="Permanent link">&para;</a></h3>
@@ -2331,9 +2346,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

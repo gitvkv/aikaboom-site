@@ -2199,6 +2199,22 @@
 <li><strong>Half threads active:</strong> <code>[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]</code> — Half the warp is idle (performance penalty).</li>
 </ul>
 <hr />
+<h3 id="visual-representation-simt-control-flow-and-thread-divergence">📊 Visual Representation: SIMT Control Flow and Thread Divergence<a class="headerlink" href="#visual-representation-simt-control-flow-and-thread-divergence" title="Permanent link">&para;</a></h3>
+<p>This flowchart demonstrates thread divergence in a warp: when conditional branching occurs, the warp serializes execution paths, reducing execution efficiency.</p>
+<div class="mermaid">flowchart LR
+    Warp["Warp Instruction"] --&gt; Cond{"Branch Condition (if/else)"}
+    Cond --&gt;|Path A (True)| ExecA["Execute Path A (False threads disabled)"]
+    Cond --&gt;|Path B (False)| ExecB["Execute Path B (True threads disabled)"]
+    ExecA --&gt; Reconverge["Reconverge &amp; resume lock-step execution"]
+    ExecB --&gt; Reconverge
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Cond cpu;
+    class ExecA,ExecB memory;
+    class Warp,Reconverge system;</div>
 <h2 id="performance-implications-of-simt">🕵️ Performance Implications of SIMT<a class="headerlink" href="#performance-implications-of-simt" title="Permanent link">&para;</a></h2>
 <p>Understanding SIMT helps you write efficient GPU code. Here are the key performance factors:</p>
 <h3 id="when-simt-is-efficient">✅ When SIMT is Efficient<a class="headerlink" href="#when-simt-is-efficient" title="Permanent link">&para;</a></h3>
@@ -2217,13 +2233,13 @@
 <hr />
 <h2 id="simt-in-action-a-simple-example">📊 SIMT in Action — A Simple Example<a class="headerlink" href="#simt-in-action-a-simple-example" title="Permanent link">&para;</a></h2>
 <p>Consider adding two arrays element-by-element. In CUDA, you write a kernel like:</p>
-<pre><code>__global__ void add_arrays(float *a, float *b, float *c, int n) {
+<div class="highlight"><pre><span></span><code>__global__ void add_arrays(float *a, float *b, float *c, int n) {
     int idx = threadIdx.x + blockIdx.x * blockDim.x;
     if (idx &lt; n) {
         c[idx] = a[idx] + b[idx];
     }
 }
-</code></pre>
+</code></pre></div>
 <p><strong>What happens under SIMT:</strong></p>
 <ul>
 <li>Thread 0 adds <code>a[0] + b[0]</code> → stores in <code>c[0]</code></li>
@@ -2231,8 +2247,8 @@
 <li>... (all 32 threads in the warp do this simultaneously)</li>
 <li>The <code>if (idx &lt; n)</code> check is a branch — if some threads pass and others don't, the warp diverges.</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>// Conceptual CUDA kernel (not executable alone)
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>// Conceptual CUDA kernel (not executable alone)
 __global__ void example_kernel() {
     int tid = threadIdx.x;
     // All 32 threads execute this line together
@@ -2244,7 +2260,7 @@ __global__ void example_kernel() {
         result = result - 1;  // Path B
     }
 }
-</code></pre>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> The GPU executes Path A for threads 0-15 (threads 16-31 are masked), then executes Path B for threads 16-31 (threads 0-15 are masked). This takes twice as long as a non-branching version.</p>
 <hr />
 <h2 id="simt-and-ai-workloads">🧩 SIMT and AI Workloads<a class="headerlink" href="#simt-and-ai-workloads" title="Permanent link">&para;</a></h2>
@@ -2315,9 +2331,11 @@ __global__ void example_kernel() {
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

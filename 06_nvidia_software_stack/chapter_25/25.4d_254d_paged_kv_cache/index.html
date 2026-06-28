@@ -2203,6 +2203,20 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-pagedattention-kv-cache-block-mapping">📊 Visual Representation: PagedAttention KV Cache Block Mapping<a class="headerlink" href="#visual-representation-pagedattention-kv-cache-block-mapping" title="Permanent link">&para;</a></h3>
+<p>This diagram displays PagedAttention, mapping logical key-value (KV) sequence tokens to non-contiguous physical DRAM memory pages.</p>
+<div class="mermaid">flowchart LR
+    Tokens["Logical KV Cache Tokens"] --&gt; PageTable["PagedAttention Block Table"]
+    PageTable --&gt; PhysicalPage1["Physical Block 0 (Host DRAM Page 15)"]
+    PageTable --&gt; PhysicalPage2["Physical Block 1 (Host DRAM Page 88)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class PageTable cpu;
+    class PhysicalPage1,PhysicalPage2 memory;
+    class Tokens system;</div>
 <h2 id="real-world-impact-serving-thousands-of-requests">🕵️ Real-World Impact: Serving Thousands of Requests<a class="headerlink" href="#real-world-impact-serving-thousands-of-requests" title="Permanent link">&para;</a></h2>
 <p>When using a Paged KV cache with TensorRT-LLM, engineers observe:</p>
 <ul>
@@ -2235,10 +2249,10 @@
 <li><strong>page_size</strong> — the number of tokens per page (typically 16 or 32)</li>
 </ul>
 <h3 id="example-configuration-for-reference">📝 Example Configuration (for reference)<a class="headerlink" href="#example-configuration-for-reference" title="Permanent link">&para;</a></h3>
-<pre><code>max_batch_size = 256
+<div class="highlight"><pre><span></span><code>max_batch_size = 256
 max_num_tokens = 8192
 page_size = 32
-</code></pre>
+</code></pre></div>
 <p>📤 <strong>Output:</strong> This configuration allows up to 256 concurrent requests, with a total of 8192 tokens distributed across all requests, using 32-token pages.</p>
 <hr />
 <h2 id="key-takeaways-for-new-engineers">🎯 Key Takeaways for New Engineers<a class="headerlink" href="#key-takeaways-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2298,9 +2312,11 @@ page_size = 32
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

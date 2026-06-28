@@ -2231,6 +2231,27 @@
 </tr>
 </tbody>
 </table>
+<h3 id="visual-representation-ecc-error-detection-and-correction-flow">📊 Visual Representation: ECC Error Detection and Correction Flow<a class="headerlink" href="#visual-representation-ecc-error-detection-and-correction-flow" title="Permanent link">&para;</a></h3>
+<p>This flowchart maps the logical steps taken by the ECC memory controller to recalculate parity, verify data integrity, correct single-bit errors, and alert the system on uncorrectable multi-bit errors.</p>
+<div class="mermaid">flowchart TD
+    DataIn["Data Read from Memory\n(64-bit Data + 8-bit ECC)"] --&gt; Calc["Recalculate Syndrome / Parity Code"]
+    Calc --&gt; Compare{"Syndrome == 0?"}
+
+    Compare --&gt;|Yes| Valid["No Error Detected\n(Send Data to CPU)"]
+    Compare --&gt;|No| Detect{"Error Type?"}
+
+    Detect --&gt;|Single-Bit Error| Correct["Locate Flipped Bit\nFlip Bit Back to Correct State\nLog Corrected ECC Event"]
+    Correct --&gt; SendCorrected["Send Corrected Data to CPU"]
+
+    Detect --&gt;|Double-Bit / Multi-Bit Error| Uncorrectable["Raise System Alert (MCE)\nPrevent Silent Corruption\nHalt System or Raise Kernel Panic"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class DataIn,Valid,SendCorrected memory;
+    class Calc,Compare,Detect system;
+    class Correct,Uncorrectable cpu;</div>
 <hr />
 <h2 id="why-engineers-must-care-about-ecc">💡 Why Engineers Must Care About ECC<a class="headerlink" href="#why-engineers-must-care-about-ecc" title="Permanent link">&para;</a></h2>
 <p>For AI infrastructure and operations, ECC memory is <strong>not optional</strong> — it's a requirement. Here's why:</p>
@@ -2335,9 +2356,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

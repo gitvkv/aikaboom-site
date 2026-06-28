@@ -2196,23 +2196,38 @@
 <li><strong>NVMe drivers and OS support:</strong> Ensure your Linux kernel (or Windows Server) and NVMe driver are configured to allow high queue depths. Defaults may limit QD to 128 or 256.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-nvme-multi-queue-depth-architecture">📊 Visual Representation: NVMe Multi-Queue Depth Architecture<a class="headerlink" href="#visual-representation-nvme-multi-queue-depth-architecture" title="Permanent link">&para;</a></h3>
+<p>This diagram displays NVMe multi-queue architecture, showing how parallel CPU cores submit commands to matching hardware queues.</p>
+<div class="mermaid">flowchart LR
+    Core1["CPU Core 1"] --&gt;|Submit Command| Queue1["Submission Queue 1 (Depth: 64K)"]
+    Core2["CPU Core 2"] --&gt;|Submit Command| Queue2["Submission Queue 2 (Depth: 64K)"]
+    Queue1 --&gt; SSDController["SSD Controller Execution Engine"]
+    Queue2 --&gt; SSDController
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class SSDController cpu;
+    class Queue1,Queue2 memory;
+    class Core1,Core2 system;</div>
 <h2 id="how-to-check-and-tune-queue-depth">🕵️ How to Check and Tune Queue Depth<a class="headerlink" href="#how-to-check-and-tune-queue-depth" title="Permanent link">&para;</a></h2>
 <h3 id="checking-current-queue-depth">🔍 Checking Current Queue Depth<a class="headerlink" href="#checking-current-queue-depth" title="Permanent link">&para;</a></h3>
 <p>On a Linux system, you can check the NVMe device's queue depth using:</p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-bash">cat /sys/block/nvme0n1/queue/nr_requests
-</code></pre>
-<p>📤 Output: <strong>256</strong> (typical default)</p>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>/sys/block/nvme0n1/queue/nr_requests
+</code></pre></div>
+📤 Output: <strong>256</strong> (typical default)</p>
 <p>To see the maximum supported queue depth:</p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-bash">cat /sys/block/nvme0n1/device/queue_depth
-</code></pre>
-<p>📤 Output: <strong>1024</strong> (or higher, depending on the drive)</p>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>/sys/block/nvme0n1/device/queue_depth
+</code></pre></div>
+📤 Output: <strong>1024</strong> (or higher, depending on the drive)</p>
 <h3 id="tuning-queue-depth">🔧 Tuning Queue Depth<a class="headerlink" href="#tuning-queue-depth" title="Permanent link">&para;</a></h3>
 <p>You can increase the queue depth temporarily:</p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-bash">echo 4096 &gt; /sys/block/nvme0n1/queue/nr_requests
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="m">4096</span><span class="w"> </span>&gt;<span class="w"> </span>/sys/block/nvme0n1/queue/nr_requests
+</code></pre></div></p>
 <p>To make it permanent, add a udev rule or set it in your storage configuration script.</p>
 <hr />
 <h2 id="real-world-ai-example">🧪 Real-World AI Example<a class="headerlink" href="#real-world-ai-example" title="Permanent link">&para;</a></h2>
@@ -2286,9 +2301,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2178,6 +2178,19 @@
 <li><strong>GPU driver abstraction</strong>: NVIDIA containers include the CUDA runtime and libraries needed, while only requiring the NVIDIA driver on the host.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-container-package-portability-promise">📊 Visual Representation: Container Package Portability Promise<a class="headerlink" href="#visual-representation-container-package-portability-promise" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how containers bundle application binaries and all dependent libraries into a portable image that runs consistently across any infrastructure.</p>
+<div class="mermaid">flowchart LR
+    Image["Container Image (Code + Libraries + Config)"] --&gt;|Deploy| Dev["Local Developer Workstation"]
+    Image --&gt;|Deploy| Staging["Cloud VM Node"]
+    Image --&gt;|Deploy| Prod["Bare-Metal DGX Server"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Image cpu;
+    class Dev,Staging,Prod system;</div>
 <h2 id="the-building-blocks-of-a-container-image">🛠️ The Building Blocks of a Container Image<a class="headerlink" href="#the-building-blocks-of-a-container-image" title="Permanent link">&para;</a></h2>
 <p>A container image is a <strong>snapshot</strong> of a complete filesystem with your application and its dependencies. It is built layer by layer.</p>
 <ul>
@@ -2247,9 +2260,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

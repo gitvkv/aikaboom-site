@@ -2209,6 +2209,29 @@
 <li><strong>Dynamic wear leveling:</strong> Only distributes writes across free (unused) blocks. Simpler but less effective over time.</li>
 <li><strong>Static wear leveling:</strong> Also moves rarely-changed data (like operating system files) to different cells to ensure even wear across all cells. More complex but extends drive life significantly.</li>
 </ul>
+<h3 id="visual-representation-ssd-wear-leveling-mechanism">📊 Visual Representation: SSD Wear Leveling Mechanism<a class="headerlink" href="#visual-representation-ssd-wear-leveling-mechanism" title="Permanent link">&para;</a></h3>
+<p>This diagram compares dynamic wear leveling (which cycles writes through free blocks) with static wear leveling (which actively relocates static data to optimize overall endurance).</p>
+<div class="mermaid">flowchart LR
+    %% Main Flow
+    Host[Host Write] --&gt; FTL[Controller / FTL]
+
+    %% Dynamic Branch
+    FTL --&gt;|Dynamic| Dyn[Write to Unused/Free Blocks Only]
+    Dyn --&gt; BlocksD[Blocks Wear Out Unevenly]
+
+    %% Static Branch
+    FTL --&gt;|Static| Stat[Relocate Static Data to Worn Blocks]
+    Stat --&gt; BlocksS[All Blocks Wear Equally]
+
+    %% Stylings
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class FTL cpu;
+    class Host system;
+    class Dyn,Stat memory;
+    class BlocksD,BlocksS system;</div>
 <hr />
 <h2 id="practical-takeaway-for-engineers">🧪 Practical Takeaway for Engineers<a class="headerlink" href="#practical-takeaway-for-engineers" title="Permanent link">&para;</a></h2>
 <p>When selecting SSDs for AI infrastructure:</p>
@@ -2219,8 +2242,8 @@
 <li><strong>Monitor drive health</strong> using tools like <strong>smartctl</strong> (from the smartmontools package). Look for attributes like "Wear Leveling Count" or "Percentage Used."</li>
 </ul>
 <p>For reference, a typical command to check SSD health:</p>
-<pre><code>smartctl -a /dev/nvme0n1
-</code></pre>
+<div class="highlight"><pre><span></span><code>smartctl -a /dev/nvme0n1
+</code></pre></div>
 <p>📤 <strong>Output:</strong> Look for lines like "Percentage Used" (0% = new, 100% = end of life) and "Available Spare" (should be 100% for a healthy drive).</p>
 <hr />
 <h2 id="summary">✅ Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
@@ -2269,9 +2292,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

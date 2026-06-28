@@ -2217,6 +2217,19 @@
 - <strong>Steps:</strong> Number of denoising iterations (higher = more detail)
 - <strong>Seed:</strong> Random seed for reproducible results</p>
 <hr />
+<h3 id="visual-representation-ngc-nim-microservice-categories">📊 Visual Representation: NGC NIM Microservice categories<a class="headerlink" href="#visual-representation-ngc-nim-microservice-categories" title="Permanent link">&para;</a></h3>
+<p>This diagram maps the primary NIM variants: Text generation, Vision, Speech translation, and Bioscience.</p>
+<div class="mermaid">flowchart LR
+    NIMs["Available NIMs"] --&gt; LLM["Text NIMs (Llama3 / Mistral)"]
+    NIMs --&gt; Vision["Vision NIMs (Kosmos / ViT)"]
+    NIMs --&gt; Audio["Speech NIMs (Riva translation)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NIMs cpu;
+    class LLM,Vision,Audio memory;</div>
 <h2 id="domain-specific-models-nims">🏥 Domain-Specific Models NIMs<a class="headerlink" href="#domain-specific-models-nims" title="Permanent link">&para;</a></h2>
 <p>Domain-specific NIMs are pre-trained or fine-tuned models optimized for particular industries or tasks.</p>
 <p><strong>Available domain categories:</strong></p>
@@ -2355,9 +2368,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

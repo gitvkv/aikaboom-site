@@ -2204,13 +2204,26 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-random-iops-ssd-address-translation">📊 Visual Representation: Random IOPS SSD Address Translation<a class="headerlink" href="#visual-representation-random-iops-ssd-address-translation" title="Permanent link">&para;</a></h3>
+<p>This diagram displays random IOPS, showing how dispersed flash cells require address translation lookups (FTL) before reading.</p>
+<div class="mermaid">flowchart LR
+    Scatter["Dispersed Flash Cells"] --&gt; FTL["Flash Translation Layer (FTL Lookup)"]
+    FTL --&gt; Controller["Flash Controller"]
+    Controller --&gt;|Multiple IOPS Requests| HostRAM["Host RAM"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class FTL,Controller cpu;
+    class Scatter,HostRAM memory;</div>
 <h2 id="how-to-measure-random-iops">🕵️ How to Measure Random IOPS<a class="headerlink" href="#how-to-measure-random-iops" title="Permanent link">&para;</a></h2>
 <p>Engineers should use benchmarking tools to test their storage system's random IOPS capability. Here's a common approach:</p>
-<p><strong>For reference:</strong></p>
-<pre><code>fio --name=random-write --ioengine=libaio --rw=randwrite \
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>fio --name=random-write --ioengine=libaio --rw=randwrite \
     --bs=4k --size=1G --numjobs=8 --iodepth=32 \
     --runtime=60 --time_based --direct=1
-</code></pre>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> Look for the line showing <strong>IOPS=</strong> followed by a number (e.g., IOPS=45,000). This tells you how many 4KB random writes your storage can handle per second.</p>
 <p><strong>For metadata testing:</strong>
 - Use tools like <strong>mdtest</strong> or <strong>filebench</strong> to simulate metadata operations
@@ -2302,9 +2315,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

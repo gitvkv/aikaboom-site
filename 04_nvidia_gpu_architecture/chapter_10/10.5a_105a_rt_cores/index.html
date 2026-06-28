@@ -2180,6 +2180,21 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-rt-core-bvh-traversal-acceleration">📊 Visual Representation: RT Core BVH Traversal Acceleration<a class="headerlink" href="#visual-representation-rt-core-bvh-traversal-acceleration" title="Permanent link">&para;</a></h3>
+<p>This diagram shows how RT Cores accelerate ray tracing by offloading Bounding Volume Hierarchy (BVH) traversals and ray-triangle intersection tests.</p>
+<div class="mermaid">flowchart LR
+    Ray["Ray Generation"] --&gt; RTCore["RT Core Hardware"]
+    RTCore --&gt; BVH["BVH Box Intersect Tests"]
+    RTCore --&gt; Tri["Ray-Triangle Intersect Tests"]
+    Tri --&gt; Output["Intersection Result (Hit/Miss)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class RTCore cpu;
+    class BVH,Tri memory;
+    class Ray,Output system;</div>
 <h2 id="when-does-ai-use-rt-cores">🕵️ When Does AI Use RT Cores?<a class="headerlink" href="#when-does-ai-use-rt-cores" title="Permanent link">&para;</a></h2>
 <p>AI models that work with <strong>3D data</strong> can benefit from RT Cores. Here are the key scenarios:</p>
 <h3 id="1-autonomous-driving-lidar-radar-data">1. 🚗 Autonomous Driving (LiDAR &amp; Radar Data)<a class="headerlink" href="#1-autonomous-driving-lidar-radar-data" title="Permanent link">&para;</a></h3>
@@ -2213,12 +2228,12 @@
 </ul>
 <h3 id="example-workflow-conceptual">📝 Example Workflow (Conceptual)<a class="headerlink" href="#example-workflow-conceptual" title="Permanent link">&para;</a></h3>
 <p>For reference, a typical AI pipeline using RT Cores might look like this:</p>
-<pre><code>1. Load a 3D mesh (e.g., a car model for autonomous driving)
+<div class="highlight"><pre><span></span><code>1. Load a 3D mesh (e.g., a car model for autonomous driving)
 2. Generate random rays from a virtual camera
 3. RT Cores compute ray-triangle intersections
 4. AI model uses intersection data to learn 3D geometry
 5. Output: A trained model that can interpret LiDAR data
-</code></pre>
+</code></pre></div>
 <p><strong>📤 Output:</strong> The AI model trains 3x faster compared to using only CUDA cores for the same geometry calculations.</p>
 <hr />
 <h2 id="key-takeaways-for-new-engineers">✅ Key Takeaways for New Engineers<a class="headerlink" href="#key-takeaways-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2276,9 +2291,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

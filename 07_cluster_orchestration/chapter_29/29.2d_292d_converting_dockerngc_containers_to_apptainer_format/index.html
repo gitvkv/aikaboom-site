@@ -2195,37 +2195,51 @@
 <h2 id="step-by-step-pulling-and-converting">📦 Step-by-Step: Pulling and Converting<a class="headerlink" href="#step-by-step-pulling-and-converting" title="Permanent link">&para;</a></h2>
 <h3 id="step-1-pull-the-dockerngc-image">Step 1: Pull the Docker/NGC Image<a class="headerlink" href="#step-1-pull-the-dockerngc-image" title="Permanent link">&para;</a></h3>
 <p>Use Apptainer's pull command to download a Docker-based image directly. Apptainer can pull from any OCI-compliant registry, including NGC.</p>
-<p>For reference:</p>
-<pre><code>apptainer pull docker://nvcr.io/nvidia/pytorch:24.01-py3
-</code></pre>
+<p>For reference:
+<div class="highlight"><pre><span></span><code>apptainer pull docker://nvcr.io/nvidia/pytorch:24.01-py3
+</code></pre></div></p>
 <p>📤 Output: A file named <strong>pytorch_24.01-py3.sif</strong> is created in your current directory.</p>
 <hr />
 <h3 id="step-2-convert-an-existing-local-docker-image">Step 2: Convert an Existing Local Docker Image<a class="headerlink" href="#step-2-convert-an-existing-local-docker-image" title="Permanent link">&para;</a></h3>
 <p>If you already have a Docker image stored locally, you can convert it using the Docker daemon.</p>
-<p>For reference:</p>
-<pre><code>apptainer build my_container.sif docker-daemon://my_image:latest
-</code></pre>
+<p>For reference:
+<div class="highlight"><pre><span></span><code>apptainer build my_container.sif docker-daemon://my_image:latest
+</code></pre></div></p>
 <p>📤 Output: A new SIF file named <strong>my_container.sif</strong> is created.</p>
 <hr />
 <h3 id="step-3-verify-the-converted-image">Step 3: Verify the Converted Image<a class="headerlink" href="#step-3-verify-the-converted-image" title="Permanent link">&para;</a></h3>
 <p>Check that the SIF file is valid and inspect its metadata.</p>
-<p>For reference:</p>
-<pre><code>apptainer inspect my_container.sif
-</code></pre>
+<p>For reference:
+<div class="highlight"><pre><span></span><code>apptainer inspect my_container.sif
+</code></pre></div></p>
 <p>📤 Output: Displays labels, environment variables, and runscript information from the original Docker image.</p>
 <hr />
+<h3 id="visual-representation-docker-to-apptainer-build-conversion">📊 Visual Representation: Docker to Apptainer build conversion<a class="headerlink" href="#visual-representation-docker-to-apptainer-build-conversion" title="Permanent link">&para;</a></h3>
+<p>This flowchart shows how Apptainer pulls Docker layers from registries and compiles them directly into a local SIF file.</p>
+<div class="mermaid">flowchart LR
+    Registry["Docker Registry (nvcr.io)"] --&gt;|apptainer pull| Pull["Download &amp; Unpack Layers"]
+    Pull --&gt; Compile["Compile to SquashFS format"]
+    Compile --&gt; SIF["Local image.sif file ready"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class SIF cpu;
+    class Compile memory;
+    class Registry,Pull system;</div>
 <h2 id="running-the-converted-apptainer-container">🚀 Running the Converted Apptainer Container<a class="headerlink" href="#running-the-converted-apptainer-container" title="Permanent link">&para;</a></h2>
 <p>Once converted, you can run the container with GPU support using the <code>--nv</code> flag.</p>
-<p>For reference:</p>
-<pre><code>apptainer run --nv my_container.sif
-</code></pre>
+<p>For reference:
+<div class="highlight"><pre><span></span><code>apptainer run --nv my_container.sif
+</code></pre></div></p>
 <p>📤 Output: The container starts and executes its default runscript (e.g., Python shell for PyTorch images).</p>
 <hr />
 <h2 id="testing-gpu-access-inside-the-container">🧪 Testing GPU Access Inside the Container<a class="headerlink" href="#testing-gpu-access-inside-the-container" title="Permanent link">&para;</a></h2>
 <p>To confirm that the converted container can access NVIDIA GPUs:</p>
-<p>For reference:</p>
-<pre><code>apptainer exec --nv my_container.sif nvidia-smi
-</code></pre>
+<p>For reference:
+<div class="highlight"><pre><span></span><code>apptainer exec --nv my_container.sif nvidia-smi
+</code></pre></div></p>
 <p>📤 Output: Shows the GPU status and driver information, identical to running nvidia-smi on the host.</p>
 <hr />
 <h2 id="working-with-ngc-containers-specifically">📁 Working with NGC Containers Specifically<a class="headerlink" href="#working-with-ngc-containers-specifically" title="Permanent link">&para;</a></h2>
@@ -2234,9 +2248,9 @@
 - Optimized frameworks (PyTorch, TensorFlow, etc.)
 - Multi-architecture support (x86_64, ARM)</p>
 <p>When pulling from NGC, use the full URI format:</p>
-<p>For reference:</p>
-<pre><code>apptainer pull docker://nvcr.io/nvidia/tensorflow:24.01-tf2-py3
-</code></pre>
+<p>For reference:
+<div class="highlight"><pre><span></span><code>apptainer pull docker://nvcr.io/nvidia/tensorflow:24.01-tf2-py3
+</code></pre></div></p>
 <p>📤 Output: A SIF file named <strong>tensorflow_24.01-tf2-py3.sif</strong> is created.</p>
 <hr />
 <h2 id="best-practices-for-new-engineers">🧹 Best Practices for New Engineers<a class="headerlink" href="#best-practices-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2323,9 +2337,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

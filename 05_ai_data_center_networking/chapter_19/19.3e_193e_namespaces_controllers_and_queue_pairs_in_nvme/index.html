@@ -2180,6 +2180,19 @@
 </li>
 </ul>
 <hr />
+<h3 id="visual-representation-nvme-of-initiator-target-subsystem-mapping">📊 Visual Representation: NVMe-oF Initiator-Target Subsystem Mapping<a class="headerlink" href="#visual-representation-nvme-of-initiator-target-subsystem-mapping" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the relationship between the host Initiator, the fabric, and the target controller subsystems in NVMe-oF.</p>
+<div class="mermaid">flowchart LR
+    Host["Host System (Initiator)"] --&gt;|Fabric Connect| TargetPort["Target Controller Port"]
+    TargetPort --&gt;|Map subsystem| Namespace["NVMe Subsystem (Logical Namespaces)"]
+    Namespace --&gt; SSD["Physical SSD Controller Flash Units"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class TargetPort cpu;
+    class Host,Namespace,SSD memory;</div>
 <h2 id="comparison-table-namespaces-vs-controllers-vs-queue-pairs">📊 Comparison Table: Namespaces vs. Controllers vs. Queue Pairs<a class="headerlink" href="#comparison-table-namespaces-vs-controllers-vs-queue-pairs" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2230,7 +2243,7 @@
 <hr />
 <h2 id="practical-configuration-example-for-reference">🧪 Practical Configuration Example (For Reference)<a class="headerlink" href="#practical-configuration-example-for-reference" title="Permanent link">&para;</a></h2>
 <p>Below is a simplified example of how an NVMe-oF target might be configured using the <strong>nvmetcli</strong> tool. This is for reference only — do not run this without understanding your environment.</p>
-<pre><code class="language-text"># Create a namespace with ID 1, backed by a block device
+<div class="highlight"><pre><span></span><code># Create a namespace with ID 1, backed by a block device
 nvmetcli &quot;add /ports/1/subsystems/nvme-subsystem/namespaces/1&quot;
 nvmetcli &quot;set /ports/1/subsystems/nvme-subsystem/namespaces/1/device /dev/nvme0n1&quot;
 nvmetcli &quot;set /ports/1/subsystems/nvme-subsystem/namespaces/1/enable 1&quot;
@@ -2238,7 +2251,7 @@ nvmetcli &quot;set /ports/1/subsystems/nvme-subsystem/namespaces/1/enable 1&quot
 # Create a controller with queue pair limits
 nvmetcli &quot;set /ports/1/subsystems/nvme-subsystem/attr/allow_any_host 1&quot;
 nvmetcli &quot;set /ports/1/subsystems/nvme-subsystem/attr/queue_size 128&quot;
-</code></pre>
+</code></pre></div>
 <p>📤 <strong>Output:</strong> The target now exposes one namespace with a queue depth of 128 commands per queue pair.</p>
 <hr />
 <h2 id="key-takeaways-for-new-engineers">✅ Key Takeaways for New Engineers<a class="headerlink" href="#key-takeaways-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2298,9 +2311,11 @@ nvmetcli &quot;set /ports/1/subsystems/nvme-subsystem/attr/queue_size 128&quot;
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

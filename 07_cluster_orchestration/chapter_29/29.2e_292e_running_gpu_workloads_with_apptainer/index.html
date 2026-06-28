@@ -2145,22 +2145,35 @@
 <hr />
 <h2 id="how-to-use-the-nv-flag">🛠️ How to Use the <code>--nv</code> Flag<a class="headerlink" href="#how-to-use-the-nv-flag" title="Permanent link">&para;</a></h2>
 <p>When launching an Apptainer container for GPU workloads, you simply add the <code>--nv</code> flag to your run or exec command. Here is the general pattern:</p>
-<p><strong>For reference:</strong></p>
-<pre><code>apptainer run --nv my_container.sif
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>apptainer run --nv my_container.sif
+</code></pre></div></p>
 <p>Or, to execute a specific command inside the container:</p>
-<p><strong>For reference:</strong></p>
-<pre><code>apptainer exec --nv my_container.sif python train_model.py
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>apptainer exec --nv my_container.sif python train_model.py
+</code></pre></div></p>
 <p>The <code>--nv</code> flag must come <strong>before</strong> the container image name. If you forget it, your GPU will not be accessible.</p>
 <hr />
 <h2 id="verifying-gpu-access-inside-the-container">🕵️ Verifying GPU Access Inside the Container<a class="headerlink" href="#verifying-gpu-access-inside-the-container" title="Permanent link">&para;</a></h2>
 <p>After launching your container with <code>--nv</code>, you should verify that the GPU is visible. Inside the container, you can run NVIDIA's diagnostic tools.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>nvidia-smi
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>nvidia-smi
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> You should see a table listing your GPU(s), driver version, CUDA version, and memory usage. If you see an error like "command not found" or "no devices were found," the <code>--nv</code> flag was not used correctly.</p>
 <hr />
+<h3 id="visual-representation-apptainer-gpu-device-nv-pass">📊 Visual Representation: Apptainer GPU Device --nv pass<a class="headerlink" href="#visual-representation-apptainer-gpu-device-nv-pass" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how adding the --nv flag to Apptainer automatically mounts host GPU driver libraries and card paths.</p>
+<div class="mermaid">flowchart LR
+    Cmd["apptainer run --nv image.sif"] --&gt;|Query host nvidia-container-cli| Mounts["Mount host /dev/nvidia* &amp; libcuda.so"]
+    Mounts --&gt; Running["Apptainer runs with CUDA support"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Running cpu;
+    class Mounts memory;
+    class Cmd system;</div>
 <h2 id="comparison-with-vs-without-nv">📊 Comparison: With vs. Without <code>--nv</code><a class="headerlink" href="#comparison-with-vs-without-nv" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2217,9 +2230,9 @@
 <li><strong>Execute your training script</strong> (e.g., <code>python train.py</code>).</li>
 <li><strong>Monitor GPU utilization</strong> using <code>nvidia-smi</code> periodically.</li>
 </ol>
-<p><strong>For reference:</strong></p>
-<pre><code>apptainer exec --nv --bind /home/user/data:/data pytorch_gpu.sif nvidia-smi
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>apptainer exec --nv --bind /home/user/data:/data pytorch_gpu.sif nvidia-smi
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> Shows GPU details, confirming the container can use the hardware.</p>
 <hr />
 <h2 id="common-pitfalls">⚠️ Common Pitfalls<a class="headerlink" href="#common-pitfalls" title="Permanent link">&para;</a></h2>
@@ -2271,9 +2284,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

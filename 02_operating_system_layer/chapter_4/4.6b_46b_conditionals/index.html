@@ -2131,7 +2131,6 @@
 
 <h2 id="introduction">🧭 Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>In AI infrastructure operations, your scripts often need to make decisions based on system states — like checking if a GPU is available, verifying disk space, or confirming that a model file exists. Conditionals are the decision-making tools that allow your Bash scripts to respond intelligently to different situations. This section covers the fundamental conditional structures: <strong>if/elif/else</strong>, <strong>test expressions</strong>, and <strong>compound conditions</strong>.</p>
-<hr />
 <h2 id="the-basic-if-statement">⚙️ The Basic if Statement<a class="headerlink" href="#the-basic-if-statement" title="Permanent link">&para;</a></h2>
 <p>The simplest conditional checks a condition and runs commands only if that condition is true.</p>
 <ul>
@@ -2139,13 +2138,13 @@
 <li>The condition is placed inside square brackets with spaces around them.</li>
 <li>Example structure: <strong>if [ condition ]; then</strong> followed by commands on the next line, then <strong>fi</strong> to close.</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>if [ -f &quot;/models/llama2.bin&quot; ]
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>if [ -f &quot;/models/llama2.bin&quot; ]
 then
     echo &quot;Model file exists&quot;
 fi
-</code></pre>
-<p>📤 Output: <strong>Model file exists</strong> (if the file is present)</p>
+</code></pre></div>
+📤 Output: <strong>Model file exists</strong> (if the file is present)</p>
 <hr />
 <h2 id="adding-else-and-elif">🔀 Adding else and elif<a class="headerlink" href="#adding-else-and-elif" title="Permanent link">&para;</a></h2>
 <p>When you need multiple decision paths, use <strong>else</strong> for the fallback and <strong>elif</strong> for additional conditions.</p>
@@ -2155,8 +2154,8 @@ fi
 <li>You can chain multiple <strong>elif</strong> statements together.</li>
 <li>Always end the entire block with <strong>fi</strong>.</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>gpu_count=4
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>gpu_count=4
 
 if [ $gpu_count -ge 8 ]
 then
@@ -2167,8 +2166,24 @@ then
 else
     echo &quot;Insufficient GPU resources&quot;
 fi
-</code></pre>
-<p>📤 Output: <strong>Standard GPU configuration</strong></p>
+</code></pre></div>
+📤 Output: <strong>Standard GPU configuration</strong></p>
+<h3 id="visual-representation-conditional-branching-logic-ifelifelse">📊 Visual Representation: Conditional Branching Logic (if/elif/else)<a class="headerlink" href="#visual-representation-conditional-branching-logic-ifelifelse" title="Permanent link">&para;</a></h3>
+<p>This flowchart maps the decision-making branching logic of an <code>if-elif-else</code> conditional evaluation check for GPU cluster scaling resources.</p>
+<div class="mermaid">flowchart LR
+    Start["Check GPUs"] --&gt; check8{"Count &gt;= 8?"}
+    check8 --&gt;|Yes| High["High-Perf Cluster"]
+    check8 --&gt;|No| check4{"Count &gt;= 4?"}
+    check4 --&gt;|Yes| Standard["Standard Config"]
+    check4 --&gt;|No| Insufficient["Insufficient Resources"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class check8,check4 cpu;
+    class High,Standard memory;
+    class Start,Insufficient system;</div>
 <hr />
 <h2 id="test-expressions">🧪 Test Expressions<a class="headerlink" href="#test-expressions" title="Permanent link">&para;</a></h2>
 <p>Test expressions are the conditions you place inside the square brackets. They check files, strings, and numbers.</p>
@@ -2246,8 +2261,8 @@ fi
 </tr>
 </tbody>
 </table>
-<p><strong>For reference:</strong></p>
-<pre><code>model_name=&quot;llama2&quot;
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>model_name=&quot;llama2&quot;
 model_size=7
 
 if [ -z &quot;$model_name&quot; ]
@@ -2259,8 +2274,8 @@ then
 else
     echo &quot;Model: $model_name, Size: ${model_size}B&quot;
 fi
-</code></pre>
-<p>📤 Output: <strong>Model: llama2, Size: 7B</strong></p>
+</code></pre></div>
+📤 Output: <strong>Model: llama2, Size: 7B</strong></p>
 <hr />
 <h2 id="compound-conditions-with-and-and-or">🔗 Compound Conditions with AND and OR<a class="headerlink" href="#compound-conditions-with-and-and-or" title="Permanent link">&para;</a></h2>
 <p>Sometimes you need to check multiple conditions at once. Use logical operators to combine them.</p>
@@ -2270,41 +2285,41 @@ fi
 <li>Syntax: <strong>[[ condition1 &amp;&amp; condition2 ]]</strong></li>
 <li>Example: Check if a file exists <strong>AND</strong> is readable.</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>if [[ -f &quot;/data/training_set.csv&quot; &amp;&amp; -r &quot;/data/training_set.csv&quot; ]]
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>if [[ -f &quot;/data/training_set.csv&quot; &amp;&amp; -r &quot;/data/training_set.csv&quot; ]]
 then
     echo &quot;Training data is available and readable&quot;
 fi
-</code></pre>
-<p>📤 Output: <strong>Training data is available and readable</strong></p>
+</code></pre></div>
+📤 Output: <strong>Training data is available and readable</strong></p>
 <h3 id="using-or">Using || (OR)<a class="headerlink" href="#using-or" title="Permanent link">&para;</a></h3>
 <p>At least one condition must be true for the overall condition to be true.</p>
 <ul>
 <li>Syntax: <strong>[[ condition1 || condition2 ]]</strong></li>
 <li>Example: Check if either a file or a backup file exists.</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>if [[ -f &quot;/models/current.pt&quot; || -f &quot;/models/backup.pt&quot; ]]
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>if [[ -f &quot;/models/current.pt&quot; || -f &quot;/models/backup.pt&quot; ]]
 then
     echo &quot;Model checkpoint found&quot;
 fi
-</code></pre>
-<p>📤 Output: <strong>Model checkpoint found</strong></p>
+</code></pre></div>
+📤 Output: <strong>Model checkpoint found</strong></p>
 <h3 id="combining-and-and-or">Combining AND and OR<a class="headerlink" href="#combining-and-and-or" title="Permanent link">&para;</a></h3>
 <p>You can nest these for complex logic using parentheses.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>if [[ ( $gpu_count -ge 4 &amp;&amp; $memory_gb -ge 64 ) || $cluster_mode == &quot;high_perf&quot; ]]
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>if [[ ( $gpu_count -ge 4 &amp;&amp; $memory_gb -ge 64 ) || $cluster_mode == &quot;high_perf&quot; ]]
 then
     echo &quot;Environment meets minimum requirements&quot;
 fi
-</code></pre>
-<p>📤 Output: <strong>Environment meets minimum requirements</strong></p>
+</code></pre></div>
+📤 Output: <strong>Environment meets minimum requirements</strong></p>
 <hr />
 <h2 id="practical-ai-infrastructure-examples">🛠️ Practical AI Infrastructure Examples<a class="headerlink" href="#practical-ai-infrastructure-examples" title="Permanent link">&para;</a></h2>
 <h3 id="example-1-checking-gpu-availability">Example 1: Checking GPU Availability<a class="headerlink" href="#example-1-checking-gpu-availability" title="Permanent link">&para;</a></h3>
 <p>This script checks if NVIDIA GPUs are detected and if enough are available.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>gpu_count=$(nvidia-smi --query-gpu=count --format=csv,noheader 2&gt;/dev/null)
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>gpu_count=$(nvidia-smi --query-gpu=count --format=csv,noheader 2&gt;/dev/null)
 
 if [ -z &quot;$gpu_count&quot; ]
 then
@@ -2318,12 +2333,12 @@ then
 else
     echo &quot;Only $gpu_count GPU(s) available&quot;
 fi
-</code></pre>
-<p>📤 Output: <strong>Sufficient GPUs for distributed training</strong> (if 4+ GPUs are detected)</p>
+</code></pre></div>
+📤 Output: <strong>Sufficient GPUs for distributed training</strong> (if 4+ GPUs are detected)</p>
 <h3 id="example-2-validating-model-directory-structure">Example 2: Validating Model Directory Structure<a class="headerlink" href="#example-2-validating-model-directory-structure" title="Permanent link">&para;</a></h3>
 <p>Check that required directories exist before running a training job.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>if [[ -d &quot;/models&quot; &amp;&amp; -d &quot;/data&quot; &amp;&amp; -d &quot;/logs&quot; ]]
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>if [[ -d &quot;/models&quot; &amp;&amp; -d &quot;/data&quot; &amp;&amp; -d &quot;/logs&quot; ]]
 then
     echo &quot;All required directories exist&quot;
 elif [ ! -d &quot;/models&quot; ]
@@ -2335,8 +2350,8 @@ then
 else
     echo &quot;Missing /logs directory&quot;
 fi
-</code></pre>
-<p>📤 Output: <strong>All required directories exist</strong> (if all three directories are present)</p>
+</code></pre></div>
+📤 Output: <strong>All required directories exist</strong> (if all three directories are present)</p>
 <hr />
 <h2 id="common-pitfalls-and-best-practices">🕵️ Common Pitfalls and Best Practices<a class="headerlink" href="#common-pitfalls-and-best-practices" title="Permanent link">&para;</a></h2>
 <h3 id="common-mistakes">❌ Common Mistakes<a class="headerlink" href="#common-mistakes" title="Permanent link">&para;</a></h3>
@@ -2449,9 +2464,11 @@ fi
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

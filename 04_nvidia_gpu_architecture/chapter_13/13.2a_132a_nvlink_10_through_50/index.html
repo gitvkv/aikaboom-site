@@ -2235,6 +2235,19 @@
 <li><strong>Engineer takeaway:</strong> This is a game-changer for AI infrastructure — it allows engineers to build clusters that train models with over 10 trillion parameters efficiently.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-nvlink-bandwidth-generational-progression">📊 Visual Representation: NVLink Bandwidth Generational Progression<a class="headerlink" href="#visual-representation-nvlink-bandwidth-generational-progression" title="Permanent link">&para;</a></h3>
+<p>This flowchart tracks the bidirectional bandwidth scaling per GPU across generations (NVLink 1 to NVLink 5).</p>
+<div class="mermaid">flowchart LR
+    NVLink1["NVLink 1 (80 GB/s)"] --&gt; NVLink2["NVLink 2 (150 GB/s)"]
+    NVLink2 --&gt; NVLink3["NVLink 3 (600 GB/s)"]
+    NVLink3 --&gt; NVLink4["NVLink 4 (900 GB/s)"]
+    NVLink4 --&gt; NVLink5["NVLink 5 (1800 GB/s / Blackwell)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NVLink1,NVLink2,NVLink3,NVLink4,NVLink5 memory;</div>
 <h2 id="practical-implications-for-engineers">🛠️ Practical Implications for Engineers<a class="headerlink" href="#practical-implications-for-engineers" title="Permanent link">&para;</a></h2>
 <h3 id="when-designing-ai-infrastructure">When Designing AI Infrastructure:<a class="headerlink" href="#when-designing-ai-infrastructure" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2313,9 +2326,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

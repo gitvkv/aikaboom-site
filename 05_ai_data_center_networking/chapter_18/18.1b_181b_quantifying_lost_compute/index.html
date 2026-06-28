@@ -2190,6 +2190,19 @@
 - Higher energy costs per AI operation
 - More servers needed to achieve the same AI performance</p>
 <hr />
+<h3 id="visual-representation-lost-compute-tax-allocation">📊 Visual Representation: Lost Compute Tax Allocation<a class="headerlink" href="#visual-representation-lost-compute-tax-allocation" title="Permanent link">&para;</a></h3>
+<p>This diagram visualizes the percentage breakdown of host CPU resources lost to networking encapsulation, storage drivers, and security agents.</p>
+<div class="mermaid">flowchart LR
+    Total["Total Host CPU Capacity"] --&gt; Network["Networking (OVS/VxLAN: 15-20%)"]
+    Total --&gt; Storage["Storage (NVMe-oF: 10-15%)"]
+    Total --&gt; Security["Security &amp; Logs (Agents: 5-10%)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Total cpu;
+    class Network,Storage,Security memory;</div>
 <h2 id="how-to-identify-infrastructure-overhead">🕵️ How to Identify Infrastructure Overhead<a class="headerlink" href="#how-to-identify-infrastructure-overhead" title="Permanent link">&para;</a></h2>
 <p>As a new engineer, you need to know when your host CPU is being taxed by infrastructure. Here are the common symptoms:</p>
 <ul>
@@ -2199,18 +2212,18 @@
 <li><strong>Security processing delays</strong>: Encryption or decryption operations slow down data pipelines</li>
 </ul>
 <p>To measure this, you can use standard Linux monitoring tools. For reference, here's a simple command to check CPU usage breakdown:</p>
-<pre><code>For reference:
+<div class="highlight"><pre><span></span><code>For reference:
 top
-</code></pre>
+</code></pre></div>
 <p>📤 <strong>Output</strong>: A real-time view of CPU usage, showing user processes (your AI workload) vs. system processes (infrastructure overhead). Look for high <strong>sy</strong> (system) percentage — that's your infrastructure tax.</p>
 <p>For a deeper look, you can check network and storage overhead separately:</p>
-<pre><code>For reference:
+<div class="highlight"><pre><span></span><code>For reference:
 sar -n DEV 1 5
-</code></pre>
+</code></pre></div>
 <p>📤 <strong>Output</strong>: Network statistics every second for 5 seconds. High <strong>%ifutil</strong> indicates the CPU is busy handling network packets.</p>
-<pre><code>For reference:
+<div class="highlight"><pre><span></span><code>For reference:
 iostat -x 1 5
-</code></pre>
+</code></pre></div>
 <p>📤 <strong>Output</strong>: Storage I/O statistics. High <strong>%util</strong> or <strong>await</strong> values suggest the CPU is spending cycles on storage virtualization.</p>
 <hr />
 <h2 id="why-this-matters-for-ai-infrastructure">🛠️ Why This Matters for AI Infrastructure<a class="headerlink" href="#why-this-matters-for-ai-infrastructure" title="Permanent link">&para;</a></h2>
@@ -2306,9 +2319,11 @@ iostat -x 1 5
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

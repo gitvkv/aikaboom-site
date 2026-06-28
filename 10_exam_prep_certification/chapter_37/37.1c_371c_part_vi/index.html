@@ -2189,6 +2189,19 @@
 - D) Lustre is easier to configure</p>
 <p><strong>Rationale</strong>: B) Lustre is designed for high-performance computing and can stripe data across multiple servers, providing much higher throughput for many clients accessing data simultaneously, which is common in distributed training.</p>
 <hr />
+<h3 id="visual-representation-storage-software-stack-concept-mapping">📊 Visual Representation: Storage &amp; Software stack concept mapping<a class="headerlink" href="#visual-representation-storage-software-stack-concept-mapping" title="Permanent link">&para;</a></h3>
+<p>This diagram maps out storage and software topics, grouping GPUDirect Storage, CUDA Toolkit layers, and driver libraries.</p>
+<div class="mermaid">flowchart LR
+    Exam["Software Exam"] --&gt; GDS["Storage (GPUDirect / NVMe-oF)"]
+    Exam --&gt; CUDA["CUDA Stack (Libraries / nvcc / compiler)"]
+    Exam --&gt; Drivers["Drivers (NVRM / kernel modules)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Exam cpu;
+    class GDS,CUDA,Drivers memory;</div>
 <h2 id="part-vii-software-stack-35-questions">🖥️ Part VII: Software Stack — 35 Questions<a class="headerlink" href="#part-vii-software-stack-35-questions" title="Permanent link">&para;</a></h2>
 <h3 id="layers-of-the-ai-software-stack">🧩 Layers of the AI Software Stack<a class="headerlink" href="#layers-of-the-ai-software-stack" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2316,9 +2329,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

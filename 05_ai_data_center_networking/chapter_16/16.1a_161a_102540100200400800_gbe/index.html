@@ -2289,6 +2289,18 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-ethernet-speed-generational-progression">📊 Visual Representation: Ethernet Speed Generational Progression<a class="headerlink" href="#visual-representation-ethernet-speed-generational-progression" title="Permanent link">&para;</a></h3>
+<p>This flowchart tracks the transmission speeds of Ethernet standards from 10G up to modern 800G.</p>
+<div class="mermaid">flowchart LR
+    G10["10G Ethernet"] --&gt; G100["100G Ethernet"]
+    G100 --&gt; G400["400G Ethernet"]
+    G400 --&gt; G800["800G Ethernet (PAM4 Modulation)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class G10,G100,G400,G800 memory;</div>
 <h2 id="how-to-choose-the-right-speed-for-your-ai-tier">🕵️ How to Choose the Right Speed for Your AI Tier<a class="headerlink" href="#how-to-choose-the-right-speed-for-your-ai-tier" title="Permanent link">&para;</a></h2>
 <p>When designing an AI network fabric, follow this simple tiered approach:</p>
 <ul>
@@ -2365,9 +2377,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

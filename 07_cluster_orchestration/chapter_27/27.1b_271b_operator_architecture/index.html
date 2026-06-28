@@ -2207,7 +2207,7 @@
 <li>Examples: GPU driver DaemonSet, NVIDIA Container Toolkit, MIG Manager.</li>
 </ul>
 <h3 id="flow-diagram-text-based">Flow Diagram (Text-Based):<a class="headerlink" href="#flow-diagram-text-based" title="Permanent link">&para;</a></h3>
-<pre><code>You create a ClusterPolicy CR
+<div class="highlight"><pre><span></span><code>You create a ClusterPolicy CR
         ↓
 Controller detects the new CR
         ↓
@@ -2218,8 +2218,21 @@ Controller creates standard Kubernetes resources (DaemonSets, ConfigMaps)
 Kubernetes schedules and runs the operands on nodes
         ↓
 Controller monitors and ensures the state stays correct
-</code></pre>
+</code></pre></div>
 <hr />
+<h3 id="visual-representation-gpu-operator-controller-components">📊 Visual Representation: GPU Operator Controller Components<a class="headerlink" href="#visual-representation-gpu-operator-controller-components" title="Permanent link">&para;</a></h3>
+<p>This diagram details the core pods deployed by the GPU Operator to manage local hardware nodes.</p>
+<div class="mermaid">flowchart LR
+    Mgr["Operator Manager Pod"] --&gt; Validator["nvidia-device-plugin-validator"]
+    Mgr --&gt; DriverContainer["nvidia-driver-daemonset (Kernel Module)"]
+    Mgr --&gt; DCGM["nvidia-dcgm-exporter (Telemetry metrics)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Mgr cpu;
+    class Validator,DriverContainer,DCGM memory;</div>
 <h2 id="why-this-matters-for-ai-infrastructure">🕵️ Why This Matters for AI Infrastructure<a class="headerlink" href="#why-this-matters-for-ai-infrastructure" title="Permanent link">&para;</a></h2>
 <p>For engineers managing GPU fleets, the Operator pattern solves several critical problems:</p>
 <ul>
@@ -2349,9 +2362,11 @@ Controller monitors and ensures the state stays correct
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

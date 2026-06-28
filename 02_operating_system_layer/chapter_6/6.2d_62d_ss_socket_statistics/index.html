@@ -2177,19 +2177,33 @@
 <li><strong>Ports</strong> are numbered doorways (e.g., port 22 for SSH, port 8000 for a model server).</li>
 </ul>
 <hr />
+<h3 id="visual-representation-tcp-connection-state-diagram">📊 Visual Representation: TCP Connection State Diagram<a class="headerlink" href="#visual-representation-tcp-connection-state-diagram" title="Permanent link">&para;</a></h3>
+<p>This flowchart traces the lifecycle of connection socket states (LISTEN, SYN-SENT, ESTABLISHED, TIME-WAIT) tracked by the ss tool.</p>
+<div class="mermaid">flowchart LR
+    LISTEN["LISTEN (Server Ready)"] --&gt;|SYN Received| ESTABLISHED["ESTABLISHED (Connection Active)"]
+    ESTABLISHED --&gt;|Active Close| FIN_WAIT["FIN-WAIT (Closing)"]
+    FIN_WAIT --&gt;|Timeout| TIME_WAIT["TIME-WAIT (Grace Period)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class ESTABLISHED cpu;
+    class LISTEN,TIME_WAIT memory;
+    class FIN_WAIT system;</div>
 <h2 id="common-analysis-tasks">🕵️ Common Analysis Tasks<a class="headerlink" href="#common-analysis-tasks" title="Permanent link">&para;</a></h2>
 <h3 id="viewing-all-sockets">🔍 Viewing All Sockets<a class="headerlink" href="#viewing-all-sockets" title="Permanent link">&para;</a></h3>
 <p>To see every socket on your system, you can use the <code>ss</code> command without any options. This will display all TCP, UDP, and UNIX sockets currently active.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>ss
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>ss
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> A long list of all socket connections, showing local and remote addresses, port numbers, and connection states.</p>
 <hr />
 <h3 id="checking-listening-ports">📡 Checking Listening Ports<a class="headerlink" href="#checking-listening-ports" title="Permanent link">&para;</a></h3>
 <p>When deploying AI services (like TensorFlow Serving or NVIDIA Triton), you need to verify they are listening on the correct port.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>ss -tln
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>ss -tln
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> Shows all TCP listening sockets with their port numbers and IP addresses. A service listening on port 8000 would appear as <code>0.0.0.0:8000</code> or <code>*:8000</code>.</p>
 <ul>
 <li><strong>-t</strong> = TCP sockets only</li>
@@ -2199,9 +2213,9 @@
 <hr />
 <h3 id="viewing-established-connections">🔗 Viewing Established Connections<a class="headerlink" href="#viewing-established-connections" title="Permanent link">&para;</a></h3>
 <p>For active AI training jobs, you may need to see which remote nodes your system is connected to.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>ss -tun
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>ss -tun
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> Displays all TCP and UDP connections that are currently established, including source and destination IP addresses and ports.</p>
 <ul>
 <li><strong>-u</strong> = UDP sockets</li>
@@ -2210,16 +2224,16 @@
 <hr />
 <h3 id="filtering-by-port-number">📊 Filtering by Port Number<a class="headerlink" href="#filtering-by-port-number" title="Permanent link">&para;</a></h3>
 <p>If you know the specific port your AI service uses (e.g., port 8888 for Jupyter), you can filter directly.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>ss -tln sport = :8888
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>ss -tln sport = :8888
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> Shows only sockets where the source port is 8888. You can also use <code>dport</code> for destination port filtering.</p>
 <hr />
 <h3 id="checking-process-ownership">🧠 Checking Process Ownership<a class="headerlink" href="#checking-process-ownership" title="Permanent link">&para;</a></h3>
 <p>When multiple services run on an AI node, you need to know which process owns which socket.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>ss -tlnp
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>ss -tlnp
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> Adds the process name and PID to each socket entry. For example, you might see <code>users:(("python3",pid=12345,fd=3))</code> next to a listening port.</p>
 <ul>
 <li><strong>-p</strong> = show process information</li>
@@ -2228,23 +2242,23 @@
 <h2 id="practical-ai-infrastructure-examples">📈 Practical AI Infrastructure Examples<a class="headerlink" href="#practical-ai-infrastructure-examples" title="Permanent link">&para;</a></h2>
 <h3 id="verifying-a-model-server-is-running">✅ Verifying a Model Server is Running<a class="headerlink" href="#verifying-a-model-server-is-running" title="Permanent link">&para;</a></h3>
 <p>After starting an AI inference server on port 8000, run:</p>
-<p><strong>For reference:</strong></p>
-<pre><code>ss -tln sport = :8000
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>ss -tln sport = :8000
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> If the server is running, you will see a line showing <code>LISTEN</code> state with port 8000. If nothing appears, the service is not listening.</p>
 <hr />
 <h3 id="monitoring-training-job-connections">🔄 Monitoring Training Job Connections<a class="headerlink" href="#monitoring-training-job-connections" title="Permanent link">&para;</a></h3>
 <p>During distributed training, check connections to your storage server:</p>
-<p><strong>For reference:</strong></p>
-<pre><code>ss -tun | grep 10.0.1.50
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>ss -tun | grep 10.0.1.50
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> Shows all TCP and UDP connections involving the IP address <code>10.0.1.50</code>. This helps confirm data transfer is happening.</p>
 <hr />
 <h3 id="detecting-port-conflicts">🚨 Detecting Port Conflicts<a class="headerlink" href="#detecting-port-conflicts" title="Permanent link">&para;</a></h3>
 <p>If a new AI service fails to start, check if the port is already in use:</p>
-<p><strong>For reference:</strong></p>
-<pre><code>ss -tln | grep :8000
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>ss -tln | grep :8000
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> If another process is using port 8000, you will see it in <code>LISTEN</code> state. Use the <code>-p</code> option to identify the conflicting process.</p>
 <hr />
 <h2 id="summary-of-key-options">🧪 Summary of Key Options<a class="headerlink" href="#summary-of-key-options" title="Permanent link">&para;</a></h2>
@@ -2306,9 +2320,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

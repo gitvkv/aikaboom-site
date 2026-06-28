@@ -2246,6 +2246,27 @@
 </tr>
 </tbody>
 </table>
+<h3 id="visual-representation-ubuntu-lts-vs-interim-support-lifecycle">📊 Visual Representation: Ubuntu LTS vs. Interim Support Lifecycle<a class="headerlink" href="#visual-representation-ubuntu-lts-vs-interim-support-lifecycle" title="Permanent link">&para;</a></h3>
+<p>This timeline flowchart contrasts the long-term stable support window of Ubuntu LTS releases against the brief lifecycle of Interim releases, highlighting standard and extended maintenance.</p>
+<div class="mermaid">flowchart LR
+    subgraph LTSCycle["LTS Release Cycle (Every 2 Years)"]
+        direction LR
+        LTS1["LTS Release (e.g., 24.04)"] --&gt;|Standard Maintenance: 5 Years| Standard["Standard Updates (No Cost)"]
+        Standard --&gt;|Optional Pro: +5 Years| ESM["Extended Security (ESM)"]
+    end
+
+    subgraph InterimCycle["Interim Release Cycle (Every 6 Months)"]
+        direction LR
+        Interim["Interim Release (e.g., 24.10)"] --&gt;|Short Lifecycle: 9 Months| DevSupport["Development &amp; Test Support"]
+        DevSupport --&gt;|EOL / Mandatory Upgrade| Upgrade["LTS or Next Interim"]
+    end
+
+    class LTS1,Standard,ESM cpu;
+    class Interim,DevSupport,Upgrade system;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;</div>
 <hr />
 <h2 id="summary-for-new-engineers">✅ Summary for New Engineers<a class="headerlink" href="#summary-for-new-engineers" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2295,9 +2316,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

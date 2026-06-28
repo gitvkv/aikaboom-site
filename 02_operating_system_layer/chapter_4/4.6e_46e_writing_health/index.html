@@ -379,8 +379,6 @@
                 </li>
                 <li class="toctree-l3 current"><a class="reference internal current" href="#">4.6e Writing health-check scripts for GPU cluster nodes</a>
     <ul class="current">
-    <li class="toctree-l4"><a class="reference internal" href="#context-introduction">🧠 Context Introduction</a>
-    </li>
     <li class="toctree-l4"><a class="reference internal" href="#what-a-gpu-node-health-check-script-should-cover">⚙️ What a GPU Node Health-Check Script Should Cover</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#structure-of-a-simple-health-check-script">🛠️ Structure of a Simple Health-Check Script</a>
@@ -2130,10 +2128,8 @@
 </div>
 
 <hr />
-<h2 id="context-introduction">🧠 Context Introduction<a class="headerlink" href="#context-introduction" title="Permanent link">&para;</a></h2>
 <p>In an AI infrastructure environment, GPU cluster nodes are the workhorses that power training and inference workloads. These nodes contain expensive and sensitive hardware — GPUs, high-speed interconnects (like NVLink or InfiniBand), and large memory pools. A single failing component can disrupt an entire training job or degrade performance silently.</p>
 <p>Health-check scripts are automated Bash or Python scripts that periodically verify that every component of a GPU node is operating within acceptable parameters. They act as the first line of defense, alerting operators before a small issue becomes a major outage. For new engineers, writing these scripts is a foundational skill to ensure cluster reliability and uptime.</p>
-<hr />
 <h2 id="what-a-gpu-node-health-check-script-should-cover">⚙️ What a GPU Node Health-Check Script Should Cover<a class="headerlink" href="#what-a-gpu-node-health-check-script-should-cover" title="Permanent link">&para;</a></h2>
 <p>A comprehensive health-check script for a GPU cluster node typically verifies the following layers:</p>
 <ul>
@@ -2217,8 +2213,29 @@
 <li><strong>PCIe Link Degradation</strong> — The GPU is connected at a lower PCIe speed (e.g., Gen2 instead of Gen4). The script queries <strong>nvidia-smi</strong> for <strong>pcie.link.gen.current</strong> and compares it to the expected generation.</li>
 <li><strong>NVLink Failure</strong> — One or more NVLink bridges are down, reducing GPU-to-GPU bandwidth. The script runs <strong>nvidia-smi nvlink --status</strong> and checks for "Active" state on all links.</li>
 <li><strong>Memory ECC Errors</strong> — Single-bit or double-bit errors in GPU VRAM. The script reads <strong>nvidia-smi --query-gpu=ecc.errors.volatile.dram</strong> and alerts if the count increases.</li>
-<li><strong>Driver Timeout</strong> — The NVIDIA driver stops responding. The script checks the kernel log (via <strong>dmesg</strong>) for "NVRM" errors or "GPU has fallen off the bus" messages.</li>
+<li><strong>Driver Timeout</strong> — The NVIDIA driver stops responding. The system log will report "GPU has fallen off the bus."</li>
 </ul>
+<h3 id="visual-representation-gpu-node-health-check-script-pipeline">📊 Visual Representation: GPU Node Health-Check Script Pipeline<a class="headerlink" href="#visual-representation-gpu-node-health-check-script-pipeline" title="Permanent link">&para;</a></h3>
+<p>This flowchart illustrates the sequence of validation checks executed by an automated node health monitoring script, detailing how a failure at any stage triggers an immediate alert and a non-zero exit code.</p>
+<div class="mermaid">flowchart LR
+    start["1. Run health-check.sh"] --&gt; check_driver["2. Verify NVIDIA Driver Loaded"]
+    check_driver --&gt;|OK| check_gpus["3. Check GPU Temp / ECC / Power"]
+    check_gpus --&gt;|OK| check_nvlink["4. Verify NVLink Connections"]
+    check_nvlink --&gt;|OK| check_fs["5. Verify Shared Dataset Mounts"]
+    check_fs --&gt;|OK| pass["6. Report PASS (exit 0)"]
+
+    check_driver --&gt;|Fail| fail["Report FAIL &amp; Alert (exit 1)"]
+    check_gpus --&gt;|Fail| fail
+    check_nvlink --&gt;|Fail| fail
+    check_fs --&gt;|Fail| fail
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class check_gpus,check_nvlink cpu;
+    class check_driver,check_fs memory;
+    class start,pass,fail system;</div>
 <hr />
 <h2 id="best-practices-for-writing-health-check-scripts">📝 Best Practices for Writing Health-Check Scripts<a class="headerlink" href="#best-practices-for-writing-health-check-scripts" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2280,9 +2297,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

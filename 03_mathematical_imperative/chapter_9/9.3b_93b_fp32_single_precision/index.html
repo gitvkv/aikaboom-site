@@ -2213,6 +2213,20 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-single-precision-fp32-bit-breakdown">📊 Visual Representation: Single Precision (FP32) Bit Breakdown<a class="headerlink" href="#visual-representation-single-precision-fp32-bit-breakdown" title="Permanent link">&para;</a></h3>
+<p>This diagram details the bit allocations (1 sign bit, 8 exponent bits, 23 mantissa bits) of standard IEEE 754 Single Precision float formats.</p>
+<div class="mermaid">flowchart LR
+    Bit32["FP32 Word (32 Bits)"] --&gt; Sign["Sign (1 Bit)"]
+    Bit32 --&gt; Exp["Exponent (8 Bits)"]
+    Bit32 --&gt; Mantissa["Mantissa / Fraction (23 Bits)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Bit32 cpu;
+    class Exp,Mantissa memory;
+    class Sign system;</div>
 <h2 id="when-to-use-fp32-in-modern-ai-infrastructure">🛠️ When to Use FP32 in Modern AI Infrastructure<a class="headerlink" href="#when-to-use-fp32-in-modern-ai-infrastructure" title="Permanent link">&para;</a></h2>
 <p>Even with faster alternatives, FP32 remains relevant in specific scenarios:</p>
 <ul>
@@ -2298,9 +2312,11 @@ A model with 100 million parameters:
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

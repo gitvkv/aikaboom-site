@@ -2238,6 +2238,18 @@
 <li><strong>Model Deployment</strong> — The final model artifact is stored in S3 and served via inference endpoints that read the model weights from the bucket.</li>
 </ol>
 <hr />
+<h3 id="visual-representation-s3-http-rest-api-object-pipeline">📊 Visual Representation: S3 HTTP REST API Object Pipeline<a class="headerlink" href="#visual-representation-s3-http-rest-api-object-pipeline" title="Permanent link">&para;</a></h3>
+<p>This diagram displays object storage HTTP requests (GET/PUT), mapping URLs directly to unstructured storage buckets.</p>
+<div class="mermaid">flowchart LR
+    Client["Client request"] --&gt;|HTTP PUT / bucket/file.json| S3API["S3 REST Gateway"]
+    S3API --&gt; FlatNamespace["Flat Namespace (Object storage bucket)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class S3API cpu;
+    class Client,FlatNamespace memory;</div>
 <h2 id="performance-considerations-for-ai-workloads">📈 Performance Considerations for AI Workloads<a class="headerlink" href="#performance-considerations-for-ai-workloads" title="Permanent link">&para;</a></h2>
 <p>Object storage is not as fast as local NVMe or parallel file systems (like Lustre or GPUDirect Storage). However, for AI workloads, the trade-off is acceptable for many use cases.</p>
 <table>
@@ -2320,30 +2332,30 @@
 <hr />
 <h2 id="practical-example-ai-dataset-management-with-s3">🧪 Practical Example: AI Dataset Management with S3<a class="headerlink" href="#practical-example-ai-dataset-management-with-s3" title="Permanent link">&para;</a></h2>
 <p>For reference:</p>
-<pre><code>import boto3
+<div class="highlight"><pre><span></span><code>import boto3
 
 # Create an S3 client
-s3 = boto3.client('s3', endpoint_url='https://my-minio-server:9000')
+s3 = boto3.client(&#39;s3&#39;, endpoint_url=&#39;https://my-minio-server:9000&#39;)
 
 # Upload a training dataset
 s3.upload_file(
-    Filename='./imagenet_train.tar.gz',
-    Bucket='ai-datasets',
-    Key='imagenet/2024/train.tar.gz'
+    Filename=&#39;./imagenet_train.tar.gz&#39;,
+    Bucket=&#39;ai-datasets&#39;,
+    Key=&#39;imagenet/2024/train.tar.gz&#39;
 )
 
 # List all objects in the bucket
-response = s3.list_objects_v2(Bucket='ai-datasets')
-for obj in response.get('Contents', []):
-    print(obj['Key'])
+response = s3.list_objects_v2(Bucket=&#39;ai-datasets&#39;)
+for obj in response.get(&#39;Contents&#39;, []):
+    print(obj[&#39;Key&#39;])
 
 # Download a model checkpoint
 s3.download_file(
-    Bucket='ai-checkpoints',
-    Key='llm/epoch_10.ckpt',
-    Filename='./checkpoints/epoch_10.ckpt'
+    Bucket=&#39;ai-checkpoints&#39;,
+    Key=&#39;llm/epoch_10.ckpt&#39;,
+    Filename=&#39;./checkpoints/epoch_10.ckpt&#39;
 )
-</code></pre>
+</code></pre></div>
 <p>📤 <strong>Output:</strong> The script uploads a dataset, lists all objects in the bucket, and downloads a checkpoint file. No local file system mounting is required.</p>
 <hr />
 <h2 id="key-takeaways-for-new-engineers">✅ Key Takeaways for New Engineers<a class="headerlink" href="#key-takeaways-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2404,9 +2416,11 @@ s3.download_file(
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

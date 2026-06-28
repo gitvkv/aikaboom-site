@@ -2208,6 +2208,18 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-gcp-a3-h100-vs-a2-a100-machine-series">📊 Visual Representation: GCP a3 (H100) vs. a2 (A100) Machine Series<a class="headerlink" href="#visual-representation-gcp-a3-h100-vs-a2-a100-machine-series" title="Permanent link">&para;</a></h3>
+<p>This diagram displays GCP machine families, contrasting A3 (H100) and A2 (A100) compute configurations.</p>
+<div class="mermaid">flowchart LR
+    GCP["GCP GPU Catalog"] --&gt; A3["a3-highgpu-8g (8 x H100 / GPU-GPU networks)"]
+    GCP --&gt; A2["a2-megagpu-16g (16 x A100 / Local storage)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GCP cpu;
+    class A3,A2 memory;</div>
 <h2 id="when-to-choose-a2-vs-a3">🛠️ When to Choose A2 vs A3<a class="headerlink" href="#when-to-choose-a2-vs-a3" title="Permanent link">&para;</a></h2>
 <p><strong>Choose A2 (A100) when:</strong>
 - Your models fit within 40GB or 80GB of GPU memory
@@ -2297,9 +2309,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

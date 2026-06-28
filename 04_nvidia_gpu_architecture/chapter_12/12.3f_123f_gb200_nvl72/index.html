@@ -2206,6 +2206,20 @@
 <li><strong>Water temperature</strong> — Typically uses 25-35°C inlet water, reducing chiller energy.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-gb200-nvl72-rack-scale-interconnect">📊 Visual Representation: GB200 NVL72 Rack-Scale Interconnect<a class="headerlink" href="#visual-representation-gb200-nvl72-rack-scale-interconnect" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the GB200 NVL72 rack-scale architecture, showing how 36 Grace CPUs and 72 Blackwell GPUs act as a single 1.4 ExaFLOP system via a copper NVLink backplane.</p>
+<div class="mermaid">flowchart LR
+    CPUs["36 Grace ARM CPUs"] --- Blackwell["72 Blackwell GPUs"]
+    Blackwell --&gt;|Copper Backplane NVLink Mesh| NVSwitch["NVLink Switch Trays"]
+    NVSwitch --&gt;|Unified 130 TB/s Bandwidth| Blackwell
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Blackwell cpu;
+    class CPUs memory;
+    class NVSwitch system;</div>
 <h2 id="why-this-matters-for-ai-workloads">🕵️ Why This Matters for AI Workloads<a class="headerlink" href="#why-this-matters-for-ai-workloads" title="Permanent link">&para;</a></h2>
 <h3 id="training-large-language-models-llms">🚀 Training Large Language Models (LLMs)<a class="headerlink" href="#training-large-language-models-llms" title="Permanent link">&para;</a></h3>
 <p>Training a model like Llama 3 70B or GPT-4 requires thousands of GPUs working in parallel. The GB200 NVL72 reduces the need for complex multi-rack networking because:</p>
@@ -2342,9 +2356,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

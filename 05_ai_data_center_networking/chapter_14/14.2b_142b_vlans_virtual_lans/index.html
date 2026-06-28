@@ -2182,6 +2182,18 @@
 </ul>
 <p>A server with a single network cable can be on VLAN 100, while the switch uplink to the core router carries all three VLANs as tagged traffic.</p>
 <hr />
+<h3 id="visual-representation-vlan-virtual-broadcast-domain-separation">📊 Visual Representation: VLAN Virtual Broadcast Domain Separation<a class="headerlink" href="#visual-representation-vlan-virtual-broadcast-domain-separation" title="Permanent link">&para;</a></h3>
+<p>This diagram shows how Virtual LANs (VLANs) segregate a single physical switch into separate logical network domains.</p>
+<div class="mermaid">flowchart LR
+    Switch["Physical Switch"] --&gt;|VLAN 10| SubnetA["VLAN 10 Broadcast Domain"]
+    Switch --&gt;|VLAN 20| SubnetB["VLAN 20 Broadcast Domain"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Switch cpu;
+    class SubnetA,SubnetB memory;</div>
 <h2 id="vlans-in-ai-infrastructure-why-they-matter">📊 VLANs in AI Infrastructure — Why They Matter<a class="headerlink" href="#vlans-in-ai-infrastructure-why-they-matter" title="Permanent link">&para;</a></h2>
 <p>AI workloads generate massive amounts of east-west traffic (server-to-server). Without VLANs, this traffic competes with management and storage traffic, causing:</p>
 <ul>
@@ -2306,9 +2318,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

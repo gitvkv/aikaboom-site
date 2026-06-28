@@ -2146,6 +2146,19 @@
 <li><strong>Protocol Translation</strong>: VAST internally converts NFS and S3 requests into a common format, so engineers don’t need separate storage silos.</li>
 </ol>
 <hr />
+<h3 id="visual-representation-vast-data-dase-disaggregated-shared-everything">📊 Visual Representation: VAST Data DASE (Disaggregated Shared Everything)<a class="headerlink" href="#visual-representation-vast-data-dase-disaggregated-shared-everything" title="Permanent link">&para;</a></h3>
+<p>This diagram displays VAST Data's DASE architecture, showing stateless containers accessing a shared pool of NVMe-oF flash storage over NVLink/RoCE fabrics.</p>
+<div class="mermaid">flowchart LR
+    Hosts["Stateless VAST Container Nodes"] --&gt;|NVMe-oF fabric| Fabric["RoCE / InfiniBand Fabric"]
+    Fabric --&gt; Storage["Shared Pool of NVMe-oF SSDs (DASE)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Hosts cpu;
+    class Storage memory;
+    class Fabric system;</div>
 <h2 id="comparison-vast-data-vs-traditional-storage">📊 Comparison: VAST Data vs. Traditional Storage<a class="headerlink" href="#comparison-vast-data-vs-traditional-storage" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2196,7 +2209,8 @@
 <ol>
 <li><strong>Ingest Data</strong>: Upload 10 million images via S3 using a simple script.</li>
 <li>For reference:
-     <code>aws s3 cp ./images/ s3://vast-data-bucket/training/ --recursive</code></li>
+     <div class="highlight"><pre><span></span><code>aws s3 cp ./images/ s3://vast-data-bucket/training/ --recursive
+</code></pre></div></li>
 <li>
 <p>📤 Output: All images are now in the VAST global namespace.</p>
 </li>
@@ -2204,7 +2218,8 @@
 <p><strong>Mount NFS on GPU Server</strong>: Access the same data as a file system.</p>
 </li>
 <li>For reference:
-     <code>mount -t nfs vast-cluster-ip:/training /mnt/training</code></li>
+     <div class="highlight"><pre><span></span><code>mount -t nfs vast-cluster-ip:/training /mnt/training
+</code></pre></div></li>
 <li>
 <p>📤 Output: The <code>/mnt/training</code> directory now contains all images.</p>
 </li>
@@ -2212,7 +2227,8 @@
 <p><strong>Run Training</strong>: The AI framework reads files from <code>/mnt/training</code> as if they were local.</p>
 </li>
 <li>For reference:
-     <code>python train.py --data-dir /mnt/training</code></li>
+     <div class="highlight"><pre><span></span><code>python train.py --data-dir /mnt/training
+</code></pre></div></li>
 <li>
 <p>📤 Output: Training starts with no storage bottlenecks.</p>
 </li>
@@ -2262,9 +2278,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

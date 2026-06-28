@@ -2170,6 +2170,19 @@
 <li><strong>Host GPU loss</strong>: The host operating system loses access to that GPU — you may need a separate GPU for the host display.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-gpu-direct-passthrough-pcie-assign">📊 Visual Representation: GPU Direct Passthrough (PCIe assign)<a class="headerlink" href="#visual-representation-gpu-direct-passthrough-pcie-assign" title="Permanent link">&para;</a></h3>
+<p>This diagram displays GPU Passthrough: binding a physical GPU directly to a target VM, bypassing hypervisor layers.</p>
+<div class="mermaid">flowchart LR
+    PhysicalGPU["Physical GPU Card"] --&gt;|IOMMU / VFIO mapping| VM["Target Guest VM (Direct driver control)"]
+    Hypervisor["Hypervisor (Bypassed)"] -.-&gt; VM
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class VM cpu;
+    class PhysicalGPU memory;
+    class Hypervisor system;</div>
 <h2 id="comparison-gpu-passthrough-vs-vgpu-vs-bare-metal">📊 Comparison: GPU Passthrough vs. vGPU vs. Bare Metal<a class="headerlink" href="#comparison-gpu-passthrough-vs-vgpu-vs-bare-metal" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2288,9 +2301,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2157,7 +2157,7 @@
 <li><strong>README.md</strong> — Documentation for the chart</li>
 </ul>
 <p><strong>Example chart structure:</strong></p>
-<pre><code>my-app/
+<div class="highlight"><pre><span></span><code>my-app/
 ├── Chart.yaml
 ├── values.yaml
 ├── templates/
@@ -2165,7 +2165,7 @@
 │   ├── service.yaml
 │   └── _helpers.tpl
 └── charts/
-</code></pre>
+</code></pre></div>
 <hr />
 <h3 id="values-the-configuration-variables">⚙️ Values — The Configuration Variables<a class="headerlink" href="#values-the-configuration-variables" title="Permanent link">&para;</a></h3>
 <p><strong>Values</strong> are the configuration parameters that customize how a chart behaves. Instead of hardcoding values in your YAML files, you use placeholders (like <strong>{{ .Values.replicaCount }}</strong>) in the templates. When you install or upgrade a chart, you provide the actual values.</p>
@@ -2177,21 +2177,21 @@
 <li>Common values include: replica counts, image tags, resource limits, and environment variables</li>
 </ul>
 <p><strong>Example of what values look like:</strong></p>
-<p>For reference:</p>
-<pre><code class="language-yaml"># values.yaml
-replicaCount: 3
-image:
-  repository: nginx
-  tag: &quot;1.25&quot;
-  pullPolicy: IfNotPresent
-service:
-  type: ClusterIP
-  port: 80
-resources:
-  limits:
-    cpu: 500m
-    memory: 512Mi
-</code></pre>
+<p>For reference:
+<div class="highlight"><pre><span></span><code><span class="c1"># values.yaml</span>
+<span class="nt">replicaCount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="nt">image</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">  </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1.25&quot;</span>
+<span class="w">  </span><span class="nt">pullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
+<span class="nt">service</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterIP</span>
+<span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+<span class="nt">resources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500m</span>
+<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512Mi</span>
+</code></pre></div></p>
 <hr />
 <h3 id="releases-the-running-instances">🚀 Releases — The Running Instances<a class="headerlink" href="#releases-the-running-instances" title="Permanent link">&para;</a></h3>
 <p>A <strong>release</strong> is a running instance of a chart in a Kubernetes cluster. When you install a chart, Helm creates a release with a unique name. This allows you to:</p>
@@ -2248,6 +2248,20 @@ resources:
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-helm-package-manager-template-rendering">📊 Visual Representation: Helm Package Manager Template Rendering<a class="headerlink" href="#visual-representation-helm-package-manager-template-rendering" title="Permanent link">&para;</a></h3>
+<p>This diagram displays Helm template processing: rendering variable definitions from values.yaml directly into YAML manifests.</p>
+<div class="mermaid">flowchart LR
+    Templates["Chart Template files"] --&gt; Engine["Helm Render Engine"]
+    Values["values.yaml (Custom values)"] --&gt; Engine
+    Engine --&gt; Manifests["Final Kubernetes YAML Manifests"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Engine cpu;
+    class Templates,Values memory;
+    class Manifests system;</div>
 <h2 id="how-helm-works-in-practice">🛠️ How Helm Works in Practice<a class="headerlink" href="#how-helm-works-in-practice" title="Permanent link">&para;</a></h2>
 <h3 id="the-workflow">The Workflow<a class="headerlink" href="#the-workflow" title="Permanent link">&para;</a></h3>
 <ol>
@@ -2376,9 +2390,11 @@ resources:
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

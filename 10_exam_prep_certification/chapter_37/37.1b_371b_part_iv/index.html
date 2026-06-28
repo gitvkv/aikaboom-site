@@ -2220,6 +2220,19 @@
 <p><strong>Question</strong>: What is the primary advantage of NVLink over PCIe for multi-GPU setups?</p>
 <p><strong>Rationale</strong>: NVLink provides significantly higher bandwidth and lower latency than PCIe, enabling faster direct GPU-to-GPU communication. This is critical for training large models that must be split across multiple GPUs.</p>
 <hr />
+<h3 id="visual-representation-gpu-networking-exam-concept-mapping">📊 Visual Representation: GPU Networking Exam concept mapping<a class="headerlink" href="#visual-representation-gpu-networking-exam-concept-mapping" title="Permanent link">&para;</a></h3>
+<p>This diagram displays networking topics tested in the exam, focusing on InfiniBand speeds and RoCE transport layers.</p>
+<div class="mermaid">flowchart LR
+    Exam["Networking Exam"] --&gt; IB["InfiniBand (NDR / Subnet Manager)"]
+    Exam --&gt; RoCE["RoCE (PFC / Global routing / L3)"]
+    Exam --&gt; NVLink["Interconnects (NVLink / NVSwitch)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Exam cpu;
+    class IB,RoCE,NVLink memory;</div>
 <h2 id="section-3-gpu-networking-fundamentals-questions-6190">🌐 Section 3: GPU Networking Fundamentals (Questions 61–90)<a class="headerlink" href="#section-3-gpu-networking-fundamentals-questions-6190" title="Permanent link">&para;</a></h2>
 <h3 id="why-networking-matters-for-ai">🖧 Why Networking Matters for AI<a class="headerlink" href="#why-networking-matters-for-ai" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2782,9 +2795,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

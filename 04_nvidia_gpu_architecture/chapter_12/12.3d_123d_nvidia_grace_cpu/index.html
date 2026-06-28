@@ -2194,6 +2194,19 @@
 <li><strong>Data Analytics Pipelines</strong>: Grace processes and preprocesses data (e.g., ETL jobs) before feeding it to the GPU for model training.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-grace-cpu-arm-architecture-layout">📊 Visual Representation: Grace CPU ARM Architecture Layout<a class="headerlink" href="#visual-representation-grace-cpu-arm-architecture-layout" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the Grace ARM CPU, utilizing Neoverse V2 cores and high-speed LPDDR5X memory to act as a system master.</p>
+<div class="mermaid">flowchart LR
+    Cores["72 x Neoverse V2 ARM Cores"] --- Fabric["NVIDIA Scalable Coherent Fabric"]
+    Fabric --- LPDDR5X["LPDDR5X Memory (512GB / 1 TB/s)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Cores cpu;
+    class LPDDR5X memory;
+    class Fabric system;</div>
 <h2 id="key-technical-details-for-engineers">🕵️ Key Technical Details for Engineers<a class="headerlink" href="#key-technical-details-for-engineers" title="Permanent link">&para;</a></h2>
 <p>When working with Grace-based systems, keep these specifics in mind:</p>
 <ul>
@@ -2299,9 +2312,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

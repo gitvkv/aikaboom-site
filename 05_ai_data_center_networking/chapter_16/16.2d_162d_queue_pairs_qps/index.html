@@ -2183,6 +2183,21 @@
 </table>
 <p>For AI workloads, <strong>Reliable Connection (RC)</strong> is the standard choice because it ensures every byte of gradient data arrives correctly and in order.</p>
 <hr />
+<h3 id="visual-representation-queue-pair-qp-work-request-processing">📊 Visual Representation: Queue Pair (QP) Work Request processing<a class="headerlink" href="#visual-representation-queue-pair-qp-work-request-processing" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the Queue Pair model: applications submit Work Requests (WR) to Send/Receive queues, which report status via Completion Queues (CQ).</p>
+<div class="mermaid">flowchart LR
+    App["Application"] --&gt;|Post Work Request| QP["Queue Pair (Send/Recv)"]
+    QP --&gt;|Hardware Engine| RNIC["RDMA Hardware"]
+    RNIC --&gt;|Post Completion| CQ["Completion Queue (CQ)"]
+    CQ --&gt;|Notify| App
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class QP cpu;
+    class CQ,App memory;
+    class RNIC system;</div>
 <h2 id="key-characteristics-of-queue-pairs">🕵️ Key Characteristics of Queue Pairs<a class="headerlink" href="#key-characteristics-of-queue-pairs" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Each QP is identified by a unique QP Number</strong> — This number is exchanged between servers during connection setup.</li>
@@ -2193,26 +2208,26 @@
 <hr />
 <h2 id="example-creating-a-queue-pair-conceptual">🧩 Example: Creating a Queue Pair (Conceptual)<a class="headerlink" href="#example-creating-a-queue-pair-conceptual" title="Permanent link">&para;</a></h2>
 <p>To create a QP, engineers typically use the <strong>ibv_create_qp()</strong> function from the libibverbs library. Here is a simplified conceptual flow:</p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-c">// Create a protection domain (PD)
-struct ibv_pd *pd = ibv_alloc_pd(context);
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">// Create a protection domain (PD)</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">ibv_pd</span><span class="w"> </span><span class="o">*</span><span class="n">pd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ibv_alloc_pd</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
 
-// Create a completion channel and CQ
-struct ibv_cq *cq = ibv_create_cq(context, cq_size, NULL, NULL, 0);
+<span class="c1">// Create a completion channel and CQ</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">ibv_cq</span><span class="w"> </span><span class="o">*</span><span class="n">cq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ibv_create_cq</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">cq_size</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
 
-// Create a QP with RC type
-struct ibv_qp_init_attr qp_attr;
-memset(&amp;qp_attr, 0, sizeof(qp_attr));
-qp_attr.send_cq = cq;
-qp_attr.recv_cq = cq;
-qp_attr.qp_type = IBV_QPT_RC;
-qp_attr.cap.max_send_wr = 16;
-qp_attr.cap.max_recv_wr = 16;
-qp_attr.cap.max_send_sge = 1;
-qp_attr.cap.max_recv_sge = 1;
+<span class="c1">// Create a QP with RC type</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">ibv_qp_init_attr</span><span class="w"> </span><span class="n">qp_attr</span><span class="p">;</span>
+<span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">qp_attr</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">qp_attr</span><span class="p">));</span>
+<span class="n">qp_attr</span><span class="p">.</span><span class="n">send_cq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cq</span><span class="p">;</span>
+<span class="n">qp_attr</span><span class="p">.</span><span class="n">recv_cq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cq</span><span class="p">;</span>
+<span class="n">qp_attr</span><span class="p">.</span><span class="n">qp_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IBV_QPT_RC</span><span class="p">;</span>
+<span class="n">qp_attr</span><span class="p">.</span><span class="n">cap</span><span class="p">.</span><span class="n">max_send_wr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">16</span><span class="p">;</span>
+<span class="n">qp_attr</span><span class="p">.</span><span class="n">cap</span><span class="p">.</span><span class="n">max_recv_wr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">16</span><span class="p">;</span>
+<span class="n">qp_attr</span><span class="p">.</span><span class="n">cap</span><span class="p">.</span><span class="n">max_send_sge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="n">qp_attr</span><span class="p">.</span><span class="n">cap</span><span class="p">.</span><span class="n">max_recv_sge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 
-struct ibv_qp *qp = ibv_create_qp(pd, &amp;qp_attr);
-</code></pre>
+<span class="k">struct</span><span class="w"> </span><span class="nc">ibv_qp</span><span class="w"> </span><span class="o">*</span><span class="n">qp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ibv_create_qp</span><span class="p">(</span><span class="n">pd</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">qp_attr</span><span class="p">);</span>
+</code></pre></div></p>
 <p><strong>📤 Output:</strong> A new QP is created with a unique QP number. This QP number is then exchanged with the remote server to establish the connection.</p>
 <hr />
 <h2 id="connecting-two-queue-pairs">🔗 Connecting Two Queue Pairs<a class="headerlink" href="#connecting-two-queue-pairs" title="Permanent link">&para;</a></h2>
@@ -2283,9 +2298,11 @@ struct ibv_qp *qp = ibv_create_qp(pd, &amp;qp_attr);
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

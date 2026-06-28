@@ -2134,7 +2134,6 @@
 <hr />
 <h2 id="context-introduction">🌐 Context Introduction<a class="headerlink" href="#context-introduction" title="Permanent link">&para;</a></h2>
 <p>In AI infrastructure, multiple users and automated processes often need to access the same datasets, model checkpoints, and configuration files. Standard Linux permissions (owner, group, others) are often too rigid. <strong>Access Control Lists (ACLs)</strong> give you fine-grained control by allowing you to set permissions for specific users or groups beyond the traditional three-tier model. This is essential when managing shared AI resources like training data directories or model registries.</p>
-<hr />
 <h2 id="what-are-acls">⚙️ What Are ACLs?<a class="headerlink" href="#what-are-acls" title="Permanent link">&para;</a></h2>
 <p>ACLs extend the standard Linux permission model. Instead of only setting read, write, and execute for the file owner, a single group, and everyone else, ACLs let you define permissions for:</p>
 <ul>
@@ -2162,8 +2161,8 @@
 <li>Default entries (if set on a directory)</li>
 </ul>
 <p>For reference:</p>
-<pre><code>getfacl /data/training_set
-</code></pre>
+<div class="highlight"><pre><span></span><code>getfacl /data/training_set
+</code></pre></div>
 <p>📤 Output:<br />
 <strong># file: /data/training_set</strong><br />
 <strong># owner: alice</strong><br />
@@ -2219,6 +2218,31 @@
 </tr>
 </tbody>
 </table>
+<h3 id="visual-representation-standard-permissions-vs-granular-acls">📊 Visual Representation: Standard Permissions vs. Granular ACLs<a class="headerlink" href="#visual-representation-standard-permissions-vs-granular-acls" title="Permanent link">&para;</a></h3>
+<p>This diagram contrasts the rigid three-tier owner/group/other permission model with the flexible, multi-entity mapping offered by Access Control Lists (ACLs).</p>
+<div class="mermaid">flowchart LR
+    subgraph Standard["Standard UGO (1 Owner, 1 Group)"]
+        owner["Owner (rwx)"]
+        group["Group (r-x)"]
+        other["Other (---)"]
+    end
+
+    subgraph ACL["ACL Granular (Multiple Users/Groups)"]
+        acl_owner["Owner: Alice (rwx)"]
+        acl_group["Group: datascience (r-x)"]
+        acl_other["Other (---)"]
+        acl_user1["User: Bob (r-x)"]
+        acl_user2["User: Carol (rwx)"]
+        acl_group2["Group: partners (r--)"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class acl_user2,owner cpu;
+    class acl_owner,acl_user1,group memory;
+    class other,acl_group,acl_other,acl_group2 system;</div>
 <hr />
 <h2 id="understanding-the-acl-mask">📊 Understanding the ACL Mask<a class="headerlink" href="#understanding-the-acl-mask" title="Permanent link">&para;</a></h2>
 <p>The <strong>mask</strong> is a critical concept. It defines the maximum effective permissions for all named users and groups (not the file owner or the owning group). If the mask is <strong>r-x</strong>, then even if you set a user to <strong>rwx</strong>, their effective permissions will be <strong>r-x</strong>.</p>
@@ -2227,15 +2251,15 @@
 <li>You can explicitly set the mask with <strong>setfacl -m m::rwx</strong>.</li>
 </ul>
 <p>For reference:</p>
-<pre><code>setfacl -m m::rw /data/shared
-</code></pre>
+<div class="highlight"><pre><span></span><code>setfacl -m m::rw /data/shared
+</code></pre></div>
 <p>This forces the mask to read-write, limiting all named users and groups to at most read and write (no execute).</p>
 <hr />
 <h2 id="default-acls-for-directories">🔁 Default ACLs for Directories<a class="headerlink" href="#default-acls-for-directories" title="Permanent link">&para;</a></h2>
 <p>When working with AI datasets or model repositories, you often want new files to inherit specific permissions. <strong>Default ACLs</strong> (prefixed with <strong>d:</strong>) achieve this.</p>
 <p>For reference:</p>
-<pre><code>setfacl -m d:u:deploy:rx /models/production
-</code></pre>
+<div class="highlight"><pre><span></span><code>setfacl -m d:u:deploy:rx /models/production
+</code></pre></div>
 <p>📤 Output:<br />
 Any new file or directory created inside <strong>/models/production</strong> will automatically grant the user <strong>deploy</strong> read and execute permissions.</p>
 <p>To view default ACLs, use <strong>getfacl</strong> on the directory. They appear as lines starting with <strong>default:</strong>.</p>
@@ -2330,9 +2354,11 @@ Any new file or directory created inside <strong>/models/production</strong> wil
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

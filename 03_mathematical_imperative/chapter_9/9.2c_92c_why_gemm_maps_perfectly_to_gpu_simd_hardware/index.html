@@ -2147,6 +2147,20 @@
 </ul>
 <p>GPUs are essentially massive SIMD machines with thousands of cores.</p>
 <hr />
+<h3 id="visual-representation-tiled-gpu-gemm-computation">📊 Visual Representation: Tiled GPU GEMM Computation<a class="headerlink" href="#visual-representation-tiled-gpu-gemm-computation" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how GPUs compute large GEMM operations by dividing matrices into sub-tiles loaded into fast shared memory.</p>
+<div class="mermaid">flowchart LR
+    Global["Global Memory (DRAM)"] --&gt;|Load Tiles| Shared["Symmetric Shared Memory (SRAM)"]
+    Shared --&gt;|Register File| TensorCores["Tensor Cores (Compute Matrix Block)"]
+    TensorCores --&gt;|Write Back| Global
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class TensorCores cpu;
+    class Shared memory;
+    class Global system;</div>
 <h2 id="why-gemm-maps-perfectly-to-gpu-simd">🕵️ Why GEMM Maps Perfectly to GPU SIMD<a class="headerlink" href="#why-gemm-maps-perfectly-to-gpu-simd" title="Permanent link">&para;</a></h2>
 <h3 id="1-data-parallelism-the-perfect-fit">1. 🎯 Data Parallelism — The Perfect Fit<a class="headerlink" href="#1-data-parallelism-the-perfect-fit" title="Permanent link">&para;</a></h3>
 <p>GEMM's structure is inherently <strong>data-parallel</strong>:</p>
@@ -2301,9 +2315,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

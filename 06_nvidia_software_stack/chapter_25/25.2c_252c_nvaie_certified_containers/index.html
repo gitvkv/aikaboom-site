@@ -2194,6 +2194,19 @@
 </table>
 <p><strong>Key takeaway</strong>: Always check the <strong>"Host Driver Minimum"</strong> column. If your server runs an older driver (e.g., R470), you must upgrade before using these containers.</p>
 <hr />
+<h3 id="visual-representation-certified-container-build-process">📊 Visual Representation: Certified Container Build Process<a class="headerlink" href="#visual-representation-certified-container-build-process" title="Permanent link">&para;</a></h3>
+<p>This diagram shows the certification pipeline: testing images across NVIDIA hardware configurations to guarantee stability.</p>
+<div class="mermaid">flowchart LR
+    Source["Raw Base Image"] --&gt; TestSuite["Certification Tests (DGX / HGX / L40S)"]
+    TestSuite --&gt;|Pass| SignedImage["Signed Enterprise Container (NVAIE Approved)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class TestSuite cpu;
+    class SignedImage memory;
+    class Source system;</div>
 <h2 id="how-to-verify-your-host-driver-matches">🕵️ How to Verify Your Host Driver Matches<a class="headerlink" href="#how-to-verify-your-host-driver-matches" title="Permanent link">&para;</a></h2>
 <p>Before pulling an NVAIE container, you need to check your host's GPU driver version.</p>
 <ul>
@@ -2262,9 +2275,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

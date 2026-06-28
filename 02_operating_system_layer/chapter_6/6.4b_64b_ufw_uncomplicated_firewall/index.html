@@ -2213,6 +2213,20 @@
 - Allow inter-node traffic within your AI cluster subnet
 - Allow Kubernetes API server access if running containers</p>
 <hr />
+<h3 id="visual-representation-uncomplicated-firewall-ufw-policy-rule-processing">📊 Visual Representation: Uncomplicated Firewall (UFW) Policy Rule Processing<a class="headerlink" href="#visual-representation-uncomplicated-firewall-ufw-policy-rule-processing" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how UFW sits as a user-friendly frontend managing netfilter rules, filtering inbound network traffic.</p>
+<div class="mermaid">flowchart LR
+    Traffic["Network Traffic"] --&gt; UFW["UFW Filter Engine"]
+    UFW --&gt;|Allow Match| Port["Target Services (SSH / Triton)"]
+    UFW --&gt;|Deny Match| Block["Packet Dropped"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class UFW cpu;
+    class Port memory;
+    class Traffic,Block system;</div>
 <h2 id="understanding-ufw-rule-syntax">🧩 Understanding ufw Rule Syntax<a class="headerlink" href="#understanding-ufw-rule-syntax" title="Permanent link">&para;</a></h2>
 <p>ufw rules follow a simple pattern:</p>
 <p><strong>Allow a specific port:</strong><br />
@@ -2303,9 +2317,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

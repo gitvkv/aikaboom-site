@@ -2225,6 +2225,29 @@
 <li><strong>Enroll your own keys</strong> (MOK — Machine Owner Key) to sign custom kernels and modules.</li>
 <li><strong>Use a signed bootloader</strong> and only load signed modules.</li>
 </ul>
+<h3 id="visual-representation-uefi-secure-boot-verification-chain">📊 Visual Representation: UEFI Secure Boot Verification Chain<a class="headerlink" href="#visual-representation-uefi-secure-boot-verification-chain" title="Permanent link">&para;</a></h3>
+<p>This flowchart depicts the step-by-step cryptographic validation process performed by UEFI Secure Boot when loading bootloaders, OS kernels, and device drivers.</p>
+<div class="mermaid">flowchart LR
+    Power[Power On / Initialize Hardware] --&gt; LoadFirm[Load UEFI Firmware]
+    LoadFirm --&gt; SecureCheck{Is Secure Boot Enabled?}
+
+    SecureCheck --&gt;|No| BootOS[Load Bootloader &amp; Kernel without check]
+    SecureCheck --&gt;|Yes| VerifyBoot[Check Bootloader Signature against DB]
+
+    VerifyBoot --&gt;|Valid Signature| VerifyKernel[Check Kernel &amp; Drivers against DB / MOK]
+    VerifyBoot --&gt;|Invalid Signature| BlockBoot[Block Boot / Display Error]
+
+    VerifyKernel --&gt;|Valid Signature| BootOS
+    VerifyKernel --&gt;|"Invalid Signature (e.g. Unsigned NVIDIA Driver)"| BlockMod[Block Driver / Prevent Kernel Load]
+
+    class Power,LoadFirm system;
+    class SecureCheck,VerifyBoot,VerifyKernel system;
+    class BootOS memory;
+    class BlockBoot,BlockMod cpu;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;</div>
 <hr />
 <h2 id="how-to-check-which-firmware-your-linux-system-uses">🧩 How to Check Which Firmware Your Linux System Uses<a class="headerlink" href="#how-to-check-which-firmware-your-linux-system-uses" title="Permanent link">&para;</a></h2>
 <p>To determine whether your system is booting in BIOS or UEFI mode, you can check the following:</p>
@@ -2232,10 +2255,10 @@
 <li>Look for the directory <strong>/sys/firmware/efi</strong>. If it exists, the system booted in UEFI mode.</li>
 <li>If that directory is missing, the system is using legacy BIOS.</li>
 </ul>
-<p>For reference:</p>
-<pre><code>ls /sys/firmware/efi
-</code></pre>
-<p>📤 Output: If the command returns a list of files and directories, you are in UEFI mode. If it returns "No such file or directory," you are in BIOS mode.</p>
+<p>For reference:
+<div class="highlight"><pre><span></span><code>ls /sys/firmware/efi
+</code></pre></div>
+📤 Output: If the command returns a list of files and directories, you are in UEFI mode. If it returns "No such file or directory," you are in BIOS mode.</p>
 <hr />
 <h2 id="switching-between-bios-and-uefi">🔄 Switching Between BIOS and UEFI<a class="headerlink" href="#switching-between-bios-and-uefi" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2294,9 +2317,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

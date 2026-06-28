@@ -2162,6 +2162,20 @@
 <li><strong>Automatic rebuild</strong> — DKMS detects the new kernel, rebuilds the NVIDIA modules, and installs them</li>
 </ol>
 <hr />
+<h3 id="visual-representation-dynamic-kernel-module-support-dkms-flow">📊 Visual Representation: Dynamic Kernel Module Support (DKMS) flow<a class="headerlink" href="#visual-representation-dynamic-kernel-module-support-dkms-flow" title="Permanent link">&para;</a></h3>
+<p>This flowchart shows DKMS: when host kernels update, DKMS automatically rebuilds proprietary NVIDIA driver modules in the background.</p>
+<div class="mermaid">flowchart LR
+    KernelUpdate["Kernel Update Detected"] --&gt; DKMS["DKMS Daemon Triggered"]
+    DKMS --&gt; Build["Compile NVIDIA Driver for New Kernel"]
+    Build --&gt; Load["Load module on next boot"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class DKMS cpu;
+    class Build,Load system;
+    class KernelUpdate memory;</div>
 <h2 id="dkms-vs-manual-driver-management">📊 DKMS vs. Manual Driver Management<a class="headerlink" href="#dkms-vs-manual-driver-management" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2203,8 +2217,8 @@
 <h2 id="checking-dkms-status-on-your-system">🔍 Checking DKMS Status on Your System<a class="headerlink" href="#checking-dkms-status-on-your-system" title="Permanent link">&para;</a></h2>
 <p>To verify that DKMS is properly managing your NVIDIA drivers, you can check the status using a simple command. The output will show you which modules are registered with DKMS and their current build status.</p>
 <p>For reference, the command to check DKMS status is:</p>
-<pre><code>dkms status
-</code></pre>
+<div class="highlight"><pre><span></span><code>dkms status
+</code></pre></div>
 <p>📤 Output: This will display a list of modules, including <strong>nvidia</strong>, along with their version numbers and build status (e.g., "installed" or "built").</p>
 <hr />
 <h2 id="common-dkms-scenarios-for-engineers">🧩 Common DKMS Scenarios for Engineers<a class="headerlink" href="#common-dkms-scenarios-for-engineers" title="Permanent link">&para;</a></h2>
@@ -2267,9 +2281,11 @@ If a kernel update causes the DKMS build to fail (rare, but possible with very n
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2214,6 +2214,21 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-nccl-hardware-topology-detection">📊 Visual Representation: NCCL hardware topology detection<a class="headerlink" href="#visual-representation-nccl-hardware-topology-detection" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how NCCL discovers physical connection paths (NVLink, PCIe, InfiniBand) to build the fastest communication graphs.</p>
+<div class="mermaid">flowchart LR
+    Init["NCCL Init"] --&gt; Detect{"Probe Links"}
+    Detect --&gt;|Fast Path| NVLink["NVLink Mesh (Intra-node)"]
+    Detect --&gt;|Fallback| PCIe["PCIe / QPI Bus (Intra-node)"]
+    Detect --&gt;|Scale Out| IB["InfiniBand / RoCE (Inter-node)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Detect cpu;
+    class NVLink memory;
+    class PCIe,IB system;</div>
 <h2 id="how-nccl-auto-selects-the-path">🛠️ How NCCL Auto-Selects the Path<a class="headerlink" href="#how-nccl-auto-selects-the-path" title="Permanent link">&para;</a></h2>
 <p>NCCL uses a <strong>hierarchical selection algorithm</strong>:</p>
 <ol>
@@ -2227,12 +2242,12 @@
 <h2 id="verifying-topology-detection">🧪 Verifying Topology Detection<a class="headerlink" href="#verifying-topology-detection" title="Permanent link">&para;</a></h2>
 <p>You can see how NCCL detects your system's topology by running a simple test. The output will show a <strong>topology XML</strong> or a <strong>ring/tree</strong> structure.</p>
 <p>For reference, a typical topology dump looks like this (conceptual):</p>
-<pre><code>GPU0 : NVLink connected to GPU1, GPU2, GPU3
+<div class="highlight"><pre><span></span><code>GPU0 : NVLink connected to GPU1, GPU2, GPU3
 GPU0 : PCIe connected to GPU4 (via CPU socket 0)
 GPU4 : PCIe connected to GPU5, GPU6, GPU7 (via CPU socket 1)
 GPU0 : InfiniBand adapter mlx5_0 (local)
 GPU4 : InfiniBand adapter mlx5_1 (local)
-</code></pre>
+</code></pre></div>
 <p>📤 <strong>Output:</strong> NCCL will then construct communication rings that prioritize NVLink pairs first, then PCIe, and use InfiniBand only for cross-node traffic.</p>
 <hr />
 <h2 id="practical-implications-for-engineers">🧩 Practical Implications for Engineers<a class="headerlink" href="#practical-implications-for-engineers" title="Permanent link">&para;</a></h2>
@@ -2290,9 +2305,11 @@ GPU4 : InfiniBand adapter mlx5_1 (local)
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

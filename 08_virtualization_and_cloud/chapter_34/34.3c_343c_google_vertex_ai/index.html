@@ -2163,6 +2163,20 @@
 4. The model is deployed to a staging endpoint for testing
 5. After validation, the alias is updated to "champion" for production</p>
 <hr />
+<h3 id="visual-representation-vertex-ai-custom-job-workflow">📊 Visual Representation: Vertex AI custom job workflow<a class="headerlink" href="#visual-representation-vertex-ai-custom-job-workflow" title="Permanent link">&para;</a></h3>
+<p>This flowchart maps custom jobs: registering images, executing code on GPU nodes, and saving models.</p>
+<div class="mermaid">flowchart LR
+    Artifact["Container in Artifact Registry"] --&gt; customJob["Vertex Custom Job runtime"]
+    customJob --&gt; GPUCompute["Run training on N1/A2/A3 GPUs"]
+    GPUCompute --&gt; ModelRegistry["Save output model weights"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class customJob cpu;
+    class GPUCompute memory;
+    class Artifact,ModelRegistry system;</div>
 <h2 id="how-training-pipelines-and-model-registry-work-together">🔄 How Training Pipelines and Model Registry Work Together<a class="headerlink" href="#how-training-pipelines-and-model-registry-work-together" title="Permanent link">&para;</a></h2>
 <p>These two components form a seamless <strong>ML lifecycle management</strong> system:</p>
 <table>
@@ -2284,9 +2298,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

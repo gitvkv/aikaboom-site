@@ -2148,6 +2148,18 @@
 <li><strong>Congestion control</strong> — implements DCQCN (Data Center Quantized Congestion Notification) in hardware</li>
 </ul>
 <hr />
+<h3 id="visual-representation-bluefield-dpu-roce-offload-engine">📊 Visual Representation: BlueField DPU RoCE Offload Engine<a class="headerlink" href="#visual-representation-bluefield-dpu-roce-offload-engine" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how BlueField DPUs offload network protocol overhead from host CPUs, running security and storage tasks on ARM cores.</p>
+<div class="mermaid">flowchart LR
+    HostCPU["Host CPU (Zero overhead)"] --- DPU["BlueField DPU ARM Cores"]
+    DPU --- RoCE["Hardware RoCE Engines (Zero-copy DMA)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class DPU,RoCE cpu;
+    class HostCPU memory;</div>
 <h2 id="comparison-cpu-based-vs-bluefield-hardware-offload">📊 Comparison: CPU-Based vs. BlueField Hardware Offload<a class="headerlink" href="#comparison-cpu-based-vs-bluefield-hardware-offload" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2251,9 +2263,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

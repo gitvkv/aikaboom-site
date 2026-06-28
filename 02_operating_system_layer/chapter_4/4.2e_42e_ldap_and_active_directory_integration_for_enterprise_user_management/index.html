@@ -321,8 +321,6 @@
                 </li>
                 <li class="toctree-l3 current"><a class="reference internal current" href="#">4.2e LDAP and Active Directory integration for enterprise user management</a>
     <ul class="current">
-    <li class="toctree-l4"><a class="reference internal" href="#context-introduction">🌐 Context Introduction</a>
-    </li>
     <li class="toctree-l4"><a class="reference internal" href="#what-is-ldap-and-active-directory">⚙️ What is LDAP and Active Directory?</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#why-integrate-with-ai-infrastructure">🛠️ Why Integrate with AI Infrastructure?</a>
@@ -2132,7 +2130,6 @@
 </div>
 
 <hr />
-<h2 id="context-introduction">🌐 Context Introduction<a class="headerlink" href="#context-introduction" title="Permanent link">&para;</a></h2>
 <p>In enterprise environments, managing user accounts across dozens or hundreds of AI servers manually is impractical. Engineers need a centralized way to authenticate users, control access, and enforce security policies. This is where <strong>LDAP</strong> (Lightweight Directory Access Protocol) and <strong>Active Directory</strong> (Microsoft's directory service) come into play. They act as a single source of truth for user identities, allowing engineers to log into any AI infrastructure node with the same credentials.</p>
 <p>For AI infrastructure operations, integrating LDAP or Active Directory means that data scientists, ML engineers, and system administrators can seamlessly access GPU clusters, storage systems, and management nodes without maintaining separate local accounts on each machine.</p>
 <hr />
@@ -2187,6 +2184,23 @@
 <li>The directory server verifies credentials and returns user attributes (UID, GID, home directory, shell).</li>
 <li>The user is granted access if authentication succeeds.</li>
 </ol>
+<h3 id="visual-representation-centralized-ldapad-authentication-flow">📊 Visual Representation: Centralized LDAP/AD Authentication Flow<a class="headerlink" href="#visual-representation-centralized-ldapad-authentication-flow" title="Permanent link">&para;</a></h3>
+<p>This flowchart displays the Linux login lookup sequence, checking local user directories first before querying the remote enterprise LDAP/AD directory server using PAM/NSS.</p>
+<div class="mermaid">flowchart LR
+    login["1. Login Attempt&lt;br&gt;(User/Pass)"] --&gt; local{"2. Local User?&lt;br&gt;(/etc/passwd)"}
+    local --&gt;|Yes| localauth["3a. Authenticate via&lt;br&gt;/etc/shadow"]
+    local --&gt;|No| pam["3b. PAM/NSS Query&lt;br&gt;(/etc/nsswitch.conf)"]
+    pam --&gt; directory["4. LDAP / Active Directory Server&lt;br&gt;(Central Registry)"]
+    directory --&gt;|Success| ldapauth["5. Authenticated Session&lt;br&gt;(Auto-Create Home/Shell)"]
+    directory --&gt;|Failure| fail["6. Access Denied"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class directory cpu;
+    class localauth,ldapauth memory;
+    class login,local,pam,fail system;</div>
 <hr />
 <h2 id="key-configuration-files-and-concepts">📂 Key Configuration Files and Concepts<a class="headerlink" href="#key-configuration-files-and-concepts" title="Permanent link">&para;</a></h2>
 <p>For engineers setting up integration, these are the essential components:</p>
@@ -2315,9 +2329,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

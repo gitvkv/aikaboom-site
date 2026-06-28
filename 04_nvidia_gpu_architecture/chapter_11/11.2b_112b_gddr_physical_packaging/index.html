@@ -2186,6 +2186,21 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-gddr-physical-board-layout">📊 Visual Representation: GDDR Physical Board Layout<a class="headerlink" href="#visual-representation-gddr-physical-board-layout" title="Permanent link">&para;</a></h3>
+<p>This diagram shows the physical layout of GDDR memory chips placed around the central GPU die, connected via standard PCB traces.</p>
+<div class="mermaid">flowchart LR
+    GDDR1["GDDR Chip"] --- Trace1["PCB Traces"]
+    GDDR2["GDDR Chip"] --- Trace2["PCB Traces"]
+    Trace1 --&gt; GPUDie["Central GPU Die"]
+    Trace2 --&gt; GPUDie
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPUDie cpu;
+    class GDDR1,GDDR2 memory;
+    class Trace1,Trace2 system;</div>
 <h2 id="real-world-example-comparing-memory-configurations">🕵️ Real-World Example: Comparing Memory Configurations<a class="headerlink" href="#real-world-example-comparing-memory-configurations" title="Permanent link">&para;</a></h2>
 <p>Let's look at two common GPU memory configurations to see how physical packaging affects width:</p>
 <p><strong>Entry-level GPU (e.g., RTX 4060):</strong>
@@ -2283,9 +2298,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

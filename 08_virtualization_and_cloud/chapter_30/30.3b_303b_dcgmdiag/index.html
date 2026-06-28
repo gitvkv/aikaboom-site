@@ -2209,6 +2209,19 @@
 <li><strong>Before critical training runs</strong> — Ensure no hardware issues will interrupt long jobs</li>
 </ul>
 <hr />
+<h3 id="visual-representation-dcgm-diagnostic-test-levels">📊 Visual Representation: DCGM Diagnostic Test levels<a class="headerlink" href="#visual-representation-dcgm-diagnostic-test-levels" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the three standard levels of DCGM diagnostic tests, ranging from simple software checks to intensive memory and load stresses.</p>
+<div class="mermaid">flowchart LR
+    Diag["dcgmi diag -r"] --&gt; L1["Level 1 (Software deployment checks)"]
+    Diag --&gt; L2["Level 2 (Basic PCIe &amp; Hardware checks)"]
+    Diag --&gt; L3["Level 3 (Stress &amp; Memory checks)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Diag cpu;
+    class L1,L2,L3 memory;</div>
 <h2 id="running-dcgmdiag-command-overview">🧰 Running dcgmDiag (Command Overview)<a class="headerlink" href="#running-dcgmdiag-command-overview" title="Permanent link">&para;</a></h2>
 <p>To run dcgmDiag, use the following approach:</p>
 <p>For a quick validation (Level 0), run the diagnostic with the <strong>-l 0</strong> flag. This completes in about 1–2 minutes.</p>
@@ -2295,9 +2308,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

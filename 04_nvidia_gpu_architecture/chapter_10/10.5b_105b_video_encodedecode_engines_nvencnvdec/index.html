@@ -2185,6 +2185,22 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-nvidia-nvenc-and-nvdec-video-pipeline">📊 Visual Representation: NVIDIA NVENC and NVDEC Video Pipeline<a class="headerlink" href="#visual-representation-nvidia-nvenc-and-nvdec-video-pipeline" title="Permanent link">&para;</a></h3>
+<p>This flowchart outlines how NVDEC offloads video decoding into frame buffers for processing, and NVENC encodes the results back to video streams.</p>
+<div class="mermaid">flowchart LR
+    Stream["Raw Video Stream"] --&gt; NVDEC["NVDEC (Hardware Decoder)"]
+    NVDEC --&gt; Frame["VRAM Frame Buffer"]
+    Frame --&gt; Processing["CUDA/Tensor Processing"]
+    Processing --&gt; NVENC["NVENC (Hardware Encoder)"]
+    NVENC --&gt; Out["Encoded Video Stream"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NVDEC,NVENC cpu;
+    class Frame memory;
+    class Stream,Processing,Out system;</div>
 <h2 id="how-engineers-use-nvencnvdec-in-practice">🕵️ How Engineers Use NVENC/NVDEC in Practice<a class="headerlink" href="#how-engineers-use-nvencnvdec-in-practice" title="Permanent link">&para;</a></h2>
 <h3 id="decoding-for-preprocessing">🔄 Decoding for Preprocessing<a class="headerlink" href="#decoding-for-preprocessing" title="Permanent link">&para;</a></h3>
 <p>When building a training pipeline for video data, the typical flow is:</p>
@@ -2205,45 +2221,45 @@
 <hr />
 <h2 id="practical-example-for-reference">💻 Practical Example (For Reference)<a class="headerlink" href="#practical-example-for-reference" title="Permanent link">&para;</a></h2>
 <p>Below is a simplified Python example using PyTorch and the NVIDIA Video Codec SDK to decode a video file and extract frames for AI preprocessing:</p>
-<pre><code class="language-python">import torch
-import nvidia.dali as dali
-from nvidia.dali.pipeline import Pipeline
-from nvidia.dali.plugin.pytorch import DALIGenericIterator
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">nvidia.dali</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dali</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nvidia.dali.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nvidia.dali.plugin.pytorch</span><span class="w"> </span><span class="kn">import</span> <span class="n">DALIGenericIterator</span>
 
-# Define a DALI pipeline that uses NVDEC for hardware decoding
-@dali.pipeline_def(batch_size=4, num_threads=2, device_id=0)
-def video_pipeline():
-    # Use NVDEC to decode H.264 video directly on GPU
-    video = dali.fn.readers.video(
-        device=&quot;gpu&quot;,
-        filenames=[&quot;input_video.mp4&quot;],
-        sequence_length=16,
-        stride=1,
-        step=1,
-        dtype=dali.types.FLOAT,
-        name=&quot;Reader&quot;
-    )
-    # Preprocessing: resize and normalize
-    resized = dali.fn.resize(video, device=&quot;gpu&quot;, size=(224, 224))
-    normalized = dali.fn.crop_mirror_normalize(
-        resized,
-        device=&quot;gpu&quot;,
-        dtype=dali.types.FLOAT,
-        mean=[0.485, 0.456, 0.406],
-        std=[0.229, 0.224, 0.225]
-    )
-    return normalized
+<span class="c1"># Define a DALI pipeline that uses NVDEC for hardware decoding</span>
+<span class="nd">@dali</span><span class="o">.</span><span class="n">pipeline_def</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">num_threads</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">device_id</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">video_pipeline</span><span class="p">():</span>
+    <span class="c1"># Use NVDEC to decode H.264 video directly on GPU</span>
+    <span class="n">video</span> <span class="o">=</span> <span class="n">dali</span><span class="o">.</span><span class="n">fn</span><span class="o">.</span><span class="n">readers</span><span class="o">.</span><span class="n">video</span><span class="p">(</span>
+        <span class="n">device</span><span class="o">=</span><span class="s2">&quot;gpu&quot;</span><span class="p">,</span>
+        <span class="n">filenames</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;input_video.mp4&quot;</span><span class="p">],</span>
+        <span class="n">sequence_length</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+        <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">dali</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">FLOAT</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Reader&quot;</span>
+    <span class="p">)</span>
+    <span class="c1"># Preprocessing: resize and normalize</span>
+    <span class="n">resized</span> <span class="o">=</span> <span class="n">dali</span><span class="o">.</span><span class="n">fn</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">video</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;gpu&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">))</span>
+    <span class="n">normalized</span> <span class="o">=</span> <span class="n">dali</span><span class="o">.</span><span class="n">fn</span><span class="o">.</span><span class="n">crop_mirror_normalize</span><span class="p">(</span>
+        <span class="n">resized</span><span class="p">,</span>
+        <span class="n">device</span><span class="o">=</span><span class="s2">&quot;gpu&quot;</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">dali</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">FLOAT</span><span class="p">,</span>
+        <span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span>
+        <span class="n">std</span><span class="o">=</span><span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">normalized</span>
 
-# Create pipeline and iterator
-pipe = video_pipeline()
-pipe.build()
-dali_iterator = DALIGenericIterator(pipe, [&quot;data&quot;], reader_name=&quot;Reader&quot;)
+<span class="c1"># Create pipeline and iterator</span>
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">video_pipeline</span><span class="p">()</span>
+<span class="n">pipe</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+<span class="n">dali_iterator</span> <span class="o">=</span> <span class="n">DALIGenericIterator</span><span class="p">(</span><span class="n">pipe</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">],</span> <span class="n">reader_name</span><span class="o">=</span><span class="s2">&quot;Reader&quot;</span><span class="p">)</span>
 
-# Iterate through decoded frames
-for batch in dali_iterator:
-    frames = batch[0][&quot;data&quot;]  # Tensor on GPU, ready for model input
-    # Pass frames to your AI model here
-</code></pre>
+<span class="c1"># Iterate through decoded frames</span>
+<span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">dali_iterator</span><span class="p">:</span>
+    <span class="n">frames</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>  <span class="c1"># Tensor on GPU, ready for model input</span>
+    <span class="c1"># Pass frames to your AI model here</span>
+</code></pre></div>
 <p>📤 <strong>Output:</strong> Each iteration yields a batch of preprocessed video frames as GPU tensors, ready for model inference.</p>
 <hr />
 <h2 id="key-considerations-for-engineers">🧩 Key Considerations for Engineers<a class="headerlink" href="#key-considerations-for-engineers" title="Permanent link">&para;</a></h2>
@@ -2296,9 +2312,11 @@ for batch in dali_iterator:
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

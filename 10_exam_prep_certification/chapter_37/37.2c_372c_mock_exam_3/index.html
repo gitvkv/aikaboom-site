@@ -2222,6 +2222,20 @@
 <li><strong>Weakness Indicators:</strong> Topics where you scored below 60%</li>
 </ul>
 <hr />
+<h3 id="visual-representation-full-simulator-scoring-pipeline">📊 Visual Representation: Full Simulator scoring pipeline<a class="headerlink" href="#visual-representation-full-simulator-scoring-pipeline" title="Permanent link">&para;</a></h3>
+<p>This flowchart maps simulator pipelines: taking exam questions, scoring output results, and generating certificate reports.</p>
+<div class="mermaid">flowchart LR
+    Start["Start full simulator"] --&gt; Questions["Answer random exam pool questions"]
+    Questions --&gt; Score["Calculate percentage (Pass threshold: 70%)"]
+    Score --&gt; Report["Generate weak domain analysis report"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Questions cpu;
+    class Score memory;
+    class Start,Report system;</div>
 <h2 id="score-analysis-example">🕵️ Score Analysis Example<a class="headerlink" href="#score-analysis-example" title="Permanent link">&para;</a></h2>
 <p>Here is what your score report might look like after completing the simulation:</p>
 <p><strong>Overall Performance:</strong>
@@ -2346,9 +2360,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2198,6 +2198,19 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-nvme-over-fabrics-nvme-of-transport-layers">📊 Visual Representation: NVMe over Fabrics (NVMe-oF) Transport Layers<a class="headerlink" href="#visual-representation-nvme-over-fabrics-nvme-of-transport-layers" title="Permanent link">&para;</a></h3>
+<p>This diagram contrasts the protocol stacks of NVMe over RDMA (RoCE), NVMe over TCP, and NVMe over Fibre Channel.</p>
+<div class="mermaid">flowchart LR
+    NVMe["NVMe Command Set"] --&gt; RDMA["NVMe over RDMA (RoCE/iWARP)"]
+    NVMe --&gt; TCP["NVMe over TCP (Standard Eth)"]
+    NVMe --&gt; FC["NVMe over FC (Fibre Channel)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NVMe cpu;
+    class RDMA,TCP,FC memory;</div>
 <h2 id="common-nvme-of-fabrics">🔌 Common NVMe-oF Fabrics<a class="headerlink" href="#common-nvme-of-fabrics" title="Permanent link">&para;</a></h2>
 <p>Two main transport types dominate AI data centers:</p>
 <h3 id="1-nvmetcp-ethernet-based">1. <strong>NVMe/TCP</strong> (Ethernet-based)<a class="headerlink" href="#1-nvmetcp-ethernet-based" title="Permanent link">&para;</a></h3>
@@ -2295,9 +2308,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

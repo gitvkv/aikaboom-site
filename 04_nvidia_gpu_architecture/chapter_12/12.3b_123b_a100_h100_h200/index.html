@@ -2174,6 +2174,18 @@
 <p><strong>Why this matters</strong>: For models that require massive memory (e.g., 175B+ parameter models), the H200 reduces the need for complex model parallelism. This simplifies infrastructure and improves training efficiency.</p>
 <p><strong>Typical use cases</strong>: Training the largest foundation models (e.g., Llama 3, GPT-4 scale), fine-tuning massive models, and memory-intensive scientific simulations.</p>
 <hr />
+<h3 id="visual-representation-training-gpu-sxm-platform-hierarchy">📊 Visual Representation: Training GPU SXM Platform Hierarchy<a class="headerlink" href="#visual-representation-training-gpu-sxm-platform-hierarchy" title="Permanent link">&para;</a></h3>
+<p>This diagram shows the enterprise training GPU hierarchy (A100 SXM, H100 SXM, B200 SXM) connected via full high-speed NVLink baseboards.</p>
+<div class="mermaid">flowchart LR
+    Training["Model Training Workloads"] --&gt; A100["A100 SXM (Classic Scale)"]
+    Training --&gt; H100["H100 SXM (Transformer Optimized)"]
+    Training --&gt; B200["B200 SXM (FP4 / Dual-Die Powerhouse)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class A100,H100,B200 cpu;</div>
 <h2 id="comparison-table-a100-vs-h100-vs-h200">📊 Comparison Table: A100 vs. H100 vs. H200<a class="headerlink" href="#comparison-table-a100-vs-h100-vs-h200" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2371,9 +2383,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2203,6 +2203,18 @@
 <li><strong>No processes listed</strong> — The GPU is idle. Good for validation before deploying a new workload.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-nvidia-smi-xmljson-query-output">📊 Visual Representation: nvidia-smi XML/JSON Query output<a class="headerlink" href="#visual-representation-nvidia-smi-xmljson-query-output" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how the --query-gpu flag filters telemetry attributes, formatting them into XML/CSV for parsers.</p>
+<div class="mermaid">flowchart LR
+    Query["nvidia-smi --query-gpu=power.draw,utilization.gpu --format=csv"] --&gt; Filter{"Query Filter"}
+    Filter --&gt; CSV["CSV / Scriptable output lines"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Filter cpu;
+    class Query,CSV memory;</div>
 <h2 id="when-to-use-this-command">🕵️ When to Use This Command<a class="headerlink" href="#when-to-use-this-command" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Before deploying a new AI model</strong> — Verify memory and compute capacity.</li>
@@ -2213,8 +2225,8 @@
 <hr />
 <h2 id="practical-example-for-reference">📋 Practical Example (For Reference)<a class="headerlink" href="#practical-example-for-reference" title="Permanent link">&para;</a></h2>
 <p>For reference, here is how you would typically invoke the command:</p>
-<pre><code>nvidia-smi -q
-</code></pre>
+<div class="highlight"><pre><span></span><code>nvidia-smi -q
+</code></pre></div>
 <p>📤 Output: A multi-page text report starting with GPU identity, then clocks, temperature, power, memory, PCIe details, and finally running processes. Each GPU is separated by a divider line.</p>
 <hr />
 <h2 id="common-variations">🧩 Common Variations<a class="headerlink" href="#common-variations" title="Permanent link">&para;</a></h2>
@@ -2266,9 +2278,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

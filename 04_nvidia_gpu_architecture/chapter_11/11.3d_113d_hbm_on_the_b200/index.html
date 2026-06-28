@@ -2197,6 +2197,19 @@
 <li><strong>Multi-Model Serving</strong>: You can load multiple smaller models simultaneously on one GPU for inference serving, improving resource utilization.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-blackwell-b200-dual-die-hbm3e-layout">📊 Visual Representation: Blackwell B200 Dual-Die HBM3e Layout<a class="headerlink" href="#visual-representation-blackwell-b200-dual-die-hbm3e-layout" title="Permanent link">&para;</a></h3>
+<p>This diagram shows the dual-die architecture of the Blackwell B200, connected to 8 HBM3e stacks yielding 8 TB/s aggregate bandwidth.</p>
+<div class="mermaid">flowchart LR
+    HBM_Stacks["8 Stacks HBM3e (192GB)"] --&gt;|Silicon Interposer| B200_Die1["Blackwell Die 1"]
+    HBM_Stacks --&gt;|Silicon Interposer| B200_Die2["Blackwell Die 2"]
+    B200_Die1 ---|High-speed interconnect| B200_Die2
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class B200_Die1,B200_Die2 cpu;
+    class HBM_Stacks memory;</div>
 <h2 id="comparison-b200-vs-previous-generation">📈 Comparison: B200 vs. Previous Generation<a class="headerlink" href="#comparison-b200-vs-previous-generation" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2245,13 +2258,13 @@
 <hr />
 <h2 id="example-checking-memory-on-a-b200-system">🧪 Example: Checking Memory on a B200 System<a class="headerlink" href="#example-checking-memory-on-a-b200-system" title="Permanent link">&para;</a></h2>
 <p>For reference, to verify the B200 memory configuration, engineers can run:</p>
-<pre><code>nvidia-smi --query-gpu=memory.total,memory.bandwidth --format=csv
-</code></pre>
+<div class="highlight"><pre><span></span><code>nvidia-smi --query-gpu=memory.total,memory.bandwidth --format=csv
+</code></pre></div>
 <p>📤 <strong>Output:</strong><br />
 <code>192000 MiB, 8000 GB/s</code></p>
 <p>For reference, to monitor real-time memory bandwidth usage during a workload:</p>
-<pre><code>nvidia-smi dmon -s p -d 1
-</code></pre>
+<div class="highlight"><pre><span></span><code>nvidia-smi dmon -s p -d 1
+</code></pre></div>
 <p>📤 <strong>Output:</strong><br />
 <code># gpu   pwr gtemp mtemp    sm   mem   enc   dec   mclk   pclk</code><br />
 <code># Idx      W     C      C    %     %     %     %   MHz    MHz</code><br />
@@ -2311,9 +2324,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

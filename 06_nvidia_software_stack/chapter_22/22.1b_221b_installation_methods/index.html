@@ -2182,6 +2182,19 @@
 <li><strong>Not recommended</strong> for production environments or beginners.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-nvidia-driver-installation-flow">📊 Visual Representation: NVIDIA Driver Installation flow<a class="headerlink" href="#visual-representation-nvidia-driver-installation-flow" title="Permanent link">&para;</a></h3>
+<p>This flowchart outlines driver installation: disabling Nouveau drivers, building kernel modules, and verifying with nvidia-smi.</p>
+<div class="mermaid">flowchart LR
+    DisableNouveau["1. Disable &amp; Blacklist Nouveau"] --&gt; InstallDKMS["2. Install compiler &amp; dkms"]
+    InstallDKMS --&gt; RunInstaller["3. Execute NVIDIA RUN Installer"]
+    RunInstaller --&gt; Verify["4. Verify via 'nvidia-smi'"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Verify cpu;
+    class DisableNouveau,InstallDKMS,RunInstaller system;</div>
 <h2 id="comparison-table-aptdnf-repository-vs-run-file">📊 Comparison Table: apt/dnf Repository vs .run File<a class="headerlink" href="#comparison-table-aptdnf-repository-vs-run-file" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2314,9 +2327,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

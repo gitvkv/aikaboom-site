@@ -2172,6 +2172,19 @@
 - This also installs dependencies like <code>libnvidia-container</code> and <code>nvidia-container-runtime</code>.
 - The runtime binary is placed at <code>/usr/bin/nvidia-container-runtime</code>.</p>
 <hr />
+<h3 id="visual-representation-container-toolkit-installation-steps">📊 Visual Representation: Container Toolkit Installation steps<a class="headerlink" href="#visual-representation-container-toolkit-installation-steps" title="Permanent link">&para;</a></h3>
+<p>This flowchart maps container toolkit setup: adding repos, installing packages, and configuring Docker's daemon.json config.</p>
+<div class="mermaid">flowchart LR
+    AddRepo["1. Add GPG Key &amp; Repo"] --&gt; Install["2. Install nvidia-container-toolkit"]
+    Install --&gt; Config["3. nvidia-ctk runtime configure --runtime=docker"]
+    Config --&gt; Restart["4. Restart Docker Daemon"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Config cpu;
+    class AddRepo,Install,Restart system;</div>
 <h2 id="step-3-configuring-the-docker-daemon">🔧 Step 3: Configuring the Docker Daemon<a class="headerlink" href="#step-3-configuring-the-docker-daemon" title="Permanent link">&para;</a></h2>
 <p>This is the most critical step. You need to tell Docker's daemon (the background service that manages containers) about the NVIDIA runtime.</p>
 <p><strong>What happens here:</strong>
@@ -2294,9 +2307,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

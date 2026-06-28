@@ -2130,7 +2130,6 @@
 <hr />
 <h2 id="context-introduction">🌐 Context Introduction<a class="headerlink" href="#context-introduction" title="Permanent link">&para;</a></h2>
 <p>When managing AI infrastructure, engineers often need to perform the same action across multiple GPUs or multiple nodes in a cluster. Instead of typing commands manually for each device or server, loops allow you to automate these repetitive tasks efficiently. This section covers the three fundamental loop types in Bash — <strong>for</strong>, <strong>while</strong>, and <strong>until</strong> — and shows how they apply to iterating over GPU lists and node arrays.</p>
-<hr />
 <h2 id="the-three-loop-types-at-a-glance">⚙️ The Three Loop Types at a Glance<a class="headerlink" href="#the-three-loop-types-at-a-glance" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2229,6 +2228,31 @@ You have a list of worker nodes that need to be online before you can distribute
 </tr>
 </tbody>
 </table>
+<h3 id="visual-representation-bash-loop-control-structures">📊 Visual Representation: Bash Loop Control Structures<a class="headerlink" href="#visual-representation-bash-loop-control-structures" title="Permanent link">&para;</a></h3>
+<p>This diagram maps out and compares the logical decision-making paths of <code>for</code> loops (iterating over lists), <code>while</code> loops (repeating while true), and <code>until</code> loops (repeating until true).</p>
+<div class="mermaid">flowchart LR
+    subgraph ForLoop["For Loop (Predefined List)"]
+        for_cond{"Next item?"} --&gt;|Yes| for_body["Run command"] --&gt; for_cond
+        for_cond --&gt;|No| for_end["Exit"]
+    end
+
+    subgraph WhileLoop["While Loop (Repeat-while-True)"]
+        while_cond{"Condition True?"} --&gt;|Yes| while_body["Wait &amp; check"] --&gt; while_cond
+        while_cond --&gt;|No| while_end["Exit"]
+    end
+
+    subgraph UntilLoop["Until Loop (Repeat-until-True)"]
+        until_cond{"Condition True?"} --&gt;|No| until_body["Wait &amp; ping"] --&gt; until_cond
+        until_cond --&gt;|Yes| until_end["Exit"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class for_cond,while_cond,until_cond cpu;
+    class for_body,while_body,until_body memory;
+    class for_end,while_end,until_end system;</div>
 <hr />
 <h2 id="common-pitfalls-and-best-practices">📊 Common Pitfalls and Best Practices<a class="headerlink" href="#common-pitfalls-and-best-practices" title="Permanent link">&para;</a></h2>
 <p><strong>Pitfall 1: Forgetting to update the condition in while/until loops</strong><br />
@@ -2290,9 +2314,11 @@ Instead of <strong>i</strong> or <strong>x</strong>, use names like <strong>gpu_
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

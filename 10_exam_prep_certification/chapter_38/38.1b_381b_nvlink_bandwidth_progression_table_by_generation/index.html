@@ -2201,6 +2201,19 @@
 <li><strong>NVSwitch Impact:</strong> With NVLink 4.0, the NVSwitch allows all GPUs in a system to communicate at full bandwidth simultaneously, which is essential for large-scale AI training.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-nvlink-bandwidth-scaling-progress">📊 Visual Representation: NVLink bandwidth scaling progress<a class="headerlink" href="#visual-representation-nvlink-bandwidth-scaling-progress" title="Permanent link">&para;</a></h3>
+<p>This diagram displays NVLink bandwidth progression, detailing speeds from NVLink v1 (160 GB/s) to NVLink v4 (900 GB/s).</p>
+<div class="mermaid">flowchart LR
+    v1["NVLink v1 (160 GB/s)"] --&gt; v2["NVLink v2 (300 GB/s)"]
+    v2 --&gt; v3["NVLink v3 (600 GB/s)"]
+    v3 --&gt; v4["NVLink v4 (900 GB/s)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class v4 cpu;
+    class v1,v2,v3 memory;</div>
 <h2 id="practical-implications-for-system-design">🛠️ Practical Implications for System Design<a class="headerlink" href="#practical-implications-for-system-design" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Small Clusters (2-4 GPUs):</strong> NVLink 3.0 or 4.0 provides ample bandwidth for most workloads. Focus on GPU memory capacity first.</li>
@@ -2267,9 +2280,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

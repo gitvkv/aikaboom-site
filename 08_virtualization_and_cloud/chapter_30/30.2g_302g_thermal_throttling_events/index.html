@@ -2190,6 +2190,20 @@
 </ul>
 <p>When you check throttle reasons, you may see one or more flags active simultaneously.</p>
 <hr />
+<h3 id="visual-representation-thermal-throttling-core-slowdown">📊 Visual Representation: Thermal Throttling core slowdown<a class="headerlink" href="#visual-representation-thermal-throttling-core-slowdown" title="Permanent link">&para;</a></h3>
+<p>This flowchart demonstrates how high temperatures trigger driver limits to drop core clocks, protecting GPU silicon.</p>
+<div class="mermaid">flowchart LR
+    TempHigh["GPU temp exceeds 83°C (Slowdown temp)"] --&gt; Throttling{"Driver Throttling State"}
+    Throttling --&gt;|Reduce| Clocks["Core Clocks scale down (Throttled)"]
+    Clocks --&gt; TempSafe["Silicon cools down (Compute bottlenecked)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Throttling cpu;
+    class Clocks,TempSafe memory;
+    class TempHigh system;</div>
 <h2 id="how-to-detect-thermal-throttling-events">🛠️ How to Detect Thermal Throttling Events<a class="headerlink" href="#how-to-detect-thermal-throttling-events" title="Permanent link">&para;</a></h2>
 <p>To check for thermal throttling, engineers use <strong>nvidia-smi</strong> commands. Here is how to interpret the results:</p>
 <h3 id="checking-p-state">Checking P-State<a class="headerlink" href="#checking-p-state" title="Permanent link">&para;</a></h3>
@@ -2313,9 +2327,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

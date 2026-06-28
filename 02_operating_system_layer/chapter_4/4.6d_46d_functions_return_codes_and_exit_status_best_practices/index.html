@@ -2132,7 +2132,6 @@
 <hr />
 <h2 id="context-introduction">📘 Context Introduction<a class="headerlink" href="#context-introduction" title="Permanent link">&para;</a></h2>
 <p>When building automation scripts for AI infrastructure, you will often repeat the same logic in multiple places. Functions help you package that logic into reusable blocks, making your scripts cleaner and easier to maintain. But functions alone are not enough — you also need a reliable way to communicate success or failure back to the rest of your script. That is where <strong>return codes</strong> and <strong>exit statuses</strong> come in. This section will teach you how to write functions that behave predictably and how to check their results so your automation pipelines run smoothly.</p>
-<hr />
 <h2 id="what-are-functions-in-bash">⚙️ What Are Functions in Bash?<a class="headerlink" href="#what-are-functions-in-bash" title="Permanent link">&para;</a></h2>
 <p>A function is a named block of code that you can call multiple times from different parts of your script. Instead of copying and pasting the same commands, you define the function once and invoke it by name.</p>
 <p><strong>Key characteristics of functions:</strong>
@@ -2150,15 +2149,15 @@
 <p><strong>Calling a function:</strong>
 - Simply write the function name as if it were a command.
 - Pass arguments by listing them after the function name, separated by spaces.</p>
-<p><strong>Example of a simple function:</strong></p>
-<pre><code>check_gpu_health() {
+<p><strong>Example of a simple function:</strong>
+<div class="highlight"><pre><span></span><code>check_gpu_health() {
     echo &quot;Checking GPU status...&quot;
     nvidia-smi --query-gpu=name --format=csv,noheader
 }
-</code></pre>
-<p><strong>Calling it:</strong></p>
-<pre><code>check_gpu_health
-</code></pre>
+</code></pre></div></p>
+<p><strong>Calling it:</strong>
+<div class="highlight"><pre><span></span><code>check_gpu_health
+</code></pre></div></p>
 <hr />
 <h2 id="return-codes-vs-exit-status">🔄 Return Codes vs. Exit Status<a class="headerlink" href="#return-codes-vs-exit-status" title="Permanent link">&para;</a></h2>
 <p>This is a common point of confusion for new engineers. Let's clarify:</p>
@@ -2190,6 +2189,26 @@
 </tbody>
 </table>
 <p><strong>Important rule:</strong> A return code of <strong>0</strong> means success. Any non-zero value means a specific type of failure. By convention, use <strong>1</strong> for general errors, <strong>2</strong> for misuse of shell builtins, and higher values for more specific conditions.</p>
+<h3 id="visual-representation-functions-return-codes-vs-script-exit-statuses">📊 Visual Representation: Functions Return Codes vs. Script Exit Statuses<a class="headerlink" href="#visual-representation-functions-return-codes-vs-script-exit-statuses" title="Permanent link">&para;</a></h3>
+<p>This flowchart contrasts the execution behavior of a function returning a status code (which allows the calling script to continue) against a script exiting (which terminates the process).</p>
+<div class="mermaid">flowchart LR
+    %% Function Return path
+    subgraph "Function Return"
+        call_fn["Call function check_gpu()"] --&gt; ret_val["Return 0 (Success) or 1 (Failure)"] --&gt; continue_script["Continue script execution"]
+    end
+
+    %% Script Exit path
+    subgraph "Script Exit"
+        error_chk["Fatal error detected"] --&gt; exit_cmd["Exit 1 (Terminate process)"] --&gt; terminate["Stop execution"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class ret_val,error_chk cpu;
+    class continue_script,terminate memory;
+    class call_fn,exit_cmd system;</div>
 <hr />
 <h2 id="best-practices-for-return-codes-in-functions">🕵️ Best Practices for Return Codes in Functions<a class="headerlink" href="#best-practices-for-return-codes-in-functions" title="Permanent link">&para;</a></h2>
 <ol>
@@ -2206,13 +2225,13 @@
 <p><strong>Do not use exit inside a function unless you intend to stop the entire script.</strong> Use <strong>return</strong> instead to keep the script running and handle the error gracefully.</p>
 </li>
 </ol>
-<p><strong>Example of checking a return code:</strong></p>
-<pre><code>check_disk_space
+<p><strong>Example of checking a return code:</strong>
+<div class="highlight"><pre><span></span><code>check_disk_space
 if [ $? -ne 0 ]; then
     echo &quot;Disk space check failed. Aborting.&quot;
     exit 1
 fi
-</code></pre>
+</code></pre></div></p>
 <hr />
 <h2 id="exit-status-best-practices-for-scripts">📊 Exit Status Best Practices for Scripts<a class="headerlink" href="#exit-status-best-practices-for-scripts" title="Permanent link">&para;</a></h2>
 <ol>
@@ -2229,8 +2248,8 @@ fi
 <p><strong>Trap unexpected errors.</strong> Use the <strong>trap</strong> command to catch signals like <strong>ERR</strong> and run a cleanup function before exiting with a failure code.</p>
 </li>
 </ol>
-<p><strong>Example of a well-structured script ending:</strong></p>
-<pre><code># Exit codes:
+<p><strong>Example of a well-structured script ending:</strong>
+<div class="highlight"><pre><span></span><code># Exit codes:
 # 0 = success
 # 1 = configuration file missing
 # 2 = GPU driver not found
@@ -2238,7 +2257,7 @@ fi
 
 echo &quot;All checks passed.&quot;
 exit 0
-</code></pre>
+</code></pre></div></p>
 <hr />
 <h2 id="combining-functions-with-return-codes-a-complete-pattern">🧩 Combining Functions with Return Codes — A Complete Pattern<a class="headerlink" href="#combining-functions-with-return-codes-a-complete-pattern" title="Permanent link">&para;</a></h2>
 <p>Here is the recommended pattern for any function that performs a check or action:</p>
@@ -2250,8 +2269,8 @@ exit 0
 <li><strong>In the main script</strong>, call the function and immediately check <strong>$?</strong>.</li>
 <li><strong>Handle the error</strong> — either retry, log, or exit the script.</li>
 </ol>
-<p><strong>For reference:</strong></p>
-<pre><code>check_nvidia_driver() {
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>check_nvidia_driver() {
     if nvidia-smi &amp;&gt; /dev/null; then
         return 0
     else
@@ -2265,7 +2284,7 @@ if [ $? -ne 0 ]; then
     exit 2
 fi
 echo &quot;NVIDIA driver is active.&quot;
-</code></pre>
+</code></pre></div></p>
 <p>📤 Output: <strong>NVIDIA driver is active.</strong> (if the driver is working)</p>
 <hr />
 <h2 id="common-mistakes-to-avoid">🧼 Common Mistakes to Avoid<a class="headerlink" href="#common-mistakes-to-avoid" title="Permanent link">&para;</a></h2>
@@ -2326,9 +2345,11 @@ echo &quot;NVIDIA driver is active.&quot;
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

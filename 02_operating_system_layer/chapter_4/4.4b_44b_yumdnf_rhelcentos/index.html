@@ -345,8 +345,6 @@
                 </li>
                 <li class="toctree-l3 current"><a class="reference internal current" href="#">4.4b YUM/DNF (RHEL/CentOS): package groups, modules, and repositories</a>
     <ul class="current">
-    <li class="toctree-l4"><a class="reference internal" href="#context-introduction">🧭 Context Introduction</a>
-    </li>
     <li class="toctree-l4"><a class="reference internal" href="#what-are-package-groups">⚙️ What Are Package Groups?</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#what-are-modules">📦 What Are Modules?</a>
@@ -2128,14 +2126,12 @@
 </div>
 
 <hr />
-<h2 id="context-introduction">🧭 Context Introduction<a class="headerlink" href="#context-introduction" title="Permanent link">&para;</a></h2>
 <p>When you work with AI infrastructure on Red Hat Enterprise Linux (RHEL) or CentOS systems, you will frequently need to install, update, and manage software packages. Unlike manual downloads, package managers like <strong>YUM</strong> (Yellowdog Updater Modified) and its modern replacement <strong>DNF</strong> (Dandified YUM) handle dependencies automatically and keep your system consistent.</p>
 <p>For new engineers, understanding three key concepts is essential:
 - <strong>Package groups</strong> — collections of related packages installed together
 - <strong>Modules</strong> — streams of software with different versions or configurations
 - <strong>Repositories</strong> — remote or local sources where packages are stored</p>
 <p>This guide breaks down each concept simply, so you can confidently manage software on AI infrastructure nodes.</p>
-<hr />
 <h2 id="what-are-package-groups">⚙️ What Are Package Groups?<a class="headerlink" href="#what-are-package-groups" title="Permanent link">&para;</a></h2>
 <p>A <strong>package group</strong> is a predefined collection of RPM packages that serve a common purpose. Instead of installing 20 individual packages one by one, you install the entire group with a single command.</p>
 <p>Key points:
@@ -2212,8 +2208,24 @@
 <li><strong>Verify available repositories</strong> — Check which repositories are currently enabled on your system</li>
 <li><strong>Enable a module stream</strong> — For example, enable Python 3.9 to ensure compatibility with AI frameworks</li>
 <li><strong>Install a package group</strong> — Install "Development Tools" to get compilers and libraries needed for building AI software</li>
-<li><strong>Install individual packages</strong> — Add specific tools like <strong>nvidia-driver</strong> or <strong>cuda-toolkit</strong> from the NVIDIA repository</li>
+<li><strong>Install</strong> individual packages — Add specific tools like <strong>nvidia-driver</strong> or <strong>cuda-toolkit</strong> from the NVIDIA repository</li>
 </ol>
+<h3 id="visual-representation-yumdnf-package-management-components">📊 Visual Representation: YUM/DNF Package Management Components<a class="headerlink" href="#visual-representation-yumdnf-package-management-components" title="Permanent link">&para;</a></h3>
+<p>This flowchart illustrates the structured architecture of Red Hat-based package management, showing how DNF consumes repositories, software modules, and package groups to resolve installations.</p>
+<div class="mermaid">flowchart LR
+    nvidia_repo["NVIDIA Repo&lt;br&gt;(CUDA / Drivers)"] --&gt; repo["/etc/yum.repos.d/"]
+    rhel_repo["Official RHEL Repo"] --&gt; repo
+    repo --&gt; dnf["DNF Package Manager"]
+    dnf --&gt; groups["Package Groups&lt;br&gt;(e.g., Development Tools)"] --&gt; install["Resolved RPM Installation"]
+    dnf --&gt; modules["Software Modules&lt;br&gt;(e.g., Python 3.9)"] --&gt; install
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class nvidia_repo cpu;
+    class repo,rhel_repo memory;
+    class dnf,groups,modules,install system;</div>
 <hr />
 <h2 id="comparison-yum-vs-dnf">📊 Comparison: YUM vs DNF<a class="headerlink" href="#comparison-yum-vs-dnf" title="Permanent link">&para;</a></h2>
 <p>While both tools work similarly, DNF is the modern replacement with better performance and module support.</p>
@@ -2304,9 +2316,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

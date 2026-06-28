@@ -2213,6 +2213,34 @@
 - <strong>Basic Auth</strong> — username and password (over HTTPS only)
 - <strong>Session-based</strong> — login once, get a session token
 - <strong>Token-based</strong> — use API keys for automation</p>
+<h3 id="visual-representation-redfish-api-resource-tree-hierarchy">📊 Visual Representation: Redfish API Resource Tree Hierarchy<a class="headerlink" href="#visual-representation-redfish-api-resource-tree-hierarchy" title="Permanent link">&para;</a></h3>
+<p>This diagram maps out the hierarchical JSON resource tree schema utilized by the Redfish RESTful API to expose hardware components and configurations.</p>
+<div class="mermaid">flowchart TD
+    Root["Root: /redfish/v1/"] --&gt; Systems["Systems: /redfish/v1/Systems/"]
+    Root --&gt; Chassis["Chassis: /redfish/v1/Chassis/"]
+    Root --&gt; Managers["Managers: /redfish/v1/Managers/"]
+
+    Systems --&gt; Sys1["System 1: /Systems/1"]
+    Sys1 --&gt; Storage["Storage: /Systems/1/Storage"]
+    Sys1 --&gt; Processors["Processors: /Systems/1/Processors"]
+    Sys1 --&gt; Memory["Memory: /Systems/1/Memory"]
+
+    Chassis --&gt; Ch1["Chassis 1: /Chassis/1"]
+    Ch1 --&gt; Thermal["Thermal: /Chassis/1/Thermal"]
+    Ch1 --&gt; Power["Power: /Chassis/1/Power"]
+
+    Managers --&gt; Mgr1["Manager 1: /Managers/1"]
+    Mgr1 --&gt; Network["NetworkProtocol: /Managers/1/NetworkProtocol"]
+    Mgr1 --&gt; Ethernet["EthernetInterfaces: /Managers/1/EthernetInterfaces"]
+
+    class Root,Systems,Chassis,Managers system;
+    class Sys1,Storage,Processors,Memory cpu;
+    class Ch1,Thermal,Power system;
+    class Mgr1,Network,Ethernet system;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;</div>
 <hr />
 <h2 id="common-use-cases-for-engineers">📊 Common Use Cases for Engineers<a class="headerlink" href="#common-use-cases-for-engineers" title="Permanent link">&para;</a></h2>
 <h3 id="monitoring-hardware-health">🔍 Monitoring Hardware Health<a class="headerlink" href="#monitoring-hardware-health" title="Permanent link">&para;</a></h3>
@@ -2248,12 +2276,12 @@
 <li><strong>Receive JSON response</strong> containing the current power state.</li>
 <li><strong>Parse the JSON</strong> to extract the value (e.g., "On" or "Off").</li>
 </ol>
-<p><strong>For reference:</strong></p>
-<pre><code>GET /redfish/v1/Systems/1
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>GET /redfish/v1/Systems/1
 Host: 192.168.1.100
 Authorization: Basic base64(username:password)
 Accept: application/json
-</code></pre>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> <code>{"PowerState": "On", "Status": {"State": "Enabled", "Health": "OK"}}</code></p>
 <hr />
 <h2 id="advantages-over-ipmi">✅ Advantages Over IPMI<a class="headerlink" href="#advantages-over-ipmi" title="Permanent link">&para;</a></h2>
@@ -2325,9 +2353,11 @@ Accept: application/json
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

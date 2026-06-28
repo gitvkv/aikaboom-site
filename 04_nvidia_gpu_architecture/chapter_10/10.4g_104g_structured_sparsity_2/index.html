@@ -2182,6 +2182,20 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-structured-24-sparse-matrix-compression">📊 Visual Representation: Structured 2:4 Sparse Matrix Compression<a class="headerlink" href="#visual-representation-structured-24-sparse-matrix-compression" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how 2:4 structured sparsity compresses a dense 4-element block into 2 non-zero values, doubling matrix math throughput.</p>
+<div class="mermaid">flowchart LR
+    Dense["Dense Matrix Block: [A, 0, B, 0]"] --&gt; Filter["Structured 2:4 Sparsity Check"]
+    Filter --&gt; Sparse["Compressed Non-zero Matrix: [A, B]"]
+    Sparse --&gt; TensorCore["Sparse Tensor Core Multiplication"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class TensorCore cpu;
+    class Dense,Sparse memory;
+    class Filter system;</div>
 <h2 id="how-engineers-enable-24-sparsity">🛠️ How Engineers Enable 2:4 Sparsity<a class="headerlink" href="#how-engineers-enable-24-sparsity" title="Permanent link">&para;</a></h2>
 <p>Enabling 2:4 structured sparsity involves a few key steps during model development:</p>
 <ul>
@@ -2254,9 +2268,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

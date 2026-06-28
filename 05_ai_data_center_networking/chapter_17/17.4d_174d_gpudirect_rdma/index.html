@@ -2167,6 +2167,23 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-nvidia-gpudirect-rdma-data-path">📊 Visual Representation: NVIDIA GPUDirect RDMA Data Path<a class="headerlink" href="#visual-representation-nvidia-gpudirect-rdma-data-path" title="Permanent link">&para;</a></h3>
+<p>This diagram displays GPUDirect RDMA, bypass host RAM to copy data directly from GPU VRAM to the network adapter over the PCIe bus.</p>
+<div class="mermaid">flowchart LR
+    subgraph Standard["Standard Path (Host Copy)"]
+        VRAM1["GPU VRAM"] --&gt;|PCIe| HostRAM["Host System RAM"] --&gt;|PCIe| RNIC1["RNIC"]
+    end
+    subgraph GPUDirect["GPUDirect RDMA (Direct Path)"]
+        VRAM2["GPU VRAM"] --&gt;|Direct PCIe Peer-to-Peer| RNIC2["RNIC"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class VRAM1,VRAM2 cpu;
+    class HostRAM memory;
+    class RNIC1,RNIC2 system;</div>
 <h2 id="how-engineers-enable-gpudirect-rdma">🛠️ How Engineers Enable GPUDirect RDMA<a class="headerlink" href="#how-engineers-enable-gpudirect-rdma" title="Permanent link">&para;</a></h2>
 <p>To use GPUDirect RDMA in an AI cluster, engineers must ensure several components are properly configured:</p>
 <ul>
@@ -2239,9 +2256,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

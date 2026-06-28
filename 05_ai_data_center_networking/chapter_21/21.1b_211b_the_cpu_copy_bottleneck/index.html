@@ -2181,6 +2181,20 @@
 <p><strong>Example observation:</strong>
 - If your GPU is at 30% utilization but your CPU memory bandwidth is at 90%, you likely have a staging bottleneck.</p>
 <hr />
+<h3 id="visual-representation-cpu-and-system-memory-bandwidth-bottleneck">📊 Visual Representation: CPU and System Memory Bandwidth Bottleneck<a class="headerlink" href="#visual-representation-cpu-and-system-memory-bandwidth-bottleneck" title="Permanent link">&para;</a></h3>
+<p>This flowchart demonstrates how standard storage paths create bottlenecks by locking CPU cores to perform memmove operations, starving GPU compute.</p>
+<div class="mermaid">flowchart LR
+    Data["Storage Data Stream"] --&gt;|Saturate| Bus["System Memory Bus (DRAM)"]
+    Bus --&gt;|Core Pinning| CPU["Host CPU (Busy copying bytes)"]
+    CPU --&gt;|Compute Starvation| GPU["GPU (Idle / Waiting)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPU cpu;
+    class Bus memory;
+    class CPU,Data system;</div>
 <h2 id="how-to-mitigate-the-cpu-copy-bottleneck">🛠️ How to Mitigate the CPU Copy Bottleneck<a class="headerlink" href="#how-to-mitigate-the-cpu-copy-bottleneck" title="Permanent link">&para;</a></h2>
 <p>Here are practical steps engineers can take:</p>
 <ul>
@@ -2189,11 +2203,11 @@
 <li><strong>Pin memory buffers:</strong> Use pinned (page-locked) memory to speed up transfers between CPU and GPU.</li>
 <li><strong>Batch data transfers:</strong> Combine small transfers into larger ones to reduce overhead.</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-bash"># Example: Check if GPUDirect Storage is enabled
-nvidia-smi gds -s
-</code></pre>
-<p>📤 Output: <strong>GPUDirect Storage is enabled: Yes</strong></p>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Example: Check if GPUDirect Storage is enabled</span>
+nvidia-smi<span class="w"> </span>gds<span class="w"> </span>-s
+</code></pre></div>
+📤 Output: <strong>GPUDirect Storage is enabled: Yes</strong></p>
 <hr />
 <h2 id="comparison-with-vs-without-staging-bottleneck">🧩 Comparison: With vs. Without Staging Bottleneck<a class="headerlink" href="#comparison-with-vs-without-staging-bottleneck" title="Permanent link">&para;</a></h2>
 <table>
@@ -2283,9 +2297,11 @@ nvidia-smi gds -s
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

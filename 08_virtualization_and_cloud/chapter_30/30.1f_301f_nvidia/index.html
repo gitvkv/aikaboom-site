@@ -2166,28 +2166,41 @@
 <li><strong>tx</strong> — PCIe transmit throughput</li>
 <li><strong>rx</strong> — PCIe receive throughput</li>
 </ul>
-<p>For reference:</p>
-<pre><code>nvidia-smi dmon -d pwr,temp,sm,mem
-</code></pre>
-<p>📤 <strong>Output:</strong> A continuous display showing only power, temperature, SM utilization, and memory utilization for all GPUs.</p>
+<p>For reference:
+<div class="highlight"><pre><span></span><code>nvidia-smi dmon -d pwr,temp,sm,mem
+</code></pre></div>
+📤 <strong>Output:</strong> A continuous display showing only power, temperature, SM utilization, and memory utilization for all GPUs.</p>
 <hr />
 <h2 id="selecting-specific-gpus">🕵️ Selecting Specific GPUs<a class="headerlink" href="#selecting-specific-gpus" title="Permanent link">&para;</a></h2>
 <p>By default, <strong>nvidia-smi dmon</strong> monitors all GPUs. You can focus on a single GPU or a subset using the <strong>-i</strong> flag followed by the GPU index number.</p>
-<p>For reference:</p>
-<pre><code>nvidia-smi dmon -i 0
-</code></pre>
-<p>📤 <strong>Output:</strong> Continuous monitoring for GPU 0 only.</p>
-<p>For reference:</p>
-<pre><code>nvidia-smi dmon -i 0,2
-</code></pre>
-<p>📤 <strong>Output:</strong> Continuous monitoring for GPUs 0 and 2 only.</p>
+<p>For reference:
+<div class="highlight"><pre><span></span><code>nvidia-smi dmon -i 0
+</code></pre></div>
+📤 <strong>Output:</strong> Continuous monitoring for GPU 0 only.</p>
+<p>For reference:
+<div class="highlight"><pre><span></span><code>nvidia-smi dmon -i 0,2
+</code></pre></div>
+📤 <strong>Output:</strong> Continuous monitoring for GPUs 0 and 2 only.</p>
 <hr />
+<h3 id="visual-representation-nvidia-smi-dmon-continuous-polling">📊 Visual Representation: nvidia-smi dmon continuous polling<a class="headerlink" href="#visual-representation-nvidia-smi-dmon-continuous-polling" title="Permanent link">&para;</a></h3>
+<p>This diagram shows how dmon streams real-time GPU statistics at fixed time-intervals directly to the stdout terminal console.</p>
+<div class="mermaid">flowchart LR
+    nvidiaSmi["nvidia-smi dmon"] --&gt;|1s poll| Loop["Fetch metrics"]
+    Loop --&gt;|Stdout stream| Stream["Console Output (gpu, pwr, temp, sm, mem)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Loop cpu;
+    class Stream memory;
+    class nvidiaSmi system;</div>
 <h2 id="controlling-the-update-interval">⏱️ Controlling the Update Interval<a class="headerlink" href="#controlling-the-update-interval" title="Permanent link">&para;</a></h2>
 <p>You can change how often the metrics refresh using the <strong>-s</strong> flag, followed by the number of seconds between updates.</p>
-<p>For reference:</p>
-<pre><code>nvidia-smi dmon -s 5
-</code></pre>
-<p>📤 <strong>Output:</strong> Updates every 5 seconds instead of the default 1 second.</p>
+<p>For reference:
+<div class="highlight"><pre><span></span><code>nvidia-smi dmon -s 5
+</code></pre></div>
+📤 <strong>Output:</strong> Updates every 5 seconds instead of the default 1 second.</p>
 <hr />
 <h2 id="comparison-nvidia-smi-vs-nvidia-smi-dmon">📋 Comparison: nvidia-smi vs. nvidia-smi dmon<a class="headerlink" href="#comparison-nvidia-smi-vs-nvidia-smi-dmon" title="Permanent link">&para;</a></h2>
 <table>
@@ -2277,9 +2290,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

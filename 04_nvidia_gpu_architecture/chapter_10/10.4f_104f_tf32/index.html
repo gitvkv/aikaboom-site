@@ -2212,21 +2212,35 @@
 <li><strong>Accumulation</strong>: Results are accumulated in FP32 to maintain accuracy</li>
 <li><strong>Output</strong>: Final result is stored back as FP32</li>
 </ol>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-python"># Example: PyTorch training with TF32 enabled (default on Ampere+ GPUs)
-import torch
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Example: PyTorch training with TF32 enabled (default on Ampere+ GPUs)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 
-# Enable TF32 (default is True on compatible GPUs)
-torch.backends.cuda.matmul.allow_tf32 = True
-torch.backends.cudnn.allow_tf32 = True
+<span class="c1"># Enable TF32 (default is True on compatible GPUs)</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">matmul</span><span class="o">.</span><span class="n">allow_tf32</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">allow_tf32</span> <span class="o">=</span> <span class="kc">True</span>
 
-# Your model and training loop remain unchanged
-model = MyModel().cuda()
-input_tensor = torch.randn(64, 3, 224, 224).cuda()
-output = model(input_tensor)  # Tensor Cores automatically use TF32
-</code></pre>
+<span class="c1"># Your model and training loop remain unchanged</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">()</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+<span class="n">input_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>  <span class="c1"># Tensor Cores automatically use TF32</span>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> No visible change — training runs faster with same numerical stability.</p>
 <hr />
+<h3 id="visual-representation-tensorfloat-32-tf32-bit-format-structure">📊 Visual Representation: TensorFloat-32 (TF32) Bit Format Structure<a class="headerlink" href="#visual-representation-tensorfloat-32-tf32-bit-format-structure" title="Permanent link">&para;</a></h3>
+<p>This diagram details the bit layout of TF32 (19 bits total), showing how it combines the 8-bit exponent of FP32 with the 10-bit mantissa of FP16.</p>
+<div class="mermaid">flowchart LR
+    TF32["TF32 Word (19 Bits)"] --&gt; Sign["Sign (1 Bit)"]
+    TF32 --&gt; Exp["Exponent (8 Bits - Matches FP32 Range)"]
+    TF32 --&gt; Mantissa["Mantissa (10 Bits - Matches FP16 Precision)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class TF32 cpu;
+    class Exp,Mantissa memory;
+    class Sign system;</div>
 <h2 id="when-to-use-tf32-vs-other-formats">🕵️ When to Use TF32 vs. Other Formats<a class="headerlink" href="#when-to-use-tf32-vs-other-formats" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2276,15 +2290,15 @@ output = model(input_tensor)  # Tensor Cores automatically use TF32
 </ul>
 <hr />
 <h2 id="how-to-verify-tf32-is-active">🔍 How to Verify TF32 is Active<a class="headerlink" href="#how-to-verify-tf32-is-active" title="Permanent link">&para;</a></h2>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-bash"># Check if TF32 is enabled in PyTorch
-python -c &quot;import torch; print(torch.backends.cuda.matmul.allow_tf32)&quot;
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Check if TF32 is enabled in PyTorch</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import torch; print(torch.backends.cuda.matmul.allow_tf32)&quot;</span>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> <code>True</code> (on compatible GPUs)</p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-bash"># Monitor Tensor Core usage with NVIDIA tools
-nvidia-smi --query-gpu=tensor_core_active --format=csv
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Monitor Tensor Core usage with NVIDIA tools</span>
+nvidia-smi<span class="w"> </span>--query-gpu<span class="o">=</span>tensor_core_active<span class="w"> </span>--format<span class="o">=</span>csv
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> <code>tensor_core_active, Yes</code></p>
 <hr />
 <h2 id="summary">🧠 Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
@@ -2328,9 +2342,11 @@ nvidia-smi --query-gpu=tensor_core_active --format=csv
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

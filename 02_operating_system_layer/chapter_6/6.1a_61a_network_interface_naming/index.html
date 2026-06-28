@@ -2168,6 +2168,19 @@
 <li><strong>Key point:</strong> InfiniBand is not Ethernet — it's a separate protocol for low-latency, high-bandwidth data transfer.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-predictable-network-interface-device-path-mapping">📊 Visual Representation: Predictable Network Interface Device Path Mapping<a class="headerlink" href="#visual-representation-predictable-network-interface-device-path-mapping" title="Permanent link">&para;</a></h3>
+<p>This flowchart shows how system hardware topology (PCI bus, slot, port) is translated into predictable network interface names (eno, ens, enp) by systemd.</p>
+<div class="mermaid">flowchart LR
+    dev["Network Interface"] --&gt; eno["eno1&lt;br&gt;(Onboard NIC)"]
+    dev --&gt; ens["ens1&lt;br&gt;(PCIe Hotplug Slot)"]
+    dev --&gt; enp["enp3s0f0&lt;br&gt;(PCIe Bus 3, Slot 0, Port 0)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class dev cpu;
+    class eno,ens,enp memory;</div>
 <h2 id="comparison-table-eth0-vs-ens3-vs-ib0">📊 Comparison Table: eth0 vs. ens3 vs. ib0<a class="headerlink" href="#comparison-table-eth0-vs-ens3-vs-ib0" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2249,9 +2262,9 @@
 <li><strong>cat /sys/class/net/*/device/uevent</strong> — Displays hardware topology for each interface.</li>
 </ul>
 <p>For reference, here's a typical command sequence:</p>
-<pre><code class="language-bash">ip link show
-</code></pre>
-<p>📤 Output: <strong>1: lo: <LOOPBACK,UP,LOWER_UP> ... 2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> ... 3: ib0: <BROADCAST,MULTICAST,UP,LOWER_UP> ...</strong></p>
+<p><div class="highlight"><pre><span></span><code>ip<span class="w"> </span>link<span class="w"> </span>show
+</code></pre></div>
+📤 Output: <strong>1: lo: <LOOPBACK,UP,LOWER_UP> ... 2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> ... 3: ib0: <BROADCAST,MULTICAST,UP,LOWER_UP> ...</strong></p>
 <hr />
 <h2 id="summary-for-new-engineers">✅ Summary for New Engineers<a class="headerlink" href="#summary-for-new-engineers" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2300,9 +2313,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2161,9 +2161,9 @@
 <hr />
 <h2 id="example-requesting-8-a100-gpus-for-a-training-job">📊 Example: Requesting 8 A100 GPUs for a Training Job<a class="headerlink" href="#example-requesting-8-a100-gpus-for-a-training-job" title="Permanent link">&para;</a></h2>
 <p>When you submit a batch job that needs 8 NVIDIA A100 GPUs, your submission command would include the <code>--gres</code> flag. Here is how it looks in practice:</p>
-<p><strong>For reference:</strong></p>
-<pre><code>sbatch --gres=gpu:a100:8 --ntasks=8 --cpus-per-task=4 --mem=256G my_training_script.sh
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>sbatch --gres=gpu:a100:8 --ntasks=8 --cpus-per-task=4 --mem=256G my_training_script.sh
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> Job submitted with job ID 123456.</p>
 <p>What this does:
 - Requests exactly 8 A100 GPUs.
@@ -2175,8 +2175,8 @@
 <p>The GRES configuration is set by the cluster administrator in Slurm's configuration files. As a user, you don't change this, but understanding it helps you write correct job requests.</p>
 <h3 id="how-gpus-are-defined-in-gresconf">How GPUs are defined in <code>gres.conf</code><a class="headerlink" href="#how-gpus-are-defined-in-gresconf" title="Permanent link">&para;</a></h3>
 <p>Each compute node has a configuration file (typically <code>/etc/slurm/gres.conf</code>) that lists its GPUs. A typical entry looks like this:</p>
-<p><strong>For reference:</strong></p>
-<pre><code>NodeName=compute-gpu-01 Name=gpu Type=a100 File=/dev/nvidia0
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>NodeName=compute-gpu-01 Name=gpu Type=a100 File=/dev/nvidia0
 NodeName=compute-gpu-01 Name=gpu Type=a100 File=/dev/nvidia1
 NodeName=compute-gpu-01 Name=gpu Type=a100 File=/dev/nvidia2
 NodeName=compute-gpu-01 Name=gpu Type=a100 File=/dev/nvidia3
@@ -2184,25 +2184,38 @@ NodeName=compute-gpu-01 Name=gpu Type=a100 File=/dev/nvidia4
 NodeName=compute-gpu-01 Name=gpu Type=a100 File=/dev/nvidia5
 NodeName=compute-gpu-01 Name=gpu Type=a100 File=/dev/nvidia6
 NodeName=compute-gpu-01 Name=gpu Type=a100 File=/dev/nvidia7
-</code></pre>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> This node has 8 A100 GPUs, each mapped to a device file.</p>
 <h3 id="how-slurmconf-references-gres">How <code>slurm.conf</code> references GRES<a class="headerlink" href="#how-slurmconf-references-gres" title="Permanent link">&para;</a></h3>
 <p>The main Slurm configuration file (<code>slurm.conf</code>) also includes GRES information for each node:</p>
-<p><strong>For reference:</strong></p>
-<pre><code>NodeName=compute-gpu-01 Gres=gpu:a100:8 CPUs=64 RealMemory=512000
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>NodeName=compute-gpu-01 Gres=gpu:a100:8 CPUs=64 RealMemory=512000
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> This line tells Slurm that <code>compute-gpu-01</code> has 8 A100 GPUs, 64 CPU cores, and 512 GB of memory.</p>
 <hr />
+<h3 id="visual-representation-slurm-generic-resource-gres-gpu-binding">📊 Visual Representation: Slurm Generic Resource (GRES) GPU binding<a class="headerlink" href="#visual-representation-slurm-generic-resource-gres-gpu-binding" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how requesting a GPU via GRES tells Slurm to bind execution to matching cards.</p>
+<div class="mermaid">flowchart LR
+    Header["#SBATCH --gres=gpu:a100:2"] --&gt; Controller["slurmctld Allocation check"]
+    Controller --&gt;|Binds cards| Env["Set CUDA_VISIBLE_DEVICES=0,1 inside Job"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Controller cpu;
+    class Env memory;
+    class Header system;</div>
 <h2 id="checking-available-gpus-with-sinfo">🕵️ Checking Available GPUs with <code>sinfo</code><a class="headerlink" href="#checking-available-gpus-with-sinfo" title="Permanent link">&para;</a></h2>
 <p>Before submitting a job, you can check which nodes have the GPUs you need. Slurm provides the <code>sinfo</code> command with a special format option to display GRES information.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>sinfo -o &quot;%n %G&quot;
-</code></pre>
-<p>📤 <strong>Output:</strong></p>
-<pre><code>compute-gpu-01 gpu:a100:8
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>sinfo -o &quot;%n %G&quot;
+</code></pre></div></p>
+<p>📤 <strong>Output:</strong>
+<div class="highlight"><pre><span></span><code>compute-gpu-01 gpu:a100:8
 compute-gpu-02 gpu:a100:8
 compute-gpu-03 gpu:v100:4
-</code></pre>
+</code></pre></div></p>
 <p>This shows you which GPU types and counts are available on each node.</p>
 <hr />
 <h2 id="comparison-table-common-gres-patterns">📋 Comparison Table: Common <code>--gres</code> Patterns<a class="headerlink" href="#comparison-table-common-gres-patterns" title="Permanent link">&para;</a></h2>
@@ -2311,9 +2324,11 @@ compute-gpu-03 gpu:v100:4
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

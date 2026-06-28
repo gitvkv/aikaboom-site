@@ -2213,6 +2213,20 @@
 - <strong>host</strong> — container shares the host's network stack (faster but less isolated)
 - <strong>none</strong> — no network access (for security-sensitive workloads)</p>
 <hr />
+<h3 id="visual-representation-docker-run-lifecycle-container-states">📊 Visual Representation: Docker Run Lifecycle Container States<a class="headerlink" href="#visual-representation-docker-run-lifecycle-container-states" title="Permanent link">&para;</a></h3>
+<p>This flowchart displays container state changes during execution: from creation, to running, to exit.</p>
+<div class="mermaid">flowchart LR
+    Created["Created State"] --&gt;|docker start| Running["Running State"]
+    Running --&gt;|Application exit / stop| Stopped["Stopped / Exited State"]
+    Stopped --&gt;|docker rm| Deleted["Deleted from Disk"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Running cpu;
+    class Created,Stopped memory;
+    class Deleted system;</div>
 <h2 id="putting-it-all-together-a-real-ai-scenario">🧪 Putting It All Together — A Real AI Scenario<a class="headerlink" href="#putting-it-all-together-a-real-ai-scenario" title="Permanent link">&para;</a></h2>
 <p>Imagine you want to run an NVIDIA Triton Inference Server container that:
 - Uses your GPU
@@ -2324,9 +2338,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

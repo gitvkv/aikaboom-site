@@ -2151,6 +2151,18 @@
 </ul>
 <p>...can corrupt or crash the shared context, affecting <strong>all other clients</strong> connected to that MPS server.</p>
 <hr />
+<h3 id="visual-representation-mps-shared-context-crash-propagation">📊 Visual Representation: MPS Shared Context Crash Propagation<a class="headerlink" href="#visual-representation-mps-shared-context-crash-propagation" title="Permanent link">&para;</a></h3>
+<p>This flowchart demonstrates how a memory access crash in one client process can propagate and terminate all other clients in the shared context.</p>
+<div class="mermaid">flowchart LR
+    Client1["Client 1 (Memory fault / SegFault)"] --&gt;|Shared context crash| MPSDaemon["MPS Control Server"]
+    MPSDaemon --&gt;|Force teardown| Client2["Client 2 (Terminated / Lost computation)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class MPSDaemon cpu;
+    class Client1,Client2 memory;</div>
 <h2 id="comparison-mps-vs-separate-contexts">📊 Comparison: MPS vs. Separate Contexts<a class="headerlink" href="#comparison-mps-vs-separate-contexts" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2286,9 +2298,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

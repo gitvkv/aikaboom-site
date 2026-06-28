@@ -2160,6 +2160,19 @@
 - <strong>Speech &amp; Audio</strong> — Jasper, QuartzNet
 - <strong>Medical Imaging</strong> — MONAI models</p>
 <hr />
+<h3 id="visual-representation-nvidia-gpu-cloud-ngc-resource-hub">📊 Visual Representation: NVIDIA GPU Cloud (NGC) Resource Hub<a class="headerlink" href="#visual-representation-nvidia-gpu-cloud-ngc-resource-hub" title="Permanent link">&para;</a></h3>
+<p>This diagram maps the NGC portal resources: container registries, pre-trained AI weights, and Helm charts.</p>
+<div class="mermaid">flowchart LR
+    NGC["NVIDIA GPU Cloud (NGC)"] --&gt; Containers["AI Optimized Containers"]
+    NGC --&gt; Models["Pre-trained Foundation Model Weights"]
+    NGC --&gt; Resources["Helm Charts / Training Recipes"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NGC cpu;
+    class Containers,Models,Resources memory;</div>
 <h2 id="helm-charts">🛠️ Helm Charts<a class="headerlink" href="#helm-charts" title="Permanent link">&para;</a></h2>
 <p>Helm charts are <strong>Kubernetes package managers</strong>. NGC provides pre-built Helm charts that make deploying complex AI applications on Kubernetes clusters simple.</p>
 <p><strong>Why Helm charts matter:</strong>
@@ -2301,9 +2314,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

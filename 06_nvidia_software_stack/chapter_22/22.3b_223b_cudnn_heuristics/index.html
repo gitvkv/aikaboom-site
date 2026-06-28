@@ -2188,6 +2188,20 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-cudnn-algorithm-selection-heuristics">📊 Visual Representation: cuDNN algorithm selection heuristics<a class="headerlink" href="#visual-representation-cudnn-algorithm-selection-heuristics" title="Permanent link">&para;</a></h3>
+<p>This flowchart shows cuDNN dynamic selection: evaluating matrix dimensions and hardware architectures to deploy the fastest computation kernel.</p>
+<div class="mermaid">flowchart LR
+    Query["Conv Query (Filter &amp; Input sizes)"] --&gt; Engine{"cuDNN Heuristics Engine"}
+    Engine --&gt;|Analyze| AlgoA["Algorithm A (Best for small batch)"]
+    Engine --&gt;|Analyze| AlgoB["Algorithm B (Best for tensor cores)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Engine cpu;
+    class AlgoA,AlgoB memory;
+    class Query system;</div>
 <h2 id="when-heuristics-are-used">🛠️ When Heuristics Are Used<a class="headerlink" href="#when-heuristics-are-used" title="Permanent link">&para;</a></h2>
 <p>cuDNN heuristics are invoked automatically whenever you call cuDNN operations through deep learning frameworks. Common scenarios include:</p>
 <ul>
@@ -2201,23 +2215,23 @@
 <hr />
 <h2 id="what-happens-under-the-hood">🔬 What Happens Under the Hood?<a class="headerlink" href="#what-happens-under-the-hood" title="Permanent link">&para;</a></h2>
 <p>For reference, here is a simplified Python-like pseudocode showing how cuDNN heuristics work conceptually:</p>
-<pre><code class="language-python"># This is a conceptual representation, not actual cuDNN API
-def cudnn_convolution(input_tensor, filter_tensor):
-    # Step 1: Extract input shapes
-    batch_size, channels, height, width = input_tensor.shape
+<div class="highlight"><pre><span></span><code><span class="c1"># This is a conceptual representation, not actual cuDNN API</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cudnn_convolution</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">filter_tensor</span><span class="p">):</span>
+    <span class="c1"># Step 1: Extract input shapes</span>
+    <span class="n">batch_size</span><span class="p">,</span> <span class="n">channels</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">input_tensor</span><span class="o">.</span><span class="n">shape</span>
 
-    # Step 2: Run heuristic engine
-    best_algorithm = heuristic_engine.select_algorithm(
-        input_shape=(batch_size, channels, height, width),
-        filter_shape=filter_tensor.shape,
-        data_type='float32',
-        gpu_model='A100'
-    )
+    <span class="c1"># Step 2: Run heuristic engine</span>
+    <span class="n">best_algorithm</span> <span class="o">=</span> <span class="n">heuristic_engine</span><span class="o">.</span><span class="n">select_algorithm</span><span class="p">(</span>
+        <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">channels</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">),</span>
+        <span class="n">filter_shape</span><span class="o">=</span><span class="n">filter_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+        <span class="n">data_type</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+        <span class="n">gpu_model</span><span class="o">=</span><span class="s1">&#39;A100&#39;</span>
+    <span class="p">)</span>
 
-    # Step 3: Execute selected algorithm
-    output = best_algorithm.execute(input_tensor, filter_tensor)
-    return output
-</code></pre>
+    <span class="c1"># Step 3: Execute selected algorithm</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">best_algorithm</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">filter_tensor</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output</span>
+</code></pre></div>
 <p>📤 Output: The heuristic engine returns an algorithm identifier (e.g., <code>CUDNN_CONVOLUTION_FWD_ALGO_IMPLICIT_GEMM</code>), which is then used for the actual computation.</p>
 <hr />
 <h2 id="how-engineers-benefit">🧩 How Engineers Benefit<a class="headerlink" href="#how-engineers-benefit" title="Permanent link">&para;</a></h2>
@@ -2276,9 +2290,11 @@ def cudnn_convolution(input_tensor, filter_tensor):
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

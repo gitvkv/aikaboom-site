@@ -2184,6 +2184,22 @@
 <li><strong>Return ducts</strong> carry the hot air back to the cooling unit for re-cooling.</li>
 </ol>
 <p>The result: <strong>no mixing of hot and cold air</strong>, which means the cooling system works less hard and your AI hardware stays at safe temperatures.</p>
+<h3 id="visual-representation-hot-aislecold-aisle-airflow-containment-cycle">📊 Visual Representation: Hot-Aisle/Cold-Aisle Airflow Containment Cycle<a class="headerlink" href="#visual-representation-hot-aislecold-aisle-airflow-containment-cycle" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the closed-loop airflow path in a data center, separating cold intake air from hot exhaust air to optimize server cooling.</p>
+<div class="mermaid">flowchart LR
+    CRAC["Cooling Unit (CRAC/CRAH)"] --&gt;|Cold Air Supply| CA["Cold Aisle (Inlet)"]
+    CA --&gt;|Front Intake| Servers["GPU Servers (NVIDIA DGX)"]
+    Servers --&gt;|Heat Exchange| HA["Hot Aisle (Exhaust)"]
+    HA --&gt;|Contained Return| Duct["Return Air Duct"]
+    Duct --&gt; CRAC
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Servers cpu;
+    class CA,HA memory;
+    class CRAC,Duct system;</div>
 <hr />
 <h2 id="key-metrics-for-engineers">📊 Key Metrics for Engineers<a class="headerlink" href="#key-metrics-for-engineers" title="Permanent link">&para;</a></h2>
 <p>When evaluating your airflow setup, watch these numbers:</p>
@@ -2256,9 +2272,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

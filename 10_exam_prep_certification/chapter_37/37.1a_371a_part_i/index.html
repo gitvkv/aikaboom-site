@@ -2184,6 +2184,19 @@
 <li><strong>Cold Tier (HDD/Object):</strong> For raw data archives and backups</li>
 </ul>
 <hr />
+<h3 id="visual-representation-infrastructure-foundations-exam-concept-mapping">📊 Visual Representation: Infrastructure Foundations Exam concept mapping<a class="headerlink" href="#visual-representation-infrastructure-foundations-exam-concept-mapping" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the relationship between hardware components, power, and thermal limits tested in foundations exams.</p>
+<div class="mermaid">flowchart LR
+    Exam["Foundations Exam"] --&gt; Power["Power Limits (TDP/PUE)"]
+    Exam --&gt; Temp["Thermal Throttling (Slowdown / Shutdown)"]
+    Exam --&gt; Components["Hardware (PCIe widths / Cores)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Exam cpu;
+    class Power,Temp,Components memory;</div>
 <h2 id="part-iii-software-operations-foundations-questions-5680">🛠️ Part III: Software &amp; Operations Foundations (Questions 56–80)<a class="headerlink" href="#part-iii-software-operations-foundations-questions-5680" title="Permanent link">&para;</a></h2>
 <p><strong>Context:</strong> Hardware is useless without software. This part covers the AI software stack — from drivers and containers to orchestration and monitoring. You'll learn how to deploy and manage AI workloads efficiently.</p>
 <h3 id="key-concepts-covered_2">Key Concepts Covered:<a class="headerlink" href="#key-concepts-covered_2" title="Permanent link">&para;</a></h3>
@@ -2252,9 +2265,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

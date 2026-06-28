@@ -2289,6 +2289,20 @@
 - You get an alert when one GPU draws 800W (potential failure).
 - You remotely power cycle individual outlets.
 - You generate a report showing 94% power utilization efficiency.</p>
+<h3 id="visual-representation-pdu-feature-progression">📊 Visual Representation: PDU Feature Progression<a class="headerlink" href="#visual-representation-pdu-feature-progression" title="Permanent link">&para;</a></h3>
+<p>This diagram shows how PDUs evolve from simple electrical distribution to advanced intelligent units by progressively adding monitoring, control, and analytical features.</p>
+<div class="mermaid">flowchart LR
+    Basic["Basic PDU&lt;br&gt;(Raw Distribution)"] --&gt;|Add local screen| Metered["Metered PDU&lt;br&gt;(Local Power Metrics)"]
+    Metered --&gt;|Add network &amp; switches| Switched["Switched PDU&lt;br&gt;(Remote Power Control)"]
+    Switched --&gt;|Add sensors &amp; analytics| Intelligent["Intelligent PDU&lt;br&gt;(Environment + Per-Outlet Monitoring)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Intelligent cpu;
+    class Switched,Metered memory;
+    class Basic system;</div>
 <hr />
 <h2 id="key-takeaways-for-new-engineers">✅ Key Takeaways for New Engineers<a class="headerlink" href="#key-takeaways-for-new-engineers" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2337,9 +2351,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

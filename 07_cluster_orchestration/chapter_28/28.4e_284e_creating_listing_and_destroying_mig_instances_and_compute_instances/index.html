@@ -2184,6 +2184,19 @@
 <li>During maintenance or when upgrading drivers.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-mig-instance-creation-command-loop">📊 Visual Representation: MIG Instance Creation command loop<a class="headerlink" href="#visual-representation-mig-instance-creation-command-loop" title="Permanent link">&para;</a></h3>
+<p>This flowchart maps out creating compute and GPU instances using target profile IDs.</p>
+<div class="mermaid">flowchart LR
+    Query["Find Profile ID (e.g. 19)"] --&gt; CreateGPU["1. Create GPU Instance (mig -cci 19)"]
+    CreateGPU --&gt; CreateCompute["2. Create Compute Instance (mig -cci 19 -cci 0)"]
+    CreateCompute --&gt; Verify["3. Check instances via nvidia-smi"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class CreateGPU cpu;
+    class Query,CreateCompute,Verify system;</div>
 <h2 id="practical-workflow-summary">🛠️ Practical Workflow Summary<a class="headerlink" href="#practical-workflow-summary" title="Permanent link">&para;</a></h2>
 <p>Here's the typical lifecycle of a MIG instance from start to finish:</p>
 <ul>
@@ -2301,9 +2314,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

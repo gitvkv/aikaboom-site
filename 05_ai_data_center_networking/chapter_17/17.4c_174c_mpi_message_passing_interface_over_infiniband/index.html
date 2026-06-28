@@ -2183,6 +2183,20 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-mpi-over-infiniband-zero-copy-send">📊 Visual Representation: MPI over InfiniBand Zero-Copy Send<a class="headerlink" href="#visual-representation-mpi-over-infiniband-zero-copy-send" title="Permanent link">&para;</a></h3>
+<p>This diagram displays MPI data paths: matching messaging envelopes over InfiniBand to trigger direct DMA memory transfers.</p>
+<div class="mermaid">flowchart LR
+    App1["MPI Sender (Rank 0)"] --&gt;|Send Envelope| App2["MPI Receiver (Rank 1)"]
+    App2 --&gt;|Envelope Match / Ready| DMA["HCA DMA Transfer (Zero-Copy)"]
+    DMA --&gt;|Direct write| TargetMem["Receiver Buffer"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class App1,App2 cpu;
+    class TargetMem memory;
+    class DMA system;</div>
 <h2 id="common-mpi-operations-in-ai-training">🕵️ Common MPI Operations in AI Training<a class="headerlink" href="#common-mpi-operations-in-ai-training" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>MPI_Allreduce</strong>: The workhorse of distributed training. Each process contributes a local value (e.g., gradient tensor), and all processes receive the summed result.</li>
@@ -2258,9 +2272,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2201,6 +2201,19 @@
 <li>Produces a <strong>fixed-size vocabulary</strong> that fits neatly into model architectures</li>
 </ul>
 <hr />
+<h3 id="visual-representation-byte-pair-encoding-bpe-tokenization-pipeline">📊 Visual Representation: Byte-Pair Encoding (BPE) Tokenization Pipeline<a class="headerlink" href="#visual-representation-byte-pair-encoding-bpe-tokenization-pipeline" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how raw text strings are parsed into subword token IDs and mapped to embedding indices in an LLM.</p>
+<div class="mermaid">flowchart LR
+    Text["Raw Text: 'Pre-training'"] --&gt; Tokenizer["BPE Tokenizer Engine"]
+    Tokenizer --&gt; TokenIDs["Token IDs: [1029, 442, 59]"]
+    TokenIDs --&gt; Embeddings["Dense Vectors (Embeddings)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Tokenizer cpu;
+    class Text,TokenIDs,Embeddings memory;</div>
 <h2 id="tokenization-in-practice-what-engineers-need-to-know">🕵️ Tokenization in Practice — What Engineers Need to Know<a class="headerlink" href="#tokenization-in-practice-what-engineers-need-to-know" title="Permanent link">&para;</a></h2>
 <h3 id="token-count-and-cost">Token Count and Cost<a class="headerlink" href="#token-count-and-cost" title="Permanent link">&para;</a></h3>
 <p>Most LLM APIs charge <strong>per token</strong> (both input and output). For example:
@@ -2218,24 +2231,24 @@
 - Memory for embeddings: 50,000 × 4096 × 4 bytes = <strong>~800 MB</strong></p>
 <h3 id="common-tokenization-libraries">Common Tokenization Libraries<a class="headerlink" href="#common-tokenization-libraries" title="Permanent link">&para;</a></h3>
 <p>Engineers working with LLMs typically use these tokenizers:</p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-python"># Hugging Face tokenizers library
-from transformers import AutoTokenizer
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Hugging Face tokenizers library</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoTokenizer</span>
 
-tokenizer = AutoTokenizer.from_pretrained(&quot;meta-llama/Llama-2-7b-hf&quot;)
-text = &quot;Hello, AI infrastructure!&quot;
-tokens = tokenizer.tokenize(text)
-token_ids = tokenizer.encode(text)
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;meta-llama/Llama-2-7b-hf&quot;</span><span class="p">)</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Hello, AI infrastructure!&quot;</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="n">token_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 
-print(tokens)
-print(token_ids)
-print(f&quot;Number of tokens: {len(tokens)}&quot;)
-</code></pre>
-<p>📤 Output:</p>
-<pre><code>['▁Hello', ',', '▁AI', '▁infrastructure', '!']
+<span class="nb">print</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">token_ids</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of tokens: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<p>📤 Output:
+<div class="highlight"><pre><span></span><code>[&#39;▁Hello&#39;, &#39;,&#39;, &#39;▁AI&#39;, &#39;▁infrastructure&#39;, &#39;!&#39;]
 [1, 15043, 29892, 12345, 29991, 29973]
 Number of tokens: 6
-</code></pre>
+</code></pre></div></p>
 <hr />
 <h2 id="key-takeaways-for-new-engineers">📈 Key Takeaways for New Engineers<a class="headerlink" href="#key-takeaways-for-new-engineers" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2333,9 +2346,11 @@ Number of tokens: 6
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2248,13 +2248,37 @@
 <li><strong>BMC</strong> (often integrated into the PCH or a separate chip) provides out-of-band management.</li>
 </ol>
 <p><strong>Visual example (text-based):</strong></p>
-<pre><code>[CPU] &lt;--DMI--&gt; [PCH] &lt;--SATA--&gt; [Hard Drives]
+<div class="highlight"><pre><span></span><code>[CPU] &lt;--DMI--&gt; [PCH] &lt;--SATA--&gt; [Hard Drives]
   |                |
   |                +--USB--&gt; [Keyboard/Mouse]
   |                +--PCIe--&gt; [Network Card]
   +--PCIe--&gt; [GPU]
   +--Memory--&gt; [RAM]
-</code></pre>
+</code></pre></div>
+<h3 id="visual-representation-enterprise-motherboard-data-flow-architecture">📊 Visual Representation: Enterprise Motherboard Data Flow Architecture<a class="headerlink" href="#visual-representation-enterprise-motherboard-data-flow-architecture" title="Permanent link">&para;</a></h3>
+<p>This diagram outlines the communication paths between the CPU, high-speed subsystems (RAM, GPU), and slower peripherals managed by the Platform Controller Hub (PCH).</p>
+<div class="mermaid">flowchart TD
+    CPU[CPU / Processors] --&gt;|Direct Memory Bus| RAM[System RAM]
+    CPU --&gt;|Direct PCIe Lanes| GPU[NVIDIA GPU]
+    CPU --&gt;|DMI / High-Speed Link| PCH[Platform Controller Hub - PCH]
+
+    PCH --&gt;|SATA Controller| Drives[SATA / HDD Storage]
+    PCH --&gt;|USB Bus| USB[USB Ports / Peripherals]
+    PCH --&gt;|PCIe Link| NIC[Network Interface Card]
+    PCH &lt;--&gt;|SMBus / PCIe| BMC[Baseboard Management Controller]
+
+    class CPU cpu;
+    class RAM memory;
+    class GPU memory;
+    class PCH system;
+    class Drives memory;
+    class USB system;
+    class NIC system;
+    class BMC system;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;</div>
 <hr />
 <h2 id="practical-tips-for-new-engineers">🧪 Practical Tips for New Engineers<a class="headerlink" href="#practical-tips-for-new-engineers" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2312,9 +2336,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

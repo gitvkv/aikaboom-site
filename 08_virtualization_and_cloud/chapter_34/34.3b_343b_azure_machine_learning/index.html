@@ -2177,6 +2177,19 @@
 <li>Processing large datasets with distributed training</li>
 </ul>
 <hr />
+<h3 id="visual-representation-azure-ml-workspace-workspace-layout">📊 Visual Representation: Azure ML Workspace workspace layout<a class="headerlink" href="#visual-representation-azure-ml-workspace-workspace-layout" title="Permanent link">&para;</a></h3>
+<p>This diagram displays Azure ML Workspace components: orchestrating compute instances, datasets, and pipelines.</p>
+<div class="mermaid">flowchart LR
+    Workspace["Azure ML Workspace"] --&gt; Compute["Compute Clusters (A100 VM pools)"]
+    Workspace --&gt; Datastore["Datastores (Azure Blob Storage)"]
+    Workspace --&gt; Run["Jobs / Pipelines (Run execution logs)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Workspace cpu;
+    class Compute,Datastore,Run memory;</div>
 <h2 id="mlflow-integration">📊 MLflow Integration<a class="headerlink" href="#mlflow-integration" title="Permanent link">&para;</a></h2>
 <p>MLflow is an open-source platform for managing the machine learning lifecycle. Azure ML integrates deeply with MLflow, giving you experiment tracking, model registry, and deployment capabilities.</p>
 <h3 id="what-mlflow-brings-to-azure-ml">What MLflow brings to Azure ML:<a class="headerlink" href="#what-mlflow-brings-to-azure-ml" title="Permanent link">&para;</a></h3>
@@ -2314,9 +2327,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

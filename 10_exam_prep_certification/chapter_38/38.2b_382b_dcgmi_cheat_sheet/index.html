@@ -2185,6 +2185,19 @@
 - <strong>FAIL</strong> – Critical problem (e.g., memory error) – stop workloads and investigate</p>
 <p><strong>Pro tip:</strong> Always run a <strong>Quick</strong> health check before launching a long training job. It catches obvious problems early.</p>
 <hr />
+<h3 id="visual-representation-dcgmi-cheat-sheet-commands">📊 Visual Representation: dcgmi Cheat Sheet commands<a class="headerlink" href="#visual-representation-dcgmi-cheat-sheet-commands" title="Permanent link">&para;</a></h3>
+<p>This diagram groups key dcgmi commands for managing GPU groups, monitoring field groups, and querying health statuses.</p>
+<div class="mermaid">flowchart LR
+    dcgmi["dcgmi Commands"] --&gt; Group["Group (-g / Create GPU groups)"]
+    dcgmi --&gt; Field["FieldGroup (-f / Select metric lists)"]
+    dcgmi --&gt; Diag["Diag (-r / Execute tests)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class dcgmi cpu;
+    class Group,Field,Diag memory;</div>
 <h2 id="job-monitoring-commands">🕵️ Job Monitoring Commands<a class="headerlink" href="#job-monitoring-commands" title="Permanent link">&para;</a></h2>
 <p>Job monitoring helps you watch GPU performance during AI training or inference. dcgmi can track metrics over time and alert you to issues.</p>
 <p><strong>Key monitoring capabilities:</strong></p>
@@ -2323,9 +2336,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

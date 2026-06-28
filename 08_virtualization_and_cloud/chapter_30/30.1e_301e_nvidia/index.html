@@ -2150,6 +2150,19 @@
 </ul>
 <p>Engineers use this to decide which GPUs to pair for data parallelism or model parallelism.</p>
 <hr />
+<h3 id="visual-representation-nvidia-smi-topo-m-connection-matrix">📊 Visual Representation: nvidia-smi topo -m Connection Matrix<a class="headerlink" href="#visual-representation-nvidia-smi-topo-m-connection-matrix" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the connection speeds (NVLink vs. PCIe Gen5 vs. NUMA socket) between GPU slots.</p>
+<div class="mermaid">flowchart LR
+    GPU0["GPU 0"] ---|"NVLink (Symmetric / Coherent)"| GPU1["GPU 1"]
+    GPU0 ---|"PCIe Switch (PIX)"| GPU2["GPU 2"]
+    GPU0 ---|"NUMA Bridge (SYS)"| CPU["Host CPU socket"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPU0,GPU1 cpu;
+    class GPU2,CPU memory;</div>
 <h2 id="when-to-use-this-command">🛠️ When to Use This Command<a class="headerlink" href="#when-to-use-this-command" title="Permanent link">&para;</a></h2>
 <p>You should run <strong>nvidia-smi topo -m</strong> in these situations:</p>
 <ul>
@@ -2252,9 +2265,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

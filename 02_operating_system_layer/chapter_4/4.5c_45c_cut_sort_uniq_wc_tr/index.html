@@ -361,8 +361,6 @@
                 </li>
                 <li class="toctree-l3 current"><a class="reference internal current" href="#">4.5c cut, sort, uniq, wc, tr: building command pipelines with pipes and redirection</a>
     <ul class="current">
-    <li class="toctree-l4"><a class="reference internal" href="#context-introduction">🧭 Context Introduction</a>
-    </li>
     <li class="toctree-l4"><a class="reference internal" href="#the-five-core-commands">⚙️ The Five Core Commands</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#building-command-pipelines-with-pipes">🛠️ Building Command Pipelines with Pipes</a>
@@ -2128,10 +2126,8 @@
 </div>
 
 <hr />
-<h2 id="context-introduction">🧭 Context Introduction<a class="headerlink" href="#context-introduction" title="Permanent link">&para;</a></h2>
 <p>In AI infrastructure operations, you will constantly work with configuration files, log files, and datasets. These files often contain thousands of lines of text. Manually reading through them is impractical. Instead, you need to process, filter, sort, count, and transform text efficiently.</p>
 <p>This topic introduces five essential text-processing commands — <strong>cut</strong>, <strong>sort</strong>, <strong>uniq</strong>, <strong>wc</strong>, and <strong>tr</strong> — and shows you how to combine them using <strong>pipes</strong> and <strong>redirection</strong> to build powerful command pipelines. These pipelines allow you to extract meaningful information from raw data without writing complex scripts.</p>
-<hr />
 <h2 id="the-five-core-commands">⚙️ The Five Core Commands<a class="headerlink" href="#the-five-core-commands" title="Permanent link">&para;</a></h2>
 <p>Each command has a specific purpose. Understanding them individually is the first step to building pipelines.</p>
 <h3 id="cut-extract-specific-columns">✂️ cut — Extract Specific Columns<a class="headerlink" href="#cut-extract-specific-columns" title="Permanent link">&para;</a></h3>
@@ -2241,6 +2237,22 @@
 <li>Count the number of rows in a CSV file.</li>
 <li>Extract specific columns from a large dataset for analysis.</li>
 </ul>
+<h3 id="visual-representation-linux-command-pipeline-workflow">📊 Visual Representation: Linux Command Pipeline Workflow<a class="headerlink" href="#visual-representation-linux-command-pipeline-workflow" title="Permanent link">&para;</a></h3>
+<p>This horizontal flowchart shows how individual text-manipulation utilities are chained together using pipes (<code>|</code>) to incrementally ingest, filter, count, and format raw text data.</p>
+<div class="mermaid">flowchart LR
+    input["Input Data&lt;br&gt;(Raw Log Stream)"] --&gt; cut["cut -d':' -f1&lt;br&gt;(Extract Fields)"]
+    cut --&gt; sort["sort&lt;br&gt;(Group Rows)"]
+    sort --&gt; uniq["uniq -c&lt;br&gt;(Count Duplicates)"]
+    uniq --&gt; tr["tr '[a-z]' '[A-Z]'&lt;br&gt;(Format Case)"]
+    tr --&gt; output["Clean Output Report"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class cut,sort cpu;
+    class uniq,tr memory;
+    class input,output system;</div>
 <hr />
 <h2 id="comparison-table-when-to-use-each-command">🆚 Comparison Table: When to Use Each Command<a class="headerlink" href="#comparison-table-when-to-use-each-command" title="Permanent link">&para;</a></h2>
 <table>
@@ -2331,9 +2343,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2196,6 +2196,21 @@
 - MBR cannot address disks larger than 2 TB. If you have a 4 TB NVMe drive for storing AI model checkpoints, MBR will waste half the space.
 - You are limited to only 4 primary partitions. If you need more, you must use an extended partition — which adds complexity.</p>
 <hr />
+<h3 id="visual-representation-partitioning-utilities-and-partition-tables">📊 Visual Representation: Partitioning Utilities and Partition Tables<a class="headerlink" href="#visual-representation-partitioning-utilities-and-partition-tables" title="Permanent link">&para;</a></h3>
+<p>This flowchart maps out partition table choices (MBR vs. GPT) and the corresponding Linux management utilities.</p>
+<div class="mermaid">flowchart LR
+    Disk["Raw Block Disk"] --&gt; MBR["MBR Table (&lt;2 TB / Max 4 Primary)"]
+    Disk --&gt; GPT["GPT Table (Any size / 128+ Partitions)"]
+    MBR --&gt; fdisk["fdisk Utility"]
+    GPT --&gt; gdisk["gdisk Utility"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Disk cpu;
+    class MBR,GPT memory;
+    class fdisk,gdisk system;</div>
 <h2 id="when-to-use-gdisk-gpt">🕵️ When to Use gdisk (GPT)<a class="headerlink" href="#when-to-use-gdisk-gpt" title="Permanent link">&para;</a></h2>
 <p><strong>gdisk</strong> is the modern tool for creating GPT partition tables. Use it when:</p>
 <ul>
@@ -2285,9 +2300,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

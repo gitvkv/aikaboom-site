@@ -2188,6 +2188,18 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-gpu-time-slicing-temporal-scheduler">📊 Visual Representation: GPU Time-Slicing Temporal Scheduler<a class="headerlink" href="#visual-representation-gpu-time-slicing-temporal-scheduler" title="Permanent link">&para;</a></h3>
+<p>This flowchart demonstrates how Timeslicing schedules threads sequentially on GPU hardware over fast time-quantum intervals.</p>
+<div class="mermaid">flowchart LR
+    Scheduler["GPU Temporal Scheduler"] --&gt;|Time slice 1| PodA["Pod A active (100% compute access)"]
+    Scheduler --&gt;|Time slice 2| PodB["Pod B active (100% compute access)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Scheduler cpu;
+    class PodA,PodB memory;</div>
 <h2 id="when-to-use-time-slicing">🛠️ When to Use Time-Slicing<a class="headerlink" href="#when-to-use-time-slicing" title="Permanent link">&para;</a></h2>
 <p>Time-slicing is best suited for:</p>
 <ul>
@@ -2302,9 +2314,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

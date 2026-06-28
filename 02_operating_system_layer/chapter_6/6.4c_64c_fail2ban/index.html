@@ -2179,6 +2179,20 @@
 <li>When triggered, fail2ban adds a firewall rule that drops all packets from the attacker's IP.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-fail2ban-log-auditing-and-ban-pipeline">📊 Visual Representation: fail2ban Log Auditing and Ban Pipeline<a class="headerlink" href="#visual-representation-fail2ban-log-auditing-and-ban-pipeline" title="Permanent link">&para;</a></h3>
+<p>This flowchart shows how fail2ban parses access logs, increments host failure counts, and triggers firewall bans for malicious IPs.</p>
+<div class="mermaid">flowchart LR
+    Log["Log File (auth.log)"] --&gt;|Audit| Daemon["fail2ban-server"]
+    Daemon --&gt;|Threshold Exceeded| Action["Trigger iptables/UFW Ban"]
+    Action --&gt;|Block IP| Firewall["System Firewall"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Daemon cpu;
+    class Log,Firewall memory;
+    class Action system;</div>
 <h2 id="example-of-a-typical-fail2ban-workflow">📊 Example of a Typical fail2ban Workflow<a class="headerlink" href="#example-of-a-typical-fail2ban-workflow" title="Permanent link">&para;</a></h2>
 <ol>
 <li>An attacker tries to SSH into your server with wrong passwords.</li>
@@ -2247,9 +2261,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

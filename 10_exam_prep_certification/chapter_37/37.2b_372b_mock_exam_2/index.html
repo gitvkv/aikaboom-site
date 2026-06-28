@@ -2224,6 +2224,19 @@
 <li>Understand that GPU resources are not divisible — each pod requests whole GPUs</li>
 </ul>
 <hr />
+<h3 id="visual-representation-mock-exam-software-operations-validation">📊 Visual Representation: Mock Exam Software &amp; Operations validation<a class="headerlink" href="#visual-representation-mock-exam-software-operations-validation" title="Permanent link">&para;</a></h3>
+<p>This diagram maps software mock exams, auditing understanding of docker runtimes, DCGM, and Kubernetes Operators.</p>
+<div class="mermaid">flowchart LR
+    Mock["Software/Ops Mock"] --&gt; Runtime["Runtimes (Container Toolkit / CDI)"]
+    Mock --&gt; Ops["Monitoring (DCGM queries / Prometheus alerts)"]
+    Mock --&gt; Orchestrators["Virtualization (MIG profiles / vGPU)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Mock cpu;
+    class Runtime,Ops,Orchestrators memory;</div>
 <h2 id="monitoring-ai-infrastructure">📈 Monitoring AI Infrastructure<a class="headerlink" href="#monitoring-ai-infrastructure" title="Permanent link">&para;</a></h2>
 <h3 id="what-to-monitor-in-ai-operations">🔍 What to Monitor in AI Operations<a class="headerlink" href="#what-to-monitor-in-ai-operations" title="Permanent link">&para;</a></h3>
 <p>Effective monitoring ensures AI systems remain healthy, performant, and cost-efficient. This exam covers three monitoring layers:</p>
@@ -2327,9 +2340,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

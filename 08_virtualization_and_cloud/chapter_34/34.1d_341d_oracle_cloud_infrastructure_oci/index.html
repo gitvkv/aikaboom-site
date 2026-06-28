@@ -2237,6 +2237,18 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-oci-bmgpuh100-bare-metal-instances">📊 Visual Representation: OCI BM.GPU.H100 Bare-Metal instances<a class="headerlink" href="#visual-representation-oci-bmgpuh100-bare-metal-instances" title="Permanent link">&para;</a></h3>
+<p>This diagram displays OCI bare-metal offerings, featuring direct hardware exposure and high-bandwidth RDMA networks.</p>
+<div class="mermaid">flowchart LR
+    OCI["OCI GPU Catalog"] --&gt; BM_H100["BM.GPU.H100.8 (8 x H100 / RoCE network mesh)"]
+    OCI --&gt; BM_A100["BM.GPU4.8 (8 x A100 / RoCE network mesh)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class OCI cpu;
+    class BM_H100,BM_A100 memory;</div>
 <h2 id="provisioning-a-bmgpuh1008-instance">🔧 Provisioning a BM.GPU.H100.8 Instance<a class="headerlink" href="#provisioning-a-bmgpuh1008-instance" title="Permanent link">&para;</a></h2>
 <p>To get started, engineers typically follow these steps in the OCI Console or via the OCI CLI:</p>
 <ol>
@@ -2327,9 +2339,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

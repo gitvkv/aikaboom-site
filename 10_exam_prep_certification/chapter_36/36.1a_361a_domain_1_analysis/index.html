@@ -2225,6 +2225,19 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-ai-infrastructure-requirements-mapping">📊 Visual Representation: AI Infrastructure requirements mapping<a class="headerlink" href="#visual-representation-ai-infrastructure-requirements-mapping" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how user workload models (size, tokens) map out cluster scaling limits and hardware counts.</p>
+<div class="mermaid">flowchart LR
+    Workload["Model Scale (e.g. 70B parameter LLM)"] --&gt; ScaleDesign["Sizing Analysis"]
+    ScaleDesign --&gt; NodeCount["Required: 16 x H100 GPU Nodes"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class ScaleDesign cpu;
+    class NodeCount memory;
+    class Workload system;</div>
 <h2 id="common-coverage-gaps-for-new-engineers">🚩 Common Coverage Gaps for New Engineers<a class="headerlink" href="#common-coverage-gaps-for-new-engineers" title="Permanent link">&para;</a></h2>
 <h3 id="gap-1-confusing-gpu-memory-with-system-memory">Gap 1: Confusing GPU Memory with System Memory<a class="headerlink" href="#gap-1-confusing-gpu-memory-with-system-memory" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2337,9 +2350,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

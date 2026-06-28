@@ -2189,6 +2189,20 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-tensor-core-matrix-multiply-accumulate-mma-operation">📊 Visual Representation: Tensor Core Matrix Multiply-Accumulate (MMA) Operation<a class="headerlink" href="#visual-representation-tensor-core-matrix-multiply-accumulate-mma-operation" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the standard Tensor Core MMA operation, computing D = A * B + C in a single clock cycle.</p>
+<div class="mermaid">flowchart LR
+    A["Matrix A (FP16/FP8)"] --&gt; MMA["MMA Computation Engine"]
+    B["Matrix B (FP16/FP8)"] --&gt; MMA
+    C["Matrix C (FP32/FP16)"] --&gt; MMA
+    MMA --&gt; D["Matrix D (Accumulated Output)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class MMA cpu;
+    class A,B,C,D memory;</div>
 <h2 id="the-44-matrix-tile-the-atomic-unit">🛠️ The 4×4 Matrix Tile: The Atomic Unit<a class="headerlink" href="#the-44-matrix-tile-the-atomic-unit" title="Permanent link">&para;</a></h2>
 <p>Tensor Cores operate on <strong>4×4 matrix tiles</strong> as the smallest unit of work:</p>
 <ul>
@@ -2270,9 +2284,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

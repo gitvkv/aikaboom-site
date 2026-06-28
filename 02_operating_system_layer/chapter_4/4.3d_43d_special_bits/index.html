@@ -333,8 +333,6 @@
                 </li>
                 <li class="toctree-l3 current"><a class="reference internal current" href="#">4.3d Special bits: setuid, setgid, and the sticky bit</a>
     <ul class="current">
-    <li class="toctree-l4"><a class="reference internal" href="#context-introduction">🧠 Context Introduction</a>
-    </li>
     <li class="toctree-l4"><a class="reference internal" href="#what-are-special-bits">⚙️ What Are Special Bits?</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#how-to-identify-special-bits">🕵️ How to Identify Special Bits</a>
@@ -2126,10 +2124,8 @@
 </div>
 
 <hr />
-<h2 id="context-introduction">🧠 Context Introduction<a class="headerlink" href="#context-introduction" title="Permanent link">&para;</a></h2>
 <p>In AI infrastructure operations, you will often manage shared storage, model repositories, and training scripts that multiple users or automated processes need to access. Standard Linux permissions (read, write, execute) are not always enough. This is where <strong>special permission bits</strong> come in — they allow you to control <em>how</em> permissions are inherited or applied when files and directories are accessed.</p>
 <p>For example, you might want a training script to always run with the permissions of its owner (not the person executing it), or you might want to prevent users from deleting each other's files in a shared dataset folder. The three special bits — <strong>setuid</strong>, <strong>setgid</strong>, and the <strong>sticky bit</strong> — solve these exact problems.</p>
-<hr />
 <h2 id="what-are-special-bits">⚙️ What Are Special Bits?<a class="headerlink" href="#what-are-special-bits" title="Permanent link">&para;</a></h2>
 <p>Special bits are extra permission flags that modify the behavior of executable files and directories. They sit alongside the standard read (r), write (w), and execute (x) permissions.</p>
 <p>There are three special bits:</p>
@@ -2177,6 +2173,25 @@
 <li><strong>-rwxr-sr-x</strong> — setgid is set (group has execute and setgid)</li>
 <li><strong>drwxrwxrwt</strong> — sticky bit is set on a directory (others have execute and sticky bit)</li>
 </ul>
+<h3 id="visual-representation-linux-special-permission-bits">📊 Visual Representation: Linux Special Permission Bits<a class="headerlink" href="#visual-representation-linux-special-permission-bits" title="Permanent link">&para;</a></h3>
+<p>This diagram summarizes the roles and practical system applications of the three special permission bits: setuid, setgid, and the sticky bit.</p>
+<div class="mermaid">flowchart LR
+    special["Special Permission Bits"]
+    special --&gt; suid["setuid (s on Owner)&lt;br&gt;Execute file as Owner"]
+    special --&gt; sgid["setgid (s on Group)&lt;br&gt;Directories: Inherit Group GID"]
+    special --&gt; sticky["sticky bit (t on Other)&lt;br&gt;Directories: Only Owner deletes file"]
+
+    suid --&gt; suid_ex["Example: /usr/bin/passwd&lt;br&gt;(Runs as Root)"]
+    sgid --&gt; sgid_ex["Example: /mnt/shared_datasets&lt;br&gt;(Inherits group ownership)"]
+    sticky --&gt; sticky_ex["Example: /tmp&lt;br&gt;(Safe shared temp directory)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class suid,suid_ex cpu;
+    class sgid,sgid_ex memory;
+    class special,sticky,sticky_ex system;</div>
 <hr />
 <h2 id="when-to-use-each-special-bit-in-ai-infrastructure">🛠️ When to Use Each Special Bit in AI Infrastructure<a class="headerlink" href="#when-to-use-each-special-bit-in-ai-infrastructure" title="Permanent link">&para;</a></h2>
 <h3 id="setuid-set-user-id">🔑 setuid (Set User ID)<a class="headerlink" href="#setuid-set-user-id" title="Permanent link">&para;</a></h3>
@@ -2192,14 +2207,14 @@
 <hr />
 <h2 id="viewing-special-bits-in-practice">🔍 Viewing Special Bits in Practice<a class="headerlink" href="#viewing-special-bits-in-practice" title="Permanent link">&para;</a></h2>
 <p>To check if special bits are set on a file or directory, use the <strong>ls -l</strong> command.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>ls -l /usr/bin/passwd
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>ls -l /usr/bin/passwd
+</code></pre></div></p>
 <p>📤 Output: <strong>-rwsr-xr-x 1 root root 59976 Feb 6 2024 /usr/bin/passwd</strong></p>
 <p>The <strong>s</strong> in the owner's execute position tells you setuid is active. This is why any user can change their own password — the <strong>passwd</strong> command runs as root temporarily.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>ls -ld /shared/datasets
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>ls -ld /shared/datasets
+</code></pre></div></p>
 <p>📤 Output: <strong>drwxrwsrwt 2 root ml-team 4096 Mar 10 10:30 /shared/datasets</strong></p>
 <p>Here you see:
 - <strong>s</strong> in the group position → setgid is set
@@ -2285,9 +2300,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

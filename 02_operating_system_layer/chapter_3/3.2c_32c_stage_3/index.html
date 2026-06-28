@@ -2242,6 +2242,38 @@
 </tbody>
 </table>
 <p>Without successful completion of Stage 3, your AI server cannot proceed to start services, launch containers, or run training jobs. Engineers should verify kernel parameters and module loading when troubleshooting boot failures on GPU servers.</p>
+<h3 id="visual-representation-kernel-initialization-module-loading">📊 Visual Representation: Kernel Initialization &amp; Module Loading<a class="headerlink" href="#visual-representation-kernel-initialization-module-loading" title="Permanent link">&para;</a></h3>
+<p>This diagram shows how the Linux kernel loads into memory, initializes core systems (such as NUMA and CPU structures), dynamically loads drivers for GPUs, storage, and networking, and mounts the real root filesystem.</p>
+<div class="mermaid">flowchart TD
+    subgraph RAM["System Memory (RAM)"]
+        direction TB
+        Init["1. Kernel Decompressed (vmlinuz)"] --&gt; CoreInit["2. Core Subsystems Init (NUMA, Memory)"]
+        CoreInit --&gt; LoadModules["3. Load Kernel Modules"]
+        subgraph Modules["/lib/modules"]
+            direction LR
+            GPUDrv["nvidia.ko"]
+            StorDrv["nvme.ko"]
+            NetDrv["mlx5_core.ko"]
+        end
+        LoadModules --&gt; GPUDrv
+        LoadModules --&gt; StorDrv
+        LoadModules --&gt; NetDrv
+    end
+
+    GPUDrv --&gt;|Detects| GPU["Physical GPU (NVIDIA A100/H100)"]
+    StorDrv --&gt;|Detects| Storage["Physical Storage (NVMe SSD)"]
+    NetDrv --&gt;|Detects| NIC["Physical NIC (Mellanox InfiniBand)"]
+
+    StorDrv --&gt;|Mounts| TempRoot["Temporary initramfs"]
+    TempRoot --&gt;|pivot_root| RealRoot["Real Root Filesystem (/)"]
+
+    class GPU,Storage,NIC cpu;
+    class RAM,Modules,TempRoot,RealRoot memory;
+    class Init,CoreInit,LoadModules system;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;</div>
 <hr />
 <h2 id="quick-troubleshooting-tips">🔍 Quick Troubleshooting Tips<a class="headerlink" href="#quick-troubleshooting-tips" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2291,9 +2323,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

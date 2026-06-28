@@ -2229,6 +2229,18 @@
 </table>
 <p>Each instance is fully isolated — no sharing of L2 cache, memory controllers, or streaming multiprocessors.</p>
 <hr />
+<h3 id="visual-representation-vgpu-hardware-resource-limits">📊 Visual Representation: vGPU hardware resource limits<a class="headerlink" href="#visual-representation-vgpu-hardware-resource-limits" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how the vGPU scheduler prevents memory leaks or thread starvation between concurrent guest virtual machines.</p>
+<div class="mermaid">flowchart LR
+    vGPUSched["vGPU Engine Scheduler"] --&gt;|Symmetric time slices| VM1["VM 1 active (Isolated memory)"]
+    vGPUSched --&gt;|Symmetric time slices| VM2["VM 2 active (Isolated memory)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class vGPUSched cpu;
+    class VM1,VM2 memory;</div>
 <h2 id="combining-mig-with-vgpu-hopper">🧩 Combining MIG with vGPU (Hopper+)<a class="headerlink" href="#combining-mig-with-vgpu-hopper" title="Permanent link">&para;</a></h2>
 <p>On Hopper and later architectures, MIG can be combined with vGPU to create <strong>nested isolation</strong>:
 - <strong>Layer 1 (Hardware)</strong>: MIG partitions the physical GPU into isolated hardware slices.
@@ -2303,9 +2315,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

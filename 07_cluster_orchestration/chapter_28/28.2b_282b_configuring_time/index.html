@@ -2214,9 +2214,22 @@
 <h3 id="step-4-verify-the-configuration">Step 4: Verify the Configuration<a class="headerlink" href="#step-4-verify-the-configuration" title="Permanent link">&para;</a></h3>
 <p>After applying, you can verify by checking the device plugin logs or by deploying a test pod that requests a fractional GPU.</p>
 <hr />
+<h3 id="visual-representation-k8s-device-plugin-timeslicing-config">📊 Visual Representation: K8s Device Plugin Timeslicing config<a class="headerlink" href="#visual-representation-k8s-device-plugin-timeslicing-config" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how configuring replicas in the device plugin spec tells Kubernetes to report a single GPU card multiple times.</p>
+<div class="mermaid">flowchart LR
+    Config["config: sharing: timeSlicing: rename: replicas: 4"] --&gt; Plugin["NVIDIA Device Plugin"]
+    Plugin --&gt;|Registers| Allocatable["kube-apiserver: 4 nvidia.com/gpu resources"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Plugin cpu;
+    class Allocatable memory;
+    class Config system;</div>
 <h2 id="example-configuration-breakdown">🧪 Example Configuration Breakdown<a class="headerlink" href="#example-configuration-breakdown" title="Permanent link">&para;</a></h2>
 <p>For reference, here is a sample time-slicing configuration:</p>
-<pre><code>apiVersion: v1
+<div class="highlight"><pre><span></span><code>apiVersion: v1
 kind: ConfigMap
 metadata:
   name: nvidia-device-plugin-config
@@ -2229,7 +2242,7 @@ data:
         resources:
         - name: nvidia.com/gpu
           replicas: 4
-</code></pre>
+</code></pre></div>
 <p>📤 <strong>Output</strong>: After applying this ConfigMap, each physical GPU will appear as 4 separate nvidia.com/gpu resources in Kubernetes. A pod requesting nvidia.com/gpu: 1 will get 1/4 of the GPU's compute time.</p>
 <hr />
 <h2 id="best-practices-for-time-slicing">✅ Best Practices for Time-Slicing<a class="headerlink" href="#best-practices-for-time-slicing" title="Permanent link">&para;</a></h2>
@@ -2299,9 +2312,11 @@ data:
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

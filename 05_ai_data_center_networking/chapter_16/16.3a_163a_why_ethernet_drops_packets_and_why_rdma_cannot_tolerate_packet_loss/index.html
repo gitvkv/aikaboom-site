@@ -2221,6 +2221,20 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-lossless-ethernet-goal-switch-buffer-protection">📊 Visual Representation: Lossless Ethernet Goal: Switch Buffer Protection<a class="headerlink" href="#visual-representation-lossless-ethernet-goal-switch-buffer-protection" title="Permanent link">&para;</a></h3>
+<p>This flowchart demonstrates how packet drops trigger expensive RDMA retransmissions, requiring a lossless Ethernet environment.</p>
+<div class="mermaid">flowchart LR
+    Drop["Packet Drop in Switch"] --&gt; GoBackN["RDMA Go-Back-N Retransmission"]
+    GoBackN --&gt; Resend["Resend all outstanding packets (High Latency)"]
+    Resend --&gt; Throttle["Throughput drops to near zero"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GoBackN cpu;
+    class Resend memory;
+    class Drop,Throttle system;</div>
 <h2 id="why-standard-ethernet-fails-for-rdma">🛠️ Why Standard Ethernet Fails for RDMA<a class="headerlink" href="#why-standard-ethernet-fails-for-rdma" title="Permanent link">&para;</a></h2>
 <p>Standard Ethernet was designed with <strong>"best effort"</strong> delivery — it tries its best but accepts that packets may be lost. This works for TCP because:</p>
 <ul>
@@ -2295,9 +2309,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

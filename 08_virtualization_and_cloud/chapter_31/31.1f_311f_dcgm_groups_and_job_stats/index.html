@@ -2193,6 +2193,19 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-dcgm-gpu-groups-and-job-monitoring">📊 Visual Representation: DCGM GPU Groups and Job monitoring<a class="headerlink" href="#visual-representation-dcgm-gpu-groups-and-job-monitoring" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how DCGM aggregates metrics across specific GPU groups to generate job statistics.</p>
+<div class="mermaid">flowchart LR
+    subgraph JobStats["Job Stats Monitoring"]
+        Group["GPU Group (GPUs: 0,1,2,3)"] --&gt;|dcgmi stats -j 101| Stats["Collect Job 101 statistics"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Stats cpu;
+    class Group memory;</div>
 <h2 id="how-to-set-up-dcgm-groups-for-jobs">🛠️ How to Set Up DCGM Groups for Jobs<a class="headerlink" href="#how-to-set-up-dcgm-groups-for-jobs" title="Permanent link">&para;</a></h2>
 <h3 id="for-slurm-workloads">For Slurm Workloads<a class="headerlink" href="#for-slurm-workloads" title="Permanent link">&para;</a></h3>
 <ol>
@@ -2216,17 +2229,17 @@
 <hr />
 <h2 id="extracting-job-stats">📈 Extracting Job Stats<a class="headerlink" href="#extracting-job-stats" title="Permanent link">&para;</a></h2>
 <p>Once a job has completed, you can retrieve its GPU usage statistics using DCGM's query tools.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>dcgmi stats -j &lt;job_id&gt;
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>dcgmi stats -j &lt;job_id&gt;
+</code></pre></div></p>
 <p>📤 Output: A summary of GPU utilization, memory usage, power, and temperature for the entire job duration.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>dcgmi stats -j &lt;job_id&gt; -v
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>dcgmi stats -j &lt;job_id&gt; -v
+</code></pre></div></p>
 <p>📤 Output: Detailed per-GPU statistics including min, max, and average values for each metric.</p>
-<p><strong>For reference:</strong></p>
-<pre><code>dcgmi stats -g &lt;group_id&gt;
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>dcgmi stats -g &lt;group_id&gt;
+</code></pre></div></p>
 <p>📤 Output: Statistics for a specific DCGM group (useful when you know the group ID instead of the job ID).</p>
 <hr />
 <h2 id="practical-use-cases">🧩 Practical Use Cases<a class="headerlink" href="#practical-use-cases" title="Permanent link">&para;</a></h2>
@@ -2284,9 +2297,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

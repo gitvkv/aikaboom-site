@@ -2150,6 +2150,24 @@
 <li>Streaming data for real-time inference.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-hardware-raid-controller-vs-host-bus-adapter-hba-data-path">📊 Visual Representation: Hardware RAID Controller vs. Host Bus Adapter (HBA) Data Path<a class="headerlink" href="#visual-representation-hardware-raid-controller-vs-host-bus-adapter-hba-data-path" title="Permanent link">&para;</a></h3>
+<p>This diagram contrasts the hardware RAID controller path (offloading RAID parity calculations) with HBA IT-mode path (exposing raw disks directly to the OS).</p>
+<div class="mermaid">flowchart LR
+    subgraph HW["Hardware RAID Path"]
+        OS_HW["OS Kernel"] --&gt; RAID_Card["RAID Controller CPU"] --&gt; RAID_Disks["Virtual RAID Disk"]
+    end
+
+    subgraph HBA["HBA Passthrough Path"]
+        OS_HBA["OS (ZFS / Software RAID)"] --&gt; HBA_Card["HBA (IT Mode)"] --&gt; Raw_Disks["Individual Raw Disks"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class RAID_Card cpu;
+    class RAID_Disks,Raw_Disks memory;
+    class OS_HW,OS_HBA,HBA_Card system;</div>
 <h2 id="hba-passthrough-vs-hardware-raid-a-comparison">🛠️ HBA Passthrough vs. Hardware RAID — A Comparison<a class="headerlink" href="#hba-passthrough-vs-hardware-raid-a-comparison" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2267,9 +2285,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

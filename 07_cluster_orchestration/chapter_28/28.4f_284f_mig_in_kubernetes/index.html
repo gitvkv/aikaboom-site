@@ -2239,6 +2239,22 @@ Exposes every possible MIG profile that the GPU supports. Pods can request any p
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-mig-single-strategy-vs-mixed-strategy">📊 Visual Representation: MIG Single-Strategy vs. Mixed-Strategy<a class="headerlink" href="#visual-representation-mig-single-strategy-vs-mixed-strategy" title="Permanent link">&para;</a></h3>
+<p>This diagram contrasts Single MIG strategy (exposing identical slices across a node) against Mixed MIG strategy (exposing varied slice sizes).</p>
+<div class="mermaid">flowchart LR
+    subgraph Single["Single MIG Strategy"]
+        Node1["Node 1 (All GPUs set to 1g.10gb)"] --&gt;|Expose| Res1["nvidia.com/mig-1g.10gb"]
+    end
+    subgraph Mixed["Mixed MIG Strategy"]
+        Node2["Node 2 (GPU 0: 3g.20gb, GPU 1: 1g.10gb)"] --&gt;|Expose| Res2["mig-3g.20gb &amp; mig-1g.10gb"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Node1,Node2 cpu;
+    class Res1,Res2 memory;</div>
 <h2 id="how-to-choose-the-right-strategy">🕵️ How to Choose the Right Strategy<a class="headerlink" href="#how-to-choose-the-right-strategy" title="Permanent link">&para;</a></h2>
 <p><strong>Choose Single if:</strong><br />
 - All your AI training jobs need exactly the same GPU slice size.
@@ -2313,9 +2329,11 @@ Exposes every possible MIG profile that the GPU supports. Pods can request any p
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

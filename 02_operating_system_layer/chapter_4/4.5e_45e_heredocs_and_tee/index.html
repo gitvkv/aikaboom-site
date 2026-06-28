@@ -2136,7 +2136,6 @@
 <li><strong>tee</strong> lets you send command output to both the terminal (so you can see it) and a file (so you can save it) at the same time.</li>
 </ul>
 <p>Combined, these tools help engineers create readable automation scripts while preserving visibility into what's happening — essential for debugging AI pipeline configurations and system logs.</p>
-<hr />
 <h2 id="what-is-a-heredoc">📜 What is a Heredoc?<a class="headerlink" href="#what-is-a-heredoc" title="Permanent link">&para;</a></h2>
 <p>A heredoc (short for "here document") is a way to pass multiple lines of text as input to a command directly from within a script or terminal session. Think of it as a multi-line string that you can redirect into a file, a command, or a variable.</p>
 <p><strong>Key characteristics:</strong>
@@ -2225,6 +2224,20 @@
 </tr>
 </tbody>
 </table>
+<h3 id="visual-representation-stream-splitting-with-the-tee-command">📊 Visual Representation: Stream Splitting with the tee Command<a class="headerlink" href="#visual-representation-stream-splitting-with-the-tee-command" title="Permanent link">&para;</a></h3>
+<p>This flowchart maps the routing mechanism of the <code>tee</code> command, demonstrating how it mirrors input data to both the standard output (stdout/terminal) and a physical log file.</p>
+<div class="mermaid">flowchart LR
+    input["Input Stream&lt;br&gt;(e.g., GPU Training Logs)"] --&gt; tee["tee -a training.log&lt;br&gt;(Tee Splitter)"]
+    tee --&gt; terminal["stdout&lt;br&gt;(Live Terminal Monitor)"]
+    tee --&gt; file["File Writer&lt;br&gt;(Saved to Disk)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class tee cpu;
+    class file memory;
+    class input,terminal system;</div>
 <hr />
 <h2 id="practical-tips-for-new-engineers">🕵️ Practical Tips for New Engineers<a class="headerlink" href="#practical-tips-for-new-engineers" title="Permanent link">&para;</a></h2>
 <p><strong>When to use heredocs:</strong>
@@ -2292,9 +2305,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

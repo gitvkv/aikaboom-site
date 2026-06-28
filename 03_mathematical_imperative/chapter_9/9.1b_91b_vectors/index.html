@@ -2168,6 +2168,17 @@
 <li>If the weighted sum is <code>[2.0, -1.5]</code> and bias is <code>[0.1, -0.3]</code>, the final output is <code>[2.1, -1.8]</code>.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-vector-1d-tensor">📊 Visual Representation: Vector 1D Tensor<a class="headerlink" href="#visual-representation-vector-1d-tensor" title="Permanent link">&para;</a></h3>
+<p>This diagram displays a 1D tensor (vector), representing an ordered array of numeric elements in a single dimension.</p>
+<div class="mermaid">flowchart LR
+    Vector["Vector: [1.2, 3.4, 5.6]"] --&gt; D1["1-Dimensional Tensor"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class D1 cpu;
+    class Vector memory;</div>
 <h2 id="comparison-word-embedding-vs-bias-term">🛠️ Comparison: Word Embedding vs. Bias Term<a class="headerlink" href="#comparison-word-embedding-vs-bias-term" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2265,9 +2276,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

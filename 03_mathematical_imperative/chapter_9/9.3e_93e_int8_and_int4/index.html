@@ -2205,6 +2205,21 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-integer-quantization-mapping">📊 Visual Representation: Integer Quantization Mapping<a class="headerlink" href="#visual-representation-integer-quantization-mapping" title="Permanent link">&para;</a></h3>
+<p>This diagram shows the scaling mapping that converts high-precision float values into memory-efficient integer formats (INT8/INT4).</p>
+<div class="mermaid">flowchart LR
+    Float["FP32 Value (4 Bytes)"] --&gt; Quantize["Scale &amp; Round Operation"]
+    Quantize --&gt; Int8["INT8 Value (1 Byte)"]
+    Int8 --&gt; Dequantize["Dequantize (Restore Scale)"]
+    Dequantize --&gt; ApproxFloat["Approximate FP32 Output"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Quantize cpu;
+    class Int8 memory;
+    class Float,ApproxFloat,Dequantize system;</div>
 <h2 id="when-to-use-int8-vs-int4">🕵️ When to Use INT8 vs INT4<a class="headerlink" href="#when-to-use-int8-vs-int4" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Use INT8</strong> when you need high accuracy and can afford a small speed boost. Most NVIDIA GPUs with Tensor Cores (Volta, Turing, Ampere, Hopper) support INT8 natively.</li>
@@ -2283,9 +2298,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

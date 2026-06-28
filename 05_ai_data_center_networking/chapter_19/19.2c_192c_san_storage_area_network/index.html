@@ -2165,6 +2165,20 @@
 <li>Performance is slightly lower than Fibre Channel due to TCP/IP overhead, but still excellent for many AI workloads.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-storage-area-network-san-dedicated-fibre-channel">📊 Visual Representation: Storage Area Network (SAN) Dedicated Fibre Channel<a class="headerlink" href="#visual-representation-storage-area-network-san-dedicated-fibre-channel" title="Permanent link">&para;</a></h3>
+<p>This diagram displays SAN architecture, showing hosts connecting to All-Flash Arrays using raw block protocols over Fibre Channel switches.</p>
+<div class="mermaid">flowchart LR
+    Host1["Host Server 1"] --&gt;|SCSI / iSCSI blocks| SANSwitch["Fibre Channel Switch"]
+    Host2["Host Server 2"] --&gt;|SCSI / iSCSI blocks| SANSwitch
+    SANSwitch --&gt; AFA["All-Flash Array Storage Controller"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class AFA cpu;
+    class Host1,Host2 memory;
+    class SANSwitch system;</div>
 <h2 id="comparison-table-fibre-channel-vs-iscsi">📊 Comparison Table: Fibre Channel vs. iSCSI<a class="headerlink" href="#comparison-table-fibre-channel-vs-iscsi" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2288,9 +2302,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2144,10 +2144,10 @@
 - <strong>-g groupname</strong> — assigns the user to a primary group.
 - <strong>-G group1,group2</strong> — adds the user to supplementary groups.
 - <strong>-c "Full Name"</strong> — adds a comment (usually the user's full name).</p>
-<p>For reference:</p>
-<pre><code>sudo useradd -m -s /bin/bash -g ai-team -G docker,ml-users -c &quot;Alice Johnson&quot; alice
-</code></pre>
-<p>📤 Output: No output on success; user <strong>alice</strong> is created with home directory <strong>/home/alice</strong>, shell <strong>/bin/bash</strong>, primary group <strong>ai-team</strong>, and supplementary groups <strong>docker</strong> and <strong>ml-users</strong>.</p>
+<p>For reference:
+<div class="highlight"><pre><span></span><code>sudo useradd -m -s /bin/bash -g ai-team -G docker,ml-users -c &quot;Alice Johnson&quot; alice
+</code></pre></div>
+📤 Output: No output on success; user <strong>alice</strong> is created with home directory <strong>/home/alice</strong>, shell <strong>/bin/bash</strong>, primary group <strong>ai-team</strong>, and supplementary groups <strong>docker</strong> and <strong>ml-users</strong>.</p>
 <hr />
 <h2 id="modifying-users-with-usermod">🛠️ Modifying Users with usermod<a class="headerlink" href="#modifying-users-with-usermod" title="Permanent link">&para;</a></h2>
 <p>The <strong>usermod</strong> command modifies existing user account settings. This is useful when a user changes roles, needs access to new resources, or requires updated permissions.</p>
@@ -2163,10 +2163,10 @@
 - <strong>-L</strong> — locks the user account (prevents login).
 - <strong>-U</strong> — unlocks the user account.
 - <strong>-e YYYY-MM-DD</strong> — sets an account expiration date.</p>
-<p>For reference:</p>
-<pre><code>sudo usermod -aG gpu-users alice
-</code></pre>
-<p>📤 Output: No output on success; user <strong>alice</strong> is added to the <strong>gpu-users</strong> group while retaining all existing group memberships.</p>
+<p>For reference:
+<div class="highlight"><pre><span></span><code>sudo usermod -aG gpu-users alice
+</code></pre></div>
+📤 Output: No output on success; user <strong>alice</strong> is added to the <strong>gpu-users</strong> group while retaining all existing group memberships.</p>
 <hr />
 <h2 id="deleting-users-with-userdel">🗑️ Deleting Users with userdel<a class="headerlink" href="#deleting-users-with-userdel" title="Permanent link">&para;</a></h2>
 <p>The <strong>userdel</strong> command removes user accounts from the system. This is a critical operation in the user lifecycle, especially when employees leave or roles change.</p>
@@ -2177,10 +2177,10 @@
 <p>Common options used with <strong>userdel</strong>:
 - <strong>-r</strong> — removes the user's home directory and mail spool.
 - <strong>-f</strong> — forces removal even if the user is logged in (use with caution).</p>
-<p>For reference:</p>
-<pre><code>sudo userdel -r alice
-</code></pre>
-<p>📤 Output: No output on success; user <strong>alice</strong> is removed along with <strong>/home/alice</strong> and any mail spool files.</p>
+<p>For reference:
+<div class="highlight"><pre><span></span><code>sudo userdel -r alice
+</code></pre></div>
+📤 Output: No output on success; user <strong>alice</strong> is removed along with <strong>/home/alice</strong> and any mail spool files.</p>
 <hr />
 <h2 id="managing-passwords-with-passwd">🔑 Managing Passwords with passwd<a class="headerlink" href="#managing-passwords-with-passwd" title="Permanent link">&para;</a></h2>
 <p>The <strong>passwd</strong> command is used to set, change, or manage passwords for user accounts. Password management is essential for securing access to AI infrastructure resources.</p>
@@ -2195,10 +2195,10 @@
 - <strong>-e</strong> — forces the user to change their password at next login.
 - <strong>-d</strong> — removes the user's password (allows login without password — use with caution).
 - <strong>-S</strong> — displays the status of the user's password (locked, unlocked, last changed date).</p>
-<p>For reference:</p>
-<pre><code>sudo passwd alice
-</code></pre>
-<p>📤 Output: Prompts for a new password and confirmation. On success, displays <strong>passwd: password updated successfully</strong>.</p>
+<p>For reference:
+<div class="highlight"><pre><span></span><code>sudo passwd alice
+</code></pre></div>
+📤 Output: Prompts for a new password and confirmation. On success, displays <strong>passwd: password updated successfully</strong>.</p>
 <hr />
 <h2 id="comparison-table-user-lifecycle-commands">📊 Comparison Table: User Lifecycle Commands<a class="headerlink" href="#comparison-table-user-lifecycle-commands" title="Permanent link">&para;</a></h2>
 <table>
@@ -2232,6 +2232,20 @@
 </tr>
 </tbody>
 </table>
+<h3 id="visual-representation-user-lifecycle-states-and-commands">📊 Visual Representation: User Lifecycle States and Commands<a class="headerlink" href="#visual-representation-user-lifecycle-states-and-commands" title="Permanent link">&para;</a></h3>
+<p>This flowchart illustrates the typical user account lifecycle on a Linux server, identifying key system commands utilized during provisioning, access modification, disabling, and final deletion.</p>
+<div class="mermaid">flowchart LR
+    create["1. Provision User&lt;br&gt;(useradd &amp; passwd)"] --&gt; modify["2. Modify Access/Groups&lt;br&gt;(usermod -aG gpu-users)"]
+    modify --&gt; disable["3. Suspend Account&lt;br&gt;(usermod -L / passwd -l)"]
+    disable --&gt; delete["4. Deprovision &amp; Clean&lt;br&gt;(userdel -r)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class modify cpu;
+    class create,disable memory;
+    class delete system;</div>
 <hr />
 <h2 id="best-practices-for-user-lifecycle-management">🕵️ Best Practices for User Lifecycle Management<a class="headerlink" href="#best-practices-for-user-lifecycle-management" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2284,9 +2298,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

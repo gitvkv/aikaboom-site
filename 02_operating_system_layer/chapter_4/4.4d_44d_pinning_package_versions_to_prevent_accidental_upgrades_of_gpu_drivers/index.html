@@ -349,8 +349,6 @@
                 </li>
                 <li class="toctree-l3 current"><a class="reference internal current" href="#">4.4d Pinning package versions to prevent accidental upgrades of GPU drivers</a>
     <ul class="current">
-    <li class="toctree-l4"><a class="reference internal" href="#context-introduction">🧠 Context Introduction</a>
-    </li>
     <li class="toctree-l4"><a class="reference internal" href="#why-pin-gpu-driver-versions">⚙️ Why Pin GPU Driver Versions?</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#how-package-pinning-works">🛠️ How Package Pinning Works</a>
@@ -2132,10 +2130,8 @@
 </div>
 
 <hr />
-<h2 id="context-introduction">🧠 Context Introduction<a class="headerlink" href="#context-introduction" title="Permanent link">&para;</a></h2>
 <p>In AI infrastructure, GPU drivers are a critical component. An accidental upgrade of a GPU driver can break your entire AI workload — models may fail to load, CUDA versions may become incompatible, and training jobs can crash unexpectedly. To prevent this, engineers use a technique called <strong>package pinning</strong>, which locks a specific version of a package so that system updates or routine upgrades do not replace it.</p>
 <p>This topic explains why pinning is essential, how it works, and how to apply it to GPU drivers in a Linux environment.</p>
-<hr />
 <h2 id="why-pin-gpu-driver-versions">⚙️ Why Pin GPU Driver Versions?<a class="headerlink" href="#why-pin-gpu-driver-versions" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Stability</strong> — AI frameworks (like PyTorch or TensorFlow) are tightly coupled with specific CUDA and driver versions. An unexpected upgrade can break compatibility.</li>
@@ -2200,6 +2196,26 @@
 </tr>
 </tbody>
 </table>
+<h3 id="visual-representation-gpu-driver-pinning-comparison">📊 Visual Representation: GPU Driver Pinning Comparison<a class="headerlink" href="#visual-representation-gpu-driver-pinning-comparison" title="Permanent link">&para;</a></h3>
+<p>This flowchart contrasts system behavior when running upgrades under two scenarios: without driver pinning (leading to compatibility breakages) and with pinning enabled (safeguarding runtime environment stability).</p>
+<div class="mermaid">flowchart LR
+    %% No Pinning Path
+    subgraph "No Pinning (Risk of Breakage)"
+        cmd1["Run apt upgrade"] --&gt; upgrade1["Apply Driver Upgrade"] --&gt; break1["🚨 Workload Broken"]
+    end
+
+    %% Pinning Path
+    subgraph "With Pinning (apt-mark hold)"
+        cmd2["Run apt upgrade"] --&gt; skip2["Skip Driver Upgrade"] --&gt; safe2["✅ Stable Execution"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class safe2 cpu;
+    class break1 memory;
+    class cmd1,upgrade1,cmd2,skip2 system;</div>
 <hr />
 <h2 id="how-to-pin-a-package-conceptual-steps">🧩 How to Pin a Package (Conceptual Steps)<a class="headerlink" href="#how-to-pin-a-package-conceptual-steps" title="Permanent link">&para;</a></h2>
 <p>The process involves two main methods. Below are the steps described in plain text — no commands are shown in code blocks.</p>
@@ -2289,9 +2305,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

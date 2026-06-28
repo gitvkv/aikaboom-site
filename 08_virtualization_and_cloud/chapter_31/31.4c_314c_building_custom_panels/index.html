@@ -2182,6 +2182,19 @@
 <li><strong>Drops</strong> = job completion or memory cleanup</li>
 </ul>
 <hr />
+<h3 id="visual-representation-custom-grafana-panel-creation">📊 Visual Representation: Custom Grafana Panel creation<a class="headerlink" href="#visual-representation-custom-grafana-panel-creation" title="Permanent link">&para;</a></h3>
+<p>This diagram shows how custom PromQL query variables dynamically build specialized telemetry panels.</p>
+<div class="mermaid">flowchart LR
+    PromQL["Custom query: sum(pwr_draw) by (node)"] --&gt; Config["Panel settings"]
+    Config --&gt; Panel["Visual Panel (Bar Gauge / Gauge Chart)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Config cpu;
+    class Panel memory;
+    class PromQL system;</div>
 <h2 id="comparison-table-heatmap-vs-trend-chart">📋 Comparison Table: Heatmap vs. Trend Chart<a class="headerlink" href="#comparison-table-heatmap-vs-trend-chart" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2280,9 +2293,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

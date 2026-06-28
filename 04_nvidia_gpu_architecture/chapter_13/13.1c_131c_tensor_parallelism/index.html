@@ -2194,6 +2194,22 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-tensor-parallelism-megatron-lm-style-intra-layer-split">📊 Visual Representation: Tensor Parallelism (Megatron-LM Style) Intra-Layer Split<a class="headerlink" href="#visual-representation-tensor-parallelism-megatron-lm-style-intra-layer-split" title="Permanent link">&para;</a></h3>
+<p>This flowchart shows Tensor Parallelism, splitting individual weight matrices column-wise/row-wise across GPUs to compute a single layer concurrently.</p>
+<div class="mermaid">flowchart LR
+    Input["Input Vector X"] --&gt; GPU1["GPU 1 (Col-split weights W1)"]
+    Input --&gt; GPU2["GPU 2 (Col-split weights W2)"]
+    GPU1 --&gt;|Partial Y1| Sync["All-Gather / Sync"]
+    GPU2 --&gt;|Partial Y2| Sync
+    Sync --&gt; Output["Concatenated Layer Output Y"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPU1,GPU2 cpu;
+    class Input,Output memory;
+    class Sync system;</div>
 <h2 id="how-tensor-parallelism-works-in-practice">🛠️ How Tensor Parallelism Works in Practice<a class="headerlink" href="#how-tensor-parallelism-works-in-practice" title="Permanent link">&para;</a></h2>
 <h3 id="step-by-step-flow-for-a-single-transformer-layer">Step-by-step flow for a single transformer layer:<a class="headerlink" href="#step-by-step-flow-for-a-single-transformer-layer" title="Permanent link">&para;</a></h3>
 <ol>
@@ -2213,8 +2229,8 @@
 </ul>
 <hr />
 <h2 id="practical-example-splitting-8-attention-heads-across-2-gpus">🧩 Practical Example: Splitting 8 Attention Heads Across 2 GPUs<a class="headerlink" href="#practical-example-splitting-8-attention-heads-across-2-gpus" title="Permanent link">&para;</a></h2>
-<p>For reference:</p>
-<pre><code># Conceptual layout (not actual code)
+<p>For reference:
+<div class="highlight"><pre><span></span><code># Conceptual layout (not actual code)
 # Model: 8 attention heads, hidden size = 1024
 
 # GPU 0 gets heads 0-3 (4 heads)
@@ -2230,7 +2246,7 @@
 # GPU 0 computes attention for heads 0-3
 # GPU 1 computes attention for heads 4-7
 # Both GPUs all-reduce to combine outputs
-</code></pre>
+</code></pre></div></p>
 <p>📤 <strong>Output</strong>: Each GPU produces a partial attention output of shape [batch, seq_len, 512]. After all-reduce, the full output is [batch, seq_len, 1024].</p>
 <hr />
 <h2 id="key-takeaways-for-new-engineers">✅ Key Takeaways for New Engineers<a class="headerlink" href="#key-takeaways-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2291,9 +2307,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

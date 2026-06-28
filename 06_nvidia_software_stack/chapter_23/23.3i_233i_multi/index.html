@@ -2163,6 +2163,22 @@
 - Installs only runtime Python dependencies (no pip cache, no compilers).
 - Sets the final entrypoint and command.</p>
 <hr />
+<h3 id="visual-representation-multi-stage-build-pipeline-size-reduction">📊 Visual Representation: Multi-Stage Build Pipeline Size Reduction<a class="headerlink" href="#visual-representation-multi-stage-build-pipeline-size-reduction" title="Permanent link">&para;</a></h3>
+<p>This diagram shows how multi-stage builds compile code in a heavy development stage and copy only the final binary to a clean, lightweight runtime stage.</p>
+<div class="mermaid">flowchart LR
+    subgraph BuildStage["Stage 1: Build Environment (Heavy)"]
+        DevEnv["GCC Compiler + Header files (1.2GB)"] --&gt; Compile["Compile C++/CUDA Code"]
+    end
+    subgraph RuntimeStage["Stage 2: Production Runtime (Lightweight)"]
+        Compile --&gt;|Copy Compiled Binary ONLY| ProdEnv["Clean Base Image (50MB)"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Compile cpu;
+    class DevEnv,ProdEnv memory;</div>
 <h2 id="comparison-single-stage-vs-multi-stage-builds">📊 Comparison: Single-stage vs. Multi-stage Builds<a class="headerlink" href="#comparison-single-stage-vs-multi-stage-builds" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2272,9 +2288,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2143,6 +2143,25 @@
 - <strong>Support higher-density racks</strong> (e.g., 20–40 kW per rack) where traditional air cooling falls short.
 - <strong>Prepare for future liquid cooling</strong> while maintaining existing air-cooled infrastructure.
 - <strong>Reduce energy costs</strong> by lowering fan speeds and improving heat rejection efficiency.</p>
+<h3 id="visual-representation-rear-door-heat-exchanger-air-and-water-flow">📊 Visual Representation: Rear-Door Heat Exchanger Air and Water Flow<a class="headerlink" href="#visual-representation-rear-door-heat-exchanger-air-and-water-flow" title="Permanent link">&para;</a></h3>
+<p>This diagram shows how hot server exhaust is cooled to room temperature as it passes through the rear-door heat exchanger coils fed by chilled water.</p>
+<div class="mermaid">flowchart LR
+    CA["Cold Aisle (Cool Air, ~20°C)"] --&gt;|Front Intake| Servers["GPU Servers (NVIDIA DGX)"]
+    Servers --&gt;|Heated Exhaust, ~35-40°C| Exhaust["Hot Air (Internal Rack Rear)"]
+    Exhaust --&gt;|Passes Through| RDHx["Rear-Door Heat Exchanger (Coils)"]
+
+    ChilledWater["Chilled Water Supply (15°C)"] --&gt;|Coolant Input| RDHx
+    RDHx --&gt;|"Warm Water Return (21°C)"| ChilledWater
+
+    RDHx --&gt;|"Neutral Air Exhaust (~24°C)"| Room["Data Center Room (Neutral Air)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Servers cpu;
+    class RDHx memory;
+    class CA,Exhaust,ChilledWater,Room system;</div>
 <hr />
 <h2 id="comparison-rdhx-vs-traditional-air-cooling-vs-direct-liquid-cooling">📊 Comparison: RDHx vs. Traditional Air Cooling vs. Direct Liquid Cooling<a class="headerlink" href="#comparison-rdhx-vs-traditional-air-cooling-vs-direct-liquid-cooling" title="Permanent link">&para;</a></h2>
 <table>
@@ -2255,9 +2274,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

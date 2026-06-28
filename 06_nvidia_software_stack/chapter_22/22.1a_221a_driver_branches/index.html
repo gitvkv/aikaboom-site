@@ -2215,11 +2215,25 @@
 <li><strong>If you are experimenting with new frameworks or GPU features</strong> → Choose the <strong>Latest</strong> branch.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-nvidia-datacenter-lts-vs-consumer-driver-branches">📊 Visual Representation: NVIDIA Datacenter (LTS) vs. Consumer Driver Branches<a class="headerlink" href="#visual-representation-nvidia-datacenter-lts-vs-consumer-driver-branches" title="Permanent link">&para;</a></h3>
+<p>This diagram contrasts Datacenter drivers (LTS, prioritized stability/virtualization) against GeForce drivers (frequent updates, optimized for graphics).</p>
+<div class="mermaid">flowchart LR
+    Drivers["NVIDIA Drivers"] --&gt; Datacenter["Datacenter / Enterprise (LTS / v535 / Stable)"]
+    Drivers --&gt; Consumer["GeForce / Studio (Short-lived branches / Graphics)"]
+    Datacenter --&gt;|Target| AIServers["Grace Hopper / HGX H100 Servers"]
+    Consumer --&gt;|Target| Desktop["Gaming &amp; Visual Workstations"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Datacenter,Consumer memory;
+    class AIServers,Desktop system;</div>
 <h2 id="checking-your-current-driver-branch">🛠️ Checking Your Current Driver Branch<a class="headerlink" href="#checking-your-current-driver-branch" title="Permanent link">&para;</a></h2>
 <p>To see which branch your system is currently using, you can run the following command in your terminal:</p>
-<p><strong>For reference:</strong></p>
-<pre><code>nvidia-smi --query-gpu=driver_version --format=csv,noheader
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>nvidia-smi --query-gpu=driver_version --format=csv,noheader
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> <code>550.54.15</code> (example version number)</p>
 <p>Then, cross-reference this version number with NVIDIA's official driver release notes to determine which branch it belongs to.</p>
 <hr />
@@ -2231,9 +2245,9 @@
 <li><strong>NVIDIA GPU Driver</strong> (Latest branch)</li>
 </ul>
 <p>For engineers using package managers like <code>apt</code> or <code>yum</code>, you can specify the branch by adding the appropriate repository:</p>
-<p><strong>For reference:</strong></p>
-<pre><code>sudo apt-get install nvidia-driver-550-server
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>sudo apt-get install nvidia-driver-550-server
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> Installs the Data Center (production) branch version 550.</p>
 <hr />
 <h2 id="important-considerations">⚠️ Important Considerations<a class="headerlink" href="#important-considerations" title="Permanent link">&para;</a></h2>
@@ -2307,9 +2321,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

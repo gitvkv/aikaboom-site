@@ -2182,6 +2182,26 @@
 </tr>
 </tbody>
 </table>
+<h3 id="visual-representation-dev-device-classification">📊 Visual Representation: /dev Device Classification<a class="headerlink" href="#visual-representation-dev-device-classification" title="Permanent link">&para;</a></h3>
+<p>This flowchart contrasts block devices (ideal for buffered, high-speed dataset storage) and character devices (used for unbuffered, stream-oriented hardware interfaces like GPUs).</p>
+<div class="mermaid">flowchart LR
+    dev["/dev (Device Files)"]
+    dev --&gt; Block["Block Devices&lt;br&gt;(Buffered / Random Access / Fixed Blocks)"]
+    dev --&gt; Char["Character Devices&lt;br&gt;(Unbuffered / Sequential / Byte Streams)"]
+
+    Block --&gt; sda["/dev/sda&lt;br&gt;(SCSI/SATA Disk)"]
+    Block --&gt; nvme["/dev/nvme0n1&lt;br&gt;(NVMe SSD Storage)"]
+
+    Char --&gt; tty["/dev/tty&lt;br&gt;(Terminal Access)"]
+    Char --&gt; nvidia["/dev/nvidia0&lt;br&gt;(NVIDIA GPU Interface)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class nvidia cpu;
+    class nvme,sda memory;
+    class dev,Block,Char,tty system;</div>
 <hr />
 <h2 id="block-devices-the-storage-foundation-for-ai">🛠️ Block Devices — The Storage Foundation for AI<a class="headerlink" href="#block-devices-the-storage-foundation-for-ai" title="Permanent link">&para;</a></h2>
 <p>Block devices are the backbone of AI infrastructure storage. They handle data in fixed-size chunks (typically 512 bytes or 4KB), making them ideal for filesystems and databases.</p>
@@ -2222,9 +2242,9 @@
 <li>A <strong>b</strong> at the beginning indicates a <strong>block device</strong></li>
 <li>A <strong>c</strong> at the beginning indicates a <strong>character device</strong></li>
 </ul>
-<p>For reference:</p>
-<pre><code>ls -la /dev/sda /dev/nvme0n1 /dev/tty /dev/random
-</code></pre>
+<p>For reference:
+<div class="highlight"><pre><span></span><code>ls -la /dev/sda /dev/nvme0n1 /dev/tty /dev/random
+</code></pre></div></p>
 <p>📤 Output: The first character of the line shows <strong>b</strong> for <strong>/dev/sda</strong> and <strong>/dev/nvme0n1</strong>, and <strong>c</strong> for <strong>/dev/tty</strong> and <strong>/dev/random</strong>.</p>
 <hr />
 <h2 id="practical-relevance-for-ai-operations">🧩 Practical Relevance for AI Operations<a class="headerlink" href="#practical-relevance-for-ai-operations" title="Permanent link">&para;</a></h2>
@@ -2319,9 +2339,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

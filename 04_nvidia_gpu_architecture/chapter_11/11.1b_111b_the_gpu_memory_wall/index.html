@@ -2198,6 +2198,20 @@
 </table>
 <p><strong>Key takeaway:</strong> You can squeeze larger models into smaller VRAM by using lower precision (INT8, FP8, or even 4-bit quantization), but you lose some accuracy.</p>
 <hr />
+<h3 id="visual-representation-compute-speed-vs-memory-bandwidth-scaling-memory-wall">📊 Visual Representation: Compute Speed vs. Memory Bandwidth Scaling (Memory Wall)<a class="headerlink" href="#visual-representation-compute-speed-vs-memory-bandwidth-scaling-memory-wall" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the growing performance gap (the Memory Wall) between compute FLOP rates scaling exponentially and slower memory bandwidth growth rates.</p>
+<div class="mermaid">flowchart LR
+    Compute["GPU Processing Speed (FLOPs)"] --&gt;|Fast Exponential Growth| Wall{"Memory Wall Bottleneck"}
+    Bandwidth["Memory Bandwidth (HBM/GDDR)"] --&gt;|Slower Linear Growth| Wall
+    Wall --&gt; Limit["Idle compute cores (Memory starvation)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Wall cpu;
+    class Bandwidth memory;
+    class Compute,Limit system;</div>
 <h2 id="how-engineers-hit-the-wall-and-what-happens">🕵️ How Engineers Hit the Wall (and What Happens)<a class="headerlink" href="#how-engineers-hit-the-wall-and-what-happens" title="Permanent link">&para;</a></h2>
 <p>When you try to load a model that exceeds VRAM:</p>
 <ul>
@@ -2225,19 +2239,19 @@
 <hr />
 <h2 id="simple-example-checking-vram-usage">🧪 Simple Example: Checking VRAM Usage<a class="headerlink" href="#simple-example-checking-vram-usage" title="Permanent link">&para;</a></h2>
 <p>When you load a model, you can quickly check how much VRAM it consumes. Here is a Python example using PyTorch:</p>
-<pre><code class="language-python">import torch
-import torch.cuda as cuda
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.cuda</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cuda</span>
 
-# Load a model (example: 7B parameter model)
-model = torch.load(&quot;my_model.pt&quot;, map_location=&quot;cuda&quot;)
+<span class="c1"># Load a model (example: 7B parameter model)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;my_model.pt&quot;</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
 
-# Check VRAM usage
-allocated = cuda.memory_allocated() / (1024**3)  # Convert to GB
-reserved = cuda.memory_reserved() / (1024**3)
+<span class="c1"># Check VRAM usage</span>
+<span class="n">allocated</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">memory_allocated</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># Convert to GB</span>
+<span class="n">reserved</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">memory_reserved</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
 
-print(f&quot;VRAM allocated: {allocated:.2f} GB&quot;)
-print(f&quot;VRAM reserved: {reserved:.2f} GB&quot;)
-</code></pre>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;VRAM allocated: </span><span class="si">{</span><span class="n">allocated</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> GB&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;VRAM reserved: </span><span class="si">{</span><span class="n">reserved</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> GB&quot;</span><span class="p">)</span>
+</code></pre></div>
 <p>📤 <strong>Output:</strong><br />
 <strong>VRAM allocated: 14.32 GB</strong><br />
 <strong>VRAM reserved: 16.00 GB</strong></p>
@@ -2291,9 +2305,11 @@ print(f&quot;VRAM reserved: {reserved:.2f} GB&quot;)
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

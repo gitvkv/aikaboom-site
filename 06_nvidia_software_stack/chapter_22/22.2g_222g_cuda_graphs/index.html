@@ -2188,6 +2188,22 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-cuda-graphs-kernel-execution-flow">📊 Visual Representation: CUDA Graphs kernel execution flow<a class="headerlink" href="#visual-representation-cuda-graphs-kernel-execution-flow" title="Permanent link">&para;</a></h3>
+<p>This diagram displays CUDA Graphs: combining separate launch steps into a single dependency graph to bypass CPU launch overhead.</p>
+<div class="mermaid">flowchart LR
+    subgraph Traditional["Traditional (CPU launch overhead per step)"]
+        Step1["Launch Kernel A"] --&gt; Step2["Launch Kernel B"]
+    end
+    subgraph Graph["CUDA Graphs (Single unified launch)"]
+        NodeA["Node A"] --&gt; NodeB["Node B"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NodeA,NodeB cpu;
+    class Step1,Step2 memory;</div>
 <h2 id="key-benefits-for-ai-workloads">🕵️ Key Benefits for AI Workloads<a class="headerlink" href="#key-benefits-for-ai-workloads" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Reduced CPU utilization:</strong> The CPU spends less time managing GPU launches, freeing it for other tasks.</li>
@@ -2254,9 +2270,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

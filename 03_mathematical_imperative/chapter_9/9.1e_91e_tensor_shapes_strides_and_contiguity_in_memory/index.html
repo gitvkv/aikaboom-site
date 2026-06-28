@@ -2170,25 +2170,38 @@
 <hr />
 <h2 id="how-to-check-contiguity">🕵️ How to Check Contiguity<a class="headerlink" href="#how-to-check-contiguity" title="Permanent link">&para;</a></h2>
 <p>In PyTorch, you can check if a tensor is contiguous using:</p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-python">import torch
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 
-tensor_a = torch.randn(2, 3)
-print(tensor_a.is_contiguous())
-</code></pre>
+<span class="n">tensor_a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tensor_a</span><span class="o">.</span><span class="n">is_contiguous</span><span class="p">())</span>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> <strong>True</strong></p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-python">tensor_b = tensor_a.T  # Transpose
-print(tensor_b.is_contiguous())
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="n">tensor_b</span> <span class="o">=</span> <span class="n">tensor_a</span><span class="o">.</span><span class="n">T</span>  <span class="c1"># Transpose</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tensor_b</span><span class="o">.</span><span class="n">is_contiguous</span><span class="p">())</span>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> <strong>False</strong></p>
 <p>To make a non-contiguous tensor contiguous, call <code>.contiguous()</code>:</p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-python">tensor_c = tensor_b.contiguous()
-print(tensor_c.is_contiguous())
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="n">tensor_c</span> <span class="o">=</span> <span class="n">tensor_b</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tensor_c</span><span class="o">.</span><span class="n">is_contiguous</span><span class="p">())</span>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> <strong>True</strong></p>
 <hr />
+<h3 id="visual-representation-tensor-shapes-and-strides-mapping">📊 Visual Representation: Tensor Shapes and Strides Mapping<a class="headerlink" href="#visual-representation-tensor-shapes-and-strides-mapping" title="Permanent link">&para;</a></h3>
+<p>This diagram maps how a multi-dimensional tensor shape (dimensions) maps to raw contiguous memory layout using strides.</p>
+<div class="mermaid">flowchart LR
+    TensorShape["Logical Shape (2, 3)"] --&gt; Strides["Strides: (3, 1)"]
+    Strides --&gt; Memory["Physical Contiguous Memory (1D Array)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Strides cpu;
+    class Memory memory;
+    class TensorShape system;</div>
 <h2 id="comparison-contiguous-vs-non-contiguous-tensors">📊 Comparison: Contiguous vs. Non-Contiguous Tensors<a class="headerlink" href="#comparison-contiguous-vs-non-contiguous-tensors" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2229,14 +2242,14 @@ print(tensor_c.is_contiguous())
 <hr />
 <h2 id="practical-example-strides-in-action">⚙️ Practical Example: Strides in Action<a class="headerlink" href="#practical-example-strides-in-action" title="Permanent link">&para;</a></h2>
 <p>Consider a 2D tensor with shape <strong>(3, 4)</strong>:</p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-python">import torch
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 
-x = torch.arange(12).reshape(3, 4)
-print(&quot;Shape:&quot;, x.shape)
-print(&quot;Strides:&quot;, x.stride())
-print(x)
-</code></pre>
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shape:&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Strides:&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">stride</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong>
 <strong>Shape: torch.Size([3, 4])</strong>
 <strong>Strides: (4, 1)</strong>
@@ -2244,12 +2257,12 @@ print(x)
 **        [ 4,  5,  6,  7],<strong>
 **        [ 8,  9, 10, 11]])</strong></p>
 <p>Now transpose it:</p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-python">y = x.T
-print(&quot;Shape:&quot;, y.shape)
-print(&quot;Strides:&quot;, y.stride())
-print(y)
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">T</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shape:&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Strides:&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">stride</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong>
 <strong>Shape: torch.Size([4, 3])</strong>
 <strong>Strides: (1, 4)</strong>
@@ -2316,9 +2329,11 @@ print(y)
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

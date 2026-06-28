@@ -2148,6 +2148,19 @@
 - Recovery requires restarting all workloads, not just the failed one</p>
 <p><strong>Real-world impact:</strong> A buggy training script that causes a GPU exception will kill not only that training job but also any other inference or development workloads sharing the same GPU.</p>
 <hr />
+<h3 id="visual-representation-timeslicing-vram-out-of-memory-oom-crash">📊 Visual Representation: Timeslicing VRAM Out-Of-Memory (OOM) Crash<a class="headerlink" href="#visual-representation-timeslicing-vram-out-of-memory-oom-crash" title="Permanent link">&para;</a></h3>
+<p>This flowchart shows the limits of timeslicing: if concurrent pods exceed physical VRAM, the application crashes with an OOM error.</p>
+<div class="mermaid">flowchart LR
+    PodA["Pod A (Allocates 12GB VRAM)"] --&gt;|No VRAM isolation| PhysicalGPU["Physical GPU (16GB VRAM)"]
+    PodB["Pod B (Allocates 6GB VRAM)"] --&gt;|No VRAM isolation| PhysicalGPU
+    PhysicalGPU --&gt;|VRAM Over-allocation check| Crash["OOM Error (Pod B terminated)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class PhysicalGPU cpu;
+    class Crash memory;</div>
 <h2 id="limitation-3-no-qos-guarantees">📊 Limitation 3: No QoS Guarantees<a class="headerlink" href="#limitation-3-no-qos-guarantees" title="Permanent link">&para;</a></h2>
 <p><strong>What it means:</strong> Quality of Service (QoS) guarantees — such as minimum compute time, maximum latency, or predictable throughput — are not possible with time-slicing.</p>
 <p><strong>Key consequences:</strong>
@@ -2272,9 +2285,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

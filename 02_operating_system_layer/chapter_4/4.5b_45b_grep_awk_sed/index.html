@@ -2124,7 +2124,6 @@
 </div>
 
 <p>Welcome to the world of text processing in Linux. As an engineer working with AI infrastructure, you will constantly interact with configuration files, log files, and data streams. These three tools — <strong>grep</strong>, <strong>awk</strong>, and <strong>sed</strong> — are your essential companions for searching, filtering, and transforming text without needing to open a full editor. Think of them as your command-line Swiss Army knife for text.</p>
-<hr />
 <h2 id="what-is-grep-searching-for-patterns">🕵️ What is grep? — Searching for Patterns<a class="headerlink" href="#what-is-grep-searching-for-patterns" title="Permanent link">&para;</a></h2>
 <p><strong>grep</strong> stands for "global regular expression print." Its primary job is to search through text and print lines that match a specific pattern. This is incredibly useful when you need to find specific errors in a log file or locate a configuration setting across many files.</p>
 <ul>
@@ -2138,8 +2137,8 @@
 <li><strong>-c</strong> counts how many lines matched instead of showing them</li>
 </ul>
 <p>For reference, a basic grep command looks like this:</p>
-<pre><code>grep &quot;ERROR&quot; /var/log/syslog
-</code></pre>
+<div class="highlight"><pre><span></span><code>grep &quot;ERROR&quot; /var/log/syslog
+</code></pre></div>
 <p>📤 Output: All lines from the syslog file containing the word "ERROR" are printed to the terminal.</p>
 <hr />
 <h2 id="what-is-awk-filtering-and-processing-structured-data">📊 What is awk? — Filtering and Processing Structured Data<a class="headerlink" href="#what-is-awk-filtering-and-processing-structured-data" title="Permanent link">&para;</a></h2>
@@ -2154,8 +2153,8 @@
 <li>Format output with custom separators</li>
 </ul>
 <p>For reference, a basic awk command looks like this:</p>
-<pre><code>awk '{print $1, $3}' /var/log/syslog
-</code></pre>
+<div class="highlight"><pre><span></span><code>awk &#39;{print $1, $3}&#39; /var/log/syslog
+</code></pre></div>
 <p>📤 Output: Only the first and third columns from each line of the syslog file are printed, separated by a space.</p>
 <hr />
 <h2 id="what-is-sed-stream-editing-and-transformation">🛠️ What is sed? — Stream Editing and Transformation<a class="headerlink" href="#what-is-sed-stream-editing-and-transformation" title="Permanent link">&para;</a></h2>
@@ -2170,8 +2169,8 @@
 <li><strong>In-place editing (-i):</strong> Save changes directly to the file</li>
 </ul>
 <p>For reference, a basic sed command looks like this:</p>
-<pre><code>sed 's/old_hostname/new_hostname/g' config.txt
-</code></pre>
+<div class="highlight"><pre><span></span><code>sed &#39;s/old_hostname/new_hostname/g&#39; config.txt
+</code></pre></div>
 <p>📤 Output: All occurrences of "old_hostname" in config.txt are replaced with "new_hostname" and the result is printed to the terminal.</p>
 <hr />
 <h2 id="comparison-table-when-to-use-each-tool">⚖️ Comparison Table: When to Use Each Tool<a class="headerlink" href="#comparison-table-when-to-use-each-tool" title="Permanent link">&para;</a></h2>
@@ -2214,9 +2213,24 @@
 <li><strong>awk → sed:</strong> Process structured data with awk, then apply text transformations with sed</li>
 </ul>
 <p>For reference, a combined pipeline looks like this:</p>
-<pre><code>grep &quot;ERROR&quot; /var/log/syslog | awk '{print $1, $2, $5}'
-</code></pre>
+<div class="highlight"><pre><span></span><code>grep &quot;ERROR&quot; /var/log/syslog | awk &#39;{print $1, $2, $5}&#39;
+</code></pre></div>
 <p>📤 Output: Only lines containing "ERROR" are shown, and from those lines, only the first, second, and fifth columns are printed.</p>
+<h3 id="visual-representation-log-processing-pipeline-grep-awk-sed">📊 Visual Representation: Log Processing Pipeline (grep -&gt; awk -&gt; sed)<a class="headerlink" href="#visual-representation-log-processing-pipeline-grep-awk-sed" title="Permanent link">&para;</a></h3>
+<p>This horizontal flowchart shows how a raw system log stream is incrementally parsed, filtered, structured, and transformed by piping <code>grep</code>, <code>awk</code>, and <code>sed</code> together.</p>
+<div class="mermaid">flowchart LR
+    stream["Input Log Stream&lt;br&gt;(Raw GPU Logs)"] --&gt; grep["grep 'Xid'&lt;br&gt;(Filter Rows / Horizontal Select)"]
+    grep --&gt; awk["awk '{print $1, $5}'&lt;br&gt;(Filter Columns / Vertical Select)"]
+    awk --&gt; sed["sed 's/Xid/Error_ID/g'&lt;br&gt;(Transform Text / Substitution)"]
+    sed --&gt; output["Refined Output Log"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class grep cpu;
+    class awk memory;
+    class stream,sed,output system;</div>
 <hr />
 <h2 id="practical-tips-for-new-engineers">💡 Practical Tips for New Engineers<a class="headerlink" href="#practical-tips-for-new-engineers" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2266,9 +2280,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

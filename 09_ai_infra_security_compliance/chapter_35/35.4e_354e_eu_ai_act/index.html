@@ -2171,6 +2171,18 @@
 <li>If the system uses a <strong>General-Purpose AI</strong> model (e.g., a large language model), the model provider may already have a conformity assessment. You must verify this and keep the documentation.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-eu-ai-act-risk-classifications">📊 Visual Representation: EU AI Act Risk Classifications<a class="headerlink" href="#visual-representation-eu-ai-act-risk-classifications" title="Permanent link">&para;</a></h3>
+<p>This diagram displays EU AI Act levels, showing risk classifications that map out transparency requirements.</p>
+<div class="mermaid">flowchart LR
+    AIAct["EU AI Act Levels"] --&gt; High["High Risk (Biometrics, infrastructure / Heavy audit validation)"]
+    AIAct --&gt; Low["Minimal/Low Risk (Spam filters / Standard transparency)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class AIAct cpu;
+    class High,Low memory;</div>
 <h2 id="comparison-operator-vs-provider-responsibilities">🔄 Comparison: Operator vs. Provider Responsibilities<a class="headerlink" href="#comparison-operator-vs-provider-responsibilities" title="Permanent link">&para;</a></h2>
 <p>It is important to distinguish between the <strong>provider</strong> (who develops the AI system) and the <strong>operator</strong> (who deploys and uses it). The table below clarifies key differences:</p>
 <table>
@@ -2302,9 +2314,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

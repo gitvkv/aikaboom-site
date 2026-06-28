@@ -2180,6 +2180,18 @@
 </ul>
 <p><strong>Key point:</strong> Every GPU-accelerated container <strong>must</strong> have <strong>/dev/nvidiactl</strong> mounted, even if only one GPU is used.</p>
 <hr />
+<h3 id="visual-representation-linux-gpu-device-files-mapping">📊 Visual Representation: Linux GPU Device Files mapping<a class="headerlink" href="#visual-representation-linux-gpu-device-files-mapping" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how physical GPU device files in the host system (/dev/nvidia*) are mapped into isolated container namespaces.</p>
+<div class="mermaid">flowchart LR
+    HostGPU["Host Kernel Devices (/dev/nvidia0)"] --&gt;|Device Mapping| Container["Container Namespace (/dev/nvidia0)"]
+    HostCtl["Host Controller (/dev/nvidiactl)"] --&gt;|Device Mapping| Container
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Container cpu;
+    class HostGPU,HostCtl memory;</div>
 <h2 id="devnvidia-uvm-unified-virtual-memory">📊 /dev/nvidia-uvm — Unified Virtual Memory<a class="headerlink" href="#devnvidia-uvm-unified-virtual-memory" title="Permanent link">&para;</a></h2>
 <ul>
 <li>This file enables <strong>UVM (Unified Virtual Memory)</strong> — a technology that allows the CPU and GPU to share memory transparently.</li>
@@ -2284,9 +2296,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

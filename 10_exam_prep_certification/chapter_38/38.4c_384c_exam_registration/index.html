@@ -2184,6 +2184,19 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-pearson-vue-registration-pipeline">📊 Visual Representation: Pearson VUE registration pipeline<a class="headerlink" href="#visual-representation-pearson-vue-registration-pipeline" title="Permanent link">&para;</a></h3>
+<p>This flowchart maps out exam booking: registering credentials, scheduling times, and starting proctored exam sessions.</p>
+<div class="mermaid">flowchart LR
+    Register["1. Create Pearson VUE / NVIDIA account"] --&gt; Schedule["2. Select NCA/AIIO exam &amp; booking time"]
+    Schedule --&gt; Test["3. Complete proctored exam session"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Schedule cpu;
+    class Test memory;
+    class Register system;</div>
 <h2 id="accommodation-requests">🕊️ Accommodation Requests<a class="headerlink" href="#accommodation-requests" title="Permanent link">&para;</a></h2>
 <p>If you have a disability or medical condition that requires adjustments to the standard testing environment, Pearson VUE provides accommodations under their <strong>ADA-compliant policy</strong>. The process is straightforward but requires advance planning.</p>
 <ul>
@@ -2262,9 +2275,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

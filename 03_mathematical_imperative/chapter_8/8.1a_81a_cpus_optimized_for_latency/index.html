@@ -2243,6 +2243,24 @@
 <li>Large caches can hold more of your working dataset, reducing the need to go to main memory.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-latency-optimized-cpu-vs-throughput-optimized-gpu">📊 Visual Representation: Latency-Optimized CPU vs. Throughput-Optimized GPU<a class="headerlink" href="#visual-representation-latency-optimized-cpu-vs-throughput-optimized-gpu" title="Permanent link">&para;</a></h3>
+<p>This diagram contrasts the CPU architecture (large cache, powerful control unit, few ALU cores) with the GPU architecture (dense grid of smaller ALU cores).</p>
+<div class="mermaid">flowchart LR
+    subgraph CPU["CPU: Latency-Optimized"]
+        Core_CPU["Few High-performance Cores"] --- Cache_CPU["Large L1/L2/L3 Cache"]
+        Cache_CPU --- Control_CPU["Complex Control Logic"]
+    end
+    subgraph GPU["GPU: Throughput-Optimized"]
+        Grid["Thousands of smaller ALU Cores"] --- Cache_GPU["Smaller Distributed Caches"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Grid cpu;
+    class Cache_CPU,Cache_GPU memory;
+    class Core_CPU,Control_CPU system;</div>
 <h2 id="comparison-table-cpu-vs-gpu-design-philosophy">📊 Comparison Table: CPU vs. GPU Design Philosophy<a class="headerlink" href="#comparison-table-cpu-vs-gpu-design-philosophy" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2389,9 +2407,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

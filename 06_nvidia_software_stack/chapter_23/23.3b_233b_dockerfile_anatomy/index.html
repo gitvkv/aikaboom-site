@@ -2211,10 +2211,22 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-dockerfile-instruction-layer-build">📊 Visual Representation: Dockerfile Instruction Layer Build<a class="headerlink" href="#visual-representation-dockerfile-instruction-layer-build" title="Permanent link">&para;</a></h3>
+<p>This diagram shows how Dockerfile commands map to permanent, cached read-only image layers.</p>
+<div class="mermaid">flowchart LR
+    FROM["FROM ubuntu:22.04"] --&gt; Layer1["Base OS Layer (Cached)"]
+    RUN["RUN apt-get install -y python3"] --&gt; Layer2["Python Package Layer (Cached)"]
+    COPY["COPY train.py /app/"] --&gt; Layer3["Application File Layer"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Layer1,Layer2,Layer3 memory;</div>
 <h2 id="practical-ai-example-building-an-inference-container">🛠️ Practical AI Example: Building an Inference Container<a class="headerlink" href="#practical-ai-example-building-an-inference-container" title="Permanent link">&para;</a></h2>
 <p>Here's how these instructions work together for a simple AI inference service:</p>
-<p><strong>For reference:</strong></p>
-<pre><code>FROM nvidia/cuda:12.2.0-runtime-ubuntu22.04
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>FROM nvidia/cuda:12.2.0-runtime-ubuntu22.04
 
 RUN apt-get update &amp;&amp; apt-get install -y python3-pip
 
@@ -2231,7 +2243,7 @@ EXPOSE 8000
 ENTRYPOINT [&quot;python3&quot;]
 
 CMD [&quot;/app/inference_server.py&quot;]
-</code></pre>
+</code></pre></div></p>
 <p>📤 <strong>Output</strong>: When you run this container with <strong>docker run -p 8000:8000 my-ai-image</strong>, it starts the FastAPI inference server on port 8000, ready to accept model prediction requests.</p>
 <hr />
 <h2 id="common-mistakes-new-engineers-make">🕵️ Common Mistakes New Engineers Make<a class="headerlink" href="#common-mistakes-new-engineers-make" title="Permanent link">&para;</a></h2>
@@ -2295,9 +2307,11 @@ CMD [&quot;/app/inference_server.py&quot;]
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

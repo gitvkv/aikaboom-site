@@ -2187,6 +2187,22 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-nvidia-collective-communications-library-nccl-channels">📊 Visual Representation: NVIDIA Collective Communications Library (NCCL) Channels<a class="headerlink" href="#visual-representation-nvidia-collective-communications-library-nccl-channels" title="Permanent link">&para;</a></h3>
+<p>This diagram displays NCCL routing, using NVLink for intra-node transfers and InfiniBand RDMA for inter-node transfers.</p>
+<div class="mermaid">flowchart LR
+    subgraph IntraNode["Intra-Node (Local GPU-to-GPU)"]
+        GPU1["GPU 1"] --&gt;|"NVLink (Direct Memory Access)"| GPU2["GPU 2"]
+    end
+    subgraph InterNode["Inter-Node (Server-to-Server)"]
+        GPU2 --&gt;|InfiniBand RDMA / PCIe| Switch["Quantum IB Network Switch"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPU1,GPU2 cpu;
+    class Switch system;</div>
 <h2 id="nccl-communication-modes">🕵️ NCCL Communication Modes<a class="headerlink" href="#nccl-communication-modes" title="Permanent link">&para;</a></h2>
 <p>NCCL can use different underlying transport mechanisms depending on what hardware is available:</p>
 <ul>
@@ -2256,9 +2272,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

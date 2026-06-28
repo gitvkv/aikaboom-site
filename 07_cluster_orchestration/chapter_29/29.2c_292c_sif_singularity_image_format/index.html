@@ -2246,6 +2246,19 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-singularity-image-format-sif-flat-file">📊 Visual Representation: Singularity Image Format (SIF) flat file<a class="headerlink" href="#visual-representation-singularity-image-format-sif-flat-file" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the SIF structure, compiling overlays and file systems into a single compressed, cryptographically signed file.</p>
+<div class="mermaid">flowchart LR
+    SIF["SIF File (.sif)"] --&gt; Header["SIF Header (Metadata &amp; Signatures)"]
+    SIF --&gt; RootFS["SquashFS File System Image (Read-Only)"]
+    SIF --&gt; Signature["PGP Signature block"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class SIF cpu;
+    class Header,RootFS,Signature memory;</div>
 <h2 id="typical-workflow-with-sif">🔄 Typical Workflow with SIF<a class="headerlink" href="#typical-workflow-with-sif" title="Permanent link">&para;</a></h2>
 <ol>
 <li><strong>Define your environment</strong> — Create a definition file (<code>.def</code>) that describes the base OS, software packages, and environment variables.</li>
@@ -2320,9 +2333,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2195,6 +2195,18 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-kustomize-overlay-manifest-inheritance">📊 Visual Representation: Kustomize Overlay Manifest inheritance<a class="headerlink" href="#visual-representation-kustomize-overlay-manifest-inheritance" title="Permanent link">&para;</a></h3>
+<p>This diagram displays Kustomize overlay structures: inheriting from a shared base directory to modify configuration variables.</p>
+<div class="mermaid">flowchart LR
+    Base["Base Manifest Directory (kustomization.yaml)"] --&gt; Dev["dev Overlay (Appends dev tags)"]
+    Base --&gt; Prod["prod Overlay (Appends resource limits)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Base cpu;
+    class Dev,Prod memory;</div>
 <h2 id="key-benefits-for-ai-infrastructure">🕵️ Key Benefits for AI Infrastructure<a class="headerlink" href="#key-benefits-for-ai-infrastructure" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>No templating complexity</strong>: Engineers work with familiar YAML, not custom syntax.</li>
@@ -2206,7 +2218,7 @@
 <hr />
 <h2 id="practical-example-structure">📋 Practical Example Structure<a class="headerlink" href="#practical-example-structure" title="Permanent link">&para;</a></h2>
 <p>A typical AI application configuration might look like this:</p>
-<pre><code>ai-training-app/
+<div class="highlight"><pre><span></span><code>ai-training-app/
 ├── base/
 │   ├── kustomization.yaml
 │   ├── deployment.yaml
@@ -2225,7 +2237,7 @@
         ├── patch_gpu.yaml
         ├── patch_resources.yaml
         └── patch_hpa.yaml
-</code></pre>
+</code></pre></div>
 <hr />
 <h2 id="workflow-from-base-to-final-configuration">🔄 Workflow: From Base to Final Configuration<a class="headerlink" href="#workflow-from-base-to-final-configuration" title="Permanent link">&para;</a></h2>
 <ol>
@@ -2286,9 +2298,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

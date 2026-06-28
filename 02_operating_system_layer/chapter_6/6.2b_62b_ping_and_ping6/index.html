@@ -2189,6 +2189,18 @@
 <li><strong>Verifying IPv6 connectivity</strong> — In modern clusters using IPv6 for RDMA (Remote Direct Memory Access), ping6 is essential.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-icmp-echo-requestreply-flow">📊 Visual Representation: ICMP Echo Request/Reply Flow<a class="headerlink" href="#visual-representation-icmp-echo-requestreply-flow" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the basic ICMP ping round-trip transaction between a local monitoring node and a remote target host.</p>
+<div class="mermaid">flowchart LR
+    Local["Local Host"] --&gt;|ICMP Type 8 (Echo Request)| Remote["Remote Host"]
+    Remote --&gt;|ICMP Type 0 (Echo Reply)| Local
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Local cpu;
+    class Remote memory;</div>
 <h2 id="common-ping-scenarios-and-what-they-mean">🔍 Common ping Scenarios and What They Mean<a class="headerlink" href="#common-ping-scenarios-and-what-they-mean" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Successful reply</strong> — The target is reachable and responding. Check the time value for latency.</li>
@@ -2284,9 +2296,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

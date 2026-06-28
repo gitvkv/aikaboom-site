@@ -2152,7 +2152,7 @@
 - <strong>ports</strong> — container ports to expose
 - <strong>restartPolicy</strong> — when to restart the container (Always, OnFailure, Never)</p>
 <p><strong>Example structure (for reference):</strong></p>
-<pre><code>apiVersion: v1
+<div class="highlight"><pre><span></span><code>apiVersion: v1
 kind: Pod
 metadata:
   name: my-first-pod
@@ -2165,7 +2165,7 @@ spec:
     ports:
     - containerPort: 80
   restartPolicy: Always
-</code></pre>
+</code></pre></div>
 <p>📤 <strong>Output:</strong> This manifest describes a single Pod named <strong>my-first-pod</strong> running an nginx container on port 80.</p>
 <hr />
 <h2 id="writing-a-deployment-manifest">🛠️ Writing a Deployment Manifest<a class="headerlink" href="#writing-a-deployment-manifest" title="Permanent link">&para;</a></h2>
@@ -2176,7 +2176,7 @@ spec:
 - <strong>template</strong> — the Pod template that defines what each Pod looks like
 - <strong>strategy</strong> — how to update Pods (e.g., RollingUpdate or Recreate)</p>
 <p><strong>Example structure (for reference):</strong></p>
-<pre><code>apiVersion: apps/v1
+<div class="highlight"><pre><span></span><code>apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: my-first-deployment
@@ -2197,9 +2197,23 @@ spec:
         image: nginx:latest
         ports:
         - containerPort: 80
-</code></pre>
+</code></pre></div>
 <p>📤 <strong>Output:</strong> This manifest creates a Deployment named <strong>my-first-deployment</strong> that keeps 3 Pods running, each with an nginx container.</p>
 <hr />
+<h3 id="visual-representation-kubernetes-yaml-manifest-fields">📊 Visual Representation: Kubernetes YAML Manifest fields<a class="headerlink" href="#visual-representation-kubernetes-yaml-manifest-fields" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the 4 required top-level metadata keys in every Kubernetes YAML manifest.</p>
+<div class="mermaid">flowchart LR
+    Yaml["YAML Manifest"] --&gt; ApiVersion["apiVersion: v1"]
+    Yaml --&gt; Kind["kind: Pod"]
+    Yaml --&gt; Metadata["metadata (Name, Labels)"]
+    Yaml --&gt; Spec["spec (Container images, volumes)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Yaml cpu;
+    class ApiVersion,Kind,Metadata,Spec memory;</div>
 <h2 id="pod-vs-deployment-when-to-use-which">📊 Pod vs Deployment — When to Use Which<a class="headerlink" href="#pod-vs-deployment-when-to-use-which" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2245,18 +2259,18 @@ spec:
 2. Run the apply command pointing to that file
 3. Kubernetes reads the file and creates or updates the resource</p>
 <p><strong>Example command (for reference):</strong></p>
-<pre><code>kubectl apply -f pod.yaml
-</code></pre>
+<div class="highlight"><pre><span></span><code>kubectl apply -f pod.yaml
+</code></pre></div>
 <p>📤 <strong>Output:</strong> The cluster responds with a message like <strong>pod/my-first-pod created</strong> or <strong>deployment.apps/my-first-deployment created</strong>.</p>
 <hr />
 <h2 id="verifying-your-work">🧪 Verifying Your Work<a class="headerlink" href="#verifying-your-work" title="Permanent link">&para;</a></h2>
 <p>After applying a manifest, you should verify that the resources are running as expected.</p>
 <p><strong>Common verification commands (for reference):</strong></p>
-<pre><code>kubectl get pods
+<div class="highlight"><pre><span></span><code>kubectl get pods
 kubectl get deployments
 kubectl describe pod my-first-pod
 kubectl describe deployment my-first-deployment
-</code></pre>
+</code></pre></div>
 <p>📤 <strong>Output examples:</strong>
 - <strong>kubectl get pods</strong> shows a list of Pods with their status (Running, Pending, etc.)
 - <strong>kubectl describe</strong> gives detailed information including events and container status</p>
@@ -2264,9 +2278,9 @@ kubectl describe deployment my-first-deployment
 <h2 id="cleaning-up-resources">🧹 Cleaning Up Resources<a class="headerlink" href="#cleaning-up-resources" title="Permanent link">&para;</a></h2>
 <p>When you no longer need a resource, you can delete it using the same YAML file.</p>
 <p><strong>Example command (for reference):</strong></p>
-<pre><code>kubectl delete -f pod.yaml
+<div class="highlight"><pre><span></span><code>kubectl delete -f pod.yaml
 kubectl delete -f deployment.yaml
-</code></pre>
+</code></pre></div>
 <p>📤 <strong>Output:</strong> The cluster confirms deletion with messages like <strong>pod "my-first-pod" deleted</strong> or <strong>deployment.apps "my-first-deployment" deleted</strong>.</p>
 <hr />
 <h2 id="key-takeaways-for-new-engineers">✅ Key Takeaways for New Engineers<a class="headerlink" href="#key-takeaways-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2318,9 +2332,11 @@ kubectl delete -f deployment.yaml
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

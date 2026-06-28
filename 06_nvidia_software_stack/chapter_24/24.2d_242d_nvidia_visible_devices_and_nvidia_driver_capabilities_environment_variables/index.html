@@ -2167,6 +2167,19 @@
 <p>⚠️ <strong>Warning:</strong> If you run a PyTorch or TensorFlow container without setting <code>compute</code>, your GPU will appear as "not available" even though <code>nvidia-smi</code> works.</p>
 </blockquote>
 <hr />
+<h3 id="visual-representation-nvidia-container-runtime-environment-variables">📊 Visual Representation: NVIDIA Container Runtime Environment Variables<a class="headerlink" href="#visual-representation-nvidia-container-runtime-environment-variables" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the primary runtime control environment variables used to tune GPU configuration inside containers.</p>
+<div class="mermaid">flowchart LR
+    Env["Runtime Variables"] --&gt; Visible["NVIDIA_VISIBLE_DEVICES (Select GPUs)"]
+    Env --&gt; Cap["NVIDIA_DRIVER_CAPABILITIES (compute,utility,video)"]
+    Env --&gt; Req["NVIDIA_REQUIRE_CUDA (Minimum driver version checks)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Env cpu;
+    class Visible,Cap,Req memory;</div>
 <h2 id="comparison-table-common-use-cases">📊 Comparison Table: Common Use Cases<a class="headerlink" href="#comparison-table-common-use-cases" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2287,9 +2300,11 @@ If you set <code>NVIDIA_VISIBLE_DEVICES=0</code> and <code>NVIDIA_DRIVER_CAPABIL
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

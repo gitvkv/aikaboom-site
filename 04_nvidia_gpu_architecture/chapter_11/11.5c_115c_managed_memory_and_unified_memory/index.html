@@ -2208,6 +2208,21 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-cuda-unified-memory-um-page-migration">📊 Visual Representation: CUDA Unified Memory (UM) Page Migration<a class="headerlink" href="#visual-representation-cuda-unified-memory-um-page-migration" title="Permanent link">&para;</a></h3>
+<p>This diagram displays CUDA Unified Memory, utilizing the Page Migration Engine to automatically shift page frames between System RAM and GPU VRAM over PCIe/NVLink.</p>
+<div class="mermaid">flowchart LR
+    CPU["CPU Host"] --&gt;|Access Page| Managed["Unified Memory Virtual Address Space"]
+    GPU["GPU Device"] --&gt;|Access Page| Managed
+    Managed --&gt;|Page Fault / Migration| HostRAM["Host System RAM"]
+    Managed --&gt;|Page Fault / Migration| DeviceVRAM["Device GPU VRAM"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPU cpu;
+    class HostRAM,DeviceVRAM memory;
+    class CPU,Managed system;</div>
 <h2 id="when-to-use-unified-memory">✅ When to Use Unified Memory<a class="headerlink" href="#when-to-use-unified-memory" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Prototyping</strong>: When you want to quickly test an idea without worrying about memory management.</li>
@@ -2292,9 +2307,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

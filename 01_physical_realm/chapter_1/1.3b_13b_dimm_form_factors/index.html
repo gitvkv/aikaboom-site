@@ -2208,6 +2208,33 @@
 </tr>
 </tbody>
 </table>
+<h3 id="visual-representation-memory-module-dimm-architecture-comparison">📊 Visual Representation: Memory Module (DIMM) Architecture Comparison<a class="headerlink" href="#visual-representation-memory-module-dimm-architecture-comparison" title="Permanent link">&para;</a></h3>
+<p>This diagram compares the internal routing and buffering mechanisms of UDIMM, RDIMM, and LRDIMM architectures, showing how they handle memory controller signals.</p>
+<div class="mermaid">flowchart TD
+    subgraph UDIMM["UDIMM (Unbuffered DIMM)"]
+        Ctrl_U["Memory Controller"] --&gt;|Direct Cmd/Addr &amp; Data| DRAM_U["DRAM Chips (Direct Load)"]
+    end
+
+    subgraph RDIMM["RDIMM (Registered DIMM)"]
+        Ctrl_R["Memory Controller"] --&gt;|Command/Address| Reg_R["Register (RCD)"]
+        Ctrl_R --&gt;|Direct Data| DRAM_R["DRAM Chips"]
+        Reg_R --&gt;|Buffered Cmd/Addr| DRAM_R
+    end
+
+    subgraph LRDIMM["LRDIMM (Load-Reduced DIMM)"]
+        Ctrl_L["Memory Controller"] --&gt;|Command/Address| Buff_L["Data Buffer + RCD"]
+        Ctrl_L --&gt;|Data| Buff_L
+        Buff_L --&gt;|Buffered Cmd/Addr| DRAM_L["DRAM Chips"]
+        Buff_L --&gt;|Buffered Data| DRAM_L
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Ctrl_U,Ctrl_R,Ctrl_L cpu;
+    class DRAM_U,DRAM_R,DRAM_L,UDIMM,RDIMM,LRDIMM memory;
+    class Reg_R,Buff_L system;</div>
 <hr />
 <h2 id="why-ai-servers-need-rdimms">🕵️ Why AI Servers Need RDIMMs<a class="headerlink" href="#why-ai-servers-need-rdimms" title="Permanent link">&para;</a></h2>
 <p>AI workloads (training large models, running inference on big datasets) have three critical memory requirements:</p>
@@ -2234,9 +2261,9 @@
 <hr />
 <h2 id="example-identifying-dimm-type-in-a-server">📝 Example: Identifying DIMM Type in a Server<a class="headerlink" href="#example-identifying-dimm-type-in-a-server" title="Permanent link">&para;</a></h2>
 <p>If you're inspecting a server's memory configuration, you can check the label on the DIMM itself or use system tools.</p>
-<p><strong>For reference (command example):</strong></p>
-<pre><code>sudo dmidecode --type memory | grep &quot;Type:&quot;
-</code></pre>
+<p><strong>For reference (command example):</strong>
+<div class="highlight"><pre><span></span><code>sudo dmidecode --type memory | grep &quot;Type:&quot;
+</code></pre></div></p>
 <p><strong>📤 Output:</strong> <code>Type: DDR4</code> (or DDR5) — but this won't show UDIMM/RDIMM directly. You may need to check the module's physical label for "RDIMM" or "Registered."</p>
 <p><strong>For reference (physical inspection):</strong>
 - Look for a small chip (the register) in the center of the DIMM — that's the RDIMM.
@@ -2290,9 +2317,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

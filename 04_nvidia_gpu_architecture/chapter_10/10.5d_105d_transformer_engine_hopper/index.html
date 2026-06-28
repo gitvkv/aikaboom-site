@@ -2185,6 +2185,22 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-nvidia-transformer-engine-dynamic-fp8-execution">📊 Visual Representation: NVIDIA Transformer Engine Dynamic FP8 Execution<a class="headerlink" href="#visual-representation-nvidia-transformer-engine-dynamic-fp8-execution" title="Permanent link">&para;</a></h3>
+<p>This flowchart outlines how the Transformer Engine dynamically scales tensor precision (FP8 vs. FP16) based on activation value ranges to maximize throughput.</p>
+<div class="mermaid">flowchart LR
+    Input["High Precision Input (FP16)"] --&gt; Range{"Check Value Range"}
+    Range --&gt;|Fits in FP8| FP8["Dynamic Cast to FP8 (Double speed)"]
+    Range --&gt;|Exceeds FP8| FP16["Preserve FP16 (Avoid Overflow)"]
+    FP8 --&gt; MMA["Tensor Core Multiply"]
+    FP16 --&gt; MMA
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Range cpu;
+    class FP8,FP16 memory;
+    class Input,MMA system;</div>
 <h2 id="benefits-for-llm-training-and-inference">🛠️ Benefits for LLM Training and Inference<a class="headerlink" href="#benefits-for-llm-training-and-inference" title="Permanent link">&para;</a></h2>
 <h3 id="training-speed-improvements">🚀 Training Speed Improvements<a class="headerlink" href="#training-speed-improvements" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2215,28 +2231,28 @@
 </ul>
 <h3 id="example-workflow">🧪 Example Workflow<a class="headerlink" href="#example-workflow" title="Permanent link">&para;</a></h3>
 <p>To enable the Transformer Engine in a PyTorch training script:</p>
-<p>For reference:</p>
-<pre><code class="language-python">import transformer_engine.pytorch as te
-from transformer_engine.common.recipe import Format, DelayedScaling
+<p>For reference:
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">transformer_engine.pytorch</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">te</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">transformer_engine.common.recipe</span><span class="w"> </span><span class="kn">import</span> <span class="n">Format</span><span class="p">,</span> <span class="n">DelayedScaling</span>
 
-# Enable dynamic precision selection
-recipe = DelayedScaling(
-    fp8_format=Format.E4M3,  # FP8 format
-    amax_history_len=16,     # History length for scaling
-    amax_compute_algo=&quot;max&quot;, # Use max for scaling factor
-)
+<span class="c1"># Enable dynamic precision selection</span>
+<span class="n">recipe</span> <span class="o">=</span> <span class="n">DelayedScaling</span><span class="p">(</span>
+    <span class="n">fp8_format</span><span class="o">=</span><span class="n">Format</span><span class="o">.</span><span class="n">E4M3</span><span class="p">,</span>  <span class="c1"># FP8 format</span>
+    <span class="n">amax_history_len</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>     <span class="c1"># History length for scaling</span>
+    <span class="n">amax_compute_algo</span><span class="o">=</span><span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="c1"># Use max for scaling factor</span>
+<span class="p">)</span>
 
-# Wrap your model with Transformer Engine
-model = te.pytorch.Transformer(model)
-model.train()
+<span class="c1"># Wrap your model with Transformer Engine</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">te</span><span class="o">.</span><span class="n">pytorch</span><span class="o">.</span><span class="n">Transformer</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
 
-# During training, the engine automatically selects precision per layer
-for batch in dataloader:
-    output = model(batch)
-    loss = criterion(output, targets)
-    loss.backward()
-    optimizer.step()
-</code></pre>
+<span class="c1"># During training, the engine automatically selects precision per layer</span>
+<span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> The model will train with dynamic precision, automatically selecting FP8, FP16, or FP32 per layer. You can verify this by checking GPU kernel traces in Nsight Systems.</p>
 <hr />
 <h2 id="monitoring-and-debugging">🕵️ Monitoring and Debugging<a class="headerlink" href="#monitoring-and-debugging" title="Permanent link">&para;</a></h2>
@@ -2302,9 +2318,11 @@ for batch in dataloader:
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

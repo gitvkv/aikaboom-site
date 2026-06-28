@@ -319,8 +319,6 @@
                 </li>
                 <li class="toctree-l3 current"><a class="reference internal current" href="#">4.2d The sudoers file and visudo: safely granting administrative privileges</a>
     <ul class="current">
-    <li class="toctree-l4"><a class="reference internal" href="#context-introduction">🧭 Context Introduction</a>
-    </li>
     <li class="toctree-l4"><a class="reference internal" href="#what-is-the-sudoers-file">⚙️ What is the sudoers File?</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#understanding-visudo-the-safe-editor">🛠️ Understanding visudo — The Safe Editor</a>
@@ -2128,7 +2126,6 @@
 </div>
 
 <hr />
-<h2 id="context-introduction">🧭 Context Introduction<a class="headerlink" href="#context-introduction" title="Permanent link">&para;</a></h2>
 <p>In AI infrastructure operations, many routine tasks — such as installing GPU drivers, managing storage volumes, or restarting services — require <strong>administrative (root) privileges</strong>. However, handing out the root password to every engineer is a serious security risk. Instead, Linux provides a controlled mechanism called <strong>sudo</strong> (short for "superuser do").</p>
 <p>The <strong>sudoers file</strong> is the configuration file that defines <em>who</em> can run <em>what</em> commands as <em>which</em> user. The <strong>visudo</strong> command is the safe, recommended way to edit this file — it prevents syntax errors that could lock everyone out of administrative access.</p>
 <p>This topic covers how to safely grant and manage administrative privileges for engineers working with AI infrastructure.</p>
@@ -2158,6 +2155,23 @@
 - Make changes to the sudoers file
 - Save and exit — visudo automatically validates the syntax
 - If errors exist, visudo shows the problem line and asks what to do (edit again, quit, or force save — the last option is dangerous)</p>
+<h3 id="visual-representation-the-visudo-verification-process">📊 Visual Representation: The visudo Verification Process<a class="headerlink" href="#visual-representation-the-visudo-verification-process" title="Permanent link">&para;</a></h3>
+<p>This flowchart illustrates the editing and verification lifecycle of <code>visudo</code>, highlighting how syntax validation prevents corrupted configurations in <code>/etc/sudoers</code>.</p>
+<div class="mermaid">flowchart LR
+    start["1. Run sudo visudo"] --&gt; edit["2. Edit /etc/sudoers"]
+    edit --&gt; save["3. Save &amp; Exit"]
+    save --&gt; check{"4. Syntax Valid?"}
+    check --&gt;|Yes| apply["5. Apply Changes Safely"]
+    check --&gt;|No| prompt["6. Warning: Re-edit / Abort"]
+    prompt --&gt; edit
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class check cpu;
+    class edit,prompt memory;
+    class start,save,apply system;</div>
 <hr />
 <h2 id="sudoers-file-syntax-breakdown">📊 Sudoers File Syntax Breakdown<a class="headerlink" href="#sudoers-file-syntax-breakdown" title="Permanent link">&para;</a></h2>
 <p>The sudoers file uses a specific syntax pattern. Each rule line follows this structure:</p>
@@ -2317,9 +2331,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -1464,6 +1464,8 @@
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#key-takeaways-for-new-engineers">✅ Key Takeaways for New Engineers</a>
     </li>
+    <li class="toctree-l4"><a class="reference internal" href="#visual-representation-kube-controller-manager-state-loop">📊 Visual Representation: kube-controller-manager State Loop</a>
+    </li>
     </ul>
                 </li>
                 <li class="toctree-l3"><a class="reference internal" href="../26.2e_262e_kubelet/">26.2e Kubelet: the node agent — ensuring Pods are running as declared</a>
@@ -2226,6 +2228,20 @@
 <li>For AI workloads, these controllers are critical because they ensure GPU pods are always running, even when hardware fails.</li>
 </ul>
 <p>Remember: You don't need to interact with these controllers directly. You define your desired state in YAML files (e.g., a Deployment), and the Controller Manager handles the rest. This is the power of Kubernetes — it automates infrastructure management so you can focus on building and training AI models.</p>
+<h3 id="visual-representation-kube-controller-manager-state-loop">📊 Visual Representation: kube-controller-manager State Loop<a class="headerlink" href="#visual-representation-kube-controller-manager-state-loop" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how controllers (Node, Deployment, Namespace) continually resolve states in the background.</p>
+<div class="mermaid">flowchart LR
+    APIServer["kube-apiserver Watch"] --&gt; Controllers["kube-controller-manager"]
+    Controllers --&gt; NodeCtrl["Node Controller (Link health)"]
+    Controllers --&gt; DeployCtrl["Deployment Controller (Replicas)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Controllers cpu;
+    class NodeCtrl,DeployCtrl memory;
+    class APIServer system;</div>
               
             </div>
           </div><footer>
@@ -2265,9 +2281,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

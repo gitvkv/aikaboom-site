@@ -2200,13 +2200,27 @@
 - Check counters for ECN-marked packets.</p>
 <hr />
 <p>For reference:</p>
-<pre><code>mlxconfig -d /dev/mst/mt4123_pciconf0 set ECN_ENABLE=1
+<div class="highlight"><pre><span></span><code>mlxconfig -d /dev/mst/mt4123_pciconf0 set ECN_ENABLE=1
 mlxconfig -d /dev/mst/mt4123_pciconf0 set ECN_THRESHOLD_MIN=150000
 mlxconfig -d /dev/mst/mt4123_pciconf0 set ECN_THRESHOLD_MAX=300000
 mlxconfig -d /dev/mst/mt4123_pciconf0 set ECN_MARK_PROBABILITY=100
-</code></pre>
+</code></pre></div>
 <p>📤 <strong>Output:</strong> ECN enabled with Kmin=150000 bytes, Kmax=300000 bytes, 100% marking probability.</p>
 <hr />
+<h3 id="visual-representation-explicit-congestion-notification-ecn-ip-header-bits">📊 Visual Representation: Explicit Congestion Notification (ECN) IP Header Bits<a class="headerlink" href="#visual-representation-explicit-congestion-notification-ecn-ip-header-bits" title="Permanent link">&para;</a></h3>
+<p>This diagram details the ECN bit settings (ECT and CE bits) within the IPv4/IPv6 Traffic Class fields.</p>
+<div class="mermaid">flowchart LR
+    IPField["IPv4 TOS / IPv6 Traffic Class"] --&gt; ECNBits["2 ECN Bits"]
+    ECNBits --&gt;|00| NonECT["Not ECN Capable"]
+    ECNBits --&gt;|11| Congestion["Congestion Encountered (CE)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class ECNBits cpu;
+    class IPField memory;
+    class NonECT,Congestion system;</div>
 <h2 id="end-to-end-ecn-flow-step-by-step">🔄 End-to-End ECN Flow — Step by Step<a class="headerlink" href="#end-to-end-ecn-flow-step-by-step" title="Permanent link">&para;</a></h2>
 <ol>
 <li><strong>Sender</strong> sends data with ECT bit set (ECN-capable).</li>
@@ -2285,9 +2299,11 @@ mlxconfig -d /dev/mst/mt4123_pciconf0 set ECN_MARK_PROBABILITY=100
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

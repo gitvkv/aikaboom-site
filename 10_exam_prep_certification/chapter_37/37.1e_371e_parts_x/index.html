@@ -2315,6 +2315,19 @@
 </li>
 </ol>
 <hr />
+<h3 id="visual-representation-cloud-security-exam-concept-mapping">📊 Visual Representation: Cloud &amp; Security Exam concept mapping<a class="headerlink" href="#visual-representation-cloud-security-exam-concept-mapping" title="Permanent link">&para;</a></h3>
+<p>This diagram displays security exam scopes, grouping modelHub supply chains, CVE container scans, and compliance levels.</p>
+<div class="mermaid">flowchart LR
+    Exam["Security Exam"] --&gt; Threat["Threats (Model theft / cryptojacking)"]
+    Exam --&gt; Security["Securing (SBOM / cosign / scan)"]
+    Exam --&gt; Compliance["Compliance (HIPAA / SOC2 / Export)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Exam cpu;
+    class Threat,Security,Compliance memory;</div>
 <h2 id="comparison-table-cloud-vs-on-premises-security-responsibilities">📊 Comparison Table: Cloud vs. On-Premises Security Responsibilities<a class="headerlink" href="#comparison-table-cloud-vs-on-premises-security-responsibilities" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2400,9 +2413,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

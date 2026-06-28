@@ -2187,6 +2187,21 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-loss-scaling-gradient-protection">📊 Visual Representation: Loss Scaling Gradient Protection<a class="headerlink" href="#visual-representation-loss-scaling-gradient-protection" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how loss scaling multiplies training loss to shift gradient distributions out of the FP16 underflow range.</p>
+<div class="mermaid">flowchart LR
+    Loss["Calculate Loss"] --&gt;|Multiply by Scale Factor| ScaledLoss["Scaled Loss"]
+    ScaledLoss --&gt; Backprop["Backward Pass (Gradients Scaled Up)"]
+    Backprop --&gt; Unscale["Unscale Gradients (Divide by Scale Factor)"]
+    Unscale --&gt; Update["Weight Update (Safe from Underflow)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Backprop cpu;
+    class Loss,ScaledLoss memory;
+    class Unscale,Update system;</div>
 <h2 id="common-scaling-strategies">🕵️ Common Scaling Strategies<a class="headerlink" href="#common-scaling-strategies" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Static loss scaling</strong>: Use a fixed scale factor (e.g., 2⁸ or 2¹⁶). Simple but may need manual tuning.</li>
@@ -2197,8 +2212,8 @@
 </ul>
 <hr />
 <h2 id="practical-example-conceptual">🧪 Practical Example (Conceptual)<a class="headerlink" href="#practical-example-conceptual" title="Permanent link">&para;</a></h2>
-<p><strong>For reference:</strong></p>
-<pre><code># Conceptual steps in training loop
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code># Conceptual steps in training loop
 loss = model(inputs, targets)
 
 # Step 1: Scale the loss
@@ -2213,7 +2228,7 @@ for param in model.parameters():
 
 # Step 4: Update weights
 optimizer.step()
-</code></pre>
+</code></pre></div></p>
 <p>📤 <strong>Output:</strong> Gradients that would have been zero in FP16 now have values like <strong>0.0001</strong> instead of <strong>0.0</strong>.</p>
 <hr />
 <h2 id="key-takeaways-for-new-engineers">✅ Key Takeaways for New Engineers<a class="headerlink" href="#key-takeaways-for-new-engineers" title="Permanent link">&para;</a></h2>
@@ -2266,9 +2281,11 @@ optimizer.step()
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2191,6 +2191,20 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-bluefield-2-dpu-hardware-layout">📊 Visual Representation: BlueField-2 DPU Hardware Layout<a class="headerlink" href="#visual-representation-bluefield-2-dpu-hardware-layout" title="Permanent link">&para;</a></h3>
+<p>This diagram details the BlueField-2 DPU, integrating ConnectX-6 Dx network engines, ARM A72 processor cores, and DDR4 memory.</p>
+<div class="mermaid">flowchart LR
+    Ports["Dual 100Gb/s Ports"] --- CX6["ConnectX-6 Dx Network Engine"]
+    CX6 --- ARM["8 x ARM Cortex-A72 Cores"]
+    ARM --- DDR4["On-board DDR4 Memory"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class ARM,CX6 cpu;
+    class DDR4 memory;
+    class Ports system;</div>
 <h2 id="real-world-use-cases">🕵️ Real-World Use Cases<a class="headerlink" href="#real-world-use-cases" title="Permanent link">&para;</a></h2>
 <p>Engineers deploy BlueField-2 in several critical scenarios:</p>
 <ul>
@@ -2273,9 +2287,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2183,79 +2183,93 @@
 <li>Identify your NVMe drives (e.g., <code>/dev/nvme0n1</code>, <code>/dev/nvme1n1</code>, <code>/dev/nvme2n1</code>).</li>
 <li>Initialize each drive as an LVM physical volume.</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>pvcreate /dev/nvme0n1
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>pvcreate /dev/nvme0n1
 pvcreate /dev/nvme1n1
 pvcreate /dev/nvme2n1
-</code></pre>
-<p>📤 <strong>Output:</strong> Each command returns a confirmation like "Physical volume successfully created."</p>
+</code></pre></div>
+📤 <strong>Output:</strong> Each command returns a confirmation like "Physical volume successfully created."</p>
 <hr />
 <h3 id="2-create-a-volume-group">2️⃣ Create a Volume Group<a class="headerlink" href="#2-create-a-volume-group" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Combine the physical volumes into a single volume group (e.g., <code>vg_ai_data</code>).</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>vgcreate vg_ai_data /dev/nvme0n1 /dev/nvme1n1 /dev/nvme2n1
-</code></pre>
-<p>📤 <strong>Output:</strong> "Volume group 'vg_ai_data' successfully created."</p>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>vgcreate vg_ai_data /dev/nvme0n1 /dev/nvme1n1 /dev/nvme2n1
+</code></pre></div>
+📤 <strong>Output:</strong> "Volume group 'vg_ai_data' successfully created."</p>
 <hr />
 <h3 id="3-create-a-logical-volume">3️⃣ Create a Logical Volume<a class="headerlink" href="#3-create-a-logical-volume" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Create a logical volume that uses all available space from the volume group (e.g., <code>lv_training_data</code>).</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>lvcreate -l 100%FREE -n lv_training_data vg_ai_data
-</code></pre>
-<p>📤 <strong>Output:</strong> "Logical volume 'lv_training_data' created."</p>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>lvcreate -l 100%FREE -n lv_training_data vg_ai_data
+</code></pre></div>
+📤 <strong>Output:</strong> "Logical volume 'lv_training_data' created."</p>
 <hr />
 <h3 id="4-format-and-mount-the-logical-volume">4️⃣ Format and Mount the Logical Volume<a class="headerlink" href="#4-format-and-mount-the-logical-volume" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Format the logical volume with a filesystem (e.g., <code>ext4</code> or <code>xfs</code>).</li>
 <li>Mount it to a directory (e.g., <code>/mnt/ai_data</code>).</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>mkfs.ext4 /dev/vg_ai_data/lv_training_data
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>mkfs.ext4 /dev/vg_ai_data/lv_training_data
 mount /dev/vg_ai_data/lv_training_data /mnt/ai_data
-</code></pre>
-<p>📤 <strong>Output:</strong> The filesystem is created and mounted. Use <code>df -h</code> to verify.</p>
+</code></pre></div>
+📤 <strong>Output:</strong> The filesystem is created and mounted. Use <code>df -h</code> to verify.</p>
 <hr />
+<h3 id="visual-representation-lvm-capacity-extension-workflow">📊 Visual Representation: LVM Capacity Extension Workflow<a class="headerlink" href="#visual-representation-lvm-capacity-extension-workflow" title="Permanent link">&para;</a></h3>
+<p>This flowchart outlines the steps required to safely expand a logical volume and resize its underlying filesystem on a running system.</p>
+<div class="mermaid">flowchart LR
+    pvcreate["1. pvcreate (New Disk)"] --&gt; vgextend["2. vgextend (Add to VG)"]
+    vgextend --&gt; lvextend["3. lvextend (Expand LV)"]
+    lvextend --&gt; resize["4. resize2fs / xfs_growfs (Grow FS)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class lvextend cpu;
+    class resize memory;
+    class pvcreate,vgextend system;</div>
 <h2 id="extending-the-volume-when-more-space-is-needed">🚀 Extending the Volume When More Space Is Needed<a class="headerlink" href="#extending-the-volume-when-more-space-is-needed" title="Permanent link">&para;</a></h2>
 <h3 id="1-add-a-new-nvme-drive">1️⃣ Add a New NVMe Drive<a class="headerlink" href="#1-add-a-new-nvme-drive" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Physically install a new NVMe drive (e.g., <code>/dev/nvme3n1</code>).</li>
 <li>Initialize it as a physical volume.</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>pvcreate /dev/nvme3n1
-</code></pre>
-<p>📤 <strong>Output:</strong> "Physical volume '/dev/nvme3n1' successfully created."</p>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>pvcreate /dev/nvme3n1
+</code></pre></div>
+📤 <strong>Output:</strong> "Physical volume '/dev/nvme3n1' successfully created."</p>
 <hr />
 <h3 id="2-extend-the-volume-group">2️⃣ Extend the Volume Group<a class="headerlink" href="#2-extend-the-volume-group" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Add the new physical volume to the existing volume group.</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>vgextend vg_ai_data /dev/nvme3n1
-</code></pre>
-<p>📤 <strong>Output:</strong> "Volume group 'vg_ai_data' successfully extended."</p>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>vgextend vg_ai_data /dev/nvme3n1
+</code></pre></div>
+📤 <strong>Output:</strong> "Volume group 'vg_ai_data' successfully extended."</p>
 <hr />
 <h3 id="3-extend-the-logical-volume">3️⃣ Extend the Logical Volume<a class="headerlink" href="#3-extend-the-logical-volume" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Increase the logical volume size to use the new space. You can specify a size (e.g., <code>+2TB</code>) or use all free space.</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>lvextend -l +100%FREE /dev/vg_ai_data/lv_training_data
-</code></pre>
-<p>📤 <strong>Output:</strong> "Size of logical volume vg_ai_data/lv_training_data changed from 6.00 TiB to 8.00 TiB."</p>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>lvextend -l +100%FREE /dev/vg_ai_data/lv_training_data
+</code></pre></div>
+📤 <strong>Output:</strong> "Size of logical volume vg_ai_data/lv_training_data changed from 6.00 TiB to 8.00 TiB."</p>
 <hr />
 <h3 id="4-resize-the-filesystem">4️⃣ Resize the Filesystem<a class="headerlink" href="#4-resize-the-filesystem" title="Permanent link">&para;</a></h3>
 <ul>
 <li>After extending the logical volume, resize the filesystem to use the new space.</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>resize2fs /dev/vg_ai_data/lv_training_data
-</code></pre>
-<p>📤 <strong>Output:</strong> "The filesystem on /dev/vg_ai_data/lv_training_data is now 2097152000 (4k) blocks long."</p>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>resize2fs /dev/vg_ai_data/lv_training_data
+</code></pre></div>
+📤 <strong>Output:</strong> "The filesystem on /dev/vg_ai_data/lv_training_data is now 2097152000 (4k) blocks long."</p>
 <hr />
 <h2 id="verification-and-monitoring">🕵️ Verification and Monitoring<a class="headerlink" href="#verification-and-monitoring" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2314,9 +2328,11 @@ mount /dev/vg_ai_data/lv_training_data /mnt/ai_data
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

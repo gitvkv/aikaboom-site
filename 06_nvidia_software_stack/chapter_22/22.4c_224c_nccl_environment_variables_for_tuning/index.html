@@ -2151,6 +2151,19 @@
 </ul>
 <p><strong>🕵️ When to tune this:</strong> If your system has multiple IB adapters but some are connected to different networks (e.g., storage vs. compute), you may need to explicitly select the compute-facing adapter. If NCCL picks the wrong one, performance will suffer.</p>
 <hr />
+<h3 id="visual-representation-nccl-performance-tuning-variables">📊 Visual Representation: NCCL Performance Tuning variables<a class="headerlink" href="#visual-representation-nccl-performance-tuning-variables" title="Permanent link">&para;</a></h3>
+<p>This diagram displays environment variables (NCCL_DEBUG, NCCL_IB_DISABLE) used to monitor and tune performance.</p>
+<div class="mermaid">flowchart LR
+    Tuning["NCCL Environment Variables"] --&gt; Debug["NCCL_DEBUG=INFO (Detailed logs)"]
+    Tuning --&gt; IB_Control["NCCL_IB_DISABLE=0/1 (InfiniBand control)"]
+    Tuning --&gt; Net_Select["NCCL_SOCKET_IFNAME=eth0 (Interface selection)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Tuning cpu;
+    class Debug,IB_Control,Net_Select memory;</div>
 <h2 id="nccl_net_gdr_level-controlling-gpu-direct-rdma">📊 NCCL_NET_GDR_LEVEL — Controlling GPU Direct RDMA<a class="headerlink" href="#nccl_net_gdr_level-controlling-gpu-direct-rdma" title="Permanent link">&para;</a></h2>
 <p><strong>What it does:</strong> GPU Direct RDMA (GDR) allows data to move directly between a GPU and a network adapter without passing through the CPU or system memory. This is much faster but requires specific hardware support. This variable controls how aggressively NCCL uses GDR.</p>
 <p><strong>Common values and their meanings:</strong></p>
@@ -2194,11 +2207,11 @@
 <hr />
 <h2 id="putting-it-all-together-a-practical-example">🧩 Putting It All Together — A Practical Example<a class="headerlink" href="#putting-it-all-together-a-practical-example" title="Permanent link">&para;</a></h2>
 <p>For a typical multi-node training setup with InfiniBand, you might set these variables together before launching your training script:</p>
-<p><strong>For reference:</strong></p>
-<pre><code>export NCCL_DEBUG=WARN
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>export NCCL_DEBUG=WARN
 export NCCL_IB_HCA=mlx5_0
 export NCCL_NET_GDR_LEVEL=1
-</code></pre>
+</code></pre></div></p>
 <p><strong>📤 Output:</strong> With these settings, NCCL will only print warnings (keeping logs clean), use only the first InfiniBand adapter (mlx5_0), and enable GPU Direct RDMA only for local node transfers (safe default).</p>
 <hr />
 <h2 id="quick-troubleshooting-checklist">✅ Quick Troubleshooting Checklist<a class="headerlink" href="#quick-troubleshooting-checklist" title="Permanent link">&para;</a></h2>
@@ -2250,9 +2263,11 @@ export NCCL_NET_GDR_LEVEL=1
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

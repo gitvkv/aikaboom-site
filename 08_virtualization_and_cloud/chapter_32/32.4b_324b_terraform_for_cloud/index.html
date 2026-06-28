@@ -2150,12 +2150,12 @@
 <li><strong>Profile</strong>: Optionally reference a named profile from your AWS credentials file.</li>
 </ul>
 <h3 id="example-provider-block-structure">Example Provider Block Structure<a class="headerlink" href="#example-provider-block-structure" title="Permanent link">&para;</a></h3>
-<p>For reference:</p>
-<pre><code>provider &quot;aws&quot; {
+<p>For reference:
+<div class="highlight"><pre><span></span><code>provider &quot;aws&quot; {
   region = &quot;us-west-2&quot;
   profile = &quot;ai-admin&quot;
 }
-</code></pre>
+</code></pre></div></p>
 <p><strong>📤 Output:</strong> No direct output — this configures the provider for subsequent resource definitions.</p>
 <h3 id="common-ai-resources-in-aws">Common AI Resources in AWS<a class="headerlink" href="#common-ai-resources-in-aws" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2175,15 +2175,15 @@
 <li><strong>Features</strong>: Optional block to enable preview features.</li>
 </ul>
 <h3 id="example-provider-block-structure_1">Example Provider Block Structure<a class="headerlink" href="#example-provider-block-structure_1" title="Permanent link">&para;</a></h3>
-<p>For reference:</p>
-<pre><code>provider &quot;azurerm&quot; {
+<p>For reference:
+<div class="highlight"><pre><span></span><code>provider &quot;azurerm&quot; {
   features {}
   subscription_id = &quot;00000000-0000-0000-0000-000000000000&quot;
   tenant_id       = &quot;11111111-1111-1111-1111-111111111111&quot;
   client_id       = &quot;22222222-2222-2222-2222-222222222222&quot;
   client_secret   = &quot;your-client-secret-value&quot;
 }
-</code></pre>
+</code></pre></div></p>
 <p><strong>📤 Output:</strong> No direct output — the provider is now ready to manage Azure resources.</p>
 <h3 id="common-ai-resources-in-azure">Common AI Resources in Azure<a class="headerlink" href="#common-ai-resources-in-azure" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2193,6 +2193,18 @@
 <li><strong>azurerm_network_interface</strong> with accelerated networking enabled</li>
 </ul>
 <hr />
+<h3 id="visual-representation-terraform-declarative-state-mapping">📊 Visual Representation: Terraform Declarative state mapping<a class="headerlink" href="#visual-representation-terraform-declarative-state-mapping" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how Terraform deploys resources (VMs, network adapters) to match states specified in tf configurations.</p>
+<div class="mermaid">flowchart LR
+    Config["variables.tf (Target: 4 GPU Instances)"] --&gt; Terraform["Terraform Engine (tfstate)"]
+    Terraform --&gt;|API Call| CloudProvider["Cloud Provider (Exposes GPU nodes)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Terraform cpu;
+    class Config,CloudProvider memory;</div>
 <h2 id="provider-configuration-for-gcp">🌍 Provider Configuration for GCP<a class="headerlink" href="#provider-configuration-for-gcp" title="Permanent link">&para;</a></h2>
 <p>Google Cloud Platform offers GPU-accelerated instances like A2, G2, and N1 with attached GPUs (e.g., NVIDIA A100, T4, L4).</p>
 <h3 id="key-configuration-elements_2">Key Configuration Elements<a class="headerlink" href="#key-configuration-elements_2" title="Permanent link">&para;</a></h3>
@@ -2202,14 +2214,14 @@
 <li><strong>Credentials</strong>: Path to a service account JSON key file.</li>
 </ul>
 <h3 id="example-provider-block-structure_2">Example Provider Block Structure<a class="headerlink" href="#example-provider-block-structure_2" title="Permanent link">&para;</a></h3>
-<p>For reference:</p>
-<pre><code>provider &quot;google&quot; {
+<p>For reference:
+<div class="highlight"><pre><span></span><code>provider &quot;google&quot; {
   project     = &quot;my-ai-project-123456&quot;
   region      = &quot;us-central1&quot;
   zone        = &quot;us-central1-a&quot;
   credentials = file(&quot;path/to/service-account-key.json&quot;)
 }
-</code></pre>
+</code></pre></div></p>
 <p><strong>📤 Output:</strong> No direct output — the provider is configured for GCP resource management.</p>
 <h3 id="common-ai-resources-in-gcp">Common AI Resources in GCP<a class="headerlink" href="#common-ai-resources-in-gcp" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2280,8 +2292,8 @@
 <li>Manage <strong>separate state files</strong> per cloud provider to avoid complexity.</li>
 </ul>
 <h3 id="example-multi-provider-setup">Example Multi-Provider Setup<a class="headerlink" href="#example-multi-provider-setup" title="Permanent link">&para;</a></h3>
-<p>For reference:</p>
-<pre><code># AWS provider for primary training cluster
+<p>For reference:
+<div class="highlight"><pre><span></span><code># AWS provider for primary training cluster
 provider &quot;aws&quot; {
   alias   = &quot;primary&quot;
   region  = &quot;us-east-1&quot;
@@ -2295,7 +2307,7 @@ provider &quot;google&quot; {
   region      = &quot;europe-west1&quot;
   credentials = file(&quot;gcp-backup-key.json&quot;)
 }
-</code></pre>
+</code></pre></div></p>
 <p><strong>📤 Output:</strong> Two providers are now available — referenced as <code>aws.primary</code> and <code>google.backup</code> in resource blocks.</p>
 <hr />
 <h2 id="summary">✅ Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
@@ -2340,9 +2352,11 @@ provider &quot;google&quot; {
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

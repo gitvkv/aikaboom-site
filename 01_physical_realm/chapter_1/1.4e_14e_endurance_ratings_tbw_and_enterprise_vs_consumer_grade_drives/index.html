@@ -2189,6 +2189,34 @@
 </tr>
 </tbody>
 </table>
+<h3 id="visual-representation-architectural-trade-offs-consumer-vs-enterprise-ssds">📊 Visual Representation: Architectural Trade-Offs — Consumer vs. Enterprise SSDs<a class="headerlink" href="#visual-representation-architectural-trade-offs-consumer-vs-enterprise-ssds" title="Permanent link">&para;</a></h3>
+<p>This diagram illustrates the design choices and structural differences between consumer and enterprise drives, showcasing their respective optimization focus areas.</p>
+<div class="mermaid">flowchart TD
+    subgraph ConsumerSSD [Consumer SSD: Burst-Optimized]
+        C1[NAND Flash: Higher Bit Density TLC/QLC] --&gt; C2[Controller: Burst performance firmware]
+        C2 --&gt; C3[No Power Loss Protection Capacitors]
+        C3 --&gt; C4[Low Endurance: 150-600 TBW]
+    end
+
+    subgraph EnterpriseSSD [Enterprise SSD: 24/7 Consistent &amp; Durable]
+        E1[NAND Flash: High Endurance TLC/MLC] --&gt; E2[Controller: Consistent latency firmware]
+        E2 --&gt; E3[Integrated Power Loss Protection Capacitors]
+        E3 --&gt; E4[High Endurance: 1,000-10,000+ TBW]
+    end
+
+    class C1 memory;
+    class C2 cpu;
+    class C3 system;
+    class C4 system;
+
+    class E1 memory;
+    class E2 cpu;
+    class E3 system;
+    class E4 system;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;</div>
 <hr />
 <h2 id="how-to-read-an-ssd-endurance-rating">🛠️ How to Read an SSD Endurance Rating<a class="headerlink" href="#how-to-read-an-ssd-endurance-rating" title="Permanent link">&para;</a></h2>
 <p>SSD manufacturers typically list TBW in the product specifications. Here is how to interpret it:</p>
@@ -2293,9 +2321,11 @@ A team training a large language model (LLM) used consumer SSDs in a storage nod
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

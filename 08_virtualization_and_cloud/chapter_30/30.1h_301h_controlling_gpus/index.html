@@ -2192,6 +2192,19 @@
 - The mode takes effect immediately for new processes; existing processes are unaffected.
 - After a reboot, the mode resets to <strong>Default</strong> unless persistence mode is on.</p>
 <hr />
+<h3 id="visual-representation-gpu-control-configurations">📊 Visual Representation: GPU Control configurations<a class="headerlink" href="#visual-representation-gpu-control-configurations" title="Permanent link">&para;</a></h3>
+<p>This diagram outlines active hardware controls: setting persistent modes, power limits, and locking application clocks.</p>
+<div class="mermaid">flowchart LR
+    Control["nvidia-smi Commands"] --&gt; Persistent["Persistence Mode (-pm 1 / Keeps driver loaded)"]
+    Control --&gt; PowerLimit["Power Limit (-pl 400 / Caps TDP)"]
+    Control --&gt; LockClocks["Lock Clocks (-lgc 1500 / Controls heating)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Control cpu;
+    class Persistent,PowerLimit,LockClocks memory;</div>
 <h2 id="3-persistence-mode-persistence-mode">🔄 3. Persistence Mode (<code>persistence-mode</code>)<a class="headerlink" href="#3-persistence-mode-persistence-mode" title="Permanent link">&para;</a></h2>
 <p><strong>What it does:</strong> Keeps the NVIDIA driver loaded in memory even when no process is using the GPU. This eliminates the startup delay when a new workload begins.</p>
 <p><strong>Why it matters:</strong>
@@ -2293,9 +2306,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

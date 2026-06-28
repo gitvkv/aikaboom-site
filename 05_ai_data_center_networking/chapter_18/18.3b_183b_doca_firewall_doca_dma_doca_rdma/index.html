@@ -2163,6 +2163,19 @@
 - Copying inference results back to host storage.
 - Accelerating data shuffling in distributed training jobs.</p>
 <hr />
+<h3 id="visual-representation-doca-service-frameworks">📊 Visual Representation: DOCA Service Frameworks<a class="headerlink" href="#visual-representation-doca-service-frameworks" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the various service wrappers (Firewalls, Telemetry, Storage) exposed by DOCA libraries.</p>
+<div class="mermaid">flowchart LR
+    DOCA["DOCA Frameworks"] --&gt; Flow["DOCA Flow (Packet processing)"]
+    DOCA --&gt; Telemetry["DOCA Telemetry (Switch/Link health)"]
+    DOCA --&gt; Storage["DOCA Firefly / Storage (Virtual disks)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class DOCA cpu;
+    class Flow,Telemetry,Storage memory;</div>
 <h2 id="doca-rdma-remote-memory-access-at-gpu-speed">🌐 DOCA RDMA — Remote Memory Access at GPU Speed<a class="headerlink" href="#doca-rdma-remote-memory-access-at-gpu-speed" title="Permanent link">&para;</a></h2>
 <p>DOCA RDMA (Remote Direct Memory Access) is a framework that allows one machine to directly read or write memory on another machine over the network — bypassing both CPUs and operating systems.</p>
 <p><strong>Key concepts:</strong></p>
@@ -2291,9 +2304,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

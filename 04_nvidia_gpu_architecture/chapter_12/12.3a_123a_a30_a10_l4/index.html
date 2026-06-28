@@ -2220,6 +2220,18 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-inference-gpu-platforms-hierarchy">📊 Visual Representation: Inference GPU Platforms Hierarchy<a class="headerlink" href="#visual-representation-inference-gpu-platforms-hierarchy" title="Permanent link">&para;</a></h3>
+<p>This diagram displays inference-optimized GPUs (L4, L40S, H100 NVL) and their target workload placements.</p>
+<div class="mermaid">flowchart LR
+    Inference["Inference Workloads"] --&gt; L4["L4 (Single-Slot, Low-Power, Edge)"]
+    Inference --&gt; L40s["L40S (Multi-Modal &amp; High-Throughput)"]
+    Inference --&gt; H100_NVL["H100 NVL (LLM Inference Scale)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class L4,L40s,H100_NVL cpu;</div>
 <h2 id="deep-dive-when-to-use-each-card">🕵️ Deep Dive: When to Use Each Card<a class="headerlink" href="#deep-dive-when-to-use-each-card" title="Permanent link">&para;</a></h2>
 <h3 id="nvidia-a30-the-balanced-workhorse">🟢 NVIDIA A30 — The Balanced Workhorse<a class="headerlink" href="#nvidia-a30-the-balanced-workhorse" title="Permanent link">&para;</a></h3>
 <p>The A30 is the most versatile card in this group. It uses HBM2 memory (high bandwidth) and supports a wider range of precisions (FP32, TF32, FP16, INT8). It can handle <strong>small-scale training</strong> (fine-tuning) and inference equally well.</p>
@@ -2312,9 +2324,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

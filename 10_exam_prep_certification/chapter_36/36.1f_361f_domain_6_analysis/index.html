@@ -2166,6 +2166,18 @@
 <li>Finally, it deploys monitoring and MIG management components.</li>
 </ol>
 <hr />
+<h3 id="visual-representation-slurm-vs-kubernetes-orchestration-selection">📊 Visual Representation: Slurm vs. Kubernetes orchestration selection<a class="headerlink" href="#visual-representation-slurm-vs-kubernetes-orchestration-selection" title="Permanent link">&para;</a></h3>
+<p>This diagram contrasts orchestration boundaries: selecting Kubernetes for inference APIs and Slurm for large pre-training runs.</p>
+<div class="mermaid">flowchart LR
+    Scheduler["Orchestrator Select"] --&gt; K8s["Kubernetes (Microservices / Real-time APIs)"]
+    Scheduler --&gt; Slurm["Slurm (Batch queues / Bare-metal performance)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Scheduler cpu;
+    class K8s,Slurm memory;</div>
 <h2 id="section-3-multi-instance-gpu-mig-the-basics">🕵️ Section 3: Multi-Instance GPU (MIG) — The Basics<a class="headerlink" href="#section-3-multi-instance-gpu-mig-the-basics" title="Permanent link">&para;</a></h2>
 <p>MIG is a feature available on NVIDIA Ampere and later architectures (e.g., A100, H100). It allows you to partition a single physical GPU into up to seven smaller, fully isolated GPU instances.</p>
 <p><strong>Why MIG matters:</strong></p>
@@ -2299,9 +2311,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2382,32 +2382,45 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-dcgm-field-id-telemetry-groups">📊 Visual Representation: DCGM Field ID Telemetry groups<a class="headerlink" href="#visual-representation-dcgm-field-id-telemetry-groups" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the primary DCGM field IDs mapped to GPU hardware counters.</p>
+<div class="mermaid">flowchart LR
+    Fields["DCGM Fields"] --&gt; Field1002["Field 1002 (GPU Temp)"]
+    Fields --&gt; Field1004["Field 1004 (Core clock speed)"]
+    Fields --&gt; Field1011["Field 1011 (FB memory allocations)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Fields cpu;
+    class Field1002,Field1004,Field1011 memory;</div>
 <h2 id="how-to-use-these-field-ids-in-practice">🛠️ How to Use These Field IDs in Practice<a class="headerlink" href="#how-to-use-these-field-ids-in-practice" title="Permanent link">&para;</a></h2>
 <p>When configuring DCGM for scraping, you specify which field IDs to collect. Here is how you would typically do it:</p>
 <h3 id="for-dcgm-exporter-prometheus-integration">For DCGM Exporter (Prometheus Integration)<a class="headerlink" href="#for-dcgm-exporter-prometheus-integration" title="Permanent link">&para;</a></h3>
 <p>The DCGM Exporter uses a configuration file where you list the field IDs you want. For example:</p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-bash"># Example configuration snippet for dcgm-exporter
-# File: /etc/dcgm-exporter/dcp-metrics-included.csv
-# Format: field_id, metric_name, help_text, labels
-100, gpu_utilization, GPU utilization percentage, gpu
-155, mem_utilization, Memory utilization percentage, gpu
-200, gpu_temp, GPU temperature in Celsius, gpu
-202, power_draw, GPU power draw in milliwatts, gpu
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Example configuration snippet for dcgm-exporter</span>
+<span class="c1"># File: /etc/dcgm-exporter/dcp-metrics-included.csv</span>
+<span class="c1"># Format: field_id, metric_name, help_text, labels</span>
+<span class="m">100</span>,<span class="w"> </span>gpu_utilization,<span class="w"> </span>GPU<span class="w"> </span>utilization<span class="w"> </span>percentage,<span class="w"> </span>gpu
+<span class="m">155</span>,<span class="w"> </span>mem_utilization,<span class="w"> </span>Memory<span class="w"> </span>utilization<span class="w"> </span>percentage,<span class="w"> </span>gpu
+<span class="m">200</span>,<span class="w"> </span>gpu_temp,<span class="w"> </span>GPU<span class="w"> </span>temperature<span class="w"> </span><span class="k">in</span><span class="w"> </span>Celsius,<span class="w"> </span>gpu
+<span class="m">202</span>,<span class="w"> </span>power_draw,<span class="w"> </span>GPU<span class="w"> </span>power<span class="w"> </span>draw<span class="w"> </span><span class="k">in</span><span class="w"> </span>milliwatts,<span class="w"> </span>gpu
+</code></pre></div></p>
 <p><strong>📤 Output:</strong> The exporter will then expose these metrics at an HTTP endpoint (default port 9400) for Prometheus to scrape.</p>
 <h3 id="for-direct-dcgm-api-calls">For Direct DCGM API Calls<a class="headerlink" href="#for-direct-dcgm-api-calls" title="Permanent link">&para;</a></h3>
 <p>If you are using the DCGM library directly in Python or C++, you reference field IDs like this:</p>
-<p><strong>For reference:</strong></p>
-<pre><code class="language-python">import pydcgm
-# Connect to DCGM engine
-dcgm = pydcgm.DcgmHandle()
-# Get GPU utilization (field ID 100)
-utilization = dcgm.GetEntityGroupEntities(
-    entityGroupId=0,  # GPU group
-    fieldIds=[100, 155, 200]
-)
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pydcgm</span>
+<span class="c1"># Connect to DCGM engine</span>
+<span class="n">dcgm</span> <span class="o">=</span> <span class="n">pydcgm</span><span class="o">.</span><span class="n">DcgmHandle</span><span class="p">()</span>
+<span class="c1"># Get GPU utilization (field ID 100)</span>
+<span class="n">utilization</span> <span class="o">=</span> <span class="n">dcgm</span><span class="o">.</span><span class="n">GetEntityGroupEntities</span><span class="p">(</span>
+    <span class="n">entityGroupId</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>  <span class="c1"># GPU group</span>
+    <span class="n">fieldIds</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">155</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>
+<span class="p">)</span>
+</code></pre></div></p>
 <p><strong>📤 Output:</strong> The API returns a dictionary with field ID values for each GPU.</p>
 <hr />
 <h2 id="choosing-the-right-metrics-for-ai-workloads">🕵️ Choosing the Right Metrics for AI Workloads<a class="headerlink" href="#choosing-the-right-metrics-for-ai-workloads" title="Permanent link">&para;</a></h2>
@@ -2524,9 +2537,11 @@ utilization = dcgm.GetEntityGroupEntities(
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

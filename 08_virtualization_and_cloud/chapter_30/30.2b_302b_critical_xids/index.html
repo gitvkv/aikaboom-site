@@ -2176,6 +2176,19 @@ The GPU has become <strong>unreachable</strong> by the system. The operating sys
 <p><strong>How to confirm recovery:</strong><br />
 After a reboot, run <strong>nvidia-smi</strong> and verify the GPU appears in the list with a valid temperature and power reading.</p>
 <hr />
+<h3 id="visual-representation-critical-gpu-xid-error-classifications">📊 Visual Representation: Critical GPU Xid Error classifications<a class="headerlink" href="#visual-representation-critical-gpu-xid-error-classifications" title="Permanent link">&para;</a></h3>
+<p>This diagram maps critical Xid codes: sorting PCIe bus drops (Xid 79), thermal trips (Xid 43), and memory parity errors (Xid 95).</p>
+<div class="mermaid">flowchart LR
+    Xid["Critical Xids"] --&gt; Xid79["Xid 79 (PCIe Link Lost - Node reboot required)"]
+    Xid --&gt; Xid43["Xid 43 (GPU Stopped - Thermal/Hardware crash)"]
+    Xid --&gt; Xid95["Xid 95 (SRAM Parity Error - Memory error)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Xid cpu;
+    class Xid79,Xid43,Xid95 memory;</div>
 <h2 id="xid-94-dbe-double-bit-error">🧠 Xid 94 — DBE (Double Bit Error)<a class="headerlink" href="#xid-94-dbe-double-bit-error" title="Permanent link">&para;</a></h2>
 <p><strong>What it means:</strong><br />
 A <strong>Double Bit Error</strong> (DBE) occurred in the GPU's memory. This means two bits in a memory location were corrupted, and the error could not be corrected.</p>
@@ -2319,9 +2332,11 @@ Use <strong>nvidia-smi -q -d ECC</strong> and look for "Double Bit Errors" under
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

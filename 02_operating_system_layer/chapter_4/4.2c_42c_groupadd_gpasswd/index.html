@@ -317,8 +317,6 @@
                 </li>
                 <li class="toctree-l3 current"><a class="reference internal current" href="#">4.2c groupadd, gpasswd: managing groups for shared GPU access</a>
     <ul class="current">
-    <li class="toctree-l4"><a class="reference internal" href="#context-introduction">🧠 Context Introduction</a>
-    </li>
     <li class="toctree-l4"><a class="reference internal" href="#what-is-a-group-in-linux">⚙️ What is a Group in Linux?</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#creating-a-new-group-with-groupadd">🛠️ Creating a New Group with groupadd</a>
@@ -2130,7 +2128,6 @@
 </div>
 
 <hr />
-<h2 id="context-introduction">🧠 Context Introduction<a class="headerlink" href="#context-introduction" title="Permanent link">&para;</a></h2>
 <p>In AI infrastructure, GPUs are expensive and powerful resources that often need to be shared among multiple users. Instead of giving every user direct access to the GPU devices (which can lead to conflicts or security issues), Linux groups provide a clean way to control who can use the GPUs. This section covers two essential commands — <strong>groupadd</strong> and <strong>gpasswd</strong> — that help you create and manage these groups for shared GPU access.</p>
 <p>Think of a group as a "club membership." Once a user is added to the GPU group, they automatically get permission to use the GPU devices without needing special administrative rights every time.</p>
 <hr />
@@ -2150,10 +2147,10 @@
 - Each group gets a unique <strong>Group ID (GID)</strong> automatically.</p>
 <p><strong>Example scenario:</strong>
 An engineer needs to create a group called <strong>gpuusers</strong> so that team members can share access to two NVIDIA GPUs installed on the server.</p>
-<p>For reference:</p>
-<pre><code>groupadd gpuusers
-</code></pre>
-<p>📤 Output: No output if successful (the group is created silently).</p>
+<p>For reference:
+<div class="highlight"><pre><span></span><code>groupadd gpuusers
+</code></pre></div>
+📤 Output: No output if successful (the group is created silently).</p>
 <hr />
 <h2 id="managing-group-membership-with-gpasswd">🕵️ Managing Group Membership with gpasswd<a class="headerlink" href="#managing-group-membership-with-gpasswd" title="Permanent link">&para;</a></h2>
 <p>The <strong>gpasswd</strong> command is used to manage group membership — adding or removing users from a group.</p>
@@ -2163,11 +2160,11 @@ An engineer needs to create a group called <strong>gpuusers</strong> so that tea
 - Changes take effect immediately, but the user may need to log out and log back in for the new group membership to be recognized.</p>
 <p><strong>Example scenario:</strong>
 An engineer wants to add two users — <strong>alice</strong> and <strong>bob</strong> — to the <strong>gpuusers</strong> group so they can run AI training jobs on the shared GPUs.</p>
-<p>For reference:</p>
-<pre><code>gpasswd -a alice gpuusers
+<p>For reference:
+<div class="highlight"><pre><span></span><code>gpasswd -a alice gpuusers
 gpasswd -a bob gpuusers
-</code></pre>
-<p>📤 Output:<br />
+</code></pre></div>
+📤 Output:<br />
 Adding user alice to group gpuusers<br />
 Adding user bob to group gpuusers</p>
 <hr />
@@ -2218,6 +2215,35 @@ Adding user bob to group gpuusers</p>
 <li><strong>User logs in again</strong> — The user logs out and back in (or starts a new session) so the group membership takes effect.</li>
 <li><strong>User runs AI workloads</strong> — The user can now run GPU-accelerated applications (like TensorFlow or PyTorch) without permission errors.</li>
 </ol>
+<h3 id="visual-representation-group-based-gpu-access-control">📊 Visual Representation: Group-Based GPU Access Control<a class="headerlink" href="#visual-representation-group-based-gpu-access-control" title="Permanent link">&para;</a></h3>
+<p>This diagram shows how users are consolidated into a dedicated Linux group (e.g., <code>gpuusers</code>) to securely share write/read access to physical NVIDIA GPU device files, while unauthorized users are blocked.</p>
+<div class="mermaid">flowchart TD
+    subgraph Users["System Users"]
+        Alice["User: Alice"]
+        Bob["User: Bob"]
+        Charlie["User: Charlie&lt;br&gt;(Not in gpuusers)"]
+    end
+
+    subgraph AccessGroup["Linux Group: gpuusers (GID: 1200)"]
+        Alice
+        Bob
+    end
+
+    subgraph HW["NVIDIA GPU Hardware Interfaces"]
+        dev0["/dev/nvidia0"]
+        dev1["/dev/nvidia1"]
+    end
+
+    AccessGroup --&gt;|Read/Write Permission| HW
+    Charlie --&gt;|Access Denied| HW
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class dev0,dev1 cpu;
+    class Alice,Bob,Charlie memory;
+    class AccessGroup,Users system;</div>
 <hr />
 <h2 id="best-practices-for-engineers">✅ Best Practices for Engineers<a class="headerlink" href="#best-practices-for-engineers" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2293,9 +2319,11 @@ Adding user bob to group gpuusers</p>
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

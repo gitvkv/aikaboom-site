@@ -2179,6 +2179,20 @@
 - <strong>Query</strong>: <code>rate(DCGM_FI_DEV_GPU_UTIL[5m])</code>
 - <strong>📤 Output</strong>: Change in utilization per second (useful for spotting trends)</p>
 <hr />
+<h3 id="visual-representation-promql-query-evaluation">📊 Visual Representation: PromQL query evaluation<a class="headerlink" href="#visual-representation-promql-query-evaluation" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how PromQL queries parse, filter, and aggregate time-series metric databases.</p>
+<div class="mermaid">flowchart LR
+    Query["PromQL Query: sum(dcgm_gpu_temp)"] --&gt; Engine["Prometheus Query Engine"]
+    Engine --&gt; TSDB["TSDB Data Blocks"]
+    Engine --&gt; Result["Computed Scalar / Vector results"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Engine cpu;
+    class Result memory;
+    class Query,TSDB system;</div>
 <h2 id="querying-gpu-memory">🧠 Querying GPU Memory<a class="headerlink" href="#querying-gpu-memory" title="Permanent link">&para;</a></h2>
 <p>Memory is a finite resource — running out can crash your AI workloads. Monitoring memory usage helps you plan capacity.</p>
 <h3 id="total-memory">Total Memory<a class="headerlink" href="#total-memory" title="Permanent link">&para;</a></h3>
@@ -2329,9 +2343,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

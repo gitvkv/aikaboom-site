@@ -2186,6 +2186,19 @@ You specify a username (e.g., <code>alice</code>), a home directory (e.g., <code
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-bcm-user-and-project-directory-provisioning">📊 Visual Representation: BCM User and Project Directory provisioning<a class="headerlink" href="#visual-representation-bcm-user-and-project-directory-provisioning" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how user accounts and LDAP group directories are synchronized across BCM nodes.</p>
+<div class="mermaid">flowchart LR
+    LDAP["LDAP / Active Directory Server"] --&gt; BCMHead["BCM Head Node Sync"]
+    BCMHead --&gt;|Configure PAM / SSSD| ClusterNodes["All Cluster Compute Nodes"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class BCMHead cpu;
+    class ClusterNodes memory;
+    class LDAP system;</div>
 <h2 id="setting-gpu-quotas">🛠️ Setting GPU Quotas<a class="headerlink" href="#setting-gpu-quotas" title="Permanent link">&para;</a></h2>
 <p>GPU quotas prevent any single user or project from monopolizing the cluster. You can set quotas at two levels:</p>
 <ol>
@@ -2286,9 +2299,11 @@ User <code>alice</code> — Project: <code>research</code> — GPU Quota: 4 GPUs
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

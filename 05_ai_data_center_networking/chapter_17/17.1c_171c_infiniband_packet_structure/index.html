@@ -2201,6 +2201,20 @@
 <p><strong>Key takeaway:</strong> Every InfiniBand packet has an LRH. Without it, the packet cannot be routed even one hop.</p>
 </blockquote>
 <hr />
+<h3 id="visual-representation-infiniband-packet-framing-layout">📊 Visual Representation: InfiniBand Packet Framing Layout<a class="headerlink" href="#visual-representation-infiniband-packet-framing-layout" title="Permanent link">&para;</a></h3>
+<p>This diagram details the headers of an InfiniBand packet, showing Local Routing (LRH), Base Transport (BTH), Payload, and Integrity checks.</p>
+<div class="mermaid">flowchart LR
+    LRH["Local Routing Header (LID Addresses)"] --&gt; BTH["Base Transport Header (QP Index)"]
+    BTH --&gt; Payload["RDMA Message (Data)"]
+    Payload --&gt; ICR["ICRC + VCRC (Integrity Checks)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class LRH cpu;
+    class BTH,Payload memory;
+    class ICR system;</div>
 <h2 id="global-routing-header-grh-the-inter-subnet-passport">🌍 Global Routing Header (GRH) — The "Inter-Subnet Passport"<a class="headerlink" href="#global-routing-header-grh-the-inter-subnet-passport" title="Permanent link">&para;</a></h2>
 <p>The GRH is <strong>optional</strong> and only appears when a packet needs to travel from one InfiniBand subnet to another. It is based on <strong>IPv6-style addressing</strong> (128-bit addresses) and provides global routing information.</p>
 <h3 id="key-fields-in-the-grh">Key Fields in the GRH:<a class="headerlink" href="#key-fields-in-the-grh" title="Permanent link">&para;</a></h3>
@@ -2366,9 +2380,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

@@ -2155,6 +2155,21 @@
 <li><strong>Solution</strong>: Use <strong>micro-batching</strong> — split each batch into smaller micro-batches to keep all GPUs busy.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-pipeline-parallelism-with-micro-batches">📊 Visual Representation: Pipeline Parallelism with Micro-Batches<a class="headerlink" href="#visual-representation-pipeline-parallelism-with-micro-batches" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how Pipeline Parallelism divides a batch into micro-batches to overlap GPU executions, reducing inactive bubble time.</p>
+<div class="mermaid">flowchart LR
+    Batch["Input Batch"] --&gt;|Split| Micro["Micro-Batches 1..4"]
+    Micro --&gt; GPU1["GPU 1 (Stage 1)"]
+    GPU1 --&gt;|Activations| GPU2["GPU 2 (Stage 2)"]
+    GPU2 --&gt;|Activations| GPU3["GPU 3 (Stage 3)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPU1,GPU2,GPU3 cpu;
+    class Batch memory;
+    class Micro system;</div>
 <h2 id="comparison-pipeline-parallelism-vs-other-parallelism-types">📊 Comparison: Pipeline Parallelism vs. Other Parallelism Types<a class="headerlink" href="#comparison-pipeline-parallelism-vs-other-parallelism-types" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2262,9 +2277,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

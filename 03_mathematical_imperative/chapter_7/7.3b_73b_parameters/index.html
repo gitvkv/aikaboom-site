@@ -2236,6 +2236,24 @@
 <p><strong>Key Insight:</strong><br />
 Using lower precision (FP16 or INT8) dramatically reduces VRAM requirements. This is why engineers use techniques like <strong>quantization</strong> to run large models on smaller GPUs.</p>
 <hr />
+<h3 id="visual-representation-model-parameter-memory-footprint">📊 Visual Representation: Model Parameter Memory Footprint<a class="headerlink" href="#visual-representation-model-parameter-memory-footprint" title="Permanent link">&para;</a></h3>
+<p>This diagram outlines how model parameters translate to physical GPU memory (VRAM) during training vs. inference (including optimizer states).</p>
+<div class="mermaid">flowchart LR
+    subgraph Inference["Inference VRAM"]
+        Weights["Model Weights (1x size)"] --- KVCache["KV Cache (Dynamic)"]
+    end
+    subgraph Training["Training VRAM"]
+        TrainWeights["Model Weights"] --- OptState["Optimizer States (Adam: 2x)"]
+        OptState --- Grads["Gradients (1x)"]
+        Grads --- Activations["Activation Memory"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Weights,TrainWeights memory;
+    class KVCache,OptState,Grads,Activations system;</div>
 <h2 id="real-world-implications-for-engineers">🕵️ Real-World Implications for Engineers<a class="headerlink" href="#real-world-implications-for-engineers" title="Permanent link">&para;</a></h2>
 <h3 id="gpu-selection">🖥️ GPU Selection<a class="headerlink" href="#gpu-selection" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2353,9 +2371,11 @@ Using lower precision (FP16 or INT8) dramatically reduces VRAM requirements. Thi
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

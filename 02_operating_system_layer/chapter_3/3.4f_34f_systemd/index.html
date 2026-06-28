@@ -2203,6 +2203,29 @@
 </tr>
 </tbody>
 </table>
+<h3 id="visual-representation-systemd-analyze-profiling-toolkit">📊 Visual Representation: systemd-analyze Profiling Toolkit<a class="headerlink" href="#visual-representation-systemd-analyze-profiling-toolkit" title="Permanent link">&para;</a></h3>
+<p>This diagram maps the subcommands of <code>systemd-analyze</code>, highlighting how each profiling perspective reports boot duration, bottlenecks, and service ordering.</p>
+<div class="mermaid">flowchart TD
+    subgraph ToolSuite["systemd-analyze Command Suite"]
+        direction TB
+        Main["systemd-analyze"] --&gt; TimeS["time\n(Total Kernel &amp; User Space Boot Duration)"]
+        Main --&gt; BlameS["blame\n(Raw Service Activation Duration)"]
+        Main --&gt; ChainS["critical-chain\n(Dependency Bottleneck Tree)"]
+        Main --&gt; PlotS["plot\n(SVG Graphical Timeline Chart)"]
+    end
+
+    TimeS --&gt;|Query Overall| ResultTime["e.g., Startup finished in 2.1s (kernel) + 12s (userspace)"]
+    BlameS --&gt;|Query Service Cost| ResultBlame["e.g., 3.1s docker.service, 2.4s nvidia-persistenced"]
+    ChainS --&gt;|Query Critical Path| ResultChain["e.g., multi-user.target -&gt; docker.service -&gt; network-online"]
+    PlotS --&gt;|Export Timeline Visual| ResultPlot["e.g., boot-timeline.svg file"]
+
+    class ResultTime,ResultPlot memory;
+    class TimeS,BlameS,ChainS,PlotS system;
+    class Main cpu;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;</div>
 <hr />
 <h2 id="practical-tips-for-ai-infrastructure-operators">🧠 Practical Tips for AI Infrastructure Operators<a class="headerlink" href="#practical-tips-for-ai-infrastructure-operators" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2273,9 +2296,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

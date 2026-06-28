@@ -2200,6 +2200,19 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-authorized-keys-registry-registration">📊 Visual Representation: Authorized Keys Registry Registration<a class="headerlink" href="#visual-representation-authorized-keys-registry-registration" title="Permanent link">&para;</a></h3>
+<p>This flowchart illustrates how ssh-copy-id logs into a remote server to append the client's public key to the remote authorized_keys file.</p>
+<div class="mermaid">flowchart LR
+    Client["Client (id_ed25519.pub)"] --&gt;|ssh-copy-id command| Remote["Remote Server"]
+    Remote --&gt;|Appends key to| Auth["~/.ssh/authorized_keys"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Client cpu;
+    class Auth memory;
+    class Remote system;</div>
 <h2 id="how-authorized_keys-works-under-the-hood">🕵️ How authorized_keys Works Under the Hood<a class="headerlink" href="#how-authorized_keys-works-under-the-hood" title="Permanent link">&para;</a></h2>
 <p>When you initiate an SSH connection:</p>
 <ol>
@@ -2278,9 +2291,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

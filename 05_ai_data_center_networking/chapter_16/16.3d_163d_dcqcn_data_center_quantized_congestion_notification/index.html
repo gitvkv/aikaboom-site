@@ -2188,6 +2188,20 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-dcqcn-congestion-feedback-loop">📊 Visual Representation: DCQCN Congestion Feedback Loop<a class="headerlink" href="#visual-representation-dcqcn-congestion-feedback-loop" title="Permanent link">&para;</a></h3>
+<p>This flowchart displays the DCQCN congestion loop, showing how ECN-marked packets trigger rate limiters at the source.</p>
+<div class="mermaid">flowchart LR
+    Source["Source Node (Rate Limiter)"] --&gt;|UDP/IP Packets| Switch{"Congested Switch"}
+    Switch --&gt;|Mark ECN in IP Header| Dest["Destination Node"]
+    Dest --&gt;|"Generate CNP (Congestion Notification Packet)"| Source
+    Source --&gt;|Apply DCQCN Rate Reduction| Source
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Switch cpu;
+    class Source,Dest memory;</div>
 <h2 id="practical-configuration-example">🛠️ Practical Configuration Example<a class="headerlink" href="#practical-configuration-example" title="Permanent link">&para;</a></h2>
 <p>When configuring DCQCN on a NVIDIA Spectrum switch, engineers typically set the following values. These are not commands but conceptual settings you would apply:</p>
 <ul>
@@ -2304,9 +2318,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

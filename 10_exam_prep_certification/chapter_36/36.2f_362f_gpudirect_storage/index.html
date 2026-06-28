@@ -2192,6 +2192,22 @@
 <li><strong>Multi-GPU Support</strong>: GDS can distribute data across multiple GPUs in a single node or across nodes.</li>
 </ul>
 <hr />
+<h3 id="visual-representation-gpudirect-storage-gds-vs-cpu-read-path">📊 Visual Representation: GPUDirect Storage (GDS) vs. CPU read path<a class="headerlink" href="#visual-representation-gpudirect-storage-gds-vs-cpu-read-path" title="Permanent link">&para;</a></h3>
+<p>This diagram contrasts GDS (direct NVMe-to-GPU data transfers) against legacy paths (CPU bounce buffers).</p>
+<div class="mermaid">flowchart LR
+    subgraph Legacy["Legacy Copy Path"]
+        Drive1["NVMe SSD"] --&gt; HostRAM["CPU host bounce buffer"] --&gt; GPUMem1["GPU memory"]
+    end
+    subgraph GDS["GPUDirect Storage Path"]
+        Drive2["NVMe SSD"] --&gt;|Direct DMA over PCIe| GPUMem2["GPU memory"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPUMem2 cpu;
+    class HostRAM memory;</div>
 <h2 id="common-architecture-questions-exam-focus">🕵️ Common Architecture Questions (Exam Focus)<a class="headerlink" href="#common-architecture-questions-exam-focus" title="Permanent link">&para;</a></h2>
 <h3 id="1-does-gds-require-special-hardware">1. "Does GDS require special hardware?"<a class="headerlink" href="#1-does-gds-require-special-hardware" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2322,9 +2338,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

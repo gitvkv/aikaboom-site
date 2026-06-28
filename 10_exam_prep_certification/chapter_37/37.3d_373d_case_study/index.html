@@ -2041,6 +2041,8 @@
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#summary">🏁 Summary</a>
     </li>
+    <li class="toctree-l4"><a class="reference internal" href="#visual-representation-gpudirect-storage-sizing-requirement">📊 Visual Representation: GPUDirect Storage sizing requirement</a>
+    </li>
     </ul>
                 </li>
     </ul>
@@ -2247,6 +2249,19 @@
 <li><strong>Key metric:</strong> Keep p99 latency under 100 microseconds</li>
 </ul>
 <p>Remember: Storage sizing for AI is about <strong>peak burst performance</strong>, not average throughput. GPUDirect Storage helps reduce the peak requirement by ~30%, but you still need a high-performance all-flash array to keep your GPUs fed. Always test with real workloads before production deployment.</p>
+<h3 id="visual-representation-gpudirect-storage-sizing-requirement">📊 Visual Representation: GPUDirect Storage sizing requirement<a class="headerlink" href="#visual-representation-gpudirect-storage-sizing-requirement" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how sizing parallel filesystems meets GDS throughput capabilities to bypass CPU bottlenecks.</p>
+<div class="mermaid">flowchart LR
+    ClusterNode["GPU node requests (GDS throughput: 50 GB/s)"] --&gt; StorageSize["Parallel storage array sizing"]
+    StorageSize --&gt; MultiNVMe["Requires: 4 x high-performance PCIe Gen5 NVMe pools"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class StorageSize cpu;
+    class MultiNVMe memory;
+    class ClusterNode system;</div>
               
             </div>
           </div><footer>
@@ -2286,9 +2301,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

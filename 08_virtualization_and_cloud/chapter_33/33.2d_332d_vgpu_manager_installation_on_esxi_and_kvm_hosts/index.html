@@ -2191,6 +2191,20 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-vgpu-manager-installation-steps">📊 Visual Representation: vGPU Manager installation steps<a class="headerlink" href="#visual-representation-vgpu-manager-installation-steps" title="Permanent link">&para;</a></h3>
+<p>This flowchart maps installing vGPU: loading vibs on hypervisors, booting VMs, and loading guest drivers.</p>
+<div class="mermaid">flowchart LR
+    InstallVIB["1. Install Host vGPU Manager VIB/rpm"] --&gt; BootVM["2. Configure vGPU Profile on VM &amp; Boot"]
+    BootVM --&gt; GuestInstall["3. Install Guest OS NVIDIA driver"]
+    GuestInstall --&gt; Verify["4. Verify status using nvidia-smi"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class InstallVIB cpu;
+    class BootVM memory;
+    class GuestInstall,Verify system;</div>
 <h2 id="installing-vgpu-manager-on-esxi-hosts">🖥️ Installing vGPU Manager on ESXi Hosts<a class="headerlink" href="#installing-vgpu-manager-on-esxi-hosts" title="Permanent link">&para;</a></h2>
 <h3 id="step-1-download-the-vgpu-manager-vib">🔹 Step 1: Download the vGPU Manager VIB<a class="headerlink" href="#step-1-download-the-vgpu-manager-vib" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2207,18 +2221,18 @@
 <li>Transfer the VIB file to the ESXi host (e.g., via SCP or datastore upload)</li>
 <li>Run the installation command from the ESXi shell</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>esxcli software vib install -v /path/to/NVIDIA-vGPU-VIB.vib
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>esxcli software vib install -v /path/to/NVIDIA-vGPU-VIB.vib
+</code></pre></div></p>
 <p>📤 Output: A message confirming successful installation, including the VIB name and version.</p>
 <h3 id="step-4-reboot-the-esxi-host">🔹 Step 4: Reboot the ESXi Host<a class="headerlink" href="#step-4-reboot-the-esxi-host" title="Permanent link">&para;</a></h3>
 <ul>
 <li>After installation, reboot the host to load the new vGPU kernel module</li>
 <li>Verify the module is loaded using the ESXi command</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>esxcli system module list | grep nvidia
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>esxcli system module list | grep nvidia
+</code></pre></div></p>
 <p>📤 Output: A line showing the NVIDIA vGPU module (e.g., <code>nvidia-vgpu</code>)</p>
 <h3 id="step-5-verify-gpu-detection">🔹 Step 5: Verify GPU Detection<a class="headerlink" href="#step-5-verify-gpu-detection" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2236,39 +2250,39 @@
 <ul>
 <li>Ensure your KVM host has the correct kernel headers and development tools installed</li>
 </ul>
-<p><strong>For reference (RHEL-based):</strong></p>
-<pre><code>sudo yum install kernel-devel kernel-headers gcc make
-</code></pre>
-<p><strong>For reference (Debian-based):</strong></p>
-<pre><code>sudo apt-get install linux-headers-$(uname -r) build-essential
-</code></pre>
+<p><strong>For reference (RHEL-based):</strong>
+<div class="highlight"><pre><span></span><code>sudo yum install kernel-devel kernel-headers gcc make
+</code></pre></div></p>
+<p><strong>For reference (Debian-based):</strong>
+<div class="highlight"><pre><span></span><code>sudo apt-get install linux-headers-$(uname -r) build-essential
+</code></pre></div></p>
 <h3 id="step-3-install-the-vgpu-manager-package">🔹 Step 3: Install the vGPU Manager Package<a class="headerlink" href="#step-3-install-the-vgpu-manager-package" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Use the package manager appropriate for your distribution</li>
 </ul>
-<p><strong>For reference (RPM):</strong></p>
-<pre><code>sudo rpm -ivh NVIDIA-vGPU-Manager-&lt;version&gt;.x86_64.rpm
-</code></pre>
-<p><strong>For reference (Debian):</strong></p>
-<pre><code>sudo dpkg -i NVIDIA-vGPU-Manager-&lt;version&gt;.amd64.deb
-</code></pre>
+<p><strong>For reference (RPM):</strong>
+<div class="highlight"><pre><span></span><code>sudo rpm -ivh NVIDIA-vGPU-Manager-&lt;version&gt;.x86_64.rpm
+</code></pre></div></p>
+<p><strong>For reference (Debian):</strong>
+<div class="highlight"><pre><span></span><code>sudo dpkg -i NVIDIA-vGPU-Manager-&lt;version&gt;.amd64.deb
+</code></pre></div></p>
 <p>📤 Output: Installation progress and a final confirmation message.</p>
 <h3 id="step-4-reboot-the-kvm-host">🔹 Step 4: Reboot the KVM Host<a class="headerlink" href="#step-4-reboot-the-kvm-host" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Reboot the host to load the NVIDIA kernel module</li>
 <li>After reboot, verify the module is loaded</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>lsmod | grep nvidia
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>lsmod | grep nvidia
+</code></pre></div></p>
 <p>📤 Output: A list showing <code>nvidia</code> and <code>nvidia-vgpu-vfio</code> modules</p>
 <h3 id="step-5-verify-gpu-and-vgpu-capabilities">🔹 Step 5: Verify GPU and vGPU Capabilities<a class="headerlink" href="#step-5-verify-gpu-and-vgpu-capabilities" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Use the NVIDIA management tool to check GPU status</li>
 </ul>
-<p><strong>For reference:</strong></p>
-<pre><code>nvidia-smi
-</code></pre>
+<p><strong>For reference:</strong>
+<div class="highlight"><pre><span></span><code>nvidia-smi
+</code></pre></div></p>
 <p>📤 Output: A table showing GPU name, driver version, and vGPU capabilities (look for "vGPU" in the GPU name line)</p>
 <hr />
 <h2 id="post-installation-verification-checklist">🕵️ Post-Installation Verification Checklist<a class="headerlink" href="#post-installation-verification-checklist" title="Permanent link">&para;</a></h2>
@@ -2330,9 +2344,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

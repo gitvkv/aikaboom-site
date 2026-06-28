@@ -2201,6 +2201,18 @@
 </tbody>
 </table>
 <hr />
+<h3 id="visual-representation-service-abstraction-selector-routing">📊 Visual Representation: Service abstraction selector routing<a class="headerlink" href="#visual-representation-service-abstraction-selector-routing" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how Service abstractions route traffic to backend Pods dynamically using matching metadata label selectors.</p>
+<div class="mermaid">flowchart LR
+    Service["Service (selector: app=inference)"] --&gt;|Labels check| Pod1["Pod 1 (app=inference / Target IP)"]
+    Service --&gt;|Labels check| Pod2["Pod 2 (app=inference / Target IP)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Service cpu;
+    class Pod1,Pod2 memory;</div>
 <h2 id="how-services-work-with-pods">🕵️ How Services Work with Pods<a class="headerlink" href="#how-services-work-with-pods" title="Permanent link">&para;</a></h2>
 <p>Services use <strong>label selectors</strong> to find the Pods they should route traffic to. Here is the flow:</p>
 <ol>
@@ -2266,9 +2278,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

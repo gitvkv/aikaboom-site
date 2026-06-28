@@ -2163,6 +2163,19 @@
 <li><strong>Take action</strong> — If a GPU fails, you can exclude it from training or trigger alerts</li>
 </ol>
 <hr />
+<h3 id="visual-representation-dcgm-health-monitor-watches">📊 Visual Representation: DCGM Health Monitor watches<a class="headerlink" href="#visual-representation-dcgm-health-monitor-watches" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how the DCGM engine monitors background metrics like PCIe lanes, thermal states, and memory errors.</p>
+<div class="mermaid">flowchart LR
+    DCGMHealth["DCGM Health Systems"] --&gt; PCIe["PCIe Link Health"]
+    DCGMHealth --&gt; Mem["Memory Health (Remapping / SBE / DBE)"]
+    DCGMHealth --&gt; PowerTemp["Power &amp; Thermal Health"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class DCGMHealth cpu;
+    class PCIe,Mem,PowerTemp memory;</div>
 <h2 id="comparison-of-common-health-check-types">📊 Comparison of Common Health Check Types<a class="headerlink" href="#comparison-of-common-health-check-types" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2270,9 +2283,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

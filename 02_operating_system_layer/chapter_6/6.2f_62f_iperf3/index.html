@@ -2199,6 +2199,19 @@
 <li><strong>Comparing two paths</strong> — test direct connect vs. through a switch</li>
 </ul>
 <hr />
+<h3 id="visual-representation-iperf3-network-performance-benchmark">📊 Visual Representation: iperf3 Network Performance Benchmark<a class="headerlink" href="#visual-representation-iperf3-network-performance-benchmark" title="Permanent link">&para;</a></h3>
+<p>This diagram displays the active test loop between an iperf3 client generating traffic and an iperf3 server monitoring latency and bandwith throughput.</p>
+<div class="mermaid">flowchart LR
+    Client["iperf3 Client (Generate Traffic)"] --&gt;|TCP/UDP Stream| Network["Network Path"]
+    Network --&gt;|Sustained Data| Server["iperf3 Server (Measure Bandwidth/Loss)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Client cpu;
+    class Server memory;
+    class Network system;</div>
 <h2 id="typical-test-scenarios">🧪 Typical Test Scenarios<a class="headerlink" href="#typical-test-scenarios" title="Permanent link">&para;</a></h2>
 <p><strong>Scenario 1: Single-stream TCP test</strong>
 - Run the server on Node A
@@ -2290,9 +2303,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {

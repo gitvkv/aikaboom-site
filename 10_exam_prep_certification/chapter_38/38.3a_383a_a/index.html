@@ -2215,6 +2215,19 @@
 - <strong>CUDA Toolkit</strong> — includes compilers, libraries (cuBLAS, cuDNN), and debugging tools.</p>
 <p><strong>Why it matters:</strong> Almost all AI frameworks (PyTorch, TensorFlow, JAX) use CUDA under the hood. Understanding CUDA helps you debug performance issues and write custom GPU-accelerated code.</p>
 <hr />
+<h3 id="visual-representation-glossary-terms-mapping-a-to-f">📊 Visual Representation: Glossary terms mapping (A to F)<a class="headerlink" href="#visual-representation-glossary-terms-mapping-a-to-f" title="Permanent link">&para;</a></h3>
+<p>This diagram displays how primary glossary concepts (Ampere, CDI, DKMS, EFA) link to system components.</p>
+<div class="mermaid">flowchart LR
+    Glossary["Glossary A-F"] --&gt; Ampere["Ampere (GPU Architecture)"]
+    Glossary --&gt; CDI["CDI (Container Device Interface)"]
+    Glossary --&gt; EFA["EFA (Elastic Fabric Adapter)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Glossary cpu;
+    class Ampere,CDI,EFA memory;</div>
 <h2 id="dpu-data-processing-unit">🔗 DPU (Data Processing Unit)<a class="headerlink" href="#dpu-data-processing-unit" title="Permanent link">&para;</a></h2>
 <p><strong>What it is:</strong> A specialized processor designed to offload and accelerate data-center infrastructure tasks from the CPU. NVIDIA's BlueField DPU is a prime example.</p>
 <p><strong>Key capabilities:</strong>
@@ -2340,9 +2353,11 @@
     <script>var base_url = "../../..";</script>
     <script src="../../../js/theme_extra.js"></script>
     <script src="../../../js/theme.js"></script>
+      <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       <script src="../../../js/quiz_questions.js"></script>
       <script src="../../../js/mock_test_questions.js"></script>
       <script src="../../../js/extra.js"></script>
+      <script src="../../../js/mermaid_init.js"></script>
       <script src="../../../search/main.js"></script>
     <script>
         jQuery(function () {
