@@ -68,6 +68,24 @@ Higher tiers mean more resilience, but also higher cost and complexity.
 | **Maintainability** | Requires shutdown | Requires shutdown | Concurrent maintenance | Concurrent + fault tolerant |
 | **Cost Factor** | Low | Medium | High | Very High |
 
+### 📊 Visual Representation: Data Center Tier Progression
+This diagram shows the evolution of data center tiers from basic capacity to fully fault-tolerant systems, outlining the redundancy configurations and availability goals.
+
+```mermaid
+flowchart LR
+    Tier1["Tier I<br>Basic Capacity<br>(99.671% / N)"] -->|Add components| Tier2["Tier II<br>Redundant Comp.<br>(99.741% / N+1)"]
+    Tier2 -->|Add secondary path| Tier3["Tier III<br>Concurrently Maint.<br>(99.982% / Dual Path)"]
+    Tier3 -->|Add active fault tolerance| Tier4["Tier IV<br>Fault Tolerant<br>(99.995% / 2N+1 or 2N)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Tier4 cpu;
+    class Tier3 memory;
+    class Tier1,Tier2 system;
+```
+
 ---
 
 ## 🕵️ Why This Matters for AI Infrastructure

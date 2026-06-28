@@ -41,6 +41,29 @@ This is the core difference between a **CPU (Central Processing Unit)** and a **
 
 ---
 
+### 📊 Visual Representation: Professors (CPU) vs. Assembly Line (GPU) Analogy
+This diagram visualizes the classic analogy: CPUs behave like a team of polymath professors solving complex serial logic, while GPUs function as a structured factory assembly line.
+
+```mermaid
+flowchart LR
+    subgraph CPU["CPU: Team of Professors"]
+        Prof["1 Professor"] -->|Fast sequential execution| Task1["Serial Math Task"]
+    end
+    subgraph GPU["GPU: Assembly Line"]
+        Worker1["Worker 1"] --> Task_A["Task A"]
+        Worker2["Worker 2"] --> Task_B["Task B"]
+        Worker3["Worker 3"] --> Task_C["Task C"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Worker1,Worker2,Worker3 cpu;
+    class Prof memory;
+    class Task1,Task_A,Task_B,Task_C system;
+```
+
 ## 🛠️ Why AI Needs the Factory
 
 AI, especially deep learning, relies on **matrix multiplications** — billions of simple math operations performed on large datasets. This is the "assembly line" work that GPUs excel at.

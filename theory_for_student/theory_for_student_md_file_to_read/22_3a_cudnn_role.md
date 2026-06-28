@@ -46,6 +46,25 @@ GPUs are not general-purpose processors. They excel at performing the same opera
 
 ---
 
+
+### 📊 Visual Representation: cuDNN Convolution Neural Network acceleration
+This diagram displays the cuDNN library, providing highly optimized convolution, activation, and pooling algorithms.
+
+```mermaid
+flowchart LR
+    Framework["PyTorch / TensorFlow"] -->|Deep Learning Ops| cuDNN["cuDNN Library"]
+    cuDNN -->|Targeted Kernels| GPUHardware["GPU Hardware Execution Engine"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPUHardware cpu;
+    class cuDNN memory;
+    class Framework system;
+```
+
+
 ## 🕵️ How cuDNN Works Under the Hood
 
 When a deep learning framework (like PyTorch) needs to perform a convolution, it does not directly call cuDNN. Instead, the framework's backend (e.g., PyTorch's ATen library) calls cuDNN's API. Here is a simplified flow:

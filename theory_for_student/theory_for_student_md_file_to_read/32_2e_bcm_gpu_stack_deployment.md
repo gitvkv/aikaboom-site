@@ -49,6 +49,26 @@ BCM uses a **node image** or **software profile** approach. You define a configu
 
 ---
 
+
+### 📊 Visual Representation: BCM GPU software stack bootstrap
+This flowchart shows how BCM automatically installs the host GPU driver, CUDA toolkit, and fabric managers upon node boot.
+
+```mermaid
+flowchart LR
+    NodeBoot["Compute Node Boot"] --> InstallDriver["1. Auto-load NVIDIA Driver"]
+    InstallDriver --> InstallCUDA["2. Configure CUDA path & tools"]
+    InstallCUDA --> StartFabric["3. Start Fabric Manager daemon"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class InstallDriver cpu;
+    class InstallCUDA memory;
+    class NodeBoot,StartFabric system;
+```
+
+
 ## 🕵️ Verification After Deployment
 
 After BCM pushes the GPU stack, engineers should verify that each node is ready for AI workloads. Key checks include:

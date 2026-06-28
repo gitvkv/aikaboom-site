@@ -73,6 +73,31 @@ This means:
 - If the GPU driver or NFS fails, the AI trainer **will not start**.
 - The monitoring agent is attempted, but if it fails, the AI trainer **still starts**.
 
+### 📊 Visual Representation: systemd Dependency Relationships
+
+This flowchart maps the different types of dependencies (`Requires`, `Wants`, and `After` ordering) that systemd resolves when launching a custom AI training service.
+
+```mermaid
+flowchart TD
+    Trainer["ai-trainer.service\n(AI Training Workload)"]
+    
+    GPU["nvidia-persistenced.service\n(GPU State Daemon)"]
+    NFS["nfs-server.service\n(Shared NFS Dataset Mount)"]
+    Prom["prometheus-node-exporter.service\n(Telemetry Monitor)"]
+
+    Trainer -->|Requires & After| GPU
+    Trainer -->|Requires & After| NFS
+    Trainer -.->|Wants & After| Prom
+
+    class GPU cpu;
+    class NFS memory;
+    class Trainer,Prom system;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+```
+
 ---
 
 ## 🔍 Common Pitfalls for New Engineers

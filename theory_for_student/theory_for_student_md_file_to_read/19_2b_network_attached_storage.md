@@ -39,6 +39,26 @@ In AI workflows, datasets are the lifeblood of model training and inference. Eng
 
 ---
 
+
+### 📊 Visual Representation: Network Attached Storage (NAS) Shared File Access
+This diagram displays NAS architecture, showing multiple host systems accessing files over standard IP networks using NFS or SMB.
+
+```mermaid
+flowchart LR
+    Host1["Host 1"] -->|NFS protocol| Switch["Ethernet Switch"]
+    Host2["Host 2"] -->|NFS protocol| Switch
+    Switch --> NAS["NAS Server (Shared Directory / ext4)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NAS cpu;
+    class Host1,Host2 memory;
+    class Switch system;
+```
+
+
 ## 🕵️ The Limitations of NFS for AI Workloads
 
 While convenient, NFS was not designed for the extreme demands of AI training. Here are the key limitations:

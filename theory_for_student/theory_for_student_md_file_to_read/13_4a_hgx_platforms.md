@@ -49,6 +49,24 @@ The **NVSwitch** is a custom silicon chip that acts as a fully connected switch 
 
 ---
 
+### 📊 Visual Representation: HGX baseboard architecture
+This diagram displays the HGX baseboard layout, showing x86 CPUs interfacing with the x8 SXM GPU baseboard via PCIe switches.
+
+```mermaid
+flowchart LR
+    HostCPU["Dual x86 Host CPUs"] -->|PCIe Gen5| PCIeSwitches["PCIe Switches (Plx/Microchip)"]
+    PCIeSwitches -->|x16 Link per GPU| HGXBoard["HGX Mezzanine Board (8 x SXM GPUs)"]
+    HGXBoard -->|Integrated NVLink Mesh| HGXBoard
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class HGXBoard cpu;
+    class HostCPU memory;
+    class PCIeSwitches system;
+```
+
 ## 🛠️ How It All Fits Together
 
 Here is a simplified view of how the HGX A100/H100 baseboard works inside a server:

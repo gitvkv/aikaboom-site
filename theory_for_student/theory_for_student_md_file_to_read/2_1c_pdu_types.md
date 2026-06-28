@@ -143,6 +143,24 @@ Imagine you are setting up a rack with 8 NVIDIA H100 GPUs (each drawing ~700W pe
 - You remotely power cycle individual outlets.
 - You generate a report showing 94% power utilization efficiency.
 
+### 📊 Visual Representation: PDU Feature Progression
+This diagram shows how PDUs evolve from simple electrical distribution to advanced intelligent units by progressively adding monitoring, control, and analytical features.
+
+```mermaid
+flowchart LR
+    Basic["Basic PDU<br>(Raw Distribution)"] -->|Add local screen| Metered["Metered PDU<br>(Local Power Metrics)"]
+    Metered -->|Add network & switches| Switched["Switched PDU<br>(Remote Power Control)"]
+    Switched -->|Add sensors & analytics| Intelligent["Intelligent PDU<br>(Environment + Per-Outlet Monitoring)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Intelligent cpu;
+    class Switched,Metered memory;
+    class Basic system;
+```
+
 ---
 
 ## ✅ Key Takeaways for New Engineers

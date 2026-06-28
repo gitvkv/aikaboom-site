@@ -35,6 +35,24 @@ The A100 GPU supports five standard MIG instance profiles. Here is a quick compa
 
 ---
 
+
+### 📊 Visual Representation: A100 GPU MIG profile allocations
+This diagram displays A100 partition limits: splitting the card into up to seven separate 1g.10gb slices.
+
+```mermaid
+flowchart LR
+    A100["A100 GPU (80GB VRAM)"] --> Profile1["7 x 1g.10gb Instances"]
+    A100 --> Profile2["2 x 3g.40gb + 1 x 1g.10gb Instances"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class A100 cpu;
+    class Profile1,Profile2 memory;
+```
+
+
 ## 🛠️ How These Profiles Work in Practice
 
 When you enable MIG on an A100 GPU, you can create one or more instances using these profiles. The key rules are:

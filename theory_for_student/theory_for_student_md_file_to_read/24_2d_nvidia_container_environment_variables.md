@@ -48,6 +48,25 @@ This variable defines **which driver features** the container can use.
 
 ---
 
+
+### 📊 Visual Representation: NVIDIA Container Runtime Environment Variables
+This diagram displays the primary runtime control environment variables used to tune GPU configuration inside containers.
+
+```mermaid
+flowchart LR
+    Env["Runtime Variables"] --> Visible["NVIDIA_VISIBLE_DEVICES (Select GPUs)"]
+    Env --> Cap["NVIDIA_DRIVER_CAPABILITIES (compute,utility,video)"]
+    Env --> Req["NVIDIA_REQUIRE_CUDA (Minimum driver version checks)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Env cpu;
+    class Visible,Cap,Req memory;
+```
+
+
 ## 📊 Comparison Table: Common Use Cases
 
 | Use Case | `NVIDIA_VISIBLE_DEVICES` | `NVIDIA_DRIVER_CAPABILITIES` |

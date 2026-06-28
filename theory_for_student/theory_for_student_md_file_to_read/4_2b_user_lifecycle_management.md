@@ -6,6 +6,7 @@
 
 In any AI infrastructure environment, managing users is a fundamental responsibility. Whether you are setting up access for data scientists, granting permissions to model trainers, or removing access for departing team members, understanding the user lifecycle is essential. This topic covers the four core commands that allow you to create, modify, delete, and manage passwords for user accounts on a Linux system. These commands form the backbone of user administration and are critical for maintaining security and organization in your AI operations.
 
+
 ---
 
 ## ⚙️ Creating Users with useradd
@@ -114,6 +115,24 @@ sudo passwd alice
 | **usermod**  | Modify an existing user        | Adding a user to a GPU access group               |
 | **userdel**  | Delete a user                  | Removing access for a departing team member       |
 | **passwd**   | Set or manage passwords        | Setting initial password or forcing a reset       |
+
+### 📊 Visual Representation: User Lifecycle States and Commands
+This flowchart illustrates the typical user account lifecycle on a Linux server, identifying key system commands utilized during provisioning, access modification, disabling, and final deletion.
+
+```mermaid
+flowchart LR
+    create["1. Provision User<br>(useradd & passwd)"] --> modify["2. Modify Access/Groups<br>(usermod -aG gpu-users)"]
+    modify --> disable["3. Suspend Account<br>(usermod -L / passwd -l)"]
+    disable --> delete["4. Deprovision & Clean<br>(userdel -r)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class modify cpu;
+    class create,disable memory;
+    class delete system;
+```
 
 ---
 

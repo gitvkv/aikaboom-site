@@ -43,6 +43,26 @@ Without dedicated hardware decoders, engineers would need to use software decode
 
 ---
 
+### 📊 Visual Representation: NVIDIA NVENC and NVDEC Video Pipeline
+This flowchart outlines how NVDEC offloads video decoding into frame buffers for processing, and NVENC encodes the results back to video streams.
+
+```mermaid
+flowchart LR
+    Stream["Raw Video Stream"] --> NVDEC["NVDEC (Hardware Decoder)"]
+    NVDEC --> Frame["VRAM Frame Buffer"]
+    Frame --> Processing["CUDA/Tensor Processing"]
+    Processing --> NVENC["NVENC (Hardware Encoder)"]
+    NVENC --> Out["Encoded Video Stream"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NVDEC,NVENC cpu;
+    class Frame memory;
+    class Stream,Processing,Out system;
+```
+
 ## 🕵️ How Engineers Use NVENC/NVDEC in Practice
 
 ### 🔄 Decoding for Preprocessing

@@ -50,6 +50,25 @@ Engineers typically generate SBOMs using specialized tools that scan the contain
 
 ---
 
+
+### 📊 Visual Representation: SBOM Package Inventory list
+This diagram displays SBOM structures, cataloging package versions and dependencies inside images.
+
+```mermaid
+flowchart LR
+    Image["Container Image build"] --> SBOM["SBOM output file (JSON/SPDX)"]
+    SBOM --> PkgList["List: python packages, cuda-drivers, libc versions"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class SBOM cpu;
+    class PkgList memory;
+    class Image system;
+```
+
+
 ## 📊 Common SBOM Formats for AI Containers
 
 | Format | Description | Typical Use Case |

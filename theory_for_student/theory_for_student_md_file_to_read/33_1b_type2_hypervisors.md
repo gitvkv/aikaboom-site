@@ -65,6 +65,26 @@ A Type 2 hypervisor is a **hosted hypervisor** — it runs as a software applica
 
 ---
 
+
+### 📊 Visual Representation: Type-2 Hypervisor Host OS virtualization
+This diagram displays a Type-2 hypervisor: running inside a standard host OS, introducing virtualization scheduling latency.
+
+```mermaid
+flowchart LR
+    Hardware["Hardware"] --> HostOS["Host Operating System"]
+    HostOS --> Hypervisor["Type-2 Hypervisor (VirtualBox / Workstation)"]
+    Hypervisor --> GuestVM["Guest VM (Emulated resources)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class HostOS cpu;
+    class Hypervisor memory;
+    class GuestVM system;
+```
+
+
 ## 📊 Comparison Table: VirtualBox vs. VMware Workstation for AI Development
 
 | Feature | VirtualBox | VMware Workstation |

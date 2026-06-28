@@ -56,6 +56,24 @@ Here:
 
 ---
 
+### 📊 Visual Representation: Multi-Dimensional Tensor Generalization
+This flowchart demonstrates the structural progression of numeric tensors from 0D scalars up to multi-dimensional data blocks.
+
+```mermaid
+flowchart LR
+    Scalar["Scalar (0D)"] --> Vector["Vector (1D)"]
+    Vector --> Matrix["Matrix (2D)"]
+    Matrix --> Tensor["High-Dimensional Tensor (ND)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Tensor cpu;
+    class Matrix,Vector memory;
+    class Scalar system;
+```
+
 ## ⚡ Activations as Tensors
 
 Inside a neural network, every layer produces **activations** — the output values that flow to the next layer. These activations are always tensors.
@@ -107,3 +125,4 @@ As an engineer working with AI infrastructure, you will encounter tensors in sev
 - **Activations are tensors too** — every layer's output is a tensor that must fit in GPU memory.
 
 When you see GPU memory errors or data pipeline bottlenecks, start by examining the shapes and sizes of your tensors. This simple habit will help you debug and optimize AI workloads effectively.
+

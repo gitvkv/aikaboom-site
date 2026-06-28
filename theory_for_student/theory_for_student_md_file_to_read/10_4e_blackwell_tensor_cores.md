@@ -53,6 +53,24 @@ FP4 is a 4-bit floating point format that uses 1 sign bit, 2 exponent bits, and 
 
 ---
 
+### 📊 Visual Representation: Blackwell 5th Gen Tensor Core and FP4 Precision
+This diagram shows the fifth-generation Tensor Core in Blackwell, deploying native 4-bit floating-point (FP4) execution channels to double AI training speed.
+
+```mermaid
+flowchart LR
+    Inputs["FP4 / FP8 Matrix Inputs"] --> Microscaling["Microscaling Formats (MX)"]
+    Microscaling --> MMA["Blackwell Tensor Core (5th Gen)"]
+    MMA --> Out["Extreme-Throughput Output"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class MMA cpu;
+    class Inputs,Out memory;
+    class Microscaling system;
+```
+
 ## 🕵️ Massive Scale: The Blackwell NVLink Domain
 
 The B200's ability to scale to **72 GPUs** in a single NVLink domain is a game-changer. This is achieved through:

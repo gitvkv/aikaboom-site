@@ -47,6 +47,24 @@ MPS enables **true concurrent execution** of multiple processes on the GPU, unli
 
 ---
 
+
+### 📊 Visual Representation: MPS Spatial Partitioning Allocation
+This diagram displays spatial partitioning: allocating specific VRAM percentages (e.g. 30%) and hardware execution queues to each process.
+
+```mermaid
+flowchart LR
+    GPU["Physical GPU"] -->|CUDA_MPS_ACTIVE_THREAD_PERCENTAGE=30| Client1["MPS Client 1 (30% SMs)"]
+    GPU -->|CUDA_MPS_ACTIVE_THREAD_PERCENTAGE=70| Client2["MPS Client 2 (70% SMs)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPU cpu;
+    class Client1,Client2 memory;
+```
+
+
 ## 🕵️ Why This Matters for AI Workloads
 
 AI workloads benefit from MPS's concurrent execution in several ways:

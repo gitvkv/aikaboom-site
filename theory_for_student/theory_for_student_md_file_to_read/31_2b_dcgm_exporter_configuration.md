@@ -52,6 +52,24 @@ You can find the full list of supported field IDs in the NVIDIA DCGM documentati
 
 ---
 
+
+### 📊 Visual Representation: dcgm-exporter Metric filter CSV file
+This diagram displays the metric configuration file structure used to filter which DCGM field IDs are exposed to Prometheus.
+
+```mermaid
+flowchart LR
+    CSV["dcgm-metrics.csv File"] --> Format["DCGM_FI_DEV_POWER_USAGE, gauge, power_draw"]
+    CSV --> Format2["DCGM_FI_DEV_GPU_TEMP, gauge, temperature"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class CSV cpu;
+    class Format,Format2 memory;
+```
+
+
 ## 🕵️ Example: Selecting Only Key Metrics
 
 Suppose you only want to monitor GPU utilization, memory usage, and temperature. Your custom ConfigMap would include only those three metrics.

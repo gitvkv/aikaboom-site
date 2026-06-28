@@ -46,6 +46,23 @@ For engineers working with AI infrastructure, GPCs are important because:
 
 ---
 
+### 📊 Visual Representation: Graphics Processing Cluster (GPC) Internal Structure
+This diagram details the dedicated rasterization and geometry pipelines housed within each NVIDIA GPC.
+
+```mermaid
+flowchart LR
+    Raster["Raster Engine"] --> TPC["TPCs (Compute Grid)"]
+    TPC --> SM["Streaming Multiprocessors"]
+    SM --> Poly["Polymorph Engine (Geometry/Tessellation)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class SM cpu;
+    class Raster,TPC,Poly system;
+```
+
 ## 🕵️ How GPCs Work in Practice
 
 When you launch a CUDA kernel (a function that runs on the GPU):

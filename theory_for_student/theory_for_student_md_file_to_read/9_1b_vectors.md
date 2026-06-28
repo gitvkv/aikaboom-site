@@ -51,6 +51,21 @@ A **bias term** is another vector, but much simpler. It's a single value (or a s
 
 ---
 
+### 📊 Visual Representation: Vector 1D Tensor
+This diagram displays a 1D tensor (vector), representing an ordered array of numeric elements in a single dimension.
+
+```mermaid
+flowchart LR
+    Vector["Vector: [1.2, 3.4, 5.6]"] --> D1["1-Dimensional Tensor"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class D1 cpu;
+    class Vector memory;
+```
+
 ## 🛠️ Comparison: Word Embedding vs. Bias Term
 
 | Feature | Word Embedding | Bias Term |
@@ -85,3 +100,4 @@ Both are just 1D arrays (vectors), but they serve very different purposes in the
 - What is the shape of a vector with 5 elements? *(Answer: (5,))*
 - Why do we need bias terms in a neural network? *(Answer: To allow the model to fit data that doesn't pass through the origin.)*
 - How does a word embedding help a model understand language? *(Answer: By representing words as dense vectors that capture semantic relationships.)*
+

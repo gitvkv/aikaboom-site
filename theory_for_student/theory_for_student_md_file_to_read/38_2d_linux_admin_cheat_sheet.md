@@ -70,6 +70,25 @@ For AI operators, GPU monitoring is non-negotiable. These commands help you chec
 
 ---
 
+
+### 📊 Visual Representation: Linux Admin troubleshooting Commands
+This diagram groups diagnostic CLI commands for checking system statistics, monitoring filesystems, and inspecting sockets.
+
+```mermaid
+flowchart LR
+    Diagnostics["Troubleshooting Commands"] --> Stats["System Stats (htop / vmstat / sar)"]
+    Diagnostics --> Storage["Disk Space (df / du / iostat)"]
+    Diagnostics --> Network["Sockets (ss / mtr / tcpdump)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Diagnostics cpu;
+    class Stats,Storage,Network memory;
+```
+
+
 ## 🔐 Permissions & User Management
 
 AI systems often have multiple users sharing resources. Proper permissions prevent accidental data loss.

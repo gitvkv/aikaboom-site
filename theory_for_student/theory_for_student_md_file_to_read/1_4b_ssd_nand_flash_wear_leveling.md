@@ -62,6 +62,33 @@ Every time you write data to a NAND Flash cell, the insulating layer around the 
 - **Dynamic wear leveling:** Only distributes writes across free (unused) blocks. Simpler but less effective over time.
 - **Static wear leveling:** Also moves rarely-changed data (like operating system files) to different cells to ensure even wear across all cells. More complex but extends drive life significantly.
 
+### 📊 Visual Representation: SSD Wear Leveling Mechanism
+This diagram compares dynamic wear leveling (which cycles writes through free blocks) with static wear leveling (which actively relocates static data to optimize overall endurance).
+
+```mermaid
+flowchart LR
+    %% Main Flow
+    Host[Host Write] --> FTL[Controller / FTL]
+    
+    %% Dynamic Branch
+    FTL -->|Dynamic| Dyn[Write to Unused/Free Blocks Only]
+    Dyn --> BlocksD[Blocks Wear Out Unevenly]
+    
+    %% Static Branch
+    FTL -->|Static| Stat[Relocate Static Data to Worn Blocks]
+    Stat --> BlocksS[All Blocks Wear Equally]
+
+    %% Stylings
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+    
+    class FTL cpu;
+    class Host system;
+    class Dyn,Stat memory;
+    class BlocksD,BlocksS system;
+```
+
 ---
 
 ## 🧪 Practical Takeaway for Engineers

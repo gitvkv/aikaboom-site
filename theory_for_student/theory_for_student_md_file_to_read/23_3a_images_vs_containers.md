@@ -58,6 +58,23 @@ Key characteristics of a container:
 
 ---
 
+
+### 📊 Visual Representation: Static Image vs. Active Running Container
+This diagram displays the relationship between a static container image (read-only blueprint) and a running container instance.
+
+```mermaid
+flowchart LR
+    Image["Container Image (Static blueprint on disk)"] -->|docker run / instantiation| Container["Running Container (Active memory process)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Container cpu;
+    class Image memory;
+```
+
+
 ## 🛠️ How This Applies to AI Workflows
 
 For AI engineers, the image vs. container distinction matters in these practical scenarios:

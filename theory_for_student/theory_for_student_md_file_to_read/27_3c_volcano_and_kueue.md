@@ -61,6 +61,28 @@ KUEUE (pronounced "queue") is a Kubernetes-native job queueing system. It manage
 
 ---
 
+
+### 📊 Visual Representation: Volcano vs. Kueue Batch Scheduling scopes
+This diagram contrasts Volcano (custom scheduler replacement) with Kueue (declarative quota manager wrapper).
+
+```mermaid
+flowchart LR
+    subgraph Volcano["Volcano Scheduler"]
+        Scheduler["Volcano Custom Pod Scheduler (Queue/Gang)"]
+    end
+    subgraph Kueue["Kueue Quota Manager"]
+        K8sScheduler["Standard K8s Scheduler"] --- Quota["Kueue Quota Controller (Suspends/Resumes Pods)"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Scheduler cpu;
+    class Quota memory;
+```
+
+
 ## 🕵️ How They Work Together
 
 In many production environments, engineers use **both** Volcano and KUEUE together:

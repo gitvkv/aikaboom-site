@@ -33,6 +33,39 @@ When you work with AI workloads, memory is one of the most critical components. 
 
 > **MT/s** stands for *Mega Transfers per second* — it measures how many data transfers happen per second. Higher MT/s means faster memory.
 
+### 📊 Visual Representation: DDR4 vs. DDR5 System Architecture
+
+This diagram contrasts DDR4 and DDR5 memory systems, highlighting changes in bus structure, power delivery, speeds, and error correction features between the generations.
+
+```mermaid
+flowchart TD
+    CPU["Host CPU / GPU\n(Memory Controller)"]
+    
+    subgraph D4_Sys["DDR4 System"]
+        DDR4["DDR4 DIMM\n(Single 64-bit Channel)"]
+        D4_Specs["- 1.2V External Power\n- Burst Length: 8 (BL8)\n- 1600-3200 MT/s\n- No On-Die ECC"]
+        DDR4 --- D4_Specs
+    end
+
+    subgraph D5_Sys["DDR5 System"]
+        DDR5["DDR5 DIMM\n(Dual 32-bit Subchannels)"]
+        D5_Specs["- 1.1V Local PMIC\n- Burst Length: 16 (BL16)\n- 4800-8400+ MT/s\n- On-Die ECC Enabled"]
+        DDR5 --- D5_Specs
+    end
+
+    CPU -->|64-bit Bus| DDR4
+    CPU -->|Independent Subchannels| DDR5
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class CPU cpu;
+    class DDR4,DDR5,D4_Specs,D5_Specs memory;
+    class D4_Sys,D5_Sys system;
+```
+
+
 ---
 
 ## 🚀 Bandwidth Explained Simply

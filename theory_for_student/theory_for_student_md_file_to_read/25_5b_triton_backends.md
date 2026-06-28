@@ -73,6 +73,25 @@ A backend is the engine that actually runs your model inside Triton. Think of it
 
 ---
 
+
+### 📊 Visual Representation: Triton Backend Engine Plugins
+This diagram displays Triton's modular backend architecture, enabling simultaneous execution of ONNX, TensorRT, and Python models.
+
+```mermaid
+flowchart LR
+    TritonCore["Triton Server Core"] -->|Backend API| ONNX["ONNX Runtime Backend"]
+    TritonCore -->|Backend API| PyTorch["PyTorch / LibTorch Backend"]
+    TritonCore -->|Backend API| Python["Custom Python script Backend"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class TritonCore cpu;
+    class ONNX,PyTorch,Python memory;
+```
+
+
 ## 🛠️ How to Choose a Backend
 
 - **If you want the absolute fastest inference on NVIDIA GPUs:** Use **TensorRT**.

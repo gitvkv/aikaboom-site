@@ -35,6 +35,40 @@ The BMC is a **system-on-chip (SoC)** with its own:
 
 The BMC communicates with the main server via a **dedicated internal bus** (like PCIe or I2C). It can read sensor data and send power control signals **without involving the main CPU or operating system**.
 
+### 📊 Visual Representation: Out-of-Band BMC Architecture
+This block diagram illustrates how the Baseboard Management Controller (BMC) operates as an independent system-on-chip (SoC) with its own resources, isolated from the host CPU and OS.
+
+```mermaid
+flowchart TD
+    subgraph HostDomain [Host Server Domain]
+        HostCPU[Host CPU / Processors] <--> HostRAM[System Memory]
+        HostCPU <--> PCIeBus[Internal Bus: PCIe / I2C / IPMB]
+    end
+
+    subgraph BMCDomain [Management Domain: Always On]
+        BMCSoc[BMC SoC] <--> BMCMem[BMC RAM & Flash]
+        BMCSoc <--> MgmtPort[Dedicated Mgmt NIC]
+        BMCSoc <--> Sensors[Sensors: Temp, Fans, Volts]
+        BMCSoc <--> PowerCtrl[Chassis Power Control]
+    end
+
+    PCIeBus <--> BMCSoc
+
+    class HostCPU cpu;
+    class HostRAM memory;
+    
+    class BMCSoc cpu;
+    class BMCMem memory;
+    class MgmtPort system;
+    class Sensors system;
+    class PowerCtrl system;
+    class PCIeBus system;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+```
+
 ---
 
 ## 📊 BMC vs. In-Band Management

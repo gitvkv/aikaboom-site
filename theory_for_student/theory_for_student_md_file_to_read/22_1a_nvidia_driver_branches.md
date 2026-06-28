@@ -58,6 +58,26 @@ For engineers new to AI infrastructure, understanding these three branches — *
 
 ---
 
+
+### 📊 Visual Representation: NVIDIA Datacenter (LTS) vs. Consumer Driver Branches
+This diagram contrasts Datacenter drivers (LTS, prioritized stability/virtualization) against GeForce drivers (frequent updates, optimized for graphics).
+
+```mermaid
+flowchart LR
+    Drivers["NVIDIA Drivers"] --> Datacenter["Datacenter / Enterprise (LTS / v535 / Stable)"]
+    Drivers --> Consumer["GeForce / Studio (Short-lived branches / Graphics)"]
+    Datacenter -->|Target| AIServers["Grace Hopper / HGX H100 Servers"]
+    Consumer -->|Target| Desktop["Gaming & Visual Workstations"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Datacenter,Consumer memory;
+    class AIServers,Desktop system;
+```
+
+
 ## 🛠️ Checking Your Current Driver Branch
 
 To see which branch your system is currently using, you can run the following command in your terminal:

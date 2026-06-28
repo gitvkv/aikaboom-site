@@ -48,6 +48,26 @@ This direct path is achieved using **DMA (Direct Memory Access)** engines on the
 
 ---
 
+
+### 📊 Visual Representation: NVIDIA Magnum IO Stack
+This diagram displays the Magnum IO software stack, integrating GPUDirect Storage, GPUDirect RDMA, and NCCL library interfaces.
+
+```mermaid
+flowchart LR
+    App["AI / DL Applications"] --> MagnumIO["Magnum IO API SDK"]
+    MagnumIO --> GDS["GPUDirect Storage (Storage acceleration)"]
+    MagnumIO --> GDR["GPUDirect RDMA (Network acceleration)"]
+    MagnumIO --> NCCL["NCCL (Collective comms)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class App,MagnumIO cpu;
+    class GDS,GDR,NCCL memory;
+```
+
+
 ## 🕵️ Key Libraries in the Magnum IO SDK
 
 Here is a breakdown of the most important libraries you will encounter as a new engineer:

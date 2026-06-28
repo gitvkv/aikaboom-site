@@ -34,6 +34,24 @@ Security is non-negotiable in AI data centers, but scanning for threats consumes
 
 ---
 
+
+### 📊 Visual Representation: Infrastructure CPU Overhead (lost compute tax)
+This diagram displays how network, storage, security, and telemetry workloads consume host CPU cycles, leaving fewer resources for AI training workloads.
+
+```mermaid
+flowchart LR
+    HostCPU["Host CPU Cores"] -->|lost compute tax| Infra["Infra tasks (OVS, NVMe, Encryption, Logs)"]
+    HostCPU -->|Productive work| AIWorkload["AI Training / PyTorch Engine"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class AIWorkload cpu;
+    class Infra memory;
+```
+
+
 ## 🗄️ Storage Protocols — The CPU Cost of Data Access
 
 AI workloads are data-hungry. Moving data from storage to compute requires protocols like NVMe-oF, iSCSI, or NFS. Each protocol adds CPU overhead.

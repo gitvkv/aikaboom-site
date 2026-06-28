@@ -42,6 +42,26 @@ The scary part? A poisoned model can pass all standard validation checks because
 
 ---
 
+
+### 📊 Visual Representation: Training Data Poisoning exploit
+This diagram displays data poisoning: how malicious training dataset injections degrade final model accuracy.
+
+```mermaid
+flowchart LR
+    Attacker["Attacker injects bad samples"] --> Dataset["Target Training Dataset"]
+    Dataset --> TrainRun["GPU Pre-training / Fine-tuning"]
+    TrainRun --> BadModel["Trained Model outputs wrong predictions"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Dataset cpu;
+    class TrainRun memory;
+    class Attacker,BadModel system;
+```
+
+
 ## 🛠️ Real-World Impact for Engineers
 
 As an engineer managing AI infrastructure, data poisoning affects you in three key areas:

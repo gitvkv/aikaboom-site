@@ -55,6 +55,26 @@ The **gpu-operator** namespace contains the core GPU management components.
 
 ---
 
+
+### 📊 Visual Representation: GPU Operator Node Verification loop
+This flowchart maps out validation steps check-list to verify successful Operator boot on a node.
+
+```mermaid
+flowchart LR
+    PodList["Check operator namespace pods"] --> NodeLabels["Check kubectl get nodes --show-labels"]
+    NodeLabels --> RunVerify["Execute sample gpu vectorAdd pod"]
+    RunVerify --> Verified["Verified: GPU resources exposed to scheduler"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Verified cpu;
+    class NodeLabels,RunVerify memory;
+    class PodList system;
+```
+
+
 ## 📊 Comparison Table: Pods by Namespace
 
 | Namespace | Pod Type | Count per Node | Purpose |

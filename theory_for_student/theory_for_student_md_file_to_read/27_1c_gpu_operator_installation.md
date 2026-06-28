@@ -86,6 +86,25 @@ For partitioning A100/H100 GPUs:
 
 ---
 
+
+### 📊 Visual Representation: GPU Operator Helm Chart deploy flow
+This flowchart maps out Operator installation: deploying Helm charts and monitoring pod boots.
+
+```mermaid
+flowchart LR
+    AddHelm["1. Add nvidia repository"] --> DeployHelm["2. helm install gpu-operator"]
+    DeployHelm --> WatchPods["3. kubectl get pods -n gpu-operator"]
+    WatchPods --> Ready["4. Validator pod transitions to Completed"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class WatchPods cpu;
+    class AddHelm,DeployHelm,Ready system;
+```
+
+
 ## 🗂️ How to Customize values.yaml
 
 When installing the GPU Operator, you pass your custom values.yaml to Helm. The typical workflow is:

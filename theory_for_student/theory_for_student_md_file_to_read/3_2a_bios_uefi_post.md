@@ -41,6 +41,29 @@ Modern AI servers almost exclusively use **UEFI**, but understanding both helps 
 | Driver support | Limited, 16-bit mode | Full 32-bit or 64-bit drivers |
 | AI relevance | Rarely used in modern GPU servers | Standard for all NVIDIA-certified servers |
 
+### 📊 Visual Representation: UEFI POST Sequence
+
+This horizontal flowchart illustrates the sequential hardware check and initialization steps performed by UEFI firmware before handing off control to the bootloader.
+
+```mermaid
+flowchart LR
+    A["Power-On"] --> B["Power Supply Check"]
+    B --> C["CPU Init"]
+    C --> D["Memory Detection & Test"]
+    D --> E["Bus / PCIe Init"]
+    E --> F["GPU / NIC Discovery"]
+    F --> G["Storage Scan"]
+    G --> H["Bootloader Hand-off"]
+
+    class A,H memory;
+    class B,C,D,E,G system;
+    class F cpu;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+```
+
 ---
 
 ## 🕵️ Common POST Issues in AI Infrastructure

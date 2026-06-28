@@ -80,6 +80,41 @@ Think of it like this: if your server needs **N** power supplies to run, redunda
 | Power efficiency | Good (all units share load) | Lower (units run at partial load) |
 | Space required | Minimal | Double |
 
+### 📊 Visual Representation: Power Redundancy Architectures (N+1 vs. 2N)
+This diagram illustrates the physical wiring and source isolation differences between N+1 redundancy (shared power source) and 2N redundancy (isolated dual power paths).
+
+```mermaid
+flowchart TD
+    subgraph NPlus1 "N+1 Redundancy: Shared Source"
+        SourceA[Single Power Source / PDU] --> PSU1[Power Supply 1]
+        SourceA --> PSU2[Power Supply 2]
+        SourceA --> PSU3[Power Supply 3 (Backup)]
+        PSU1 --> ServerLoad1[Server Logic & GPUs]
+        PSU2 --> ServerLoad1
+        PSU3 --> ServerLoad1
+    end
+
+    subgraph TwoN "2N Redundancy: Isolated Sources"
+        SourceB1[Power Source A / PDU A] --> PSU_A1[Power Supply A1]
+        SourceB1 --> PSU_A2[Power Supply A2]
+        SourceB2[Power Source B / PDU B] --> PSU_B1[Power Supply B1]
+        SourceB2 --> PSU_B2[Power Supply B2]
+        
+        PSU_A1 --> ServerLoad2[Server Logic & GPUs]
+        PSU_A2 --> ServerLoad2
+        PSU_B1 --> ServerLoad2
+        PSU_B2 --> ServerLoad2
+    end
+
+    class SourceA,SourceB1,SourceB2 system;
+    class PSU1,PSU2,PSU3,PSU_A1,PSU_A2,PSU_B1,PSU_B2 memory;
+    class ServerLoad1,ServerLoad2 cpu;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+```
+
 ---
 
 ## 🔌 How to Identify Redundancy in a Server

@@ -51,6 +51,27 @@ This prevents a problem called **gradient underflow** — where small weight upd
 
 ---
 
+### 📊 Visual Representation: Mixed Precision (FP16/FP32) Training Loop
+This flowchart shows the mixed precision training step, running forward/backward passes in FP16 while maintaining a master copy of weights in FP32.
+
+```mermaid
+flowchart LR
+    Master["FP32 Master Weights"] -->|Cast to half| FP16Weights["FP16 Weights"]
+    FP16Weights --> Forward["Forward Pass (FP16)"]
+    Forward --> Loss["Calculate Loss"]
+    Loss --> Backward["Backward Pass (FP16 Gradients)"]
+    Backward --> Update["Update Master Weights (FP32)"]
+    Update --> Master
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Forward,Backward cpu;
+    class Master,FP16Weights memory;
+    class Loss,Update system;
+```
+
 ## 🕵️ Step-by-Step Flow
 
 1. **Start:** Master weights exist in FP32
@@ -99,3 +120,4 @@ Wait — that's more memory? Yes, but the tradeoff is worth it because:
 ## 🧠 Summary
 
 Mixed-precision training with FP16/BF16 for forward pass and FP32 for master weights is the **standard approach** for training modern deep learning models efficiently. It balances speed and accuracy by using lower precision where it's safe (forward/backward calculations) and higher precision where it's critical (weight updates). For new engineers, understanding this concept is essential for working with large-scale AI infrastructure.
+

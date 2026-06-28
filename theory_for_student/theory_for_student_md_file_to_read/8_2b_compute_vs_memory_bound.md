@@ -90,6 +90,23 @@ The **ridge point** is where the memory bandwidth line and compute ceiling line 
 
 ---
 
+### 📊 Visual Representation: Roofline Performance Model
+This diagram shows the Roofline Model, mapping how workloads are classified as memory-bound (limited by memory bandwidth) or compute-bound (limited by processor FLOP limits).
+
+```mermaid
+flowchart LR
+    intensity["Low Arithmetic Intensity"] --> MemoryBound["Memory Bound Area<br>(Limit: HBM Bandwidth)"]
+    intensity2["High Arithmetic Intensity"] --> ComputeBound["Compute Bound Area<br>(Limit: Tensor Core Peak FLOPs)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class ComputeBound cpu;
+    class MemoryBound memory;
+    class intensity,intensity2 system;
+```
+
 ## 🛠️ Practical Example — Comparing Two Layers
 
 Let's compare a large fully connected layer and a ReLU activation layer.

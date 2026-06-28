@@ -44,6 +44,24 @@ For daily health checks, **volatile** is more useful because it shows recent iss
 
 ---
 
+
+### 📊 Visual Representation: Querying ECC Error counters
+This diagram displays how nvidia-smi queries volatile (since boot) vs. aggregate (lifetime) correctable/uncorrectable ECC events.
+
+```mermaid
+flowchart LR
+    nvidiaSmi["nvidia-smi -q -d ECC"] --> Volatile["Volatile Counters (Resets on reboot)"]
+    nvidiaSmi --> Aggregate["Aggregate Counters (Persists in hardware EEPROM)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class nvidiaSmi cpu;
+    class Volatile,Aggregate memory;
+```
+
+
 ## 🛠️ How to Interpret the Results
 
 **Scenario 1: You see 0**

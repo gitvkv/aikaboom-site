@@ -93,6 +93,25 @@ Below is the full set of GPU metrics available through DCGM, grouped by what the
 
 ---
 
+
+### 📊 Visual Representation: DCGM Field ID Telemetry groups
+This diagram displays the primary DCGM field IDs mapped to GPU hardware counters.
+
+```mermaid
+flowchart LR
+    Fields["DCGM Fields"] --> Field1002["Field 1002 (GPU Temp)"]
+    Fields --> Field1004["Field 1004 (Core clock speed)"]
+    Fields --> Field1011["Field 1011 (FB memory allocations)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Fields cpu;
+    class Field1002,Field1004,Field1011 memory;
+```
+
+
 ## 🛠️ How to Use These Field IDs in Practice
 
 When configuring DCGM for scraping, you specify which field IDs to collect. Here is how you would typically do it:

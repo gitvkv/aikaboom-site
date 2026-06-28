@@ -2,9 +2,9 @@
 
 #### 🏷️ The Operating System Layer — Linux for AI Infrastructure Operators > 4 Core Linux Administration for AI Operators > 4.4 Package Management — Installing Software on Linux
 
-When working with AI infrastructure, you will encounter software that is not available through your system's standard package manager (like `apt` or `yum). This is especially common with newer AI tools, GPU drivers, or specialized libraries. Three alternative installation methods you will frequently use are **Snap packages**, **AppImage**, and **tarball manual installs**. Each has its own strengths and ideal use cases.
+When working with AI infrastructure, you will encounter software that is not available through your system's standard package manager (like `apt` or `yum`). This is especially common with newer AI tools, GPU drivers, or specialized libraries. Three alternative installation methods you will frequently use are **Snap packages**, **AppImage**, and **tarball manual installs**. Each has its own strengths and ideal use cases.
 
----
+
 
 ## ⚙️ What Are Snap Packages?
 
@@ -97,6 +97,29 @@ Use this simple decision guide:
   - You need a very specific version (e.g., for compatibility with your AI framework).
   - The software is not packaged as Snap or AppImage.
   - You want full control over the installation path and files.
+
+### 📊 Visual Representation: Alternative Package Deployment Methods
+This flowchart categorizes the three main alternative package deployment options on Linux, providing their architectural characteristics and representative installation examples.
+
+```mermaid
+flowchart LR
+    formats["Alternative Packaging Formats"]
+    formats --> snap["Snap Package<br>(Sandboxed Daemon)"]
+    formats --> appimage["AppImage<br>(Portable Executable)"]
+    formats --> tarball["Tarball (.tar.gz)<br>(Manual Extraction)"]
+
+    snap --> snap_ex["Example: CLI tools & microk8s"]
+    appimage --> appimage_ex["Example: standalone apps"]
+    tarball --> tarball_ex["Example: CUDA Toolkit"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class tarball,tarball_ex cpu;
+    class snap,snap_ex memory;
+    class formats,appimage,appimage_ex system;
+```
 
 ---
 

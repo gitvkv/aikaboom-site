@@ -42,6 +42,35 @@ Overhead cooling systems are mounted above the racks, typically in the ceiling p
 | **Service access** | Easy (at floor level) | More difficult (requires ladder or lift) |
 | **Retrofit friendliness** | Good (can be added to existing rows) | Moderate (may require ceiling modifications) |
 
+### 📊 Visual Representation: In-Row vs. Overhead Airflow Layouts
+This diagram shows the comparison of localized in-row cooling (closed horizontal loop between racks) and overhead cooling (downward vertical cold air supply).
+
+```mermaid
+flowchart TD
+    subgraph IR["In-Row Cooling Layout"]
+        direction LR
+        RackIR["GPU Rack (NVIDIA DGX)"] -->|Hot Exhaust| IRC["In-Row Cooler (Between Racks)"]
+        IRC -->|Short Cold Air Path| CA_IR["Cold Aisle"]
+        CA_IR --> RackIR
+     end
+
+    subgraph OH["Overhead Cooling Layout"]
+        direction LR
+        CeilingOH["Overhead Cooler (Ceiling-Mounted)"] -->|Downward Cold Air| CA_OH["Cold Aisle"]
+        CA_OH --> RackOH["GPU Rack (NVIDIA DGX)"]
+        RackOH -->|Hot Exhaust Rises| ReturnOH["Return Plenum (Ceiling)"]
+        ReturnOH --> CeilingOH
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class RackIR,RackOH cpu;
+    class CA_IR,CA_OH memory;
+    class IRC,CeilingOH,ReturnOH,IR,OH system;
+```
+
 ---
 
 ## 🕵️ When to Use Which System

@@ -8,7 +8,7 @@
 
 When building automation scripts for AI infrastructure, you will often repeat the same logic in multiple places. Functions help you package that logic into reusable blocks, making your scripts cleaner and easier to maintain. But functions alone are not enough — you also need a reliable way to communicate success or failure back to the rest of your script. That is where **return codes** and **exit statuses** come in. This section will teach you how to write functions that behave predictably and how to check their results so your automation pipelines run smoothly.
 
----
+
 
 ## ⚙️ What Are Functions in Bash?
 
@@ -60,6 +60,30 @@ This is a common point of confusion for new engineers. Let's clarify:
 | **Exit status** | Signals success/failure of the entire script to the shell or parent process | 0–255 | Use the **exit** command anywhere in the script | Terminates the script immediately |
 
 **Important rule:** A return code of **0** means success. Any non-zero value means a specific type of failure. By convention, use **1** for general errors, **2** for misuse of shell builtins, and higher values for more specific conditions.
+
+### 📊 Visual Representation: Functions Return Codes vs. Script Exit Statuses
+This flowchart contrasts the execution behavior of a function returning a status code (which allows the calling script to continue) against a script exiting (which terminates the process).
+
+```mermaid
+flowchart LR
+    %% Function Return path
+    subgraph "Function Return"
+        call_fn["Call function check_gpu()"] --> ret_val["Return 0 (Success) or 1 (Failure)"] --> continue_script["Continue script execution"]
+    end
+
+    %% Script Exit path
+    subgraph "Script Exit"
+        error_chk["Fatal error detected"] --> exit_cmd["Exit 1 (Terminate process)"] --> terminate["Stop execution"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class ret_val,error_chk cpu;
+    class continue_script,terminate memory;
+    class call_fn,exit_cmd system;
+```
 
 ---
 

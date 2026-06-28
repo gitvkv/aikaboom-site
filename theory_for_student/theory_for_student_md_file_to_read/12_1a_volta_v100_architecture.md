@@ -56,6 +56,24 @@ Why this matters for engineers:
 
 ---
 
+### 📊 Visual Representation: Volta V100 GPU Architecture Layout
+This diagram displays Volta V100 Silicon components, highlighting first-generation Tensor Cores and HBM2 memory connectivity.
+
+```mermaid
+flowchart LR
+    Cores["CUDA Cores (FP32/INT32)"] --- TC["1st Gen Tensor Cores"]
+    TC --- Cache["L1 Cache / Shared Memory"]
+    Cache --- HBM2["HBM2 Memory (900 GB/s)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Cores,TC cpu;
+    class HBM2 memory;
+    class Cache system;
+```
+
 ## 🔗 NVLink 2.0: GPU-to-GPU Communication
 
 NVLink 2.0 allowed engineers to connect multiple V100 GPUs directly. Each link provided **50 GB/s** bidirectional bandwidth — much faster than PCIe 3.0 (16 GB/s).

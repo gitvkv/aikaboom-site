@@ -48,6 +48,23 @@ To help you navigate conversations with engineers and stakeholders, here is how 
 
 ---
 
+### 📊 Visual Representation: AI, ML, and DL Nested Venn Relationship
+This diagram illustrates the nested containment relationship between Artificial Intelligence, Machine Learning, and Deep Learning.
+
+```mermaid
+flowchart LR
+    AI["Artificial Intelligence (Broadest Class)"] --> ML["Machine Learning (Data-driven Algorithms)"]
+    ML --> DL["Deep Learning (Multi-layer Neural Networks)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class DL cpu;
+    class ML memory;
+    class AI system;
+```
+
 ## 🕵️ Common Misconceptions About AI (Cleared Up for New Engineers)
 
 - **❌ "AI is only for robots and sci-fi."**  
@@ -85,3 +102,4 @@ As an engineer responsible for AI infrastructure, you will encounter this term c
 ## 🔍 Next Steps
 
 Now that you understand AI as the broad umbrella, your next topic will dive into **Machine Learning (ML)** — the most common subset you will encounter in production infrastructure. Remember: All ML is AI, but not all AI is ML. Keep this distinction clear in your mind as you build and operate the systems that power intelligent applications.
+

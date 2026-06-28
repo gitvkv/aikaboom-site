@@ -54,6 +54,26 @@ When you run the verification, check these key items:
 
 ---
 
+
+### 📊 Visual Representation: GPU Container Verification Pipeline
+This flowchart displays verification steps inside a container: compiling CUDA samples and executing nvidia-smi.
+
+```mermaid
+flowchart LR
+    Shell["Enter Container Shell"] --> RunSmi["1. Run nvidia-smi"]
+    RunSmi --> RunSample["2. Execute deviceQuery sample"]
+    RunSample --> Success["Success: Driver + Library mounts working"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Success cpu;
+    class RunSmi,RunSample memory;
+    class Shell system;
+```
+
+
 ## 📊 Common Issues and Troubleshooting
 
 | Symptom | Likely Cause | What to Check |

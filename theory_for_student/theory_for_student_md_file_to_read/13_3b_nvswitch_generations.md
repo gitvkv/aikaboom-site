@@ -56,6 +56,22 @@ Each new generation of NVSwitch brings higher bandwidth, lower latency, and bett
 
 ---
 
+### 📊 Visual Representation: NVSwitch ASIC Generational Progression
+This flowchart tracks the routing bandwidth and port density of NVSwitch ASICs from NVSwitch 1 up to NVSwitch 4.
+
+```mermaid
+flowchart LR
+    NVSwitch1["NVSwitch 1 (900 GB/s / Volta)"] --> NVSwitch2["NVSwitch 2 (7.2 TB/s / Ampere)"]
+    NVSwitch2 --> NVSwitch3["NVSwitch 3 (12.8 TB/s / Hopper)"]
+    NVSwitch3 --> NVSwitch4["NVSwitch 4 (115 TB/s / Blackwell / Copper Backplane)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NVSwitch1,NVSwitch2,NVSwitch3,NVSwitch4 system;
+```
+
 ## 🔮 Generation 4.0 — NVSwitch (Blackwell Architecture)
 
 **Release Year:** 2024  

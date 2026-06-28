@@ -48,6 +48,28 @@ RoCEv2 is the enhanced version that addresses the scalability limitations of RoC
 
 ---
 
+### 📊 Visual Representation: RoCE v1 L2 MAC vs. RoCE v2 L3 IP Encapsulation
+This flowchart contrasts RoCE v1 (encapsulated directly in Layer 2 Ethernet) with RoCE v2 (encapsulated in UDP/IP packets, enabling Layer 3 routing).
+
+```mermaid
+flowchart LR
+    subgraph RoCE_v1["RoCE v1 (Non-routable)"]
+        Header1["Ethernet MAC Header"] --- IB_Payload1["RDMA Payload"]
+    end
+    subgraph RoCE_v2["RoCE v2 (Routable)"]
+        Header2["Ethernet Header"] --- IP["IP Header"]
+        IP --- UDP["UDP Header"]
+        UDP --- IB_Payload2["RDMA Payload"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Header1,Header2 memory;
+    class IP,UDP system;
+```
+
 ## 🕵️ Key Differences Explained Simply
 
 ### 1. **Routability (The Biggest Difference)**

@@ -36,6 +36,25 @@ The result is that each MIG instance becomes the *underlying resource* for a vGP
 
 ---
 
+
+### 📊 Visual Representation: MIG-Backed vGPU hardware slicing
+This diagram displays how combining MIG hardware blocks with vGPU virtualization provides clean, isolated slices to VMs.
+
+```mermaid
+flowchart LR
+    MIGInstance["H100 Hardware MIG Slice"] --> vGPUProfile["MIG-Backed vGPU Profile (e.g. 1g.10gb)"]
+    vGPUProfile --> VM["Target Guest VM (Strictly isolated hardware path)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class vGPUProfile cpu;
+    class VM memory;
+    class MIGInstance system;
+```
+
+
 ## 📊 Comparison: MIG-backed vGPU vs. Traditional vGPU
 
 | Feature | Traditional vGPU | MIG-backed vGPU |

@@ -69,6 +69,22 @@ Every AI workload (training or inference) divides GPU memory into four primary c
 
 ---
 
+### 📊 Visual Representation: VRAM Allocations: User Space vs. System Overhead
+This diagram shows the division of physical VRAM between user-managed parameters (weights, activations) and fixed CUDA runtime overhead.
+
+```mermaid
+flowchart LR
+    VRAM["Physical VRAM"] --> CUDA["CUDA Context & Driver (Fixed overhead)"]
+    VRAM --> User["User Space (Model weights, activations, KV Cache)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class VRAM cpu;
+    class CUDA,User memory;
+```
+
 ## 📈 Real-World VRAM Allocation Example
 
 Consider training a **7B parameter model** in FP16 on an NVIDIA A100 (80 GB VRAM):

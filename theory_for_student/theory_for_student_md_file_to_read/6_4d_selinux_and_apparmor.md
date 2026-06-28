@@ -52,6 +52,25 @@ For engineers new to AI infrastructure, understanding MAC helps you prevent data
 
 ---
 
+### 📊 Visual Representation: SELinux and AppArmor MAC Policies
+This diagram displays how Mandatory Access Control (MAC) frameworks intercept process system calls, checking policies before granting file system access.
+
+```mermaid
+flowchart LR
+    Process["Process (Subject)"] -->|Access Request| Kernel["Security Module (SELinux/AppArmor)"]
+    Kernel -->|Consult Policy Rules| Decision{"Access Granted?"}
+    Decision -->|Yes| Target["File / Port (Object)"]
+    Decision -->|No| Audit["Audit Log / Deny Alert"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Decision cpu;
+    class Process,Target memory;
+    class Kernel,Audit system;
+```
+
 ## 🧰 How AppArmor Works
 
 - AppArmor uses **profiles** that define what a specific program can do.
@@ -110,3 +129,4 @@ For engineers new to AI infrastructure, understanding MAC helps you prevent data
 - As a new engineer, start by checking which MAC system your Linux distribution uses, then learn to read audit logs and adjust policies gradually.
 
 > **Remember:** MAC is your safety net. It doesn't replace good practices like least privilege and regular updates — it reinforces them.
+

@@ -50,6 +50,25 @@ Think of it like giving one VM its own dedicated graphics card — no sharing, n
 
 ---
 
+
+### 📊 Visual Representation: GPU Direct Passthrough (PCIe assign)
+This diagram displays GPU Passthrough: binding a physical GPU directly to a target VM, bypassing hypervisor layers.
+
+```mermaid
+flowchart LR
+    PhysicalGPU["Physical GPU Card"] -->|IOMMU / VFIO mapping| VM["Target Guest VM (Direct driver control)"]
+    Hypervisor["Hypervisor (Bypassed)"] -.-> VM
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class VM cpu;
+    class PhysicalGPU memory;
+    class Hypervisor system;
+```
+
+
 ## 📊 Comparison: GPU Passthrough vs. vGPU vs. Bare Metal
 
 | Feature | GPU Passthrough | vGPU (Virtual GPU) | Bare Metal |

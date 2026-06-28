@@ -65,6 +65,24 @@ The journey to sub-10μs latency involves three critical components working toge
 
 ---
 
+
+### 📊 Visual Representation: NVMe over RDMA (RoCE) Zero-Copy Path
+This diagram displays NVMe over RDMA, showing how block commands write directly to remote SSD controller memory without intermediate host CPU buffering.
+
+```mermaid
+flowchart LR
+    Host["Host System Memory"] -->|RoCE Zero-Copy DMA| RNIC["Target RNIC Interface"]
+    RNIC -->|PCIe Peer-to-Peer| TargetSSD["Target SSD Flash Pool"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class RNIC cpu;
+    class Host,TargetSSD memory;
+```
+
+
 ## 🕵️ InfiniBand Deep Dive
 
 InfiniBand is a purpose-built, high-speed, low-latency interconnect technology.

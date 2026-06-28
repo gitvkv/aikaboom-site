@@ -44,6 +44,25 @@ Below is a simplified version of the official NVIDIA compatibility matrix. This 
 
 ---
 
+
+### 📊 Visual Representation: NVIDIA Driver vs. CUDA Toolkit Compatibility
+This diagram displays how CUDA application compatibility depends on matching user-space CUDA runtime versions with installed kernel space drivers.
+
+```mermaid
+flowchart LR
+    App["CUDA Application"] -->|Requires CUDA Toolkit 12.x| Userspace["CUDA User-space Runtime (libcudart.so)"]
+    Userspace -->|Requires Driver >= v525.60| KernelDriver["NVIDIA Kernel Driver (nvidia.ko)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class App cpu;
+    class Userspace memory;
+    class KernelDriver system;
+```
+
+
 ## 🛠️ How to Check Your Current Driver and CUDA Version
 
 To find out what driver and CUDA version you have on your system, you can use the following methods:

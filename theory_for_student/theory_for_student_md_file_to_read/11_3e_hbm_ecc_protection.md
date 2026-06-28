@@ -54,6 +54,24 @@ NVIDIA Hopper and Blackwell GPUs use enhanced ECC with Chipkill-like protection.
 
 ---
 
+### 📊 Visual Representation: HBM On-Die and Link ECC Data Path
+This flowchart shows the dual-layered ECC protection in HBM: on-die ECC correcting storage cells and Link ECC correcting transmission lines.
+
+```mermaid
+flowchart LR
+    Cells["DRAM Cells"] -->|On-Die ECC| LogicDie["Logic base die (1-Bit Correct / 2-Bit Detect)"]
+    LogicDie -->|Link ECC| Interposer["Silicon Interposer Connection"]
+    Interposer --> GPU["GPU Memory Controller"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPU cpu;
+    class Cells,LogicDie memory;
+    class Interposer system;
+```
+
 ## 📊 Why ECC Matters for AI Training
 
 AI training runs are **long-duration, high-value operations**. Here is why ECC is critical:

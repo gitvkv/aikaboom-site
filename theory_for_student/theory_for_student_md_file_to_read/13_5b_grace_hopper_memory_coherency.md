@@ -32,6 +32,22 @@ The Grace Hopper Superchip solves this by physically connecting an NVIDIA Grace 
 
 ---
 
+### 📊 Visual Representation: Grace Hopper Unified Coherent Memory Space
+This diagram displays GH200 unified memory coherency, allowing the Grace CPU and Hopper GPU to access each other's memory spaces directly.
+
+```mermaid
+flowchart LR
+    GraceCPU["Grace CPU (512GB LPDDR5X)"] -->|NVLink-C2C Coherent Page Migration| HopperGPU["Hopper GPU (96GB HBM3)"]
+    HopperGPU -->|Direct Hardware Page Tables| GraceCPU
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class HopperGPU cpu;
+    class GraceCPU memory;
+```
+
 ## 🛠️ Why This Matters for Engineers
 
 - **Simpler Code**: You no longer need to write complex data migration logic. Just allocate memory once and let both processors use it.

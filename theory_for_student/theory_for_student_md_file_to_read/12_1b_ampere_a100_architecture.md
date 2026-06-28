@@ -36,6 +36,24 @@ The NVIDIA Ampere architecture, launched in 2020 with the A100 GPU, represents a
 
 ---
 
+### 📊 Visual Representation: Ampere A100 GPU Architecture Layout
+This diagram maps the A100 GPU components, displaying 3rd Gen Tensor Cores, structured sparsity support, and HBM2e memory interfaces.
+
+```mermaid
+flowchart LR
+    Cores["CUDA Cores (FP32/INT32)"] --- TC["3rd Gen Tensor Cores"]
+    TC --- Sparsity["Structured 2:4 Sparsity Filter"]
+    Sparsity --- HBM2e["HBM2e Memory (2.0 TB/s)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Cores,TC cpu;
+    class HBM2e memory;
+    class Sparsity system;
+```
+
 ## 🛠️ Practical Use Cases for Engineers
 
 - **Large Language Model Training**: The A100's 80 GB memory and fast Tensor Cores make it ideal for training models like GPT-3 or BERT-large. Engineers can fit entire model weights and optimizer states in GPU memory, reducing the need for complex model parallelism.

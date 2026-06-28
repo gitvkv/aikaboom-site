@@ -70,6 +70,25 @@ pcieport 0000:00:01.0:    [ 0] RxErr
 
 ---
 
+
+### 📊 Visual Representation: PCIe Advanced Error Reporting (AER) alerts
+This diagram displays how the Linux kernel AER driver logs hardware PCIe transmission errors, isolating bad slots.
+
+```mermaid
+flowchart LR
+    PCIeLink["PCIe Link Parity failure"] --> AERDriver["Linux Kernel AER Driver"]
+    AERDriver --> Log["dmesg: 'PCIe Bus Error: severity=Corrected'"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class AERDriver cpu;
+    class Log memory;
+    class PCIeLink system;
+```
+
+
 ## 📊 Where to Find AER Logs
 
 You can inspect AER errors using these standard Linux tools:

@@ -81,6 +81,26 @@ NVIDIA follows a structured process that moves from discovery to deployment. Her
 
 ---
 
+
+### 📊 Visual Representation: NVAIE Security Scan and Patch Loop
+This flowchart displays how containers are constantly scanned for vulnerabilities, and how security patches are updated in the NVAIE channel.
+
+```mermaid
+flowchart LR
+    Scan["Vulnerability Scanner (Trivy / Anchore)"] -->|Detect CVE| Dev["Dev Team Patching"]
+    Dev -->|Build update| Registry["Publish Patched Image to NGC"]
+    Registry -->|Automatic Pull| Deploy["Production Nodes"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Dev cpu;
+    class Registry memory;
+    class Scan,Deploy system;
+```
+
+
 ## 🧰 How Engineers Should Respond to NVIDIA CVEs
 
 Here is a practical workflow for handling a CVE in your AI infrastructure:

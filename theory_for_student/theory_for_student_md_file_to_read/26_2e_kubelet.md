@@ -100,6 +100,26 @@ Kubelet enforces security contexts defined in Pod specifications:
 
 ---
 
+
+### 📊 Visual Representation: kubelet Node Agent Container Management
+This diagram displays the kubelet: monitoring local container states and communicating with runtimes over the CRI interface.
+
+```mermaid
+flowchart LR
+    APIServer["kube-apiserver Assignment"] --> Kubelet["kubelet Node Agent"]
+    Kubelet -->|CRI gRPC API| Runtime["CRI Container Runtime (containerd)"]
+    Runtime -->|Monitor status| Kubelet
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Kubelet cpu;
+    class Runtime memory;
+    class APIServer system;
+```
+
+
 ## 🧩 Kubelet in the AI Infrastructure Context
 
 For AI workloads on GPU nodes, Kubelet plays a critical role:

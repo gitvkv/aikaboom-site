@@ -44,6 +44,25 @@ Loss (FP32) → Multiply by scale factor → Backprop in FP16 → Divide gradien
 
 ---
 
+### 📊 Visual Representation: Loss Scaling Gradient Protection
+This diagram displays how loss scaling multiplies training loss to shift gradient distributions out of the FP16 underflow range.
+
+```mermaid
+flowchart LR
+    Loss["Calculate Loss"] -->|Multiply by Scale Factor| ScaledLoss["Scaled Loss"]
+    ScaledLoss --> Backprop["Backward Pass (Gradients Scaled Up)"]
+    Backprop --> Unscale["Unscale Gradients (Divide by Scale Factor)"]
+    Unscale --> Update["Weight Update (Safe from Underflow)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Backprop cpu;
+    class Loss,ScaledLoss memory;
+    class Unscale,Update system;
+```
+
 ## 🕵️ Common Scaling Strategies
 
 - **Static loss scaling**: Use a fixed scale factor (e.g., 2⁸ or 2¹⁶). Simple but may need manual tuning.

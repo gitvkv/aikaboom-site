@@ -54,6 +54,26 @@ AI training and inference have different resource needs. Training requires large
 
 ---
 
+
+### 📊 Visual Representation: vCS (Virtual Compute Server) architecture
+This diagram displays vCS: exposing GPU hardware virtualization to enterprise AI containers and VMs.
+
+```mermaid
+flowchart LR
+    Hypervisor["Hypervisor"] --> vCS["Virtual Compute Server Profile"]
+    vCS --> VM["vCS Guest VM"]
+    VM --> Docker["Docker Container workloads (CUDA)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class vCS cpu;
+    class VM memory;
+    class Docker system;
+```
+
+
 ## 🛠️ Comparison Table: Training vs. Inference vGPU Profiles
 
 | Feature | AI Training VMs | AI Inference VMs |

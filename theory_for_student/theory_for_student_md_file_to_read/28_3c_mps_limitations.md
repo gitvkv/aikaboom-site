@@ -35,6 +35,24 @@ When engineers begin working with NVIDIA Multi-Process Service (MPS), they often
 
 ---
 
+
+### 📊 Visual Representation: MPS Shared Context Crash Propagation
+This flowchart demonstrates how a memory access crash in one client process can propagate and terminate all other clients in the shared context.
+
+```mermaid
+flowchart LR
+    Client1["Client 1 (Memory fault / SegFault)"] -->|Shared context crash| MPSDaemon["MPS Control Server"]
+    MPSDaemon -->|Force teardown| Client2["Client 2 (Terminated / Lost computation)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class MPSDaemon cpu;
+    class Client1,Client2 memory;
+```
+
+
 ## 📊 Comparison: MPS vs. Separate Contexts
 
 | Feature | MPS (Single Context) | Separate CUDA Contexts (No MPS) |

@@ -55,6 +55,25 @@ Remote Storage → RDMA Network → NIC → PCIe → GPU Memory (via GDS)
 
 ---
 
+
+### 📊 Visual Representation: GDS and GPUDirect RDMA Unified Path
+This diagram displays unified GDS/RDMA execution: copying data directly from remote NVMe-oF network targets to GPU memory.
+
+```mermaid
+flowchart LR
+    RemoteNVMe["Remote Storage Node"] -->|RoCE RDMA Fabric| HCA["Host RNIC / HCA"]
+    HCA -->|Direct DMA Peer-to-Peer| VRAM["GPU Memory (VRAM)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class VRAM cpu;
+    class HCA memory;
+    class RemoteNVMe system;
+```
+
+
 ## 🧩 Configuration Steps Overview
 
 1. **Verify hardware compatibility** — Ensure GPU, NIC, and storage server all support RDMA and GDS.

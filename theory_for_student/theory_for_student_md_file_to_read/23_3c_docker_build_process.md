@@ -63,6 +63,26 @@ CMD ["python3", "/app/main.py"]
 
 ---
 
+
+### 📊 Visual Representation: Docker Build Context and Daemon Engine
+This flowchart outlines how the Docker CLI sends the local build context directory to the background Docker Daemon to execute image compilation.
+
+```mermaid
+flowchart LR
+    CLI["Docker CLI (Command run)"] -->|Send context tarball| Daemon["Docker Daemon Engine"]
+    Daemon -->|Execute instructions| Pull["Pull Base Images"]
+    Pull --> Compile["Compile layers & output image"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Daemon cpu;
+    class CLI memory;
+    class Pull,Compile system;
+```
+
+
 ## 📦 The `.dockerignore` File — Stop Sending Junk to the Build Context
 
 When you run **docker build**, Docker sends the entire directory (called the **build context**) to the Docker daemon. This includes hidden files, virtual environments, and large datasets — all of which slow down the build and bloat the image.

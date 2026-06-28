@@ -43,6 +43,25 @@ For example, if you use **`--gpus 'device=0,1'`**, the toolkit sets **`NVIDIA_VI
 
 ---
 
+
+### 📊 Visual Representation: NVIDIA_VISIBLE_DEVICES GPU Filtering
+This diagram displays how setting the NVIDIA_VISIBLE_DEVICES environment variable filters which physical GPUs are visible to a container.
+
+```mermaid
+flowchart LR
+    Host["Host: GPU 0, GPU 1, GPU 2"] -->|"NVIDIA_VISIBLE_DEVICES=0,2"| Filter{"Toolkit Filter"}
+    Filter --> Container["Container: Sees GPU 0 & GPU 2 (Excludes GPU 1)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Container cpu;
+    class Host memory;
+    class Filter system;
+```
+
+
 ## 🕵️ Verifying GPU Selection Inside a Container
 
 After starting a container with any GPU selection method, you can confirm which GPUs are visible by running a simple check inside the container.

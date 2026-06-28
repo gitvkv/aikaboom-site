@@ -54,6 +54,26 @@ Prometheus alerting rules are defined in YAML configuration files. Each rule has
 
 ---
 
+
+### 📊 Visual Representation: Prometheus Alert Rules and Alertmanager
+This diagram displays how Prometheus evaluates alert conditions and forwards notifications to Alertmanager.
+
+```mermaid
+flowchart LR
+    Rule["Alert Rule: dcgm_gpu_temp > 85"] --> Prometheus["Prometheus server"]
+    Prometheus -->|Active alert| Alertmanager["Alertmanager Daemon"]
+    Alertmanager -->|Notify| Slack["Slack / PagerDuty channel"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Prometheus cpu;
+    class Alertmanager memory;
+    class Rule,Slack system;
+```
+
+
 ## 🛠️ Setting Up Alertmanager for GPU Notifications
 
 To receive GPU fault notifications, you need to configure Alertmanager with **receivers**. A receiver defines where alerts should be sent.

@@ -51,6 +51,26 @@ OVS is a virtual switch that connects VMs to the physical network. With hardware
 
 ---
 
+
+### 📊 Visual Representation: OVS hardware offload via ASAP²
+This flowchart shows OVS hardware offload: the first packet of a stream is processed by the DPU control plane, which programs hardware flow tables to forward subsequent packets at wire speed.
+
+```mermaid
+flowchart LR
+    Packet["First Packet of Stream"] --> DPU["DPU OVS Control Plane (ARM)"]
+    DPU -->|Configure Flow| ASIC["ConnectX ASIC Flow Table (ASAP²)"]
+    ASIC -->|Subsequent packets| FastForward["Wire-speed hardware forwarding"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class DPU cpu;
+    class ASIC memory;
+    class Packet,FastForward system;
+```
+
+
 ## 🧩 Key Components Involved
 
 - **BlueField DPU** — The hardware that performs the offload (includes ARM cores, accelerators, and programmable data path).

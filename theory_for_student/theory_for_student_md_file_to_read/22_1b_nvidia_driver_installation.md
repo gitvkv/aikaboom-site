@@ -65,6 +65,25 @@ This method involves downloading a standalone executable **.run file** directly 
 
 ---
 
+
+### 📊 Visual Representation: NVIDIA Driver Installation flow
+This flowchart outlines driver installation: disabling Nouveau drivers, building kernel modules, and verifying with nvidia-smi.
+
+```mermaid
+flowchart LR
+    DisableNouveau["1. Disable & Blacklist Nouveau"] --> InstallDKMS["2. Install compiler & dkms"]
+    InstallDKMS --> RunInstaller["3. Execute NVIDIA RUN Installer"]
+    RunInstaller --> Verify["4. Verify via 'nvidia-smi'"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Verify cpu;
+    class DisableNouveau,InstallDKMS,RunInstaller system;
+```
+
+
 ## 📊 Comparison Table: apt/dnf Repository vs .run File
 
 | Feature | apt/dnf Repository (Recommended) | .run File (Manual) |

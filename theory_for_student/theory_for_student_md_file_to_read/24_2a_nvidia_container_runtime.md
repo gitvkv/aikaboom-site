@@ -47,6 +47,26 @@ This happens automatically — you don't need to manually mount GPU devices or c
 
 ---
 
+
+### 📊 Visual Representation: NVIDIA Container Runtime Architecture
+This diagram displays how the NVIDIA Container Runtime wraps OCI runc to inject driver libraries and device files before container boot.
+
+```mermaid
+flowchart LR
+    CRI["Container Engine (docker/containerd)"] -->|Launch hook| NVRuntime["NVIDIA Container Runtime"]
+    NVRuntime -->|Hook: Inject GPUs| NVToolkit["NVIDIA Container Toolkit (CLI)"]
+    NVToolkit -->|Standard Boot| runc["Standard OCI runc Engine"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NVRuntime cpu;
+    class NVToolkit memory;
+    class CRI,runc system;
+```
+
+
 ## 🕵️ How to Verify It's Working
 
 Once the NVIDIA Container Runtime is installed and configured, you can verify GPU access inside a container by:

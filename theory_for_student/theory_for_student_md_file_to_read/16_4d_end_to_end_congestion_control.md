@@ -49,6 +49,23 @@ The system uses **explicit congestion notification (ECN)** markers in packet hea
 
 ---
 
+### 📊 Visual Representation: End-to-End Congestion Monitoring Loop
+This diagram maps the complete end-to-end congestion loop, showing telemetry from switches to endpoints to throttle source transmission rates.
+
+```mermaid
+flowchart LR
+    Telemetry["Switch Buffer Telemetry"] --> Controller["DCQCN Congestion Engine"]
+    Controller -->|Throttle Rate| Sender["GPU Node HCA Rate Limiter"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Controller cpu;
+    class Sender memory;
+    class Telemetry system;
+```
+
 ## 🛠️ Key Components in the E2E CC System
 
 - **Congestion Detection** — Switches monitor buffer occupancy and mark packets when queues exceed a threshold

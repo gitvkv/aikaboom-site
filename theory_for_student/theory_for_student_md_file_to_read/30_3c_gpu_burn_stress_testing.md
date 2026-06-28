@@ -54,6 +54,26 @@ When you run gpu-burn, it provides real-time feedback. Here's what to look for:
 
 ---
 
+
+### 📊 Visual Representation: gpu-burn GEMM load test
+This diagram displays gpu-burn: executing intensive GEMM calculations on Tensor Cores to verify GPU stability under max load.
+
+```mermaid
+flowchart LR
+    BurnCmd["gpu-burn execution"] --> Test["Intensive Matrix Mult (GEMM FP64/FP32/FP16)"]
+    Test -->|Saturate power / TDP| Verify{"Verify Matrix Output Errors"}
+    Verify -->|Correct| Stable["GPU Stable"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Verify cpu;
+    class Stable memory;
+    class BurnCmd,Test system;
+```
+
+
 ## 🕵️ Best Practices for Effective Stress Testing
 
 Follow these guidelines to get reliable results from gpu-burn:

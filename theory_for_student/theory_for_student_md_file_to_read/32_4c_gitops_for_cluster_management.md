@@ -62,6 +62,24 @@ Your Git repo for an AI cluster typically contains YAML files organized like thi
 
 ---
 
+
+### 📊 Visual Representation: GitOps ArgoCD pull reconcile loop
+This flowchart shows how GitOps controllers monitor Git changes and apply configurations directly to Kubernetes APIs.
+
+```mermaid
+flowchart LR
+    GitRepo["Git Repository (Source of Truth)"] -->|Sync webhook| ArgoCD["ArgoCD GitOps Controller"]
+    ArgoCD -->|Reconcile| APIServer["kube-apiserver API (Applies changes)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class ArgoCD cpu;
+    class GitRepo,APIServer memory;
+```
+
+
 ## 🕵️ Real-World Example: Adding a GPU Node
 
 Here's how a typical GitOps workflow looks when adding a new GPU node to your AI cluster:

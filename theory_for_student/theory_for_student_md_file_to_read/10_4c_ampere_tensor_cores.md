@@ -62,6 +62,24 @@ Key improvements over first-gen (Volta):
 
 ---
 
+### 📊 Visual Representation: Ampere 3rd Gen Tensor Core Precision Expansion
+This diagram details the third-generation Tensor Core in Ampere, expanding precision formats to support TF32, BF16, and structured 2:4 sparsity.
+
+```mermaid
+flowchart LR
+    Inputs["Inputs (TF32 / BF16 / INT8)"] --> Sparsity["Structured 2:4 Sparsity Filter"]
+    Sparsity --> MMA["Ampere Tensor Core (3rd Gen)"]
+    MMA --> Out["Output (Double throughput via sparsity)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class MMA cpu;
+    class Inputs,Out memory;
+    class Sparsity system;
+```
+
 ## 🛠️ How Engineers Use These in Practice
 
 ### For Training
@@ -114,3 +132,4 @@ Key improvements over first-gen (Volta):
 ---
 
 *Remember: The best precision is the lowest one that still gives you acceptable accuracy. Start with FP32/TF32, then gradually lower precision until accuracy drops — that's your sweet spot.*
+

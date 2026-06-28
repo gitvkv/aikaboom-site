@@ -77,6 +77,24 @@ Here is the flow for a typical AI training job:
 
 ---
 
+### 📊 Visual Representation: Spectrum-X High-Performance Ethernet Platform
+This diagram displays the Spectrum-X platform, linking Spectrum switches and BlueField DPUs to provide lossless network paths for AI workloads.
+
+```mermaid
+flowchart LR
+    Host["GPU Node VRAM"] -->|GPUDirecRDMA| DPU["BlueField-3 DPU (NIC)"]
+    DPU -->|Symmetric Load Balancing| Switch["Spectrum-4 Switch (51.2 Tbps)"]
+    Switch -->|Lossless RoCE| Switch
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class DPU cpu;
+    class Host memory;
+    class Switch system;
+```
+
 ## 📊 Comparison: Standard Ethernet vs. Spectrum-X
 
 | Aspect | Standard Ethernet | Spectrum-X (Spectrum-4 + BlueField-3) |

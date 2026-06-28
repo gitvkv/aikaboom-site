@@ -54,6 +54,24 @@ For most AI workloads, the **Fat Tree** or **Up/Down** algorithms are recommende
 
 ---
 
+### 📊 Visual Representation: OpenSM Configuration and Log Flow
+This diagram displays the OpenSM system daemon, loading path configurations to manage local InfiniBand subnet routing tables.
+
+```mermaid
+flowchart LR
+    Conf["opensm.conf Configuration"] --> Daemon["OpenSM Daemon (userspace)"]
+    Daemon -->|sysfs interface| Kernel["Kernel IB Driver"]
+    Daemon --> Log["opensm.log (Diagnostics)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Daemon cpu;
+    class Conf,Log memory;
+    class Kernel system;
+```
+
 ## 🕵️ Common OpenSM Operations
 
 Engineers interact with OpenSM primarily through its management tools. Here are typical tasks:

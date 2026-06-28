@@ -6,7 +6,7 @@
 
 When managing AI infrastructure, GPU logs and DCGM (NVIDIA Data Center GPU Manager) output contain critical information about GPU health, performance, and errors. Engineers need to quickly extract meaningful data from these logs — such as temperature spikes, memory errors, or power consumption anomalies — without manually scrolling through hundreds of lines. This is where **awk** and **grep** become essential tools. They allow you to filter, search, and format GPU-related log data efficiently, helping you monitor and troubleshoot AI workloads at scale.
 
----
+
 
 ## ⚙️ What Are GPU Logs and DCGM Output?
 
@@ -84,6 +84,25 @@ To get a clean table of GPU temperatures over time, you might:
 
 - **Scenario D — Parsing DCGM JSON output**:  
   If DCGM outputs JSON (using **-o json**), you can still use **grep** to find keys like **"temperature"** and then use **awk** to extract values after the colon. For complex JSON, consider **jq** as an alternative.
+
+### 📊 Visual Representation: NVIDIA GPU Diagnostic Log Parsing Pipeline
+This horizontal flowchart shows how raw system logs are processed to extract NVIDIA driver error events (such as GPU Xid codes) and compile them into a readable diagnostic report.
+
+```mermaid
+flowchart LR
+    syslog["System Logs<br>(/var/log/syslog)"] --> grep["grep NVRM<br>(Filter Driver Logs)"]
+    grep --> xid["grep 'Xid'<br>(Isolate Hardware Errors)"]
+    xid --> awk["awk '{print $1, $5, $9}'<br>(Format Timestamp & Error ID)"]
+    awk --> report["GPU Diagnostic Report"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class xid,report cpu;
+    class syslog,grep memory;
+    class awk system;
+```
 
 ---
 

@@ -44,6 +44,26 @@ This command was often:
 
 ---
 
+
+### 📊 Visual Representation: Manual CLI GPU Device Exposure
+This flowchart shows manual CLI execution exposing raw GPUs using standard Docker volume and device flags.
+
+```mermaid
+flowchart LR
+    Cmd["docker run command"] -->|--device /dev/nvidia0| ExposeDev["Expose GPU Device file"]
+    Cmd -->|-v /usr/lib:/usr/lib| ExposeLibs["Expose host driver library paths"]
+    ExposeDev & ExposeLibs --> Running["Container running with GPU Access"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Running cpu;
+    class Cmd memory;
+    class ExposeDev,ExposeLibs system;
+```
+
+
 ## 📊 Comparison: Old Way vs. Modern NVIDIA Container Toolkit
 
 | Aspect | Old Manual Mounts | NVIDIA Container Toolkit |

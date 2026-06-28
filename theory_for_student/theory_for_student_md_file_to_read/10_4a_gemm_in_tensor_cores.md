@@ -46,6 +46,24 @@ Tensor Cores achieve single-clock execution through three key hardware innovatio
 
 ---
 
+### 📊 Visual Representation: Tensor Core Matrix Multiply-Accumulate (MMA) Operation
+This diagram displays the standard Tensor Core MMA operation, computing D = A * B + C in a single clock cycle.
+
+```mermaid
+flowchart LR
+    A["Matrix A (FP16/FP8)"] --> MMA["MMA Computation Engine"]
+    B["Matrix B (FP16/FP8)"] --> MMA
+    C["Matrix C (FP32/FP16)"] --> MMA
+    MMA --> D["Matrix D (Accumulated Output)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class MMA cpu;
+    class A,B,C,D memory;
+```
+
 ## 🛠️ The 4×4 Matrix Tile: The Atomic Unit
 
 Tensor Cores operate on **4×4 matrix tiles** as the smallest unit of work:
@@ -98,3 +116,4 @@ A single NVIDIA H100 GPU contains **528 Tensor Cores**. Each core executing a 4�
 ## 🎯 Key Takeaway for New Engineers
 
 The GEMM operation **D = A × B + C** executed in a single clock is not just a hardware specification—it is the fundamental reason why modern AI is possible. When you see GPU performance numbers, remember that behind every teraFLOP is a Tensor Core performing this exact operation, one 4×4 tile at a time, in a single clock cycle. Understanding this operation helps you reason about why certain model architectures are efficient, why memory layout matters, and why NVIDIA GPUs remain the standard for AI infrastructure.
+

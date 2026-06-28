@@ -67,6 +67,57 @@ A mismatched CPU can bottleneck your entire AI pipeline, even with the best GPUs
 | Single-thread performance | Slightly better | Slightly lower |
 | Price per core | Higher | Lower |
 
+### 📊 Visual Representation: Xeon vs. EPYC Feature Mapping
+
+This diagram compares the key architectural features of 4th Gen Intel Xeon Scalable and AMD EPYC processors, highlighting their respective strengths in memory channels, PCIe lanes, accelerators, and AI workload targets.
+
+```mermaid
+flowchart TD
+    %% Compute/processors
+    Xeon["Intel Xeon Scalable (4th Gen)"]:::cpu
+    EPYC["AMD EPYC (4th Gen Genoa)"]:::cpu
+
+    %% Features for Xeon
+    Xeon_AMX["AMX Accelerator (On-chip Matrix Math)"]:::memory
+    Xeon_Mem["DDR5 Memory (8 Channels)"]:::memory
+    Xeon_PCIe["PCIe 5.0 Lanes (Up to 80 Lanes)"]:::system
+
+    %% Features for EPYC
+    EPYC_Cores["High Core Density (Up to 96 Cores)"]:::cpu
+    EPYC_Mem["DDR5 Memory (12 Channels)"]:::memory
+    EPYC_PCIe["PCIe 5.0 Lanes (Up to 128 Lanes)"]:::system
+
+    %% GPU Connectivity/Workload target
+    Workload_Xeon["Best For CPU Inference & Mixed Workloads"]:::system
+    Workload_EPYC["Best For GPU-Dense AI Training (4-8 GPUs)"]:::system
+
+    %% Connections Xeon
+    Xeon --> Xeon_AMX
+    Xeon --> Xeon_Mem
+    Xeon --> Xeon_PCIe
+    Xeon_AMX --> Workload_Xeon
+    Xeon_Mem --> Workload_Xeon
+    Xeon_PCIe --> Workload_Xeon
+
+    %% Connections EPYC
+    EPYC --> EPYC_Cores
+    EPYC --> EPYC_Mem
+    EPYC --> EPYC_PCIe
+    EPYC_Cores --> Workload_EPYC
+    EPYC_Mem --> Workload_EPYC
+    EPYC_PCIe --> Workload_EPYC
+
+    %% Style Classes
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Xeon,EPYC,EPYC_Cores cpu;
+    class Xeon_AMX,Xeon_Mem,EPYC_Mem memory;
+    class Xeon_PCIe,EPYC_PCIe,Workload_Xeon,Workload_EPYC system;
+```
+
+
 ---
 
 ## 🕵️ How to Choose for Your AI Server

@@ -61,6 +61,23 @@ This design allows engineers to get the **speed benefits of FP16** (2× throughp
 
 ---
 
+### 📊 Visual Representation: Volta 1st Gen Tensor Core Pipeline
+This diagram maps the first-generation Tensor Core introduced in Volta, supporting FP16 matrix inputs and FP32 accumulation.
+
+```mermaid
+flowchart LR
+    Input["FP16 Inputs (Matrix A & B)"] --> MMA["Volta Tensor Core (1st Gen)"]
+    Acc["FP32 Accumulator (Matrix C)"] --> MMA
+    MMA --> Out["FP32 Output Matrix"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class MMA cpu;
+    class Input,Acc,Out memory;
+```
+
 ## 🛠️ How Engineers Use First-gen Tensor Cores in Practice
 
 For engineers working with AI infrastructure, using Tensor Cores is typically automatic through deep learning frameworks. Here's how it works in practice:
@@ -141,3 +158,4 @@ As you continue learning about AI infrastructure, you'll encounter:
 - **Fourth-gen Tensor Cores** (Hopper): Added FP8 and Transformer Engine
 
 Each generation builds on the FP16 accumulation concept introduced in Volta, expanding precision options and throughput capabilities.
+

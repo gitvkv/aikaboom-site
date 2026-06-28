@@ -40,6 +40,24 @@ Standard Tensor Cores perform matrix multiplication on dense (full) matrices. Wi
 
 ---
 
+### 📊 Visual Representation: Structured 2:4 Sparse Matrix Compression
+This diagram displays how 2:4 structured sparsity compresses a dense 4-element block into 2 non-zero values, doubling matrix math throughput.
+
+```mermaid
+flowchart LR
+    Dense["Dense Matrix Block: [A, 0, B, 0]"] --> Filter["Structured 2:4 Sparsity Check"]
+    Filter --> Sparse["Compressed Non-zero Matrix: [A, B]"]
+    Sparse --> TensorCore["Sparse Tensor Core Multiplication"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class TensorCore cpu;
+    class Dense,Sparse memory;
+    class Filter system;
+```
+
 ## 🛠️ How Engineers Enable 2:4 Sparsity
 
 Enabling 2:4 structured sparsity involves a few key steps during model development:

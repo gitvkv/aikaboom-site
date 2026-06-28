@@ -46,6 +46,29 @@ Key concepts:
 
 ---
 
+### 📊 Visual Representation: Thin Provisioning vs. Thick Provisioning
+This flowchart contrasts thick provisioning (pre-allocating all block space) with thin provisioning (on-demand allocation from a shared storage pool).
+
+```mermaid
+flowchart LR
+    subgraph Thick["Thick Provisioning (Rigid Allocation)"]
+        Disk1["Request 100GB"] --> Alloc1["Allocates 100GB immediately"]
+    end
+
+    subgraph Thin["Thin Provisioning (On-Demand Pool)"]
+        Disk2["Request 100GB"] --> Pool["Thin Pool"]
+        Pool -->|Allocates only used blocks| Alloc2["Used 20GB"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Pool cpu;
+    class Alloc1,Alloc2 memory;
+    class Disk1,Disk2 system;
+```
+
 ## 📊 Comparison: Thick vs. Thin Provisioning for Checkpoints
 
 | Feature | Thick Provisioning | Thin Provisioning |
@@ -94,3 +117,4 @@ Thin provisioning is a powerful storage optimization technique for AI checkpoint
 - Leverage efficient snapshots for checkpoint versioning.
 
 The key trade-off is the need for active monitoring to prevent pool exhaustion. With proper alerting and automated cleanup, thin provisioning becomes an essential tool in any AI infrastructure operator's storage toolkit.
+

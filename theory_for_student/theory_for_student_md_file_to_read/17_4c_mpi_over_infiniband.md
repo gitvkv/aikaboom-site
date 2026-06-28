@@ -45,6 +45,24 @@ InfiniBand provides the physical and link-layer transport. MPI sits on top, usin
 
 ---
 
+### 📊 Visual Representation: MPI over InfiniBand Zero-Copy Send
+This diagram displays MPI data paths: matching messaging envelopes over InfiniBand to trigger direct DMA memory transfers.
+
+```mermaid
+flowchart LR
+    App1["MPI Sender (Rank 0)"] -->|Send Envelope| App2["MPI Receiver (Rank 1)"]
+    App2 -->|Envelope Match / Ready| DMA["HCA DMA Transfer (Zero-Copy)"]
+    DMA -->|Direct write| TargetMem["Receiver Buffer"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class App1,App2 cpu;
+    class TargetMem memory;
+    class DMA system;
+```
+
 ## 🕵️ Common MPI Operations in AI Training
 
 - **MPI_Allreduce**: The workhorse of distributed training. Each process contributes a local value (e.g., gradient tensor), and all processes receive the summed result.

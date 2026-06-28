@@ -68,6 +68,24 @@ A Dockerfile is the blueprint for building a container image. For engineers new 
 
 ---
 
+
+### 📊 Visual Representation: Dockerfile Instruction Layer Build
+This diagram shows how Dockerfile commands map to permanent, cached read-only image layers.
+
+```mermaid
+flowchart LR
+    FROM["FROM ubuntu:22.04"] --> Layer1["Base OS Layer (Cached)"]
+    RUN["RUN apt-get install -y python3"] --> Layer2["Python Package Layer (Cached)"]
+    COPY["COPY train.py /app/"] --> Layer3["Application File Layer"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Layer1,Layer2,Layer3 memory;
+```
+
+
 ## 🛠️ Practical AI Example: Building an Inference Container
 
 Here's how these instructions work together for a simple AI inference service:

@@ -56,6 +56,39 @@ The key difference between UDIMM, RDIMM, and LRDIMM is **how they handle electri
 | **Cost** | Lowest | Moderate | Highest |
 | **Typical use** | Desktops, laptops | AI servers, enterprise servers | High-capacity servers |
 
+### 📊 Visual Representation: Memory Module (DIMM) Architecture Comparison
+
+This diagram compares the internal routing and buffering mechanisms of UDIMM, RDIMM, and LRDIMM architectures, showing how they handle memory controller signals.
+
+```mermaid
+flowchart TD
+    subgraph UDIMM["UDIMM (Unbuffered DIMM)"]
+        Ctrl_U["Memory Controller"] -->|Direct Cmd/Addr & Data| DRAM_U["DRAM Chips (Direct Load)"]
+    end
+
+    subgraph RDIMM["RDIMM (Registered DIMM)"]
+        Ctrl_R["Memory Controller"] -->|Command/Address| Reg_R["Register (RCD)"]
+        Ctrl_R -->|Direct Data| DRAM_R["DRAM Chips"]
+        Reg_R -->|Buffered Cmd/Addr| DRAM_R
+    end
+
+    subgraph LRDIMM["LRDIMM (Load-Reduced DIMM)"]
+        Ctrl_L["Memory Controller"] -->|Command/Address| Buff_L["Data Buffer + RCD"]
+        Ctrl_L -->|Data| Buff_L
+        Buff_L -->|Buffered Cmd/Addr| DRAM_L["DRAM Chips"]
+        Buff_L -->|Buffered Data| DRAM_L
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Ctrl_U,Ctrl_R,Ctrl_L cpu;
+    class DRAM_U,DRAM_R,DRAM_L,UDIMM,RDIMM,LRDIMM memory;
+    class Reg_R,Buff_L system;
+```
+
+
 ---
 
 ## 🕵️ Why AI Servers Need RDIMMs

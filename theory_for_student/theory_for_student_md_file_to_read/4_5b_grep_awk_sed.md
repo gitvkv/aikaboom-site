@@ -4,7 +4,7 @@
 
 Welcome to the world of text processing in Linux. As an engineer working with AI infrastructure, you will constantly interact with configuration files, log files, and data streams. These three tools — **grep**, **awk**, and **sed** — are your essential companions for searching, filtering, and transforming text without needing to open a full editor. Think of them as your command-line Swiss Army knife for text.
 
----
+
 
 ## 🕵️ What is grep? — Searching for Patterns
 
@@ -98,6 +98,25 @@ grep "ERROR" /var/log/syslog | awk '{print $1, $2, $5}'
 ```
 
 📤 Output: Only lines containing "ERROR" are shown, and from those lines, only the first, second, and fifth columns are printed.
+
+### 📊 Visual Representation: Log Processing Pipeline (grep -> awk -> sed)
+This horizontal flowchart shows how a raw system log stream is incrementally parsed, filtered, structured, and transformed by piping `grep`, `awk`, and `sed` together.
+
+```mermaid
+flowchart LR
+    stream["Input Log Stream<br>(Raw GPU Logs)"] --> grep["grep 'Xid'<br>(Filter Rows / Horizontal Select)"]
+    grep --> awk["awk '{print $1, $5}'<br>(Filter Columns / Vertical Select)"]
+    awk --> sed["sed 's/Xid/Error_ID/g'<br>(Transform Text / Substitution)"]
+    sed --> output["Refined Output Log"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class grep cpu;
+    class awk memory;
+    class stream,sed,output system;
+```
 
 ---
 

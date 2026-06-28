@@ -51,6 +51,26 @@ This hybrid approach allows:
 
 ---
 
+### 📊 Visual Representation: FP8 Formats: E4M3 vs. E5M2
+This diagram contrasts the two standard 8-bit float structures: E4M3 (best for weights/activations) and E5M2 (best for gradients).
+
+```mermaid
+flowchart LR
+    subgraph E4M3["E4M3 Format (Higher Precision)"]
+        Word1["8-Bit FP8"] --> E1["4 Exponent Bits"] --- M1["3 Mantissa Bits"]
+    end
+    subgraph E5M2["E5M2 Format (Higher Dynamic Range)"]
+        Word2["8-Bit FP8"] --> E2["5 Exponent Bits"] --- M2["2 Mantissa Bits"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Word1,Word2 memory;
+    class E1,E2,M1,M2 system;
+```
+
 ## 🕵️ Why Two Formats? The Precision vs Range Tradeoff
 
 Think of it like a camera lens:
@@ -115,3 +135,4 @@ model = te.Linear(in_features=512, out_features=256)
 ---
 
 *FP8 is a game-changer for AI infrastructure — it allows engineers to train larger models faster without sacrificing accuracy. Understanding E4M3 and E5M2 is your first step toward mastering modern GPU-accelerated training.*
+

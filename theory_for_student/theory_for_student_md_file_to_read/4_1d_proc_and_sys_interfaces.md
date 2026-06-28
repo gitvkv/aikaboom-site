@@ -4,11 +4,10 @@
 
 ---
 
-### 🌱 Context Introduction
-
 When you work with AI infrastructure, you often need to understand what is happening inside the Linux system — how much memory is being used, which processes are running, or what hardware is connected. Two special filesystems, **/proc** and **/sys**, give you a window into the kernel and hardware. They are not regular folders with files stored on disk; instead, they are virtual filesystems that provide real-time information about the system's state.
 
 For new engineers, think of **/proc** as the "process and kernel dashboard" and **/sys** as the "hardware and driver control panel." Learning to read these files will help you troubleshoot performance issues, monitor AI workloads, and understand how your GPU, CPU, and memory are being utilized.
+
 
 ---
 
@@ -63,6 +62,35 @@ The **/sys** filesystem (sysfs) exposes information about hardware devices, driv
 | **Writable files** | Some kernel parameters (e.g., **/proc/sys/**) | Many device and driver parameters (e.g., power control) |
 | **Real-time nature** | Yes — values change as processes run | Yes — reflects current hardware state |
 | **Example file** | **/proc/meminfo** | **/sys/class/gpu/device** |
+
+### 📊 Visual Representation: Virtual Filesystems for Kernel and Hardware Interface
+This flowchart maps the structural division between the virtual `/proc` (process-centric/system memory) and `/sys` (hardware-centric/device driver) filesystems.
+
+```mermaid
+flowchart LR
+    kernel["Linux Kernel & Hardware Space"]
+    proc["/proc (Virtual Process/Kernel FS)"]
+    sys["/sys (Virtual Hardware/Driver FS)"]
+
+    kernel --> proc
+    kernel --> sys
+
+    proc --> cpuinfo["/proc/cpuinfo<br>(CPU Specs)"]
+    proc --> meminfo["/proc/meminfo<br>(System RAM Stats)"]
+    proc --> pid["/proc/[PID]<br>(Process Metadata)"]
+
+    sys --> bus["/sys/bus/pci<br>(PCI Bus Topology & GPUs)"]
+    sys --> class_net["/sys/class/net<br>(Network Interfaces)"]
+    sys --> module["/sys/module/nvidia<br>(NVIDIA Driver Settings)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class bus,module,cpuinfo cpu;
+    class meminfo,pid memory;
+    class kernel,proc,sys,class_net system;
+```
 
 ---
 

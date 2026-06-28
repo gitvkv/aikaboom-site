@@ -32,6 +32,28 @@ With CDI, the NVIDIA Container Toolkit generates a CDI spec file that Kubernetes
 
 ---
 
+
+### 📊 Visual Representation: Modern CDI vs. Legacy Environment Variable Hooks
+This diagram contrasts legacy environment variable runtime hooks (which intercept runc commands) with CDI explicit spec mappings.
+
+```mermaid
+flowchart LR
+    subgraph Legacy["Legacy Hook Path"]
+        EnvHook["Runtime env check"] -->|Pre-start hook| Injector["Inject libs & devices"]
+    end
+    subgraph Modern["Modern CDI Path"]
+        CDISpec["Explicit CDI Spec File"] -->|Declarative Mounts| runc["runc Mount Direct"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class runc cpu;
+    class Injector memory;
+```
+
+
 ## 🕵️ Why CDI Replaces Hooks
 
 ### 1. 🎯 Standardization Across Runtimes

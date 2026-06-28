@@ -489,12 +489,19 @@ Simulate the actual proctored exam experience. This simulator dynamically genera
         "    - admonition",
         "    - toc:",
         "        permalink: true",
+        "    - pymdownx.superfences:",
+        "        custom_fences:",
+        "            - name: mermaid",
+        "              class: mermaid",
+        "              format: !!python/name:pymdownx.superfences.fence_div_format",
         "extra_css:",
         "    - stylesheets/extra.css",
         "extra_javascript:",
+        "    - https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js",
         "    - js/quiz_questions.js",
         "    - js/mock_test_questions.js",
         "    - js/extra.js",
+        "    - js/mermaid_init.js",
         "nav:"
     ]
     
@@ -510,6 +517,7 @@ Simulate the actual proctored exam experience. This simulator dynamically genera
     dest_js = DOCS_DIR / "js" / "extra.js"
     dest_quiz = DOCS_DIR / "js" / "quiz_questions.js"
     dest_mock = DOCS_DIR / "js" / "mock_test_questions.js"
+    dest_mermaid_init = DOCS_DIR / "js" / "mermaid_init.js"
     
     dest_css.parent.mkdir(parents=True, exist_ok=True)
     dest_js.parent.mkdir(parents=True, exist_ok=True)
@@ -522,6 +530,9 @@ Simulate the actual proctored exam experience. This simulator dynamically genera
     src_mock_path = THEME_SRC_DIR / "js" / "mock_test_questions.js"
     if src_mock_path.exists():
         shutil.copy2(src_mock_path, dest_mock)
+        
+    # Copy mermaid_init.js
+    shutil.copy2(THEME_SRC_DIR / "js" / "mermaid_init.js", dest_mermaid_init)
     print("Assets successfully copied.")
     
     # Summary of Build

@@ -45,6 +45,25 @@ The ClusterPolicy is defined as a YAML file that you apply using **kubectl apply
 
 ---
 
+
+### 📊 Visual Representation: ClusterPolicy Custom Resource Definition (CRD) structure
+This diagram displays the ClusterPolicy spec fields, controlling driver versions and validation options.
+
+```mermaid
+flowchart LR
+    ClusterPolicy["ClusterPolicy CRD Spec"] --> DriverSpec["driver.enabled / repository / version"]
+    ClusterPolicy --> ToolkitSpec["toolkit.enabled / runtime"]
+    ClusterPolicy --> DevicePluginSpec["devicePlugin.enabled / arguments"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class ClusterPolicy cpu;
+    class DriverSpec,ToolkitSpec,DevicePluginSpec memory;
+```
+
+
 ## 🕵️ Key Fields in a ClusterPolicy
 
 Here are the most important fields you will encounter when reading or writing a ClusterPolicy:

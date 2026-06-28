@@ -64,6 +64,25 @@ Prometheus is a popular monitoring and alerting toolkit. Triton Inference Server
 
 ---
 
+
+### 📊 Visual Representation: Triton API Endpoints and Prometheus Metrics
+This diagram displays Triton endpoints: exposing health/inference APIs and scraping Prometheus metrics.
+
+```mermaid
+flowchart LR
+    Triton["Triton Server Instance"] --> Port8000["Port 8000: HTTP/REST APIs"]
+    Triton --> Port8001["Port 8001: gRPC APIs"]
+    Triton --> Port8002["Port 8002: Prometheus Metrics (Scrape target)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Triton cpu;
+    class Port8000,Port8001,Port8002 memory;
+```
+
+
 ## 🕵️ Model Lifecycle Management — Handling Models in Production
 
 Models are not static — they get updated, replaced, or retired. Triton provides built-in support for managing the entire lifecycle of a model.

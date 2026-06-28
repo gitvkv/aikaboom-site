@@ -68,6 +68,27 @@ Instead of having one attention mechanism, Transformers use **multiple heads** (
 
 ---
 
+### 📊 Visual Representation: Transformer Encoder-Decoder Blocks
+This diagram displays the structural components of the standard Transformer block (Multi-Head Attention, Residual connections, and FFN).
+
+```mermaid
+flowchart LR
+    Input["Input Tokens"] --> Embed["Positional Embedding"]
+    Embed --> MHA["Multi-Head Self-Attention"]
+    MHA --> AddNorm1["Add & LayerNorm"]
+    AddNorm1 --> FFN["Feed-Forward Network (FFN)"]
+    FFN --> AddNorm2["Add & LayerNorm"]
+    AddNorm2 --> Output["Logits / Probability"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class MHA,FFN cpu;
+    class Input,Embed,Output memory;
+    class AddNorm1,AddNorm2 system;
+```
+
 ## 📐 Positional Encoding: Why Order Matters
 
 Attention processes all words in parallel, so it has no built-in sense of word order. To fix this, Transformers add **positional encodings** — unique signals that tell the model where each word sits in the sequence.

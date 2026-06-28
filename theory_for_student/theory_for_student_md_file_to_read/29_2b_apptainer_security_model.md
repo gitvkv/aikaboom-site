@@ -44,6 +44,25 @@ This makes Apptainer the standard container runtime for HPC clusters, including 
 
 ---
 
+
+### 📊 Visual Representation: Apptainer User Privilege Mapping
+This diagram displays how Apptainer runs containerized processes directly under the caller's standard non-root user UID to enforce security.
+
+```mermaid
+flowchart LR
+    User["Host User (UID 1001)"] -->|apptainer run| Container["Container process"]
+    Container -->|Enforce standard UID| Safe["Standard User (UID 1001 / No root elevation)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Safe cpu;
+    class Container memory;
+    class User system;
+```
+
+
 ## 🕵️ Comparison: Apptainer vs. Docker Security Model
 
 | Feature | Apptainer | Docker |

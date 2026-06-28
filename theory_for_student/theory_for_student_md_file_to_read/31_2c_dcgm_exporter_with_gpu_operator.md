@@ -43,6 +43,25 @@ All metrics are exposed on port **9400** by default, which is the standard dcgm-
 
 ---
 
+
+### 📊 Visual Representation: GPU Operator dcgm-exporter deployment
+This diagram shows how the GPU Operator deploys dcgm-exporter DaemonSets, exposing metrics on port 9400.
+
+```mermaid
+flowchart LR
+    Operator["GPU Operator Spec"] -->|Deploys DaemonSet| Exporter["dcgm-exporter Pod (Port 9400)"]
+    Exporter -->|Expose metrics| Service["k8s Service (dcgm-exporter-service)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Exporter cpu;
+    class Service memory;
+    class Operator system;
+```
+
+
 ## 🛠️ Default Configuration Details
 
 When the GPU Operator deploys dcgm-exporter, it uses sensible defaults. Here is what gets configured automatically:

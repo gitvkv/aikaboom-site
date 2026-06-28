@@ -53,6 +53,24 @@ As an operator of a **high-risk AI system**, you must fulfill the following resp
 
 ---
 
+
+### 📊 Visual Representation: EU AI Act Risk Classifications
+This diagram displays EU AI Act levels, showing risk classifications that map out transparency requirements.
+
+```mermaid
+flowchart LR
+    AIAct["EU AI Act Levels"] --> High["High Risk (Biometrics, infrastructure / Heavy audit validation)"]
+    AIAct --> Low["Minimal/Low Risk (Spam filters / Standard transparency)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class AIAct cpu;
+    class High,Low memory;
+```
+
+
 ## 🔄 Comparison: Operator vs. Provider Responsibilities
 
 It is important to distinguish between the **provider** (who develops the AI system) and the **operator** (who deploys and uses it). The table below clarifies key differences:

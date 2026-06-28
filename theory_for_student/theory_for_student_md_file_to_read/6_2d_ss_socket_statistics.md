@@ -35,6 +35,24 @@ The `ss` command works by querying kernel data structures directly. Here are the
 
 ---
 
+### 📊 Visual Representation: TCP Connection State Diagram
+This flowchart traces the lifecycle of connection socket states (LISTEN, SYN-SENT, ESTABLISHED, TIME-WAIT) tracked by the ss tool.
+
+```mermaid
+flowchart LR
+    LISTEN["LISTEN (Server Ready)"] -->|SYN Received| ESTABLISHED["ESTABLISHED (Connection Active)"]
+    ESTABLISHED -->|Active Close| FIN_WAIT["FIN-WAIT (Closing)"]
+    FIN_WAIT -->|Timeout| TIME_WAIT["TIME-WAIT (Grace Period)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class ESTABLISHED cpu;
+    class LISTEN,TIME_WAIT memory;
+    class FIN_WAIT system;
+```
+
 ## 🕵️ Common Analysis Tasks
 
 ### 🔍 Viewing All Sockets
@@ -173,3 +191,4 @@ ss -tln | grep :8000
 - **Combine with `grep`** to search for specific IP addresses or port numbers in large outputs.
 
 By mastering `ss`, you gain a powerful, lightweight tool for network diagnostics that won't slow down your AI infrastructure — even during the most demanding training workloads.
+

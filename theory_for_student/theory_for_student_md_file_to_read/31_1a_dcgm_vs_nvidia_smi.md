@@ -51,6 +51,28 @@ Think of **nvidia-smi** as a stethoscope for one patient (one GPU on one server)
 
 ---
 
+
+### 📊 Visual Representation: DCGM vs. nvidia-smi comparison
+This diagram contrasts nvidia-smi (designed for local command queries) with DCGM (designed for high-throughput cluster monitoring and scraping).
+
+```mermaid
+flowchart LR
+    subgraph Local["nvidia-smi (Single Node)"]
+        CLI["CLI queries / Parsing script"] --> Driver1["nvidia.ko driver"]
+    end
+    subgraph Cluster["DCGM Cluster Service"]
+        Exporter["dcgm-exporter (Prometheus HTTP format)"] --> Daemon["nv-hostengine Daemon"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Daemon cpu;
+    class Exporter memory;
+```
+
+
 ## 🕵️ When to Use Which Tool
 
 ### ✅ Use **nvidia-smi** when:

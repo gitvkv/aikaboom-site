@@ -40,6 +40,27 @@ The two most common rack heights in data centers are **42U** and **48U**. Here's
 | **Weight capacity** | Typically 2,000–2,500 lbs | Typically 2,500–3,000 lbs |
 | **Floor space footprint** | Same width/depth as 48U | Same width/depth as 42U |
 
+### 📊 Visual Representation: Standard AI Rack Infrastructure
+This diagram shows the physical layout and component integration of a standard 48U AI server rack, including rail mounting, power distribution, and cable management.
+
+```mermaid
+flowchart TD
+    subgraph Rack["Standard 48U AI Rack Layout"]
+        direction TB
+        ToR["Top-of-Rack Switches (1U - 2U)"] -->|Cable Harness| Cables["Vertical Cable Organizers"]
+        Servers["NVIDIA GPU Servers (4U - 8U each)"] -->|Sliding Rails| Rails["4-Post sliding Rail Kits"]
+        PDUs["Intelligent Rack PDUs (Rear/Side)"] -->|Power Cables| Servers
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Servers cpu;
+    class PDUs,ToR memory;
+    class Cables,Rails,Rack system;
+```
+
 ### 🛠️ When to Use Each
 
 - **42U racks** — Ideal for standard workloads, smaller labs, or edge deployments where ceiling height is limited

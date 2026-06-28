@@ -6,6 +6,7 @@
 
 When you start working with AI infrastructure, you will quickly realize that Linux is the backbone of almost every system — from training servers to inference endpoints. Three directories in particular will become your daily companions: **/etc**, **/var**, and **/opt**. Understanding what lives in each one helps you configure systems, troubleshoot issues, and install software without breaking anything. Think of these folders as the "control room," the "log book," and the "tool shed" of your AI infrastructure.
 
+
 ---
 
 ## ⚙️ /etc — System Configuration Files
@@ -87,8 +88,24 @@ If something goes wrong:
 - Verify settings in **/etc** are correct.
 - Confirm the software in **/opt** is properly installed.
 
----
+### 📊 Visual Representation: FHS Directory Interaction in AI Workflows
+This flowchart demonstrates the typical workflow sequence where system configurations from /etc are read, GPU computing runtimes in /opt are executed, and active runtime logs are captured inside /var.
 
+```mermaid
+flowchart LR
+    A["1. Read System & GPU Configs<br>(/etc)"] --> B["2. Execute CUDA & AI Runtimes<br>(/opt/cuda)"]
+    B --> C["3. Capture Runtime Logs & Caches<br>(/var/log)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class B cpu;
+    class C memory;
+    class A system;
+```
+
+---
 ## ✅ Key Takeaways for New Engineers
 
 - **/etc** is your configuration hub — treat it with care and always back up files before editing.

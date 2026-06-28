@@ -60,6 +60,25 @@ Once the repository is configured, you install the package using your system's p
 
 ---
 
+
+### 📊 Visual Representation: Container Toolkit Installation steps
+This flowchart maps container toolkit setup: adding repos, installing packages, and configuring Docker's daemon.json config.
+
+```mermaid
+flowchart LR
+    AddRepo["1. Add GPG Key & Repo"] --> Install["2. Install nvidia-container-toolkit"]
+    Install --> Config["3. nvidia-ctk runtime configure --runtime=docker"]
+    Config --> Restart["4. Restart Docker Daemon"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Config cpu;
+    class AddRepo,Install,Restart system;
+```
+
+
 ## 🔧 Step 3: Configuring the Docker Daemon
 
 This is the most critical step. You need to tell Docker's daemon (the background service that manages containers) about the NVIDIA runtime.

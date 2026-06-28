@@ -60,6 +60,25 @@ Each level in the hierarchy trades **speed** for **capacity**:
 
 ---
 
+### 📊 Visual Representation: GPU Memory Hierarchy and Latency Scales
+This diagram displays the GPU memory hierarchy, ordering registers, caches, shared memory, and HBM by speed and storage capacity.
+
+```mermaid
+flowchart LR
+    Reg["Registers (Fastest / Least Space)"] --> L1["L1 Cache / Shared Memory"]
+    L1 --> L2["L2 Cache (Symmetric Share)"]
+    L2 --> HBM["HBM/GDDR (Large VRAM / Higher Latency)"]
+    HBM --> SystemRAM["System RAM (via PCIe / Slowest)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Reg cpu;
+    class L1,L2,HBM memory;
+    class SystemRAM system;
+```
+
 ## 🛠️ Practical Implications for Engineers
 
 - **Optimize for data locality:** Keep frequently accessed data in shared memory or registers. Avoid random access patterns that cause cache misses.
@@ -86,3 +105,4 @@ You want to keep the most frequently used items in your hand (registers) or on t
 ## ✅ Key Takeaway
 
 The memory hierarchy is a trade-off between **speed** and **capacity**. As an engineer, your job is to understand where your data lives at each stage of execution and design your kernels to maximize reuse at the fastest levels. This is the foundation of GPU performance optimization for AI workloads.
+

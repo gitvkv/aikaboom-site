@@ -39,6 +39,24 @@ DCQCN relies on several tunable parameters. Here are the most important ones for
 
 ---
 
+### 📊 Visual Representation: DCQCN Congestion Feedback Loop
+This flowchart displays the DCQCN congestion loop, showing how ECN-marked packets trigger rate limiters at the source.
+
+```mermaid
+flowchart LR
+    Source["Source Node (Rate Limiter)"] -->|UDP/IP Packets| Switch{"Congested Switch"}
+    Switch -->|Mark ECN in IP Header| Dest["Destination Node"]
+    Dest -->|"Generate CNP (Congestion Notification Packet)"| Source
+    Source -->|Apply DCQCN Rate Reduction| Source
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Switch cpu;
+    class Source,Dest memory;
+```
+
 ## 🛠️ Practical Configuration Example
 
 When configuring DCQCN on a NVIDIA Spectrum switch, engineers typically set the following values. These are not commands but conceptual settings you would apply:

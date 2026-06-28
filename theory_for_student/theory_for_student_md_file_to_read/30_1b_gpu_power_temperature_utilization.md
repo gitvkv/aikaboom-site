@@ -36,6 +36,25 @@ When you look at a GPU monitoring output, you'll see these four values listed fo
 
 ---
 
+
+### 📊 Visual Representation: GPU Power, Temperature, and Core metrics
+This diagram details the primary hardware metrics (TDP draw, core temps, SM usage) polled by monitoring engines.
+
+```mermaid
+flowchart LR
+    Telemetry["Polled Metrics"] --> Power["Power Draw (Watts / TDP limits)"]
+    Telemetry --> Temp["Temperature (°C / Throttling limits)"]
+    Telemetry --> Util["SM Utilization (% Active time)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Telemetry cpu;
+    class Power,Temp,Util memory;
+```
+
+
 ## 🛠️ Common Scenarios You'll Encounter
 
 As a new engineer, here are the most common patterns you'll see and what they mean:

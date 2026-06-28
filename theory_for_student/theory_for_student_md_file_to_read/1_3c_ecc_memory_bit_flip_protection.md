@@ -71,6 +71,33 @@ AI training is **deterministic** — every calculation depends on the previous o
 | Detection | None | Detects and reports multi-bit errors |
 | Use case | Gaming, personal computers | Servers, AI training, scientific computing |
 
+### 📊 Visual Representation: ECC Error Detection and Correction Flow
+
+This flowchart maps the logical steps taken by the ECC memory controller to recalculate parity, verify data integrity, correct single-bit errors, and alert the system on uncorrectable multi-bit errors.
+
+```mermaid
+flowchart TD
+    DataIn["Data Read from Memory\n(64-bit Data + 8-bit ECC)"] --> Calc["Recalculate Syndrome / Parity Code"]
+    Calc --> Compare{"Syndrome == 0?"}
+    
+    Compare -->|Yes| Valid["No Error Detected\n(Send Data to CPU)"]
+    Compare -->|No| Detect{"Error Type?"}
+    
+    Detect -->|Single-Bit Error| Correct["Locate Flipped Bit\nFlip Bit Back to Correct State\nLog Corrected ECC Event"]
+    Correct --> SendCorrected["Send Corrected Data to CPU"]
+    
+    Detect -->|Double-Bit / Multi-Bit Error| Uncorrectable["Raise System Alert (MCE)\nPrevent Silent Corruption\nHalt System or Raise Kernel Panic"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class DataIn,Valid,SendCorrected memory;
+    class Calc,Compare,Detect system;
+    class Correct,Uncorrectable cpu;
+```
+
+
 ---
 
 ## 💡 Why Engineers Must Care About ECC

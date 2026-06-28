@@ -31,6 +31,23 @@ NVMe U.2 and E3 drives are the modern standard for high-speed DAS in AI servers.
 
 ---
 
+
+### 📊 Visual Representation: Direct Attached Storage (DAS) Dedicated PCIe Bus
+This diagram displays DAS, showing SSDs installed locally in server chassis and communicating directly over the host PCIe bus.
+
+```mermaid
+flowchart LR
+    Host["Host CPU"] -->|Dedicated PCIe Lanes| LocalSSD["Local PCIe NVMe SSDs"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Host cpu;
+    class LocalSSD memory;
+```
+
+
 ## 📊 Maximum Speed — What Does It Mean?
 
 The "maximum speed" of an NVMe U.2 or E3 drive depends on three factors:

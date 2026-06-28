@@ -94,6 +94,25 @@ NodeName=compute-gpu-01 Gres=gpu:a100:8 CPUs=64 RealMemory=512000
 
 ---
 
+
+### 📊 Visual Representation: Slurm Generic Resource (GRES) GPU binding
+This diagram displays how requesting a GPU via GRES tells Slurm to bind execution to matching cards.
+
+```mermaid
+flowchart LR
+    Header["#SBATCH --gres=gpu:a100:2"] --> Controller["slurmctld Allocation check"]
+    Controller -->|Binds cards| Env["Set CUDA_VISIBLE_DEVICES=0,1 inside Job"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Controller cpu;
+    class Env memory;
+    class Header system;
+```
+
+
 ## 🕵️ Checking Available GPUs with `sinfo`
 
 Before submitting a job, you can check which nodes have the GPUs you need. Slurm provides the `sinfo` command with a special format option to display GRES information.

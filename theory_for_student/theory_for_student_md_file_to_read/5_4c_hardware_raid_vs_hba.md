@@ -32,6 +32,28 @@ When building AI infrastructure, storage performance is critical — especially 
 
 ---
 
+### 📊 Visual Representation: Hardware RAID Controller vs. Host Bus Adapter (HBA) Data Path
+This diagram contrasts the hardware RAID controller path (offloading RAID parity calculations) with HBA IT-mode path (exposing raw disks directly to the OS).
+
+```mermaid
+flowchart LR
+    subgraph HW["Hardware RAID Path"]
+        OS_HW["OS Kernel"] --> RAID_Card["RAID Controller CPU"] --> RAID_Disks["Virtual RAID Disk"]
+    end
+
+    subgraph HBA["HBA Passthrough Path"]
+        OS_HBA["OS (ZFS / Software RAID)"] --> HBA_Card["HBA (IT Mode)"] --> Raw_Disks["Individual Raw Disks"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class RAID_Card cpu;
+    class RAID_Disks,Raw_Disks memory;
+    class OS_HW,OS_HBA,HBA_Card system;
+```
+
 ## 🛠️ HBA Passthrough vs. Hardware RAID — A Comparison
 
 | Feature | HBA Passthrough (IT Mode) | Hardware RAID |

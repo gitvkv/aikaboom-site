@@ -49,6 +49,23 @@ Once the SM knows the layout, it assigns a **Local Identifier (LID)** to every p
 
 ---
 
+### 📊 Visual Representation: Subnet Manager Routing Table Generation
+This flowchart displays how the InfiniBand Subnet Manager (SM) discovers network nodes, configures LIDs, and programs route tables.
+
+```mermaid
+flowchart LR
+    SM["Subnet Manager (Active)"] --> Discover["1. Discover Subnet Topology"]
+    Discover --> Assign["2. Assign Local Identifier (LID) to ports"]
+    Assign --> Program["3. Program Switch Forwarding Tables"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class SM cpu;
+    class Discover,Assign,Program system;
+```
+
 ## 🛠️ 3. Routing Table Computation — Finding the Best Paths
 
 With the map and addresses ready, the SM calculates how data should flow between every pair of devices.

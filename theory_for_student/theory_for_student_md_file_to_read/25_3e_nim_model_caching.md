@@ -37,6 +37,27 @@ Model weight caching is a mechanism where NIM saves a copy of the downloaded mod
 
 ---
 
+
+### 📊 Visual Representation: NIM Local Model Cache Mount
+This diagram shows how weights are cached locally on host storage to avoid duplicate downloads across container restarts.
+
+```mermaid
+flowchart LR
+    HostCache["Host Cache Path (/home/user/nim-cache/)"] -->|Bind Mount| NIMContainer["NIM Container (/opt/nim/.cache/)"]
+    NIMContainer -->|Check first| CacheCheck{"Weights Exist?"}
+    CacheCheck -->|Yes| LoadLocal["Load from Host cache (Fast)"]
+    CacheCheck -->|No| FetchNGC["Fetch from NGC Registry"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class CacheCheck cpu;
+    class HostCache memory;
+    class LoadLocal,FetchNGC system;
+```
+
+
 ## 🕵️ Where to Store the Cache
 
 The cache directory is typically placed on a **fast local SSD** attached to the host machine. For production deployments, consider:

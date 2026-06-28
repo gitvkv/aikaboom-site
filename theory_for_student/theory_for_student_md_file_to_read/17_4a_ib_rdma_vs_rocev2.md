@@ -41,6 +41,26 @@ RoCEv2 is a standard that allows RDMA to run over standard Ethernet networks. It
 
 ---
 
+### 📊 Visual Representation: Native InfiniBand vs. RoCE v2 Stack Comparison
+This diagram contrasts native InfiniBand (runs directly on dedicated IB hardware) against RoCE v2 (routing RDMA traffic over IP/Ethernet switches).
+
+```mermaid
+flowchart LR
+    subgraph Native_IB["Native InfiniBand"]
+        C1["InfiniBand HCA"] --- L1["Dedicated IB Switches"]
+    end
+    subgraph RoCE_v2["RoCE v2"]
+        C2["Ethernet RNIC"] --- L2["IP / Ethernet Switches"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class C1,L1 cpu;
+    class C2,L2 memory;
+```
+
 ## 📊 Comparison Table: IB RDMA vs. RoCEv2
 
 | Feature | InfiniBand RDMA (Native) | RoCEv2 (Encapsulated) |

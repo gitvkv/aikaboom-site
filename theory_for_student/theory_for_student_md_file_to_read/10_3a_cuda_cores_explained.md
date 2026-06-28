@@ -63,6 +63,25 @@ Modern AI workloads (training neural networks, running inference) rely heavily o
 
 ---
 
+### 📊 Visual Representation: CUDA Core Execution Channels
+This diagram maps the parallel execution units (FP32, INT32, and FP64 ALUs) that make up standard CUDA cores inside an SM.
+
+```mermaid
+flowchart LR
+    Thread["Thread Instruction"] --> Dispatch["Scheduler Dispatch"]
+    Dispatch --> FP32["FP32 ALU (Single Precision)"]
+    Dispatch --> INT32["INT32 ALU (Integer Math)"]
+    Dispatch --> FP64["FP64 ALU (Double Precision)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class FP32,INT32,FP64 cpu;
+    class Thread memory;
+    class Dispatch system;
+```
+
 ## 🛠️ How engineers choose the right CUDA core type
 
 - **For deep learning training**: FP32 is the standard. Newer GPUs also support mixed precision (FP16) for speed.

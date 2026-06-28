@@ -46,6 +46,24 @@ Inference is fundamentally different from training. Training is computationally 
 
 ---
 
+### 📊 Visual Representation: LLM Inference Execution Pipeline
+This diagram details the input prompt processing phase and the subsequent token generation loop during inference execution.
+
+```mermaid
+flowchart LR
+    Prompt["Input User Prompt"] --> Prefill["1. Prefill Phase (Process Prompt)"]
+    Prefill --> Decode["2. Decode Phase (Generate Next Token)"]
+    Decode -->|Token Generated| Decode
+    Decode -->|End of Text / Max Length| Output["Response Finished"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Prefill,Decode cpu;
+    class Prompt,Output memory;
+```
+
 ## 🕵️ Optimization Techniques for Production Inference
 
 - **Model Quantization**: Reduce precision from FP32 to FP16 or INT8 to speed up inference with minimal accuracy loss.

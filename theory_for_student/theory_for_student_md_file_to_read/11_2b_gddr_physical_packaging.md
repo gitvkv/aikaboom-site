@@ -51,6 +51,25 @@ But here's the catch: **the PCB has a limited number of physical lanes** (copper
 
 ---
 
+### 📊 Visual Representation: GDDR Physical Board Layout
+This diagram shows the physical layout of GDDR memory chips placed around the central GPU die, connected via standard PCB traces.
+
+```mermaid
+flowchart LR
+    GDDR1["GDDR Chip"] --- Trace1["PCB Traces"]
+    GDDR2["GDDR Chip"] --- Trace2["PCB Traces"]
+    Trace1 --> GPUDie["Central GPU Die"]
+    Trace2 --> GPUDie
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPUDie cpu;
+    class GDDR1,GDDR2 memory;
+    class Trace1,Trace2 system;
+```
+
 ## 🕵️ Real-World Example: Comparing Memory Configurations
 
 Let's look at two common GPU memory configurations to see how physical packaging affects width:
@@ -96,3 +115,4 @@ You might wonder: *why not just put 16 chips for a 512-bit bus?* Here's why that
 When you see a GPU spec sheet listing a **256-bit** or **384-bit** memory bus, remember that number isn't arbitrary — it's a direct result of how many GDDR chips the engineers could physically fit around the GPU die and reliably connect using the available PCB lanes. The memory bus width is a fundamental design constraint that balances **performance**, **cost**, **power**, and **physical space**.
 
 As AI workloads demand more memory bandwidth, engineers are pushing the limits of GDDR packaging — using faster chips (GDDR6X), more layers in the PCB, and even stacking chips (3D packaging) to overcome the lane limitation.
+

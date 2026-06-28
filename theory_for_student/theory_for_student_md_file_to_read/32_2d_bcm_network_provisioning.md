@@ -46,6 +46,24 @@ The process follows a simple workflow:
 
 ---
 
+
+### 📊 Visual Representation: BCM Multi-Network interface provisioning
+This diagram displays BCM network architecture, showing dedicated management and high-speed data networks.
+
+```mermaid
+flowchart LR
+    Nodes["Cluster Nodes"] -->|PXE / IPMI| Mgmt["Management network (1G/10G)"]
+    Nodes -->|RoCE / IB RDMA| Data["High-speed data network (400G NDR)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Nodes cpu;
+    class Mgmt,Data memory;
+```
+
+
 ## 🌐 Fabric Setup via BCM
 
 Fabric setup is about connecting all switches into a unified network. BCM handles this by:

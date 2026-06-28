@@ -88,6 +88,24 @@ For a new engineer, understanding the data flow is key. Here's a typical AI trai
 
 ---
 
+
+### 📊 Visual Representation: S3 HTTP REST API Object Pipeline
+This diagram displays object storage HTTP requests (GET/PUT), mapping URLs directly to unstructured storage buckets.
+
+```mermaid
+flowchart LR
+    Client["Client request"] -->|HTTP PUT / bucket/file.json| S3API["S3 REST Gateway"]
+    S3API --> FlatNamespace["Flat Namespace (Object storage bucket)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class S3API cpu;
+    class Client,FlatNamespace memory;
+```
+
+
 ## 📈 Performance Considerations for AI Workloads
 
 Object storage is not as fast as local NVMe or parallel file systems (like Lustre or GPUDirect Storage). However, for AI workloads, the trade-off is acceptable for many use cases.

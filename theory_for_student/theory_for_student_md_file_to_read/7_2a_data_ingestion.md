@@ -63,6 +63,24 @@ Labeling is the process of adding meaningful tags or annotations to your raw dat
 
 ---
 
+### 📊 Visual Representation: Data Ingestion and Pipeline Staging
+This flowchart maps out how raw source data is collected, cleaned, structured, and staged for model training workloads.
+
+```mermaid
+flowchart LR
+    Raw["Raw Data Sources (Logs, Web, DBs)"] --> Extract["ETL Extraction / Scraping"]
+    Extract --> Clean["Data Cleaning & Deduplication"]
+    Clean --> Stage["Training Datastores (Parquet, HDF5)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Clean cpu;
+    class Raw,Stage memory;
+    class Extract system;
+```
+
 ## 🔖 Versioning Training Datasets
 
 Dataset versioning is like using Git for code, but for data. It tracks changes to your dataset over time, allowing you to reproduce experiments, roll back to previous versions, and collaborate with team members.

@@ -64,6 +64,26 @@ Avoid Gang scheduling for:
 
 ---
 
+
+### 📊 Visual Representation: Gang Scheduling All-or-Nothing pod bindings
+This diagram displays Gang scheduling: suspending execution until the minimum pod replica count (minMember) is available in the queue.
+
+```mermaid
+flowchart LR
+    Queue["Job Queue (Requested: 4 Worker Pods)"] --> Check{"Is minMember (4) available?"}
+    Check -->|No| Pending["Suspend all workers (Wait)"]
+    Check -->|Yes| Schedule["Schedule all 4 Worker pods concurrently"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Check cpu;
+    class Schedule memory;
+    class Pending system;
+```
+
+
 ## 🔧 Implementing Gang Scheduling in Kubernetes
 
 ### Option 1: Volcano Scheduler (Recommended by NVIDIA)

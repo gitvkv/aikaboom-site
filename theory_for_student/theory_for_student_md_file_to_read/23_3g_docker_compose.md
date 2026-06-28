@@ -86,6 +86,27 @@ Production AI stacks often include:
 
 ---
 
+
+### 📊 Visual Representation: Docker Compose Multi-Container Orchestration
+This diagram displays how Docker Compose defines and boots multi-container applications (e.g., frontend, API, database) over a shared network.
+
+```mermaid
+flowchart LR
+    Yaml["docker-compose.yml Config"] -->|compose up| Engine["Compose Engine"]
+    Engine --> App["Web App Container"]
+    Engine --> DB["PostgreSQL Database Container"]
+    App ---|Shared network bridge| DB
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Engine cpu;
+    class App,DB memory;
+    class Yaml system;
+```
+
+
 ## 🧩 Service Dependencies and Startup Order
 
 Use **depends_on** to define which services must start first. For example:

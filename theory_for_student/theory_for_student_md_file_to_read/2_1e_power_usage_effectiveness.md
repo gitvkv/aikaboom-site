@@ -73,6 +73,27 @@ AI workloads, especially GPU-based training and inference, are **power-hungry**.
 - **Improve airflow:** Seal cable gaps, use blanking panels, and ensure proper floor tile placement.
 - **Use renewable energy:** While this doesn't change PUE directly, it reduces the carbon impact of the overhead energy.
 
+### 📊 Visual Representation: PUE Energy Allocation
+This diagram shows how total incoming facility energy is divided between active IT equipment (compute and memory) and infrastructure overhead, which forms the basis of the PUE ratio.
+
+```mermaid
+flowchart LR
+    Grid["Total Facility Energy Input (100%)"] --> IT["IT Equipment Power (e.g., 80% - DGX, GPUs, RAM)"]
+    Grid --> Overhead["Facility Overhead (e.g., 20% - Cooling, UPS, Lighting)"]
+    
+    IT --> PUE{"PUE Formula<br>Total / IT"}
+    Overhead --> PUE
+    PUE --> Output["PUE = 1.25<br>(Highly Efficient)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class IT cpu;
+    class Overhead memory;
+    class Grid,PUE,Output system;
+```
+
 ---
 
 ## ⚠️ Important Caveats for New Engineers

@@ -69,6 +69,25 @@ Click **Import**. The dashboard will load immediately, and you will be taken to 
 
 ---
 
+
+### 📊 Visual Representation: Grafana NVIDIA DCGM Dashboard panels
+This diagram displays the metrics rendered on Grafana DCGM dashboards, tracking temperature, compute usage, and clocks.
+
+```mermaid
+flowchart LR
+    Dashboard["Grafana DCGM Dashboard"] --> Panel1["GPU Temperature chart"]
+    Dashboard --> Panel2["SM Utilization gauge"]
+    Dashboard --> Panel3["Memory allocation table"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Dashboard cpu;
+    class Panel1,Panel2,Panel3 memory;
+```
+
+
 ## 📊 What You’ll See on the Dashboard
 
 Once imported, the dashboard is organized into several sections. Here’s a quick tour:

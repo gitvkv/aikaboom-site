@@ -45,6 +45,26 @@ The critical communication step is called **All-Reduce**. This is where all GPUs
 
 ---
 
+### 📊 Visual Representation: Data Parallelism (DP) Training Flow
+This flowchart maps out Data Parallelism (DP), where identical model copies process separate data shards on distinct GPUs, averaging gradients via All-Reduce.
+
+```mermaid
+flowchart LR
+    Dataset["Dataset Shards"] -->|Shard 1| GPU1["GPU 1 (Model Copy)"]
+    Dataset -->|Shard 2| GPU2["GPU 2 (Model Copy)"]
+    GPU1 -->|Local Gradients| AllReduce["All-Reduce Operation"]
+    GPU2 -->|Local Gradients| AllReduce
+    AllReduce -->|Averaged Gradients| Update["Sync and Update Weights"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPU1,GPU2 cpu;
+    class Dataset memory;
+    class AllReduce,Update system;
+```
+
 ## 🕵️ Important Considerations for Engineers
 
 - **Batch Size Scaling** — When you increase the total batch size (e.g., from 256 to 1024), you may need to adjust the learning rate. Larger batches provide more stable gradients but can require tuning.

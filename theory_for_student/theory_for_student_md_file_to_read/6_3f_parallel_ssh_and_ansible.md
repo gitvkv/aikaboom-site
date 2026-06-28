@@ -69,6 +69,25 @@ Parallel SSH tools let you send a single command to many remote servers at once,
 
 ---
 
+### 📊 Visual Representation: Ad-Hoc Parallel Server Automation
+This flowchart contrasts parallel SSH executions using pssh (ad-hoc commands) against declarative orchestrations using Ansible playbooks.
+
+```mermaid
+flowchart LR
+    Admin["Operator Console"] --> pssh["pssh (Direct shell parallel commands)"]
+    Admin --> Ansible["Ansible Engine (Declarative Playbooks)"]
+    pssh --> Nodes["GPU Nodes 1..N"]
+    Ansible --> Nodes
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Ansible cpu;
+    class Nodes memory;
+    class Admin,pssh system;
+```
+
 ## 📊 Comparison: pssh vs Ansible
 
 | Feature | pssh | Ansible |
@@ -129,3 +148,4 @@ Before using either pssh or Ansible, ensure the following are in place:
 - Both rely on SSH and require proper key-based authentication
 - Start simple with pssh, then graduate to Ansible as your tasks become more complex
 - Parallel execution is essential for AI infrastructure — it saves time and reduces human error
+

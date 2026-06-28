@@ -71,6 +71,25 @@ AI workloads — especially training large neural networks — seem perfectly pa
 
 ---
 
+### 📊 Visual Representation: Amdahl's Law Speedup Limits
+This flowchart displays how the maximum performance speedup of parallel systems is limited by the non-parallelizable, serial portion of the code.
+
+```mermaid
+flowchart LR
+    Code["Entire Workload"] --> Serial["Serial Portion (Non-parallelable)"]
+    Code --> Parallel["Parallel Portion (GPU Offloaded)"]
+    Parallel -->|Scale with Core Count| Speedup["Accelerated execution time"]
+    Serial -->|Constant wait time| Speedup
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Parallel cpu;
+    class Serial memory;
+    class Code,Speedup system;
+```
+
 ## 🛠️ Practical Implications for AI Engineers
 
 ### 🚫 The "More GPUs = Faster" Myth
@@ -124,3 +143,4 @@ When planning a distributed AI workload, ask yourself:
 ---
 
 *Remember: Amdahl's Law doesn't say parallelism is useless — it says we must be smart about where we invest our parallelization efforts.*
+

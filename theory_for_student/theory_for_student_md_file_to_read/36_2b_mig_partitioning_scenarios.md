@@ -49,6 +49,25 @@ Profile selection depends on three key workload characteristics:
 
 ---
 
+
+### 📊 Visual Representation: MIG Profile partition scenario
+This diagram displays partition allocations: splitting a GPU into isolated slices to host a mix of development and production runs.
+
+```mermaid
+flowchart LR
+    A100["A100 (80GB)"] --> Partition["Allocations"]
+    Partition --> Dev["2 x 1g.10gb (Interactive notebooks)"]
+    Partition --> Prod["1 x 3g.40gb (Inference endpoint)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class A100 cpu;
+    class Dev,Prod memory;
+```
+
+
 ## 🛠️ Workload Scenario Examples
 
 | Scenario | Workload Type | Recommended Profile | Reasoning |

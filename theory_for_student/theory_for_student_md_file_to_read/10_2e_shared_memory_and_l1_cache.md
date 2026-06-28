@@ -53,6 +53,24 @@ NVIDIA GPUs allow you to **partition** the on-chip memory between shared memory 
 
 ---
 
+### 📊 Visual Representation: SM Shared Memory and L1 Cache Allocation
+This diagram displays how local SRAM space within each Streaming Multiprocessor is partitioned between hardware-managed L1 cache and programmer-managed Shared Memory.
+
+```mermaid
+flowchart LR
+    SRAM["Physical SM SRAM"] --> L1["L1 Cache (Hardware Managed)"]
+    SRAM --> Shared["Shared Memory (Programmer Managed / Thread block local)"]
+    Shared --> Banks["32-Bank Structure (Avoid Bank Conflicts)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class SRAM cpu;
+    class L1,Shared memory;
+    class Banks system;
+```
+
 ## 🕵️ Why This Matters for AI Workloads
 
 In AI inference and training, the scratchpad memory model is critical for performance.
@@ -92,3 +110,4 @@ The scratchpad memory model is the **prep table** — you decide what goes on it
 To practice using the scratchpad memory model, try writing a simple matrix transpose or vector reduction kernel in CUDA. Use shared memory to store a tile of data, synchronize threads with `__syncthreads()`, and observe the performance improvement over a naive global memory-only implementation.
 
 Remember: the scratchpad is your friend — but only if you use it wisely.
+

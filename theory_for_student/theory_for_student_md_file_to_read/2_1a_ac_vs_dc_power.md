@@ -96,6 +96,25 @@ You'd likely use a **40A or 60A circuit** for this server.
 
 **Important note:** Modern server power supplies are "power factor corrected" and can accept a wide range of AC voltages automatically.
 
+### 📊 Visual Representation: Power Conversion Flow from Grid to GPU
+This diagram illustrates the conversion of high-voltage Alternating Current (AC) from the utility grid down to lower voltages and finally into Direct Current (DC) used by internal server components like the GPU.
+
+```mermaid
+flowchart LR
+    Grid["Utility Grid (AC, 13.8kV/480V)"] --> UPS["UPS & PDU (AC, 480V/208V/240V)"]
+    UPS --> PSU["Server PSU (AC to DC Converter)"]
+    PSU --> GPU["NVIDIA GPU (DC, ~0.8-1.2V)"]
+    PSU --> Board["Motherboard & Memory (DC, 12V/5V/3.3V)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPU cpu;
+    class Board memory;
+    class Grid,UPS,PSU system;
+```
+
 ---
 
 ## 📋 Quick Reference: Common Conversions

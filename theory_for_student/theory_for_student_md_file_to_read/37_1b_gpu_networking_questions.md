@@ -62,6 +62,25 @@ Welcome, new engineer! This section is designed to help you build a solid founda
 
 ---
 
+
+### 📊 Visual Representation: GPU Networking Exam concept mapping
+This diagram displays networking topics tested in the exam, focusing on InfiniBand speeds and RoCE transport layers.
+
+```mermaid
+flowchart LR
+    Exam["Networking Exam"] --> IB["InfiniBand (NDR / Subnet Manager)"]
+    Exam --> RoCE["RoCE (PFC / Global routing / L3)"]
+    Exam --> NVLink["Interconnects (NVLink / NVSwitch)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Exam cpu;
+    class IB,RoCE,NVLink memory;
+```
+
+
 ## 🌐 Section 3: GPU Networking Fundamentals (Questions 61–90)
 
 ### 🖧 Why Networking Matters for AI

@@ -62,6 +62,22 @@ Because each VL has its own buffer space, a packet stuck in VL0 cannot block a p
 
 ---
 
+### 📊 Visual Representation: InfiniBand Virtual Lanes (VL) Buffering
+This diagram displays how physical links are partitioned into virtual lanes to isolate different traffic classes.
+
+```mermaid
+flowchart LR
+    Link["Physical Link Port"] --> VL0["Virtual Lane 0 (Data traffic)"]
+    Link --> VL15["Virtual Lane 15 (Management traffic - Priority)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Link cpu;
+    class VL0,VL15 memory;
+```
+
 ## 🛠️ How VLs Are Configured in Practice
 
 Engineers configure VLs at two levels:

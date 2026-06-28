@@ -52,6 +52,22 @@ A server with a single network cable can be on VLAN 100, while the switch uplink
 
 ---
 
+### 📊 Visual Representation: VLAN Virtual Broadcast Domain Separation
+This diagram shows how Virtual LANs (VLANs) segregate a single physical switch into separate logical network domains.
+
+```mermaid
+flowchart LR
+    Switch["Physical Switch"] -->|VLAN 10| SubnetA["VLAN 10 Broadcast Domain"]
+    Switch -->|VLAN 20| SubnetB["VLAN 20 Broadcast Domain"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Switch cpu;
+    class SubnetA,SubnetB memory;
+```
+
 ## 📊 VLANs in AI Infrastructure — Why They Matter
 
 AI workloads generate massive amounts of east-west traffic (server-to-server). Without VLANs, this traffic competes with management and storage traffic, causing:

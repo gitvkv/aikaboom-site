@@ -72,6 +72,20 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    // Attach click listeners to badges on roadmap pages to toggle status directly
+    const roadmapBadges = document.querySelectorAll(".roadmap-badge");
+    roadmapBadges.forEach(function (badge) {
+        const lessonId = badge.getAttribute("data-lesson-id");
+        if (lessonId) {
+            badge.setAttribute("title", "Click to toggle completion status");
+            badge.addEventListener("click", function () {
+                const currentStatus = localStorage.getItem(KEY_PREFIX + lessonId) === "true";
+                localStorage.setItem(KEY_PREFIX + lessonId, currentStatus ? "false" : "true");
+                updateRoadmapUI();
+            });
+        }
+    });
+
     // Initialize roadmap UI elements
     updateRoadmapUI();
 
@@ -261,7 +275,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (node.closest('.lesson-completion') || node.closest('.lesson-tags') || tag === 'pre' || tag === 'code' || tag === 'a' && node.closest('.start-learning-btn')) {
                         return NodeFilter.FILTER_REJECT;
                     }
-                    if (['h1', 'h2', 'h3', 'h4', 'p', 'li', 'blockquote'].includes(tag)) {
+                    if (['h2', 'h3', 'h4', 'p', 'li', 'blockquote'].includes(tag)) {
                         return NodeFilter.FILTER_ACCEPT;
                     }
                     return NodeFilter.FILTER_SKIP;
@@ -574,7 +588,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!isJumpModeActive) return;
 
             // Find the closest readable element
-            const targetElement = event.target.closest('h1, h2, h3, h4, p, li, blockquote');
+            const targetElement = event.target.closest('h2, h3, h4, p, li, blockquote');
             if (targetElement && articleBody.contains(targetElement)) {
                 // Ignore clicks on links or buttons inside the element
                 if (event.target.tagName.toLowerCase() === 'a' || event.target.closest('a') || event.target.closest('button')) {

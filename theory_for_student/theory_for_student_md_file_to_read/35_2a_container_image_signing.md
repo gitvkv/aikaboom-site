@@ -64,6 +64,26 @@ DCT uses a hierarchy of keys to manage trust:
 
 ---
 
+
+### 📊 Visual Representation: Cosign Container Image signature validation
+This flowchart maps image verification: verifying image signatures against public keys before deploying to nodes.
+
+```mermaid
+flowchart LR
+    Deploy["Request image deployment"] --> Verify{"Verify signature using cosign public key"}
+    Verify -->|Valid| Execute["Allow container start"]
+    Verify -->|Invalid| Deny["Reject container (Policy controller blocks)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Verify cpu;
+    class Execute memory;
+    class Deploy,Deny system;
+```
+
+
 ## 📊 Comparison: DCT Enabled vs. Disabled
 
 | Feature | DCT Disabled | DCT Enabled |

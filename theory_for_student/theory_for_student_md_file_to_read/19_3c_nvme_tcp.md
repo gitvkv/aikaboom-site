@@ -58,6 +58,26 @@ The entire process feels like accessing a local NVMe drive, but the data travels
 
 ---
 
+
+### 📊 Visual Representation: NVMe over TCP Protocol Stack
+This diagram displays NVMe-oF encapsulated over TCP/IP connections, enabling standard cheap Ethernet hardware compatibility.
+
+```mermaid
+flowchart LR
+    NVMeCmd["NVMe Command PDU"] --> TCP["TCP Socket Layer"]
+    TCP --> IP["IP Layer"]
+    IP --> Ethernet["Ethernet Driver / NIC"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NVMeCmd cpu;
+    class TCP,IP memory;
+    class Ethernet system;
+```
+
+
 ## ❌ Disadvantages of NVMe/TCP
 
 - **Higher Latency** — TCP adds protocol overhead (acknowledgments, retransmissions, congestion control)

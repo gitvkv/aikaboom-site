@@ -48,6 +48,25 @@ You can detect power capping using **nvidia-smi** — the primary NVIDIA GPU mon
 
 ---
 
+
+### 📊 Visual Representation: Power Capping limit implementation
+This diagram shows how limiting maximum wattage via nvidia-smi helps cap node power draw and manage thermal loads.
+
+```mermaid
+flowchart LR
+    SetCap["nvidia-smi -pl 350 (Set Cap to 350W)"] --> Driver["NVRM Power controller"]
+    Driver -->|Throttle power phase| VRM["GPU VRMs (Voltage regulator modules)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Driver cpu;
+    class VRM memory;
+    class SetCap system;
+```
+
+
 ## 🛠️ Common Causes of Power Capping
 
 - **Insufficient power supply**: The PSU cannot deliver enough wattage to all GPUs simultaneously.

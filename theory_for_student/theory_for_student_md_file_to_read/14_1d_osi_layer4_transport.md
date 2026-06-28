@@ -56,6 +56,22 @@ UDP is designed for **speed over accuracy**. It sends data without waiting for c
 
 ---
 
+### 📊 Visual Representation: OSI Layer 4 TCP Session Handshake
+This diagram displays Layer 4 TCP synchronization, showing the standard three-way handshake establishing a reliable channel.
+
+```mermaid
+flowchart LR
+    Client["Client Node"] -->|1. SYN| Server["Server Node"]
+    Server -->|2. SYN-ACK| Client
+    Client -->|3. ACK| Server
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Client,Server cpu;
+```
+
 ## 🧠 Why AI Uses RDMA Instead
 
 AI workloads — especially **distributed training** — require GPUs to exchange data constantly. Think of it like a team of chefs passing ingredients across a kitchen. If they wait for a confirmation every time, the meal takes forever.

@@ -93,6 +93,28 @@ When booting a server for AI workloads, engineers may add or modify these kernel
 8. The initramfs loads drivers and mounts the real root filesystem
 9. Control is handed to **systemd** (or another init system) to complete the boot
 
+### 📊 Visual Representation: GRUB Boot Phase transition
+
+This horizontal flowchart illustrates the transition of system control from UEFI/BIOS through GRUB and the initramfs RAM environment, culminating in the execution of the main init system.
+
+```mermaid
+flowchart LR
+    A["UEFI / BIOS"] -->|Loads Bootloader| B["GRUB Bootloader"]
+    B -->|Reads config / grub.cfg| C["Kernel Selection"]
+    C -->|Loads into RAM| D["vmlinuz & initramfs"]
+    D -->|Executes initramfs script| E["Storage/GPU Drivers Loaded"]
+    E -->|Mounts Real RootFS| F["Root Filesystem"]
+    F -->|Launches PID 1| G["systemd"]
+
+    class A,B,C system;
+    class D,F,G memory;
+    class E cpu;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+```
+
 ---
 
 ## ✅ Key Takeaways for New Engineers

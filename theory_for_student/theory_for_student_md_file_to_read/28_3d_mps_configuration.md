@@ -54,6 +54,25 @@ To enable MPS manually on a Linux host:
 
 ---
 
+
+### 📊 Visual Representation: MPS Server Daemon Boot Flow
+This flowchart maps out starting MPS: exporting the GPU ID, starting the control daemon, and setting thread caps.
+
+```mermaid
+flowchart LR
+    Env["1. Export CUDA_VISIBLE_DEVICES"] --> Boot["2. Execute nvidia-cuda-mps-control -d"]
+    Boot --> SetCap["3. Set active thread percentage limits"]
+    SetCap --> Run["4. Execute CUDA applications"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Boot cpu;
+    class Env,SetCap,Run system;
+```
+
+
 ## 🐳 Configuring MPS in Kubernetes
 
 In Kubernetes, MPS must be configured at the **node level** or **pod level** using specific environment variables and volume mounts.

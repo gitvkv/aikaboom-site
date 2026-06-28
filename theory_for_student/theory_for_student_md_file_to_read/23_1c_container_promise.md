@@ -37,6 +37,25 @@ Dependency hell occurs when different applications require conflicting versions 
 
 ---
 
+
+### 📊 Visual Representation: Container Package Portability Promise
+This diagram displays how containers bundle application binaries and all dependent libraries into a portable image that runs consistently across any infrastructure.
+
+```mermaid
+flowchart LR
+    Image["Container Image (Code + Libraries + Config)"] -->|Deploy| Dev["Local Developer Workstation"]
+    Image -->|Deploy| Staging["Cloud VM Node"]
+    Image -->|Deploy| Prod["Bare-Metal DGX Server"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Image cpu;
+    class Dev,Staging,Prod system;
+```
+
+
 ## 🛠️ The Building Blocks of a Container Image
 
 A container image is a **snapshot** of a complete filesystem with your application and its dependencies. It is built layer by layer.

@@ -43,6 +43,25 @@ After setup, test that Docker can see your GPU by running a simple container tha
 
 ---
 
+
+### 📊 Visual Representation: Hands-On Lab GPU configuration
+This diagram displays the hands-on lab stack: deploying the container toolkit inside local Linux environments to practice CLI commands.
+
+```mermaid
+flowchart LR
+    Host["Linux Dev Server"] --> Toolkit["NVIDIA Container Toolkit"]
+    Toolkit --> Docker["Docker run --gpus all (Practice environment)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Toolkit cpu;
+    class Docker memory;
+    class Host system;
+```
+
+
 ## 🧪 Step 3: Pull and Run a Practice AI Container
 
 Use a pre-built container from NVIDIA's catalog to validate your environment.

@@ -76,6 +76,24 @@ mlxconfig -d /dev/mst/mt4123_pciconf0 set ECN_MARK_PROBABILITY=100
 
 ---
 
+### 📊 Visual Representation: Explicit Congestion Notification (ECN) IP Header Bits
+This diagram details the ECN bit settings (ECT and CE bits) within the IPv4/IPv6 Traffic Class fields.
+
+```mermaid
+flowchart LR
+    IPField["IPv4 TOS / IPv6 Traffic Class"] --> ECNBits["2 ECN Bits"]
+    ECNBits -->|00| NonECT["Not ECN Capable"]
+    ECNBits -->|11| Congestion["Congestion Encountered (CE)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class ECNBits cpu;
+    class IPField memory;
+    class NonECT,Congestion system;
+```
+
 ## 🔄 End-to-End ECN Flow — Step by Step
 
 1. **Sender** sends data with ECT bit set (ECN-capable).

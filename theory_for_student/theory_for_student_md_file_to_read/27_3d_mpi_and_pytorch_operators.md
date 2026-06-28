@@ -48,6 +48,29 @@ The **PyTorch Operator** (often called **PyTorchJob**) is purpose-built for **Py
 
 ---
 
+
+### 📊 Visual Representation: Training Operator Master-Worker layout
+This diagram displays PyTorchJob/MPIJob abstractions: establishing master rank networks and orchestrating worker pod synchronization.
+
+```mermaid
+flowchart LR
+    Operator["Kubeflow Training Operator"] --> Job["PyTorchJob Manifest"]
+    Job --> Master["Master Pod (Rank 0 - Coordinate)"]
+    Job --> Worker1["Worker Pod 1 (Rank 1 - Compute)"]
+    Job --> Worker2["Worker Pod 2 (Rank 2 - Compute)"]
+    Worker1 ---|NCCL Sync| Master
+    Worker2 ---|NCCL Sync| Master
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Master cpu;
+    class Worker1,Worker2 memory;
+    class Operator system;
+```
+
+
 ## 🛠️ How They Work in Kubernetes
 
 Both operators extend Kubernetes by introducing new **Custom Resource Definitions (CRDs)**. You define your training job as a YAML resource, and the operator's controller watches for these resources and creates the necessary pods, services, and configmaps.

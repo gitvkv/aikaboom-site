@@ -63,6 +63,25 @@ DCGM is a set of tools and libraries from NVIDIA for managing and monitoring GPU
 
 ---
 
+
+### 📊 Visual Representation: DCGM Metrics telemetry scraping
+This diagram displays telemetry collection: pulling node temperatures, power metrics, and ECC errors into central DBs.
+
+```mermaid
+flowchart LR
+    Exporter["dcgm-exporter daemon"] -->|Scrapes| Collector["Prometheus TSDB"]
+    Collector -->|Renders| Grafana["Grafana Admin Dashboards"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Exporter cpu;
+    class Collector memory;
+    class Grafana system;
+```
+
+
 ## 📊 DCGM vs Xid Errors: A Quick Comparison
 
 | Aspect | DCGM | Xid Errors |

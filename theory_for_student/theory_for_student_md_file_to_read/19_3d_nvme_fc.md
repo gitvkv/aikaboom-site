@@ -51,6 +51,26 @@ To deploy NVMe/FC, you need:
 
 ---
 
+
+### 📊 Visual Representation: NVMe over Fibre Channel (FC-NVMe) Frame Routing
+This diagram shows FC-NVMe encapsulation, routing NVMe block payloads over high-reliability Fibre Channel fabric infrastructures.
+
+```mermaid
+flowchart LR
+    NVMe["NVMe Command block"] --> FC4["FC-4 Mapping Layer"]
+    FC4 --> FC_Frame["FC Frame Header (Source/Dest D_IDs)"]
+    FC_Frame --> Physical["Fibre Channel Transceiver / Port"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class FC4 cpu;
+    class NVMe,FC_Frame memory;
+    class Physical system;
+```
+
+
 ## 🕵️ When to Use NVMe/FC
 
 NVMe/FC is ideal for:

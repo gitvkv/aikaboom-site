@@ -38,6 +38,24 @@ A **silicon interposer** is a thin slice of silicon that acts as a bridge betwee
 
 ---
 
+### 📊 Visual Representation: HBM 2.5D Stacked Architecture
+This diagram displays the 2.5D structural stack of HBM: DRAM dies are stacked vertically using TSVs and placed on a silicon interposer next to the GPU.
+
+```mermaid
+flowchart LR
+    DRAM_Stack["Vertical DRAM Stack (3D)"] -->|TSVs| BaseDie["Logic Base Die"]
+    BaseDie -->|Microbumps| Interposer["Silicon Interposer (2.5D)"]
+    Interposer --> GPU["GPU compute die"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPU cpu;
+    class DRAM_Stack,BaseDie memory;
+    class Interposer system;
+```
+
 ## 📊 HBM Stack Architecture — A Closer Look
 
 Each HBM stack consists of several layers:

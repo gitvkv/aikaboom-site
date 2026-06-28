@@ -29,6 +29,25 @@ MIG uses hardware-level partitioning of the GPU's internal resources. Here is ho
 
 ---
 
+
+### 📊 Visual Representation: MIG Hardware Fault and Memory Isolation
+This diagram displays how physical hardware isolation in MIG prevents memory faults from propagating to adjacent GPU instances.
+
+```mermaid
+flowchart LR
+    Instance1["MIG Instance 1 (Fault / Error)"] -.->|Hardware barrier| Instance2["MIG Instance 2 (Stable / Isolated)"]
+    Instance1 --> Teardown["Reset instance 1 ONLY"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Instance2 cpu;
+    class Instance1 memory;
+    class Teardown system;
+```
+
+
 ## 📊 Comparison: MIG vs. Software-Based Isolation
 
 | Feature | MIG (Hardware Isolation) | Software-Based Isolation (e.g., Time-Slicing) |

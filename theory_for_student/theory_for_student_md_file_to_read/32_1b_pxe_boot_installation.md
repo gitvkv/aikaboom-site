@@ -66,6 +66,26 @@ AI clusters require consistent, identical configurations across hundreds of node
 
 ---
 
+
+### 📊 Visual Representation: PXE Boot network installation flow
+This flowchart shows how target nodes PXE-boot over networks, loading kernel images from TFTP/DHCP servers.
+
+```mermaid
+flowchart LR
+    Boot["Server Boot (NIC PXE mode)"] --> DHCP["1. DHCP Request (Get IP & TFTP server)"]
+    DHCP --> TFTP["2. TFTP Download (Get kernel image & pxelinux)"]
+    TFTP --> OSInstall["3. Boot OS & Run Autoinstall script"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class DHCP cpu;
+    class TFTP memory;
+    class Boot,OSInstall system;
+```
+
+
 ## 🕵️ How NVIDIA Base Command Manager Uses PXE
 
 NVIDIA Base Command Manager (BCM) is the enterprise cluster management tool that orchestrates large-scale AI infrastructure. It uses PXE boot and network installation as the **baseline method** for bringing new nodes into the cluster.

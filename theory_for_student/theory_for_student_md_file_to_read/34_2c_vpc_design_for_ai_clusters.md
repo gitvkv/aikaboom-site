@@ -65,6 +65,24 @@ Security groups act as virtual firewalls for your instances. For AI clusters, yo
 
 ---
 
+
+### 📊 Visual Representation: VPC Subnet Architecture for GPU clusters
+This diagram displays VPC subnets, isolating public management gateways from private high-speed backend RDMA interconnect fabrics.
+
+```mermaid
+flowchart LR
+    VPC["VPC Network"] --> Public["Public Subnet (Mgmt / NAT Gateway / SSH)"]
+    VPC --> Private["Private Subnet (GPU Clusters / Multi-EFA / No public IP)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class VPC cpu;
+    class Public,Private memory;
+```
+
+
 ## 🔗 VPC Endpoints for AI Data Access
 
 VPC endpoints allow your GPU instances to access AWS services (S3, DynamoDB, ECR) without traversing the public internet. This is critical for AI clusters because:

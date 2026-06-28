@@ -48,6 +48,25 @@ Cryptojacking is a type of cyberattack where malicious actors secretly use your 
 
 ---
 
+
+### 📊 Visual Representation: GPU Cryptojacking process hijack
+This diagram displays cryptojacking: unauthorized mining containers saturating GPU compute resources.
+
+```mermaid
+flowchart LR
+    App["Compromised pod / namespace"] -->|Deploy mining container| GPU["Physical GPU (Saturated 100% compute)"]
+    GPU -->|"Drain power & resources"| Outage["Production AI inference bottlenecks"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPU cpu;
+    class Outage memory;
+    class App system;
+```
+
+
 ## 🛠️ Detection Techniques for Engineers
 
 ### 🔎 Manual Inspection Methods

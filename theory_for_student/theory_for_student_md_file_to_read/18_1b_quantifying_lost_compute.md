@@ -47,6 +47,25 @@ Let's break down where that 30%+ of lost compute comes from. The following table
 
 ---
 
+
+### 📊 Visual Representation: Lost Compute Tax Allocation
+This diagram visualizes the percentage breakdown of host CPU resources lost to networking encapsulation, storage drivers, and security agents.
+
+```mermaid
+flowchart LR
+    Total["Total Host CPU Capacity"] --> Network["Networking (OVS/VxLAN: 15-20%)"]
+    Total --> Storage["Storage (NVMe-oF: 10-15%)"]
+    Total --> Security["Security & Logs (Agents: 5-10%)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Total cpu;
+    class Network,Storage,Security memory;
+```
+
+
 ## 🕵️ How to Identify Infrastructure Overhead
 
 As a new engineer, you need to know when your host CPU is being taxed by infrastructure. Here are the common symptoms:

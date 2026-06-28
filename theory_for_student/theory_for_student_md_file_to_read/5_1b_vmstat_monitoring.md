@@ -62,6 +62,27 @@ When you run vmstat, you'll see columns like these. Here's what each means for a
 
 ---
 
+### 📊 Visual Representation: vmstat Resource Monitoring Points
+This diagram illustrates the flow of memory demands, swapping activity (si/so), and block I/O (bi/bo) monitored by the vmstat utility.
+
+```mermaid
+flowchart LR
+    Workload["AI Workload / RAM Demand"] --> RAM["System RAM (Active/Cached)"]
+    RAM -->|Memory Pressure| SwapOut["Swap Out (so)"] --> DiskSwap["Disk Swap Space"]
+    DiskSwap -->|Memory Requested| SwapIn["Swap In (si)"] --> RAM
+    
+    RAM -->|Buffer Cache Access| DiskIO["Storage Disk (bi/bo)"]
+    DiskIO -->|Slow Storage| CPU_Wait["CPU I/O Wait (wa)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class CPU_Wait cpu;
+    class RAM,DiskSwap memory;
+    class Workload,SwapOut,SwapIn,DiskIO system;
+```
+
 ## 🛠️ Practical Usage Pattern for AI Engineers
 
 To monitor your system in real time, you typically run vmstat with a delay interval. For example, to see statistics every 2 seconds:
@@ -108,3 +129,4 @@ Remember: If you see swapping (si/so > 0), your AI workload is already suffering
 ---
 
 *Next in this section: 5.1c iostat — detailed I/O statistics for storage devices*
+

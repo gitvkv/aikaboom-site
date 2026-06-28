@@ -34,6 +34,24 @@ GPUs are essentially massive SIMD machines with thousands of cores.
 
 ---
 
+### 📊 Visual Representation: Tiled GPU GEMM Computation
+This diagram displays how GPUs compute large GEMM operations by dividing matrices into sub-tiles loaded into fast shared memory.
+
+```mermaid
+flowchart LR
+    Global["Global Memory (DRAM)"] -->|Load Tiles| Shared["Symmetric Shared Memory (SRAM)"]
+    Shared -->|Register File| TensorCores["Tensor Cores (Compute Matrix Block)"]
+    TensorCores -->|Write Back| Global
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class TensorCores cpu;
+    class Shared memory;
+    class Global system;
+```
+
 ## 🕵️ Why GEMM Maps Perfectly to GPU SIMD
 
 ### 1. 🎯 Data Parallelism — The Perfect Fit

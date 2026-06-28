@@ -39,6 +39,22 @@ When training large AI models across multiple GPUs, the GPUs must constantly sha
 
 ---
 
+### 📊 Visual Representation: East-West Intra-Cluster Node-to-Node Traffic
+This diagram displays East-West data paths connecting multiple compute nodes in a parallel processing environment.
+
+```mermaid
+flowchart LR
+    Node1["Server Node 1"] -->|East-West| Node2["Server Node 2"]
+    Node2 -->|East-West| Node3["Server Node 3"]
+    Node3 -->|East-West| Node1
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Node1,Node2,Node3 cpu;
+```
+
 ## 🛠️ How Engineers Address Bandwidth Sensitivity
 
 - **Use high-bandwidth interconnects**: NVIDIA NVLink, InfiniBand (200 Gbps or 400 Gbps), or high-speed Ethernet (RoCEv2).

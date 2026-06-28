@@ -49,6 +49,26 @@ Manually managing a cluster of 5 nodes might be feasible. But when you scale to 
 
 ---
 
+
+### 📊 Visual Representation: Configuration Drift over time
+This diagram displays how nodes diverge from standard configurations over time when manual changes bypass provisioning systems.
+
+```mermaid
+flowchart LR
+    Base["Standard Cluster config (Node 1 & 2)"] --> ManualChange["Manual upgrade on Node 2 (NVIDIA driver v545)"]
+    ManualChange --> Drift{"Drift: Node 1 has v535, Node 2 has v545"}
+    Drift --> Fail["NCCL library fails during MPI distributed training runs"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Drift cpu;
+    class Fail memory;
+    class Base,ManualChange system;
+```
+
+
 ## 📊 Comparison: Intended State vs. Actual State
 
 | Aspect | Intended State (What You Want) | Actual State (What Happens) |

@@ -46,6 +46,25 @@ If the user lacks the RBAC permission to create Pods or request `nvidia.com/gpu`
 
 ---
 
+
+### 📊 Visual Representation: K8s RBAC GPU resource restrictions
+This diagram displays RBAC rules, restricting access to ClusterPolicies and GPU operator components to admin roles.
+
+```mermaid
+flowchart LR
+    User["User: Developer"] --> Role["RoleBinding: ReadOnlyRole"]
+    Role -->|Deny| Change["kubectl delete ClusterPolicy (Forbidden)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Role cpu;
+    class Change memory;
+    class User system;
+```
+
+
 ## 📊 Comparison: RBAC vs. No RBAC for GPU Jobs
 
 | Aspect | Without RBAC | With RBAC |

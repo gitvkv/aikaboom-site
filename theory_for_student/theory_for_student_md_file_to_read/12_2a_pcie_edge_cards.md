@@ -56,6 +56,23 @@ Unlike consumer GPUs with visible fans, data center PCIe Edge Cards rely on **pa
 
 ---
 
+### 📊 Visual Representation: PCIe Edge Card GPU Installation
+This diagram displays standard PCIe edge card installation on server motherboards, communicating via the PCIe slot bus.
+
+```mermaid
+flowchart LR
+    GPU["PCIe GPU Edge Card"] -->|Gold Finger Interface| Slot["Motherboard PCIe Slot"]
+    Slot -->|PCIe Lanes x16| CPU["System CPU / PCH"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPU cpu;
+    class CPU memory;
+    class Slot system;
+```
+
 ## 🔋 Power Considerations (TDP ≤ 350W)
 
 **TDP** (Thermal Design Power) is the maximum heat the cooling system must dissipate. For these cards, it's **350 watts or less**.

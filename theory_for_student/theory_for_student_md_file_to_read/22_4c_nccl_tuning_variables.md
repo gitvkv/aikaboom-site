@@ -40,6 +40,25 @@ When you run multi-GPU training or inference workloads, the NVIDIA Collective Co
 
 ---
 
+
+### 📊 Visual Representation: NCCL Performance Tuning variables
+This diagram displays environment variables (NCCL_DEBUG, NCCL_IB_DISABLE) used to monitor and tune performance.
+
+```mermaid
+flowchart LR
+    Tuning["NCCL Environment Variables"] --> Debug["NCCL_DEBUG=INFO (Detailed logs)"]
+    Tuning --> IB_Control["NCCL_IB_DISABLE=0/1 (InfiniBand control)"]
+    Tuning --> Net_Select["NCCL_SOCKET_IFNAME=eth0 (Interface selection)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Tuning cpu;
+    class Debug,IB_Control,Net_Select memory;
+```
+
+
 ## 📊 NCCL_NET_GDR_LEVEL — Controlling GPU Direct RDMA
 
 **What it does:** GPU Direct RDMA (GDR) allows data to move directly between a GPU and a network adapter without passing through the CPU or system memory. This is much faster but requires specific hardware support. This variable controls how aggressively NCCL uses GDR.

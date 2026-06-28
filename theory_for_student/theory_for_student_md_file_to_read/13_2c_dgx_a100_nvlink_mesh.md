@@ -46,6 +46,22 @@ Each A100 GPU has **12 NVLink lanes** (or links). In the DGX A100, these are arr
 
 ---
 
+### 📊 Visual Representation: DGX A100 GPU NVLink Mesh topology
+This diagram shows the full mesh topology of a 8-GPU DGX A100 system, connected symmetrically via 6 NVSwitch boards.
+
+```mermaid
+flowchart LR
+    GPUs["8 x A100 GPUs"] -->|12 Links per GPU| NVSwitches["6 x NVSwitches"]
+    NVSwitches -->|Non-blocking Crossbar| GPUs
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPUs cpu;
+    class NVSwitches system;
+```
+
 ## 🕵️ Visualizing the Topology
 
 Imagine 8 dots (GPUs) arranged in a circle. In a fully connected mesh, every dot has a direct line to every other dot. This is different from a ring or tree topology where data must pass through intermediate nodes.

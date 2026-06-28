@@ -105,6 +105,24 @@ ip route add 10.0.0.0/8 via 192.168.1.1 dev eth0
 
 ---
 
+### 📊 Visual Representation: Linux Routing Table and Interface Lookup
+This flowchart maps out the decision routing logic of packet forwarding in Linux, querying the routing table to match gateway paths.
+
+```mermaid
+flowchart LR
+    Packet["Packet Outgoing"] --> Route{"Route Match?"}
+    Route -->|Local Subnet| Direct["Direct Send via Device (e.g., eth0)"]
+    Route -->|External Subnet| Gateway["Forward to Gateway (Default Route)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Route cpu;
+    class Packet memory;
+    class Direct,Gateway system;
+```
+
 ## 📊 Comparison Table: Old vs. New
 
 | Task | Old Command (deprecated) | New Command (modern) | What It Shows |

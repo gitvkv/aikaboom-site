@@ -51,6 +51,25 @@ Supply chain attacks targeting NGC involve attackers modifying or replacing legi
 
 ---
 
+
+### 📊 Visual Representation: Model Hub supply chain exploit
+This diagram displays how downloading untrusted public models or packages can execute malicious code on local systems.
+
+```mermaid
+flowchart LR
+    PublicHub["Untrusted public hub / repository"] -->|Downloads pickle file| LocalGPU["Local GPU Compute server"]
+    LocalGPU -->|Executes arbitrary python code| Compromise["Server compromise / Root exploit"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class LocalGPU cpu;
+    class Compromise memory;
+    class PublicHub system;
+```
+
+
 ## 🕵️ Detection Strategies for Engineers
 
 **Before pulling from NGC:**

@@ -4,7 +4,7 @@
 
 When you work with AI infrastructure, you will frequently need to edit configuration files, review logs, or modify scripts directly on remote servers. Many of these servers run minimal Linux installations without graphical editors. **Vim** is the text editor you will encounter most often — it is powerful, lightweight, and available on virtually every Linux system. This section covers the absolute minimum Vim skills you need to survive: understanding its modes, navigating a file, inserting text, saving changes, and quitting.
 
----
+
 
 ## 🧭 Understanding Vim Modes
 
@@ -82,6 +82,25 @@ Here is the most common sequence you will use when editing a configuration file:
 6. Type **:wq** and press **Enter** to save and quit.
 
 If you make a mistake and want to exit without saving, type **:q!** instead.
+
+### 📊 Visual Representation: Vim Mode Transitions
+This horizontal flowchart shows how to transition between Vim's three primary operating modes (Normal, Insert, and Command-Line) and the keystrokes used to switch between them.
+
+```mermaid
+flowchart LR
+    Normal["Normal Mode<br>(Navigation & Commands)"] -->|i / a / o| Insert["Insert Mode<br>(Text Editing)"]
+    Insert -->|Esc| Normal
+    Normal -->|:| Cmd["Command-Line Mode<br>(Save :w / Quit :q)"]
+    Cmd -->|Esc / Enter| Normal
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Normal cpu;
+    class Insert memory;
+    class Cmd system;
+```
 
 ---
 

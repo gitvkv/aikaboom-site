@@ -96,6 +96,35 @@ For AI workloads, here's a simple rule of thumb:
 - A 2 ms transfer gap can cause GPU memory errors or training job failures
 - Double-conversion provides clean sine wave output, which modern PSUs prefer
 
+### 📊 Visual Representation: UPS Topology Comparison
+This diagram illustrates the difference between Line-Interactive and Online Double-Conversion UPS systems, highlighting why sensitive GPU compute loads require the zero-transfer-time, continuous regeneration pathway.
+
+```mermaid
+flowchart TD
+    subgraph LI["Line-Interactive UPS (Direct Flow with Bypass/AVR)"]
+        direction LR
+        GridLI["Utility AC Grid"] -->|Direct Path| AVR["AVR (Voltage Regulator)"]
+        AVR -->|Normal Ops| LoadLI["Non-Critical Load"]
+        BattLI["Battery / Inverter"] -->|"Power Outage (2-4ms Gap)"| LoadLI
+    end
+
+    subgraph DC["Online Double-Conversion UPS (Continuous Regeneration)"]
+        direction LR
+        GridDC["Utility AC Grid"] --> Rect["Rectifier (AC to DC)"]
+        Rect --> DCBus["DC Bus & Battery"]
+        DCBus --> Inv["Inverter (DC to AC)"]
+        Inv -->|Zero Transfer Time| LoadDC["Sensitive GPU Load"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class LoadDC cpu;
+    class LoadLI memory;
+    class GridLI,AVR,BattLI,GridDC,Rect,DCBus,Inv,LI,DC system;
+```
+
 ---
 
 ## 🔌 Real-World Example

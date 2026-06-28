@@ -91,6 +91,34 @@ Here are examples from the two major server CPU vendors:
   +--Memory--> [RAM]
 ```
 
+### 📊 Visual Representation: Enterprise Motherboard Data Flow Architecture
+This diagram outlines the communication paths between the CPU, high-speed subsystems (RAM, GPU), and slower peripherals managed by the Platform Controller Hub (PCH).
+
+```mermaid
+flowchart TD
+    CPU[CPU / Processors] -->|Direct Memory Bus| RAM[System RAM]
+    CPU -->|Direct PCIe Lanes| GPU[NVIDIA GPU]
+    CPU -->|DMI / High-Speed Link| PCH[Platform Controller Hub - PCH]
+    
+    PCH -->|SATA Controller| Drives[SATA / HDD Storage]
+    PCH -->|USB Bus| USB[USB Ports / Peripherals]
+    PCH -->|PCIe Link| NIC[Network Interface Card]
+    PCH <-->|SMBus / PCIe| BMC[Baseboard Management Controller]
+
+    class CPU cpu;
+    class RAM memory;
+    class GPU memory;
+    class PCH system;
+    class Drives memory;
+    class USB system;
+    class NIC system;
+    class BMC system;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+```
+
 ---
 
 ## 🧪 Practical Tips for New Engineers

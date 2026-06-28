@@ -152,3 +152,23 @@ Imagine you're building an AI training cluster:
 6. **Monitoring:** Watch for **Xid** errors to catch hardware issues early.
 
 You now have a solid foundation for these terms. Good luck with your NVIDIA-Certified Associate journey!
+
+
+
+### 📊 Visual Representation: Glossary terms mapping (O to Z)
+This diagram displays how final glossary terms (RoCE, Slurm, vGPU, Xid) link to cluster software stacks.
+
+```mermaid
+flowchart LR
+    Glossary["Glossary O-Z"] --> RoCE["RoCE (RDMA over Ethernet)"]
+    Glossary --> Slurm["Slurm (Batch Workload Manager)"]
+    Glossary --> Xid["Xid (NVIDIA Driver error codes)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Glossary cpu;
+    class RoCE,Slurm,Xid memory;
+```
+

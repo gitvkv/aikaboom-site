@@ -40,6 +40,25 @@ When you run a workload on an NVIDIA GPU, the **Streaming Multiprocessor (SM)** 
 
 ---
 
+### 📊 Visual Representation: Active Warps and SM Occupancy Constraints
+This flowchart demonstrates how hardware resources (registers, shared memory) limit maximum active warps per Streaming Multiprocessor (SM).
+
+```mermaid
+flowchart LR
+    Threads["Thread Block Request"] --> Limits{"Resource Checks"}
+    Limits -->|Registers Exceeded| LessBlocks["Fewer active blocks (Lower Occupancy)"]
+    Limits -->|Shared Memory Exceeded| LessBlocks
+    Limits -->|Within Limits| MaxBlocks["Max active warps (High Occupancy)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Limits cpu;
+    class LessBlocks,MaxBlocks memory;
+    class Threads system;
+```
+
 ## 🛠️ Factors That Limit Occupancy
 
 | Limiting Factor | Description |

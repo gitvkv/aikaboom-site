@@ -54,6 +54,23 @@ This approach was simple but unreliable — if you added or removed hardware, th
 
 ---
 
+### 📊 Visual Representation: Predictable Network Interface Device Path Mapping
+This flowchart shows how system hardware topology (PCI bus, slot, port) is translated into predictable network interface names (eno, ens, enp) by systemd.
+
+```mermaid
+flowchart LR
+    dev["Network Interface"] --> eno["eno1<br>(Onboard NIC)"]
+    dev --> ens["ens1<br>(PCIe Hotplug Slot)"]
+    dev --> enp["enp3s0f0<br>(PCIe Bus 3, Slot 0, Port 0)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class dev cpu;
+    class eno,ens,enp memory;
+```
+
 ## 📊 Comparison Table: eth0 vs. ens3 vs. ib0
 
 | Feature | **eth0** (Legacy) | **ens3** (Predictable) | **ib0** (InfiniBand) |
@@ -114,3 +131,4 @@ ip link show
 - **Exceptions** exist in VMs, cloud instances, and bonded interfaces — always verify with **ip link show**.
 
 When configuring AI infrastructure, always check the actual interface names on the system rather than assuming they follow a standard pattern. This simple habit will save you hours of debugging network issues later.
+

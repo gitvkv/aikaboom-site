@@ -4,11 +4,11 @@ window.NCA_MOCK_TEST_POOL = {
         "title": "NCA-AIIO Practice Exam - 500 Questions",
         "version": "1.0",
         "exam": "NVIDIA Certified Associate - AI Infrastructure & Operations",
-        "total_questions": 228,
+        "total_questions": 295,
         "sections": {
             "Essential AI Knowledge": {
                 "percentage": "38%",
-                "question_count": 90
+                "question_count": 157
             },
             "AI Infrastructure": {
                 "percentage": "40%",
@@ -20,8 +20,8 @@ window.NCA_MOCK_TEST_POOL = {
             }
         },
         "difficulty_distribution": {
-            "Easy": 56,
-            "Medium": 115,
+            "Easy": 74,
+            "Medium": 164,
             "Hard": 57
         }
     },
@@ -388,7 +388,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) Only inference tools like TensorRT"
             ],
             "answer": "B",
-            "explanation": "NVIDIA's full AI software stack is layered: hardware \u2192 drivers \u2192 CUDA \u2192 math libraries \u2192 AI frameworks \u2192 applications and domain SDKs."
+            "explanation": "NVIDIA's full AI software stack is layered: hardware → drivers → CUDA → math libraries → AI frameworks → applications and domain SDKs."
         },
         {
             "id": 27,
@@ -430,7 +430,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) They have identical compute requirements"
             ],
             "answer": "B",
-            "explanation": "Training involves forward and backward passes with gradient updates \u2014 computationally intensive. Inference prioritizes low latency and high throughput with the trained model, often requiring less compute per transaction."
+            "explanation": "Training involves forward and backward passes with gradient updates — computationally intensive. Inference prioritizes low latency and high throughput with the trained model, often requiring less compute per transaction."
         },
         {
             "id": 30,
@@ -486,7 +486,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) It connects CPUs to GPUs via PCIe"
             ],
             "answer": "B",
-            "explanation": "NVLink is NVIDIA's proprietary high-speed interconnect between GPUs within a node, offering much higher bandwidth than PCIe \u2014 critical for multi-GPU training workloads."
+            "explanation": "NVLink is NVIDIA's proprietary high-speed interconnect between GPUs within a node, offering much higher bandwidth than PCIe — critical for multi-GPU training workloads."
         },
         {
             "id": 34,
@@ -556,7 +556,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) AI model compression"
             ],
             "answer": "B",
-            "explanation": "NVIDIA Omniverse can generate synthetic, photorealistic training data for AI models \u2014 particularly valuable for robotics and autonomous vehicle perception training where real data is scarce."
+            "explanation": "NVIDIA Omniverse can generate synthetic, photorealistic training data for AI models — particularly valuable for robotics and autonomous vehicle perception training where real data is scarce."
         },
         {
             "id": 39,
@@ -775,7 +775,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is NVIDIA Morpheus designed for?",
             "options": [
                 "A) AI model training optimization",
-                "B) Cybersecurity AI \u2014 real-time detection of threats using AI on network data",
+                "B) Cybersecurity AI — real-time detection of threats using AI on network data",
                 "C) Image generation and rendering",
                 "D) Autonomous vehicle training"
             ],
@@ -901,7 +901,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is NVIDIA's Drive platform primarily designed for?",
             "options": [
                 "A) Cloud storage management",
-                "B) Autonomous vehicle AI \u2014 perception, planning, and in-vehicle compute",
+                "B) Autonomous vehicle AI — perception, planning, and in-vehicle compute",
                 "C) Enterprise data analytics",
                 "D) AI model compression"
             ],
@@ -999,12 +999,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "Which parallelism strategy combines both data and model parallelism, and is used by NVIDIA's Megatron-LM for training very large models?",
             "options": [
                 "A) Pipeline parallelism only",
-                "B) 3D parallelism \u2014 combining tensor, pipeline, and data parallelism",
+                "B) 3D parallelism — combining tensor, pipeline, and data parallelism",
                 "C) Asynchronous gradient descent",
                 "D) Federated learning"
             ],
             "answer": "B",
-            "explanation": "Megatron-LM uses 3D parallelism: tensor parallelism (splitting layers), pipeline parallelism (splitting model stages), and data parallelism \u2014 enabling efficient training of trillion-parameter models."
+            "explanation": "Megatron-LM uses 3D parallelism: tensor parallelism (splitting layers), pipeline parallelism (splitting model stages), and data parallelism — enabling efficient training of trillion-parameter models."
         },
         {
             "id": 71,
@@ -1026,10 +1026,10 @@ window.NCA_MOCK_TEST_POOL = {
             "difficulty": "Hard",
             "question": "What is the primary challenge of 'catastrophic forgetting' in continual AI learning, and how can it be mitigated?",
             "options": [
-                "A) GPU memory overflow \u2014 mitigated by reducing batch size",
-                "B) A model losing previously learned knowledge when fine-tuned on new data \u2014 mitigated by techniques like elastic weight consolidation or rehearsal",
-                "C) Data pipeline bottlenecks \u2014 mitigated by prefetching",
-                "D) Gradient explosion \u2014 mitigated by gradient clipping"
+                "A) GPU memory overflow — mitigated by reducing batch size",
+                "B) A model losing previously learned knowledge when fine-tuned on new data — mitigated by techniques like elastic weight consolidation or rehearsal",
+                "C) Data pipeline bottlenecks — mitigated by prefetching",
+                "D) Gradient explosion — mitigated by gradient clipping"
             ],
             "answer": "B",
             "explanation": "Catastrophic forgetting occurs when a model overwrites previously learned knowledge during fine-tuning. Techniques like EWC (penalize changes to important weights) or replay (train on mix of old and new data) help."
@@ -1125,12 +1125,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the primary challenge that 'attention sink' tokens address in long-context LLM inference?",
             "options": [
                 "A) Preventing GPU memory overflow during long sequence processing",
-                "B) Certain tokens accumulate disproportionately large attention weights, destabilizing KV cache eviction strategies \u2014 attention sinks preserve these tokens to maintain model stability",
+                "B) Certain tokens accumulate disproportionately large attention weights, destabilizing KV cache eviction strategies — attention sinks preserve these tokens to maintain model stability",
                 "C) Managing CPU-GPU memory transfers for long sequences",
                 "D) Preventing gradient explosion in very long context training"
             ],
             "answer": "B",
-            "explanation": "Research shows that initial tokens (attention sinks) receive disproportionally high attention regardless of content. Evicting them from KV cache during sliding window attention causes model degradation \u2014 StreamingLLM preserves them."
+            "explanation": "Research shows that initial tokens (attention sinks) receive disproportionally high attention regardless of content. Evicting them from KV cache during sliding window attention causes model degradation — StreamingLLM preserves them."
         },
         {
             "id": 80,
@@ -1153,12 +1153,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the relationship between model size (parameters) and training compute, as described by scaling laws?",
             "options": [
                 "A) Training compute scales linearly with parameter count",
-                "B) Optimal model training follows power-law scaling \u2014 performance improves predictably with more parameters, data, and compute in a balanced ratio (Chinchilla scaling)",
+                "B) Optimal model training follows power-law scaling — performance improves predictably with more parameters, data, and compute in a balanced ratio (Chinchilla scaling)",
                 "C) Larger models always require exponentially more data regardless of compute",
                 "D) Scaling laws only apply to language models, not vision models"
             ],
             "answer": "B",
-            "explanation": "Chinchilla scaling laws show that for a given compute budget, there's an optimal balance of model size and training tokens. The key insight: models are often undertrained \u2014 doubling data is as beneficial as doubling parameters."
+            "explanation": "Chinchilla scaling laws show that for a given compute budget, there's an optimal balance of model size and training tokens. The key insight: models are often undertrained — doubling data is as beneficial as doubling parameters."
         },
         {
             "id": 82,
@@ -1181,12 +1181,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is 'flash attention' and what performance problem does it solve?",
             "options": [
                 "A) A prefetching algorithm for GPU L2 cache",
-                "B) A memory-efficient, IO-aware attention algorithm that fuses attention operations to avoid storing the full attention matrix in HBM, reducing memory from O(n\u00b2) to O(n)",
+                "B) A memory-efficient, IO-aware attention algorithm that fuses attention operations to avoid storing the full attention matrix in HBM, reducing memory from O(n²) to O(n)",
                 "C) A hardware feature in H100 for faster attention computation",
                 "D) A technique to reduce attention head dimensionality"
             ],
             "answer": "B",
-            "explanation": "Standard attention materializes the full n\u00d7n attention matrix in HBM (slow). FlashAttention tiles the computation in SRAM, fusing operations to avoid HBM round-trips \u2014 enabling longer contexts without quadratic memory overhead."
+            "explanation": "Standard attention materializes the full n×n attention matrix in HBM (slow). FlashAttention tiles the computation in SRAM, fusing operations to avoid HBM round-trips — enabling longer contexts without quadratic memory overhead."
         },
         {
             "id": 84,
@@ -1222,8 +1222,8 @@ window.NCA_MOCK_TEST_POOL = {
             "difficulty": "Hard",
             "question": "What does 'tensor parallelism' require in terms of inter-GPU communication, and what is its implication for hardware selection?",
             "options": [
-                "A) Minimal communication \u2014 can work across nodes with standard Ethernet",
-                "B) High-bandwidth, low-latency intra-node communication \u2014 NVLink/NVSwitch is essential; extending across nodes significantly increases communication overhead",
+                "A) Minimal communication — can work across nodes with standard Ethernet",
+                "B) High-bandwidth, low-latency intra-node communication — NVLink/NVSwitch is essential; extending across nodes significantly increases communication overhead",
                 "C) Only storage bandwidth is critical for tensor parallelism",
                 "D) Tensor parallelism requires specialized FPGAs, not GPUs"
             ],
@@ -1251,7 +1251,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is 'activation memory' and why is it the dominant memory consumer during large model training (not weights)?",
             "options": [
                 "A) GPU L2 cache used for activation functions",
-                "B) The intermediate tensors stored during the forward pass needed to compute gradients in the backward pass \u2014 for large batch sizes or long sequences, these dwarf weight memory requirements",
+                "B) The intermediate tensors stored during the forward pass needed to compute gradients in the backward pass — for large batch sizes or long sequences, these dwarf weight memory requirements",
                 "C) Memory allocated for data augmentation pipelines",
                 "D) Memory used by the CUDA runtime for kernel launches"
             ],
@@ -1270,7 +1270,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) A quantum computing accelerator for AI research"
             ],
             "answer": "B",
-            "explanation": "GH200 pairs the Grace ARM CPU with an H100 GPU via NVLink-C2C, enabling a 480GB+ unified CPU+GPU memory space at 900 GB/s bandwidth \u2014 ideal for memory-hungry LLM inference and recommendation system workloads."
+            "explanation": "GH200 pairs the Grace ARM CPU with an H100 GPU via NVLink-C2C, enabling a 480GB+ unified CPU+GPU memory space at 900 GB/s bandwidth — ideal for memory-hungry LLM inference and recommendation system workloads."
         },
         {
             "id": 90,
@@ -1279,12 +1279,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is 'mixture of experts' (MoE) architecture and what is its advantage over dense models for scaling LLMs?",
             "options": [
                 "A) Training multiple separate models and averaging their outputs",
-                "B) An architecture with many expert sub-networks where a routing mechanism activates only a sparse subset per token \u2014 enabling larger parameter counts with similar compute cost to smaller dense models",
+                "B) An architecture with many expert sub-networks where a routing mechanism activates only a sparse subset per token — enabling larger parameter counts with similar compute cost to smaller dense models",
                 "C) A hardware configuration using multiple GPU types together",
                 "D) A data partitioning strategy for distributed training"
             ],
             "answer": "B",
-            "explanation": "MoE models (like Mixtral, GPT-4) route each token to only a subset of expert FFN layers. A 100B MoE model might activate only 12B parameters per token \u2014 achieving the capacity of large models at the inference cost of smaller ones."
+            "explanation": "MoE models (like Mixtral, GPT-4) route each token to only a subset of expert FFN layers. A 100B MoE model might activate only 12B parameters per token — achieving the capacity of large models at the inference cost of smaller ones."
         },
         {
             "id": 91,
@@ -1424,7 +1424,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) A memory error correction technology"
             ],
             "answer": "B",
-            "explanation": "NVMe (Non-Volatile Memory Express) is a storage protocol designed for SSDs over PCIe, offering microsecond latency and multi-GB/s throughput \u2014 essential for AI training data pipelines."
+            "explanation": "NVMe (Non-Volatile Memory Express) is a storage protocol designed for SSDs over PCIe, offering microsecond latency and multi-GB/s throughput — essential for AI training data pipelines."
         },
         {
             "id": 101,
@@ -1446,13 +1446,13 @@ window.NCA_MOCK_TEST_POOL = {
             "difficulty": "Easy",
             "question": "What does PCIe stand for and what role does it play in GPU servers?",
             "options": [
-                "A) Processor Core Interface Engine \u2014 it connects GPUs to storage",
-                "B) Peripheral Component Interconnect Express \u2014 it is the primary interface connecting GPUs to the host CPU/motherboard",
-                "C) Parallel Compute Interface Express \u2014 it connects GPUs to each other",
-                "D) Power Control Interface Extension \u2014 it manages GPU power delivery"
+                "A) Processor Core Interface Engine — it connects GPUs to storage",
+                "B) Peripheral Component Interconnect Express — it is the primary interface connecting GPUs to the host CPU/motherboard",
+                "C) Parallel Compute Interface Express — it connects GPUs to each other",
+                "D) Power Control Interface Extension — it manages GPU power delivery"
             ],
             "answer": "B",
-            "explanation": "PCIe is the primary host interface for add-in GPUs, providing CPU-GPU communication. PCIe 4.0/5.0 provides 16-32 GB/s bandwidth \u2014 though NVLink is used for faster GPU-GPU communication."
+            "explanation": "PCIe is the primary host interface for add-in GPUs, providing CPU-GPU communication. PCIe 4.0/5.0 provides 16-32 GB/s bandwidth — though NVLink is used for faster GPU-GPU communication."
         },
         {
             "id": 103,
@@ -1550,7 +1550,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) A GPU virtualization technology"
             ],
             "answer": "B",
-            "explanation": "RDMA allows one server to directly read/write another server's memory without OS or CPU involvement, drastically reducing latency and CPU overhead \u2014 critical for distributed AI training."
+            "explanation": "RDMA allows one server to directly read/write another server's memory without OS or CPU involvement, drastically reducing latency and CPU overhead — critical for distributed AI training."
         },
         {
             "id": 110,
@@ -1620,7 +1620,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) A container runtime for GPU workloads"
             ],
             "answer": "B",
-            "explanation": "DCGM provides active health monitoring, diagnostics, policy management, and performance metrics for NVIDIA GPUs at scale \u2014 integrating with cluster managers and Prometheus for observability."
+            "explanation": "DCGM provides active health monitoring, diagnostics, policy management, and performance metrics for NVIDIA GPUs at scale — integrating with cluster managers and Prometheus for observability."
         },
         {
             "id": 115,
@@ -1704,7 +1704,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) A mesh topology designed for high-density storage arrays"
             ],
             "answer": "B",
-            "explanation": "Fat-tree (and variants like 3-tier Clos) provides full bisection bandwidth \u2014 the bandwidth between any two halves of the network equals total edge bandwidth \u2014 ensuring no bottleneck during all-reduce operations."
+            "explanation": "Fat-tree (and variants like 3-tier Clos) provides full bisection bandwidth — the bandwidth between any two halves of the network equals total edge bandwidth — ensuring no bottleneck during all-reduce operations."
         },
         {
             "id": 121,
@@ -1755,7 +1755,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the significance of bisection bandwidth in AI cluster network design?",
             "options": [
                 "A) The total bandwidth available to a single server",
-                "B) The worst-case total bandwidth between any two equal-sized halves of the network \u2014 determines if the network can handle all-reduce and all-to-all communication patterns in distributed training without bottleneck",
+                "B) The worst-case total bandwidth between any two equal-sized halves of the network — determines if the network can handle all-reduce and all-to-all communication patterns in distributed training without bottleneck",
                 "C) The bandwidth of the management network",
                 "D) The bandwidth between storage and compute nodes"
             ],
@@ -1788,7 +1788,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) To provide block storage for OS boot volumes"
             ],
             "answer": "B",
-            "explanation": "Parallel file systems stripe data across many storage nodes, allowing aggregate throughput to scale with nodes. Training hundreds of GPUs requires tens to hundreds of GB/s of sustained I/O \u2014 only parallel filesystems can deliver this."
+            "explanation": "Parallel file systems stripe data across many storage nodes, allowing aggregate throughput to scale with nodes. Training hundreds of GPUs requires tens to hundreds of GB/s of sustained I/O — only parallel filesystems can deliver this."
         },
         {
             "id": 127,
@@ -1816,7 +1816,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) An API for container orchestration"
             ],
             "answer": "B",
-            "explanation": "IPMI (implemented as BMC \u2014 Baseboard Management Controller) allows administrators to monitor hardware health, power cycle servers, access console, and update firmware remotely even when the server is powered off or OS is unresponsive."
+            "explanation": "IPMI (implemented as BMC — Baseboard Management Controller) allows administrators to monitor hardware health, power cycle servers, access console, and update firmware remotely even when the server is powered off or OS is unresponsive."
         },
         {
             "id": 129,
@@ -1830,7 +1830,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) To replicate GPU memory to persistent storage for fault tolerance"
             ],
             "answer": "B",
-            "explanation": "GDS allows storage DMA engines to transfer data directly to/from GPU HBM, eliminating the CPU bounce buffer and reducing data loading overhead \u2014 critical for data-intensive training workloads where I/O can bottleneck GPUs."
+            "explanation": "GDS allows storage DMA engines to transfer data directly to/from GPU HBM, eliminating the CPU bounce buffer and reducing data loading overhead — critical for data-intensive training workloads where I/O can bottleneck GPUs."
         },
         {
             "id": 130,
@@ -1839,12 +1839,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What considerations are important when planning data center floor load for GPU server deployments?",
             "options": [
                 "A) Only the server weight matters; no other considerations",
-                "B) GPU servers are extremely heavy (DGX H100 = ~130kg), requiring assessment of floor load capacity (kg/m\u00b2), raised floor tile ratings, and potentially structural reinforcement",
+                "B) GPU servers are extremely heavy (DGX H100 = ~130kg), requiring assessment of floor load capacity (kg/m²), raised floor tile ratings, and potentially structural reinforcement",
                 "C) Modern data centers are always rated for maximum GPU density",
                 "D) Floor load is only relevant for storage arrays"
             ],
             "answer": "B",
-            "explanation": "A DGX H100 weighs ~130kg and a fully populated rack of them can exceed 1500kg. Standard raised floors support 500-1000 kg/m\u00b2 \u2014 dense GPU deployments require engineering assessment and potentially structural reinforcement."
+            "explanation": "A DGX H100 weighs ~130kg and a fully populated rack of them can exceed 1500kg. Standard raised floors support 500-1000 kg/m² — dense GPU deployments require engineering assessment and potentially structural reinforcement."
         },
         {
             "id": 131,
@@ -1858,7 +1858,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) A 3:1 or higher oversubscription is acceptable for AI as traffic is bursty"
             ],
             "answer": "B",
-            "explanation": "In typical enterprise networks, 2:1 to 4:1 oversubscription is acceptable. AI training all-reduce is all-to-all traffic \u2014 any oversubscription creates bottlenecks. Non-blocking 1:1 fabric is strongly preferred."
+            "explanation": "In typical enterprise networks, 2:1 to 4:1 oversubscription is acceptable. AI training all-reduce is all-to-all traffic — any oversubscription creates bottlenecks. Non-blocking 1:1 fabric is strongly preferred."
         },
         {
             "id": 132,
@@ -1872,7 +1872,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) To compress network packets for AI training workloads"
             ],
             "answer": "B",
-            "explanation": "DCQCN prevents RoCE congestion by having switches mark packets with ECN when queues build up, causing senders to reduce their rate proactively \u2014 more scalable than PFC alone and preventing head-of-line blocking."
+            "explanation": "DCQCN prevents RoCE congestion by having switches mark packets with ECN when queues build up, causing senders to reduce their rate proactively — more scalable than PFC alone and preventing head-of-line blocking."
         },
         {
             "id": 133,
@@ -1881,7 +1881,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the role of an InfiniBand Subnet Manager (SM)?",
             "options": [
                 "A) A hardware device that routes packets between InfiniBand and Ethernet",
-                "B) Software that manages the InfiniBand fabric \u2014 assigning LIDs, computing routing tables, and handling link state changes for the entire subnet",
+                "B) Software that manages the InfiniBand fabric — assigning LIDs, computing routing tables, and handling link state changes for the entire subnet",
                 "C) A performance monitoring agent for InfiniBand ports",
                 "D) A firmware component embedded in InfiniBand adapters"
             ],
@@ -1951,7 +1951,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the difference between scale-up and scale-out approaches to AI infrastructure?",
             "options": [
                 "A) They are identical approaches",
-                "B) Scale-up adds more compute to a single node (more GPUs per server via NVLink); scale-out adds more nodes to the cluster \u2014 large models require both, with all-reduce performance depending on scale-out fabric quality",
+                "B) Scale-up adds more compute to a single node (more GPUs per server via NVLink); scale-out adds more nodes to the cluster — large models require both, with all-reduce performance depending on scale-out fabric quality",
                 "C) Scale-up is for training; scale-out is for inference",
                 "D) Scale-up requires InfiniBand; scale-out uses Ethernet"
             ],
@@ -1965,7 +1965,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is NVIDIA's Magnum IO and what does it address?",
             "options": [
                 "A) A high-performance power supply for DGX systems",
-                "B) A suite of technologies (GPUDirect RDMA, GPUDirect Storage, NCCL, DOCA) that accelerates data movement between GPU memory, storage, and network \u2014 addressing the I/O bottleneck in AI workloads",
+                "B) A suite of technologies (GPUDirect RDMA, GPUDirect Storage, NCCL, DOCA) that accelerates data movement between GPU memory, storage, and network — addressing the I/O bottleneck in AI workloads",
                 "C) A monitoring and management platform for NVIDIA hardware",
                 "D) An AI model optimization and compression toolkit"
             ],
@@ -1979,12 +1979,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the purpose of Ethernet congestion control with ECN (Explicit Congestion Notification) in AI networks?",
             "options": [
                 "A) To control GPU memory access congestion",
-                "B) To signal congestion by marking packets at congested switches, enabling endpoints to reduce transmission rate before buffers overflow and cause packet loss \u2014 maintaining lossless RDMA operation",
+                "B) To signal congestion by marking packets at congested switches, enabling endpoints to reduce transmission rate before buffers overflow and cause packet loss — maintaining lossless RDMA operation",
                 "C) To prioritize AI training traffic over background traffic",
                 "D) To detect and isolate faulty network links"
             ],
             "answer": "B",
-            "explanation": "ECN marks packets at the switch (instead of dropping them) when buffer thresholds are crossed. Receivers echo this marking back to senders (DCQCN), allowing rate reduction before loss occurs \u2014 essential for RDMA reliability."
+            "explanation": "ECN marks packets at the switch (instead of dropping them) when buffer thresholds are crossed. Receivers echo this marking back to senders (DCQCN), allowing rate reduction before loss occurs — essential for RDMA reliability."
         },
         {
             "id": 141,
@@ -2007,12 +2007,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the key advantage of liquid-cooled rear-door heat exchangers (RDHx) compared to direct liquid cooling (DLC)?",
             "options": [
                 "A) RDHx provides better cooling for highest-power components",
-                "B) RDHx mounts on the rear of existing racks and passively or actively cools exhaust air without modifying servers \u2014 enabling liquid cooling as a retrofit with minimal server changes",
+                "B) RDHx mounts on the rear of existing racks and passively or actively cools exhaust air without modifying servers — enabling liquid cooling as a retrofit with minimal server changes",
                 "C) RDHx uses less water than DLC",
                 "D) RDHx is only suitable for networking equipment"
             ],
             "answer": "B",
-            "explanation": "RDHx is a non-invasive retrofit \u2014 it mounts on the rear of standard racks and cools hot exhaust air using chilled water coils before it enters the room. No server modification required, unlike DLC cold plates."
+            "explanation": "RDHx is a non-invasive retrofit — it mounts on the rear of standard racks and cools hot exhaust air using chilled water coils before it enters the room. No server modification required, unlike DLC cold plates."
         },
         {
             "id": 143,
@@ -2021,7 +2021,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What are the key metrics for selecting InfiniBand switches for an AI training cluster?",
             "options": [
                 "A) Only the number of ports matters",
-                "B) Port count, per-port bandwidth (NDR 400Gb/s vs HDR 200Gb/s), radix (ports per switch), oversubscription ratio, and switch latency \u2014 collectively determining the scale and performance of the non-blocking fat-tree fabric",
+                "B) Port count, per-port bandwidth (NDR 400Gb/s vs HDR 200Gb/s), radix (ports per switch), oversubscription ratio, and switch latency — collectively determining the scale and performance of the non-blocking fat-tree fabric",
                 "C) Only switch power consumption matters for operating cost",
                 "D) Brand compatibility with GPU vendor is the primary selection criterion"
             ],
@@ -2049,7 +2049,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is a key consideration for deploying AI workloads in a hybrid cloud architecture?",
             "options": [
                 "A) Hybrid cloud is never suitable for AI workloads",
-                "B) Data locality and transfer costs \u2014 large training datasets (TB-scale) may make on-premises training more cost-effective, while cloud provides burst capacity and avoids CapEx for variable workloads",
+                "B) Data locality and transfer costs — large training datasets (TB-scale) may make on-premises training more cost-effective, while cloud provides burst capacity and avoids CapEx for variable workloads",
                 "C) Hybrid cloud always doubles infrastructure costs",
                 "D) Only inference workloads can run in hybrid environments"
             ],
@@ -2077,7 +2077,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is NVIDIA's Spectrum Ethernet switch platform and how does it differ from Quantum InfiniBand for AI?",
             "options": [
                 "A) They are identical products for different markets",
-                "B) Spectrum provides high-performance Ethernet switching for AI (RoCE capable, adaptive routing), while Quantum provides InfiniBand \u2014 both serve AI clusters but Infiniband offers lower latency and better collective operation support",
+                "B) Spectrum provides high-performance Ethernet switching for AI (RoCE capable, adaptive routing), while Quantum provides InfiniBand — both serve AI clusters but Infiniband offers lower latency and better collective operation support",
                 "C) Spectrum is only for storage networking; Quantum is for compute",
                 "D) Spectrum requires higher power than Quantum switches"
             ],
@@ -2133,7 +2133,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the role of the data center's mechanical infrastructure (HVAC) when planning for AI GPU deployments?",
             "options": [
                 "A) HVAC is irrelevant if liquid cooling is used",
-                "B) HVAC provides building-level heat rejection (chillers, cooling towers), maintains humidity levels preventing ESD, and may supplement liquid cooling \u2014 sizing must account for GPU power density and reject heat to the environment",
+                "B) HVAC provides building-level heat rejection (chillers, cooling towers), maintains humidity levels preventing ESD, and may supplement liquid cooling — sizing must account for GPU power density and reject heat to the environment",
                 "C) HVAC only affects server room aesthetics",
                 "D) HVAC only matters for Tier 1 and Tier 2 data centers"
             ],
@@ -2147,7 +2147,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the fundamental reason that all-reduce communication efficiency determines GPU utilization in large-scale distributed training?",
             "options": [
                 "A) All-reduce consumes GPU compute that would otherwise be used for forward passes",
-                "B) During all-reduce, all GPUs are blocked synchronizing gradients \u2014 any time spent waiting for slow network links directly reduces GPU utilization, as GPUs cannot start the next iteration until all gradients are synchronized",
+                "B) During all-reduce, all GPUs are blocked synchronizing gradients — any time spent waiting for slow network links directly reduces GPU utilization, as GPUs cannot start the next iteration until all gradients are synchronized",
                 "C) All-reduce increases GPU memory pressure, causing training instability",
                 "D) All-reduce only affects checkpoint frequency, not training speed"
             ],
@@ -2161,12 +2161,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "How does NVIDIA's HGX architecture differ from a standard PCIe GPU server architecture?",
             "options": [
                 "A) HGX uses fewer GPUs than standard servers",
-                "B) HGX integrates GPUs directly via NVLink/NVSwitch with NVLink-C2C interconnect, bypassing PCIe for GPU-GPU communication \u2014 providing 900 GB/s all-to-all bandwidth vs PCIe's ~128 GB/s point-to-point",
+                "B) HGX integrates GPUs directly via NVLink/NVSwitch with NVLink-C2C interconnect, bypassing PCIe for GPU-GPU communication — providing 900 GB/s all-to-all bandwidth vs PCIe's ~128 GB/s point-to-point",
                 "C) HGX uses AMD GPUs alongside NVIDIA GPUs for cost efficiency",
                 "D) HGX is an air-cooled variant of DGX for standard data centers"
             ],
             "answer": "B",
-            "explanation": "HGX baseboards provide direct NVLink connections between all GPUs via NVSwitch, enabling any GPU to communicate with any other at full NVLink bandwidth simultaneously \u2014 impossible with PCIe topology where GPU communication routes through the CPU."
+            "explanation": "HGX baseboards provide direct NVLink connections between all GPUs via NVSwitch, enabling any GPU to communicate with any other at full NVLink bandwidth simultaneously — impossible with PCIe topology where GPU communication routes through the CPU."
         },
         {
             "id": 154,
@@ -2174,7 +2174,7 @@ window.NCA_MOCK_TEST_POOL = {
             "difficulty": "Hard",
             "question": "In a 1024-GPU training cluster using NDR InfiniBand fat-tree, how does the choice of switch radix affect topology and cost?",
             "options": [
-                "A) Higher radix reduces the number of switch tiers needed, reducing hop count and total port cost \u2014 a 64-port NDR switch can build a 2-tier fabric for up to 2048 GPU endpoints vs requiring 3 tiers with 32-port switches",
+                "A) Higher radix reduces the number of switch tiers needed, reducing hop count and total port cost — a 64-port NDR switch can build a 2-tier fabric for up to 2048 GPU endpoints vs requiring 3 tiers with 32-port switches",
                 "B) Lower radix switches are always preferred for AI due to lower latency per switch",
                 "C) Switch radix has no impact on fabric topology, only on management complexity",
                 "D) All AI clusters require exactly 3 tiers regardless of switch radix"
@@ -2189,7 +2189,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the 'memory wall' problem in GPU AI accelerators, and how do modern architectures address it?",
             "options": [
                 "A) GPU memory walls occur when VRAM is full; addressed by model quantization",
-                "B) The gap between compute FLOP/s growth and memory bandwidth growth \u2014 compute has scaled faster than memory bandwidth, making many AI workloads memory-bandwidth-bound; addressed by HBM (high bandwidth memory), NVLink-C2C, and memory-efficient algorithms",
+                "B) The gap between compute FLOP/s growth and memory bandwidth growth — compute has scaled faster than memory bandwidth, making many AI workloads memory-bandwidth-bound; addressed by HBM (high bandwidth memory), NVLink-C2C, and memory-efficient algorithms",
                 "C) Memory walls are a CPU problem only and do not affect GPUs",
                 "D) The memory wall refers to ECC memory protection overhead in data center GPUs"
             ],
@@ -2203,7 +2203,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the 'roofline model' and how is it used to analyze AI workload performance on GPU infrastructure?",
             "options": [
                 "A) A building code model for AI data center construction",
-                "B) A performance analysis framework that bounds achievable compute performance by either peak FLOP/s (compute-bound) or peak memory bandwidth \u00d7 arithmetic intensity (memory-bound), used to identify bottlenecks in AI kernels",
+                "B) A performance analysis framework that bounds achievable compute performance by either peak FLOP/s (compute-bound) or peak memory bandwidth × arithmetic intensity (memory-bound), used to identify bottlenecks in AI kernels",
                 "C) A model for predicting GPU cooling requirements",
                 "D) A cost analysis model for GPU cluster procurement"
             ],
@@ -2217,7 +2217,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What are the specific failure modes that GPU ECC (Error Correcting Code) memory handles, and what are the limitations?",
             "options": [
                 "A) ECC prevents all GPU hardware failures including compute errors",
-                "B) ECC handles single-bit memory errors (SBE, corrected silently) and detects double-bit errors (DBE, reported but uncorrectable causing process termination) in DRAM \u2014 but does not protect GPU register files, caches, or compute units",
+                "B) ECC handles single-bit memory errors (SBE, corrected silently) and detects double-bit errors (DBE, reported but uncorrectable causing process termination) in DRAM — but does not protect GPU register files, caches, or compute units",
                 "C) ECC only affects performance, with no impact on reliability",
                 "D) ECC in GPUs works identically to server DRAM ECC with no distinctions"
             ],
@@ -2231,7 +2231,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is 'network topology-aware scheduling' in GPU cluster management and why does it matter?",
             "options": [
                 "A) Placing training jobs near air conditioning units to reduce cooling costs",
-                "B) Assigning GPU groups to training jobs such that communicating GPUs are physically close in the network (same node \u2192 same rack \u2192 same pod), minimizing all-reduce communication hops and fabric congestion",
+                "B) Assigning GPU groups to training jobs such that communicating GPUs are physically close in the network (same node → same rack → same pod), minimizing all-reduce communication hops and fabric congestion",
                 "C) Scheduling network maintenance windows during training off-hours",
                 "D) Allocating storage IOPS based on training job network utilization"
             ],
@@ -2245,7 +2245,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What are the trade-offs between active optical cables (AOC), direct-attach copper (DAC) cables, and fiber transceivers for high-speed InfiniBand/Ethernet links in AI clusters?",
             "options": [
                 "A) All three options provide identical performance and should be chosen based only on cost",
-                "B) DAC: lowest cost/latency, limited to ~3-5m (copper attenuation); AOC: moderate cost, up to 100m, no external transceivers needed; fiber with transceivers: highest cost, unlimited reach \u2014 choose based on within-rack (DAC), rack-to-ToR (AOC or DAC), or inter-rack/floor (fiber)",
+                "B) DAC: lowest cost/latency, limited to ~3-5m (copper attenuation); AOC: moderate cost, up to 100m, no external transceivers needed; fiber with transceivers: highest cost, unlimited reach — choose based on within-rack (DAC), rack-to-ToR (AOC or DAC), or inter-rack/floor (fiber)",
                 "C) Only fiber transceivers are suitable for InfiniBand; DAC and AOC are Ethernet-only",
                 "D) AOC cables degrade performance due to electrical-optical conversion overhead"
             ],
@@ -2259,12 +2259,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "How does NVIDIA's Grace CPU (ARM-based) in the GH200 Superchip provide advantages specifically for LLM inference workloads compared to x86 CPUs with PCIe-attached GPUs?",
             "options": [
                 "A) ARM CPUs execute AI workloads faster than x86 CPUs natively",
-                "B) NVLink-C2C provides 900 GB/s CPU-GPU bandwidth vs PCIe 5.0's ~128 GB/s, and Grace+H100 share a coherent unified memory space \u2014 enabling LLM inference where model weights or KV cache exceed GPU HBM capacity to spill into CPU LPDDR5X memory with much lower penalty",
+                "B) NVLink-C2C provides 900 GB/s CPU-GPU bandwidth vs PCIe 5.0's ~128 GB/s, and Grace+H100 share a coherent unified memory space — enabling LLM inference where model weights or KV cache exceed GPU HBM capacity to spill into CPU LPDDR5X memory with much lower penalty",
                 "C) Grace CPU provides more PCIe lanes for faster storage access during inference",
                 "D) ARM CPUs have lower power consumption regardless of workload characteristics"
             ],
             "answer": "B",
-            "explanation": "GH200's key advantage: 900 GB/s NVLink-C2C between CPU and GPU (vs 128 GB/s PCIe). LLMs where KV cache or model weights exceed H100's 80GB HBM can overflow into Grace's 480GB LPDDR5X at 900 GB/s \u2014 far more practical than CPU-GPU PCIe transfers."
+            "explanation": "GH200's key advantage: 900 GB/s NVLink-C2C between CPU and GPU (vs 128 GB/s PCIe). LLMs where KV cache or model weights exceed H100's 80GB HBM can overflow into Grace's 480GB LPDDR5X at 900 GB/s — far more practical than CPU-GPU PCIe transfers."
         },
         {
             "id": 161,
@@ -2273,7 +2273,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the significance of NVIDIA's 'Confidential Computing' GPU capabilities (H100) for enterprise AI deployment?",
             "options": [
                 "A) It encrypts model weights to prevent intellectual property theft at rest",
-                "B) It enables Trusted Execution Environments (TEEs) within the GPU, allowing sensitive data to be processed in AI workloads without the cloud provider, hypervisor, or other tenants being able to access it \u2014 enabling multi-party AI and secure cloud AI",
+                "B) It enables Trusted Execution Environments (TEEs) within the GPU, allowing sensitive data to be processed in AI workloads without the cloud provider, hypervisor, or other tenants being able to access it — enabling multi-party AI and secure cloud AI",
                 "C) It provides DRM protection for licensed AI models",
                 "D) It enables encrypted training runs to protect training data from other cluster users at the network level"
             ],
@@ -2287,7 +2287,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the purpose of 'in-network computing' via SHArP, and what is its fundamental performance advantage over traditional endpoint-based all-reduce?",
             "options": [
                 "A) SHArP compresses gradient data before transmitting over the network",
-                "B) SHArP executes reduction operations (sum, max) within switch ASICs at each network level as data traverses the fabric \u2014 gradients are accumulated in the network rather than traveling to endpoints, reducing the data volume that reaches GPUs and network traversal time from O(n) to O(log n) hops",
+                "B) SHArP executes reduction operations (sum, max) within switch ASICs at each network level as data traverses the fabric — gradients are accumulated in the network rather than traveling to endpoints, reducing the data volume that reaches GPUs and network traversal time from O(n) to O(log n) hops",
                 "C) SHArP provides hardware QoS for AI training traffic over management traffic",
                 "D) SHArP enables GPUs to bypass the network entirely for collective operations"
             ],
@@ -2301,12 +2301,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What are the key differences between NVIDIA MIG (Multi-Instance GPU) and traditional GPU time-slicing for GPU virtualization?",
             "options": [
                 "A) They provide identical isolation and performance characteristics",
-                "B) MIG hardware-partitions an A100/H100 into up to 7 isolated GPU instances with dedicated compute, memory, and cache \u2014 providing guaranteed resources and full hardware isolation (ECC, bandwidth). Time-slicing shares all GPU resources temporally without isolation, causing performance interference between tenants",
+                "B) MIG hardware-partitions an A100/H100 into up to 7 isolated GPU instances with dedicated compute, memory, and cache — providing guaranteed resources and full hardware isolation (ECC, bandwidth). Time-slicing shares all GPU resources temporally without isolation, causing performance interference between tenants",
                 "C) MIG is for training workloads; time-slicing is for inference only",
                 "D) Time-slicing provides better memory isolation than MIG"
             ],
             "answer": "B",
-            "explanation": "MIG creates physically isolated GPU slices with dedicated SM partitions, HBM capacity, and L2 cache portions \u2014 each behaving like an independent GPU. Time-slicing only switches contexts without hardware isolation, causing latency jitter unsuitable for multi-tenant SLA environments."
+            "explanation": "MIG creates physically isolated GPU slices with dedicated SM partitions, HBM capacity, and L2 cache portions — each behaving like an independent GPU. Time-slicing only switches contexts without hardware isolation, causing latency jitter unsuitable for multi-tenant SLA environments."
         },
         {
             "id": 164,
@@ -2315,12 +2315,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the architectural difference between a DGX SuperPOD and a standard GPU cluster, and what does it imply for networking design?",
             "options": [
                 "A) A SuperPOD only differs in the number of DGX servers",
-                "B) A DGX SuperPOD is a validated reference architecture with InfiniBand spine-leaf fabric, NVLink-based within-node GPU connectivity, dedicated Ethernet management and storage networks, pre-validated cabling, and integrated power/cooling \u2014 providing a proven non-blocking topology with defined SLAs rather than custom-designed clusters",
+                "B) A DGX SuperPOD is a validated reference architecture with InfiniBand spine-leaf fabric, NVLink-based within-node GPU connectivity, dedicated Ethernet management and storage networks, pre-validated cabling, and integrated power/cooling — providing a proven non-blocking topology with defined SLAs rather than custom-designed clusters",
                 "C) SuperPOD uses Ethernet instead of InfiniBand for lower cost",
                 "D) SuperPOD runs only NVIDIA's proprietary AI software stack"
             ],
             "answer": "B",
-            "explanation": "SuperPOD is a validated blueprint: specific DGX node count, NVIDIA Quantum InfiniBand fat-tree topology, NVIDIA Spectrum Ethernet for storage/management, pre-certified cabling maps, and power/cooling specifications \u2014 allowing enterprises to deploy at scale with known performance."
+            "explanation": "SuperPOD is a validated blueprint: specific DGX node count, NVIDIA Quantum InfiniBand fat-tree topology, NVIDIA Spectrum Ethernet for storage/management, pre-certified cabling maps, and power/cooling specifications — allowing enterprises to deploy at scale with known performance."
         },
         {
             "id": 165,
@@ -2329,12 +2329,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "In designing a 512 GPU AI training cluster, what is the impact of choosing NDR InfiniBand (400Gb/s) vs HDR (200Gb/s) on the all-reduce performance for a 70B parameter model?",
             "options": [
                 "A) The choice has negligible impact since model size is the primary constraint",
-                "B) NDR doubles per-link bandwidth, reducing the time to transmit 280GB of gradient tensors (70B params \u00d7 4 bytes FP32) across all-reduce by ~50% \u2014 directly translating to higher GPU utilization and faster training completion as communication overhead is halved",
+                "B) NDR doubles per-link bandwidth, reducing the time to transmit 280GB of gradient tensors (70B params × 4 bytes FP32) across all-reduce by ~50% — directly translating to higher GPU utilization and faster training completion as communication overhead is halved",
                 "C) NDR only benefits inference workloads, not training",
                 "D) HDR is sufficient because gradient compression makes bandwidth irrelevant"
             ],
             "answer": "B",
-            "explanation": "All-reduce for a 70B model moves ~280GB of FP32 gradients. NDR (400Gb/s = 50 GB/s per port) cuts transfer time vs HDR (200Gb/s = 25 GB/s). At 512 GPUs, communication overhead is significant \u2014 halving it materially improves GPU utilization."
+            "explanation": "All-reduce for a 70B model moves ~280GB of FP32 gradients. NDR (400Gb/s = 50 GB/s per port) cuts transfer time vs HDR (200Gb/s = 25 GB/s). At 512 GPUs, communication overhead is significant — halving it materially improves GPU utilization."
         },
         {
             "id": 166,
@@ -2343,12 +2343,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the relationship between TCO (Total Cost of Ownership) analysis for on-premises AI GPU infrastructure and the factors that should be included beyond hardware purchase price?",
             "options": [
                 "A) TCO only includes hardware purchase cost",
-                "B) Comprehensive AI TCO includes: hardware (servers, networking, storage), facility (power infrastructure, cooling, space at $/sqft), power OpEx (kW \u00d7 $/kWh \u00d7 8760 hrs/yr), cooling OpEx, staffing (infrastructure engineers), software licensing, maintenance contracts, and opportunity cost of capital \u2014 typically 3-5x the hardware purchase price over 3-5 year depreciation",
+                "B) Comprehensive AI TCO includes: hardware (servers, networking, storage), facility (power infrastructure, cooling, space at $/sqft), power OpEx (kW × $/kWh × 8760 hrs/yr), cooling OpEx, staffing (infrastructure engineers), software licensing, maintenance contracts, and opportunity cost of capital — typically 3-5x the hardware purchase price over 3-5 year depreciation",
                 "C) TCO only includes hardware and energy costs",
                 "D) TCO is only relevant for cloud infrastructure decisions"
             ],
             "answer": "B",
-            "explanation": "A DGX H100 costs ~$300K. Over 3 years, its power alone (~10kW \u00d7 $0.10/kWh \u00d7 26,280 hrs \u2248 $26K), plus cooling overhead, network infrastructure, storage, and staffing can bring total TCO to $500K+. Cloud break-even analysis requires this full TCO."
+            "explanation": "A DGX H100 costs ~$300K. Over 3 years, its power alone (~10kW × $0.10/kWh × 26,280 hrs ≈ $26K), plus cooling overhead, network infrastructure, storage, and staffing can bring total TCO to $500K+. Cloud break-even analysis requires this full TCO."
         },
         {
             "id": 167,
@@ -2357,7 +2357,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the purpose of DOCA (Data-center Infrastructure-on-a-Chip Architecture) in NVIDIA's BlueField DPU ecosystem?",
             "options": [
                 "A) A GPU programming interface extending CUDA to DPUs",
-                "B) A software framework and SDK for programming BlueField DPUs, enabling development of accelerated networking, storage, and security applications that run on the DPU's ARM cores and hardware accelerators \u2014 offloading data center services from host CPUs",
+                "B) A software framework and SDK for programming BlueField DPUs, enabling development of accelerated networking, storage, and security applications that run on the DPU's ARM cores and hardware accelerators — offloading data center services from host CPUs",
                 "C) A hardware architecture replacing traditional ASIC-based switches",
                 "D) A cloud management API for NVIDIA DGX systems"
             ],
@@ -2371,7 +2371,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is 'compute express link' (CXL) and how might it impact future AI infrastructure design?",
             "options": [
                 "A) CXL is NVIDIA's replacement for NVLink in next-generation GPUs",
-                "B) CXL is an open standard interconnect over PCIe 5.0/6.0 enabling CPU-GPU memory coherency and memory pooling \u2014 potentially allowing GPU clusters to share large memory pools across multiple nodes, addressing the HBM capacity constraint in LLM serving",
+                "B) CXL is an open standard interconnect over PCIe 5.0/6.0 enabling CPU-GPU memory coherency and memory pooling — potentially allowing GPU clusters to share large memory pools across multiple nodes, addressing the HBM capacity constraint in LLM serving",
                 "C) CXL is a fiber-based interconnect replacing InfiniBand in AI clusters",
                 "D) CXL is a software-defined networking protocol for AI data centers"
             ],
@@ -2399,7 +2399,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What are the power and cooling implications of deploying NVIDIA GB200 NVL72 systems (each with 72 GPUs in a rack-scale system)?",
             "options": [
                 "A) GB200 NVL72 uses standard air cooling and consumes less than 10kW per rack",
-                "B) GB200 NVL72 consumes approximately 120kW per rack (GB200 GPU TDP ~1000W \u00d7 72 GPUs + CPUs), requires liquid cooling with dedicated CDU (coolant distribution unit) at the rack, 3-phase power at 300A+ per rack, and significant facility upgrades including floor load reinforcement",
+                "B) GB200 NVL72 consumes approximately 120kW per rack (GB200 GPU TDP ~1000W × 72 GPUs + CPUs), requires liquid cooling with dedicated CDU (coolant distribution unit) at the rack, 3-phase power at 300A+ per rack, and significant facility upgrades including floor load reinforcement",
                 "C) GB200 NVL72 is air-cooled and requires only standard server room modifications",
                 "D) Power consumption of GB200 NVL72 is comparable to previous generation H100 systems"
             ],
@@ -2413,7 +2413,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "How does pipeline bubble overhead impact training efficiency in pipeline parallel large model training, and how does it relate to the number of micro-batches?",
             "options": [
                 "A) Pipeline bubbles only occur during model checkpointing",
-                "B) In pipeline parallelism, pipeline stages must wait for previous stages to complete \u2014 creating idle time (bubbles). Bubble fraction = (stages-1)/(micro-batches + stages-1). Increasing micro-batches reduces bubble fraction but increases memory for activations \u2014 requiring gradient checkpointing to manage memory",
+                "B) In pipeline parallelism, pipeline stages must wait for previous stages to complete — creating idle time (bubbles). Bubble fraction = (stages-1)/(micro-batches + stages-1). Increasing micro-batches reduces bubble fraction but increases memory for activations — requiring gradient checkpointing to manage memory",
                 "C) Pipeline bubbles are a network issue, not a compute issue",
                 "D) Pipeline bubbles are eliminated by using tensor parallelism instead"
             ],
@@ -2432,7 +2432,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) A distributed training framework"
             ],
             "answer": "B",
-            "explanation": "Kubernetes is the de facto standard for container orchestration, used to manage AI workloads in containers across GPU cluster nodes \u2014 handling scheduling, scaling, and lifecycle management."
+            "explanation": "Kubernetes is the de facto standard for container orchestration, used to manage AI workloads in containers across GPU cluster nodes — handling scheduling, scaling, and lifecycle management."
         },
         {
             "id": 173,
@@ -2446,7 +2446,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) The number of GPU cores allocated to a job"
             ],
             "answer": "B",
-            "explanation": "GPU utilization (SM utilization) measures what fraction of time the GPU's streaming multiprocessors are actively executing kernels \u2014 a key metric for identifying underutilized GPUs."
+            "explanation": "GPU utilization (SM utilization) measures what fraction of time the GPU's streaming multiprocessors are actively executing kernels — a key metric for identifying underutilized GPUs."
         },
         {
             "id": 174,
@@ -2460,7 +2460,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) A network encapsulation protocol for AI traffic"
             ],
             "answer": "B",
-            "explanation": "Containers (Docker, OCI) package an application with all its dependencies in a portable, isolated unit that runs consistently across environments \u2014 the standard unit of deployment for AI workloads."
+            "explanation": "Containers (Docker, OCI) package an application with all its dependencies in a portable, isolated unit that runs consistently across environments — the standard unit of deployment for AI workloads."
         },
         {
             "id": 175,
@@ -2511,12 +2511,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What GPU metric indicates a potential thermal throttling situation?",
             "options": [
                 "A) GPU memory utilization above 80%",
-                "B) GPU temperature exceeding the throttle threshold (typically 83-87\u00b0C for NVIDIA data center GPUs), causing the GPU to reduce clock speed to prevent damage",
+                "B) GPU temperature exceeding the throttle threshold (typically 83-87°C for NVIDIA data center GPUs), causing the GPU to reduce clock speed to prevent damage",
                 "C) GPU power draw below the TDP limit",
                 "D) GPU fan speed above 50%"
             ],
             "answer": "B",
-            "explanation": "GPU thermal throttling occurs when temperature exceeds the thermal threshold \u2014 the GPU reduces clock frequencies to lower power and heat. Sustained throttling indicates inadequate cooling and reduces training performance."
+            "explanation": "GPU thermal throttling occurs when temperature exceeds the thermal threshold — the GPU reduces clock frequencies to lower power and heat. Sustained throttling indicates inadequate cooling and reduces training performance."
         },
         {
             "id": 179,
@@ -2539,7 +2539,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the difference between GPU memory utilization and GPU compute utilization?",
             "options": [
                 "A) They measure the same thing with different units",
-                "B) GPU memory utilization measures the percentage of VRAM in use; GPU compute utilization measures the percentage of time the GPU's compute cores are actively executing kernels \u2014 both are important for understanding GPU efficiency",
+                "B) GPU memory utilization measures the percentage of VRAM in use; GPU compute utilization measures the percentage of time the GPU's compute cores are actively executing kernels — both are important for understanding GPU efficiency",
                 "C) Memory utilization applies to training; compute utilization applies to inference",
                 "D) Compute utilization is measured in GB/s; memory utilization in TFLOPS"
             ],
@@ -2567,7 +2567,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What does 'ECC errors' as a GPU monitoring metric indicate?",
             "options": [
                 "A) Network communication errors in the GPU cluster",
-                "B) Memory bit errors in GPU DRAM \u2014 single-bit errors (corrected) or double-bit errors (uncorrectable, causing job failure) \u2014 rising ECC error rates indicate GPU memory degradation",
+                "B) Memory bit errors in GPU DRAM — single-bit errors (corrected) or double-bit errors (uncorrectable, causing job failure) — rising ECC error rates indicate GPU memory degradation",
                 "C) GPU compute kernel execution errors",
                 "D) GPU driver compatibility issues"
             ],
@@ -2595,7 +2595,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is meant by 'GPU power draw' as a monitoring metric, and why does it matter?",
             "options": [
                 "A) Total data center power consumption",
-                "B) The current wattage being consumed by the GPU \u2014 used to verify GPUs are running at expected utilization (low power = GPU is idle/throttled), manage power budgets, and detect anomalies",
+                "B) The current wattage being consumed by the GPU — used to verify GPUs are running at expected utilization (low power = GPU is idle/throttled), manage power budgets, and detect anomalies",
                 "C) The power efficiency of the GPU's memory subsystem",
                 "D) The power consumption of the GPU cooling fans"
             ],
@@ -2623,12 +2623,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the purpose of liveness and readiness probes in Kubernetes for AI inference services?",
             "options": [
                 "A) To monitor GPU health in each pod",
-                "B) Liveness probes detect if a container is stuck/crashed (triggering restart); readiness probes detect if a container is ready to serve requests (controlling traffic routing) \u2014 ensuring inference service availability",
+                "B) Liveness probes detect if a container is stuck/crashed (triggering restart); readiness probes detect if a container is ready to serve requests (controlling traffic routing) — ensuring inference service availability",
                 "C) To measure inference latency per request",
                 "D) To allocate GPU resources to inference pods"
             ],
             "answer": "B",
-            "explanation": "Liveness probes restart unhealthy containers. Readiness probes prevent traffic routing to containers that are still initializing (model loading) or temporarily overloaded \u2014 critical for maintaining inference SLAs."
+            "explanation": "Liveness probes restart unhealthy containers. Readiness probes prevent traffic routing to containers that are still initializing (model loading) or temporarily overloaded — critical for maintaining inference SLAs."
         },
         {
             "id": 187,
@@ -2637,7 +2637,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the significance of 'PCIe bandwidth' as a GPU monitoring metric?",
             "options": [
                 "A) It measures GPU-to-storage transfer speed",
-                "B) It indicates the rate of data transfer between the host CPU/memory and GPU \u2014 high sustained PCIe bandwidth can indicate CPU-GPU data transfer bottlenecks in training pipelines",
+                "B) It indicates the rate of data transfer between the host CPU/memory and GPU — high sustained PCIe bandwidth can indicate CPU-GPU data transfer bottlenecks in training pipelines",
                 "C) It monitors the GPU's internal memory bus utilization",
                 "D) It measures network traffic through the GPU"
             ],
@@ -2656,7 +2656,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) Scheduling all jobs of the same model type together"
             ],
             "answer": "B",
-            "explanation": "Gang scheduling ensures all nodes/GPUs for a distributed job are allocated simultaneously. Without it, a 64-GPU job could wait while holding 32 GPUs \u2014 blocking other jobs from those resources in a deadlock."
+            "explanation": "Gang scheduling ensures all nodes/GPUs for a distributed job are allocated simultaneously. Without it, a 64-GPU job could wait while holding 32 GPUs — blocking other jobs from those resources in a deadlock."
         },
         {
             "id": 189,
@@ -2665,7 +2665,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the purpose of NVIDIA MIG (Multi-Instance GPU) for AI operations in a shared cluster?",
             "options": [
                 "A) To increase single-job GPU performance by 7x",
-                "B) To partition an A100 or H100 GPU into up to 7 fully isolated GPU instances, each with dedicated compute, memory, and bandwidth \u2014 enabling safe multi-tenant sharing for inference or smaller training workloads with guaranteed resources",
+                "B) To partition an A100 or H100 GPU into up to 7 fully isolated GPU instances, each with dedicated compute, memory, and bandwidth — enabling safe multi-tenant sharing for inference or smaller training workloads with guaranteed resources",
                 "C) To combine multiple GPUs for a single large training job",
                 "D) To snapshot GPU state for fault tolerance"
             ],
@@ -2679,7 +2679,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is 'GPU preemption' in cluster scheduling and why is it important for AI operations?",
             "options": [
                 "A) Preventing GPU throttling during training runs",
-                "B) The ability to interrupt and suspend running lower-priority jobs to free GPU resources for higher-priority jobs \u2014 critical for ensuring high-priority inference SLAs are met without manual intervention",
+                "B) The ability to interrupt and suspend running lower-priority jobs to free GPU resources for higher-priority jobs — critical for ensuring high-priority inference SLAs are met without manual intervention",
                 "C) Replacing failed GPU hardware during running jobs",
                 "D) Pre-allocating GPU memory before job submission"
             ],
@@ -2707,12 +2707,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the NVIDIA GPU Operator for Kubernetes and what problem does it solve?",
             "options": [
                 "A) It schedules GPU workloads based on model size",
-                "B) A Kubernetes operator that automates the deployment and management of all NVIDIA software components needed for GPU-accelerated Kubernetes nodes (drivers, container runtime, DCGM, device plugins, MIG configurator) \u2014 eliminating manual per-node GPU setup",
+                "B) A Kubernetes operator that automates the deployment and management of all NVIDIA software components needed for GPU-accelerated Kubernetes nodes (drivers, container runtime, DCGM, device plugins, MIG configurator) — eliminating manual per-node GPU setup",
                 "C) A performance benchmarking tool for GPU Kubernetes clusters",
                 "D) An autoscaling controller for GPU-based inference deployments"
             ],
             "answer": "B",
-            "explanation": "GPU Operator uses Kubernetes operator pattern to automate driver installation, device plugin deployment, DCGM exporter, container runtime configuration, and MIG management across all GPU nodes \u2014 turning complex per-node setup into a cluster-wide automated process."
+            "explanation": "GPU Operator uses Kubernetes operator pattern to automate driver installation, device plugin deployment, DCGM exporter, container runtime configuration, and MIG management across all GPU nodes — turning complex per-node setup into a cluster-wide automated process."
         },
         {
             "id": 193,
@@ -2735,12 +2735,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is an XID error in NVIDIA GPU management, and what does it indicate?",
             "options": [
                 "A) A network communication error in GPU-to-GPU connections",
-                "B) NVIDIA's GPU error code system \u2014 XIDs indicate specific hardware faults (e.g., XID 79 = GPU VRAM ECC fatal; XID 92 = hardware exception in training kernel) \u2014 critical for diagnosing GPU failures and distinguishing software bugs from hardware issues",
+                "B) NVIDIA's GPU error code system — XIDs indicate specific hardware faults (e.g., XID 79 = GPU VRAM ECC fatal; XID 92 = hardware exception in training kernel) — critical for diagnosing GPU failures and distinguishing software bugs from hardware issues",
                 "C) A CUDA version incompatibility warning",
                 "D) An out-of-memory error during model training"
             ],
             "answer": "B",
-            "explanation": "XID errors are NVIDIA's hardware diagnostic codes logged to dmesg/system journal. Each XID maps to a specific hardware or driver event. DCGM tracks XIDs for automated GPU health management \u2014 certain XIDs require immediate GPU replacement."
+            "explanation": "XID errors are NVIDIA's hardware diagnostic codes logged to dmesg/system journal. Each XID maps to a specific hardware or driver event. DCGM tracks XIDs for automated GPU health management — certain XIDs require immediate GPU replacement."
         },
         {
             "id": 195,
@@ -2749,12 +2749,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the purpose of persistent volume claims (PVCs) in Kubernetes for AI training jobs?",
             "options": [
                 "A) To claim additional GPU resources for training jobs",
-                "B) To provide persistent, shareable storage for training jobs \u2014 allowing training datasets, checkpoints, and model artifacts to persist beyond the lifetime of individual pods, enabling fault-tolerant training with checkpoint resume",
+                "B) To provide persistent, shareable storage for training jobs — allowing training datasets, checkpoints, and model artifacts to persist beyond the lifetime of individual pods, enabling fault-tolerant training with checkpoint resume",
                 "C) To persistently reserve GPU nodes for specific tenants",
                 "D) To cache frequently used container images on cluster nodes"
             ],
             "answer": "B",
-            "explanation": "AI training jobs need persistent storage for datasets (TB-scale) and checkpoints. PVCs provide storage that outlives the pod \u2014 if a training pod crashes, a new pod can mount the same PVC and resume from the last checkpoint."
+            "explanation": "AI training jobs need persistent storage for datasets (TB-scale) and checkpoints. PVCs provide storage that outlives the pod — if a training pod crashes, a new pod can mount the same PVC and resume from the last checkpoint."
         },
         {
             "id": 196,
@@ -2768,7 +2768,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) Balancing GPU workloads across racks for power distribution"
             ],
             "answer": "B",
-            "explanation": "Fair-share scheduling (SLURM fair-share, Kubernetes hierarchical quotas) ensures proportional resource access over time. Tenants who have used below their share get priority over those who have overused \u2014 balancing efficiency and fairness in shared AI clusters."
+            "explanation": "Fair-share scheduling (SLURM fair-share, Kubernetes hierarchical quotas) ensures proportional resource access over time. Tenants who have used below their share get priority over those who have overused — balancing efficiency and fairness in shared AI clusters."
         },
         {
             "id": 197,
@@ -2791,12 +2791,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is 'hot standby' vs 'cold standby' in the context of AI inference service availability?",
             "options": [
                 "A) Referring to server temperature states during operation",
-                "B) Hot standby maintains a fully initialized inference instance running but idle, ready to serve immediately upon primary failure; cold standby keeps hardware available but requires model loading (minutes) before serving \u2014 hot standby provides near-instant failover for SLA-critical inference",
+                "B) Hot standby maintains a fully initialized inference instance running but idle, ready to serve immediately upon primary failure; cold standby keeps hardware available but requires model loading (minutes) before serving — hot standby provides near-instant failover for SLA-critical inference",
                 "C) Hot standby refers to GPU thermal management; cold standby to cooling",
                 "D) They are identical approaches with different naming conventions"
             ],
             "answer": "B",
-            "explanation": "For inference SLAs, hot standby is critical \u2014 LLMs take minutes to load to GPU memory. Hot standby keeps a replica loaded and ready, providing sub-second failover. Cold standby is appropriate for non-critical or batch inference where downtime is acceptable."
+            "explanation": "For inference SLAs, hot standby is critical — LLMs take minutes to load to GPU memory. Hot standby keeps a replica loaded and ready, providing sub-second failover. Cold standby is appropriate for non-critical or batch inference where downtime is acceptable."
         },
         {
             "id": 199,
@@ -2810,7 +2810,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) To partition storage volumes between different AI frameworks"
             ],
             "answer": "B",
-            "explanation": "Kubernetes namespaces provide logical boundaries for resource quotas (GPU limits), RBAC (team access control), network policies (isolation), and naming scope \u2014 enabling multi-team/project sharing of GPU clusters with governance and isolation."
+            "explanation": "Kubernetes namespaces provide logical boundaries for resource quotas (GPU limits), RBAC (team access control), network policies (isolation), and naming scope — enabling multi-team/project sharing of GPU clusters with governance and isolation."
         },
         {
             "id": 200,
@@ -2824,7 +2824,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) A data preprocessing pipeline framework"
             ],
             "answer": "B",
-            "explanation": "MLflow provides experiment tracking (log hyperparameters, metrics, artifacts), model registry (version control for trained models), and deployment utilities \u2014 enabling reproducible, well-governed AI model lifecycle management."
+            "explanation": "MLflow provides experiment tracking (log hyperparameters, metrics, artifacts), model registry (version control for trained models), and deployment utilities — enabling reproducible, well-governed AI model lifecycle management."
         },
         {
             "id": 201,
@@ -2833,7 +2833,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is 'GPU affinity' in cluster scheduling and why does it impact AI training performance?",
             "options": [
                 "A) The preference of certain models for specific GPU architectures",
-                "B) Assigning communicating GPUs to the same node or NVLink domain minimizes the distance (and latency) of inter-GPU communication \u2014 training jobs using intra-node NVLink are significantly faster than those split across nodes",
+                "B) Assigning communicating GPUs to the same node or NVLink domain minimizes the distance (and latency) of inter-GPU communication — training jobs using intra-node NVLink are significantly faster than those split across nodes",
                 "C) A GPU power management feature",
                 "D) The GPU driver's preference for certain CUDA versions"
             ],
@@ -2852,7 +2852,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) A container image build system for AI frameworks"
             ],
             "answer": "B",
-            "explanation": "Kubeflow extends Kubernetes for ML workflows: Training Operator manages distributed PyTorch/TensorFlow jobs, Pipelines orchestrates multi-step ML workflows, Katib does hyperparameter search, KServe handles model serving \u2014 all as Kubernetes-native resources."
+            "explanation": "Kubeflow extends Kubernetes for ML workflows: Training Operator manages distributed PyTorch/TensorFlow jobs, Pipelines orchestrates multi-step ML workflows, Katib does hyperparameter search, KServe handles model serving — all as Kubernetes-native resources."
         },
         {
             "id": 203,
@@ -2861,7 +2861,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the purpose of resource quotas and limits in Kubernetes for GPU management?",
             "options": [
                 "A) To improve GPU compute performance for training jobs",
-                "B) Resource quotas limit total GPU resources a namespace can claim (preventing monopolization); limits define min/max GPU per pod (ensuring fair sharing and scheduling accuracy) \u2014 essential governance for multi-tenant AI clusters",
+                "B) Resource quotas limit total GPU resources a namespace can claim (preventing monopolization); limits define min/max GPU per pod (ensuring fair sharing and scheduling accuracy) — essential governance for multi-tenant AI clusters",
                 "C) To partition GPU memory at the driver level",
                 "D) To schedule GPUs to specific physical racks"
             ],
@@ -2875,7 +2875,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What are key considerations for virtualizing GPU-accelerated AI infrastructure compared to CPU-only workloads?",
             "options": [
                 "A) GPU virtualization is identical to CPU virtualization with no special considerations",
-                "B) GPU virtualization requires driver pass-through or vGPU software (NVIDIA vGPU/MIG), GPU-aware container runtimes, careful memory partitioning, NVLink topology preservation, and performance isolation between VMs \u2014 significantly more complex than CPU virtualization",
+                "B) GPU virtualization requires driver pass-through or vGPU software (NVIDIA vGPU/MIG), GPU-aware container runtimes, careful memory partitioning, NVLink topology preservation, and performance isolation between VMs — significantly more complex than CPU virtualization",
                 "C) GPU virtualization only requires enabling SR-IOV in BIOS",
                 "D) All hypervisors natively support full GPU virtualization without additional software"
             ],
@@ -2903,12 +2903,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is 'backfill scheduling' in HPC/AI cluster job scheduling, and what is its purpose?",
             "options": [
                 "A) Reserving GPU resources for anticipated urgent jobs",
-                "B) A scheduling optimization where small, short jobs are allowed to start immediately in resource gaps that exist before the scheduler would normally assign them, as long as they complete before higher-priority reserved jobs start \u2014 improving cluster utilization without starving large jobs",
+                "B) A scheduling optimization where small, short jobs are allowed to start immediately in resource gaps that exist before the scheduler would normally assign them, as long as they complete before higher-priority reserved jobs start — improving cluster utilization without starving large jobs",
                 "C) Resubmitting failed jobs automatically to fill the schedule",
                 "D) A technique for filling GPU memory with pre-computed data before job start"
             ],
             "answer": "B",
-            "explanation": "Backfill prevents large job reservations from leaving resources idle. If job A needs 1000 GPUs at 2pm, smaller jobs B, C that can complete before 2pm are backfilled into available resources now \u2014 improving utilization without affecting job A's start time."
+            "explanation": "Backfill prevents large job reservations from leaving resources idle. If job A needs 1000 GPUs at 2pm, smaller jobs B, C that can complete before 2pm are backfilled into available resources now — improving utilization without affecting job A's start time."
         },
         {
             "id": 207,
@@ -2922,7 +2922,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) To manage container image versions for inference servers"
             ],
             "answer": "B",
-            "explanation": "Model versioning (MLflow, NVIDIA NGC model registry) tracks each model version with its provenance (training data, code, config), evaluation metrics, and deployment status \u2014 enabling safe rollback when a new model underperforms or audit requirements."
+            "explanation": "Model versioning (MLflow, NVIDIA NGC model registry) tracks each model version with its provenance (training data, code, config), evaluation metrics, and deployment status — enabling safe rollback when a new model underperforms or audit requirements."
         },
         {
             "id": 208,
@@ -2931,12 +2931,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the significance of 'SM (Streaming Multiprocessor) occupancy' as a GPU performance metric?",
             "options": [
                 "A) The physical temperature of each SM",
-                "B) The ratio of active warps to the maximum possible warps per SM \u2014 high occupancy means more warps are available to hide memory latency, though it doesn't always directly correlate with achieved performance",
+                "B) The ratio of active warps to the maximum possible warps per SM — high occupancy means more warps are available to hide memory latency, though it doesn't always directly correlate with achieved performance",
                 "C) The number of CUDA cores allocated per running process",
                 "D) The percentage of time the SM's memory bus is utilized"
             ],
             "answer": "B",
-            "explanation": "SM occupancy measures how many warps are active vs maximum theoretical. Higher occupancy provides more warps to hide latency, but optimal performance depends on instruction throughput and memory bandwidth \u2014 not just occupancy."
+            "explanation": "SM occupancy measures how many warps are active vs maximum theoretical. Higher occupancy provides more warps to hide latency, but optimal performance depends on instruction throughput and memory bandwidth — not just occupancy."
         },
         {
             "id": 209,
@@ -2945,7 +2945,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is 'node failure recovery' in distributed AI training, and what mechanisms support it?",
             "options": [
                 "A) Physical replacement of failed GPU nodes during training",
-                "B) Automatically detecting failed nodes in a distributed training job and either restarting from the last checkpoint on healthy nodes or dynamically re-partitioning the job (elastic training) \u2014 supported by checkpointing, health monitoring (DCGM), and frameworks like PyTorch elastic/DLRM",
+                "B) Automatically detecting failed nodes in a distributed training job and either restarting from the last checkpoint on healthy nodes or dynamically re-partitioning the job (elastic training) — supported by checkpointing, health monitoring (DCGM), and frameworks like PyTorch elastic/DLRM",
                 "C) Network failover when training communication links fail",
                 "D) Rolling OS updates on cluster nodes without stopping training"
             ],
@@ -2959,7 +2959,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is 'GPU idle time' as a cluster efficiency metric and what are common causes?",
             "options": [
                 "A) GPU downtime during maintenance windows",
-                "B) Time GPUs spend not executing compute workloads, wasted capacity \u2014 caused by I/O-bound data loading (CPU preprocessing bottleneck), job queue gaps between jobs, checkpoint I/O blocking, communication overhead in distributed training, or workloads with insufficient parallelism to saturate the GPU",
+                "B) Time GPUs spend not executing compute workloads, wasted capacity — caused by I/O-bound data loading (CPU preprocessing bottleneck), job queue gaps between jobs, checkpoint I/O blocking, communication overhead in distributed training, or workloads with insufficient parallelism to saturate the GPU",
                 "C) GPU time spent on memory error correction",
                 "D) Time between kernel launches for memory allocation"
             ],
@@ -2973,7 +2973,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the purpose of NVIDIA's Base Command Manager (BCM) in AI cluster operations?",
             "options": [
                 "A) A CUDA compiler for AI frameworks",
-                "B) A cluster management software for NVIDIA DGX systems providing node provisioning, health monitoring, user management, workload scheduling, and storage management \u2014 simplifying the operations of DGX-based AI clusters",
+                "B) A cluster management software for NVIDIA DGX systems providing node provisioning, health monitoring, user management, workload scheduling, and storage management — simplifying the operations of DGX-based AI clusters",
                 "C) A model deployment platform for inference servers",
                 "D) A benchmarking tool for NVIDIA GPU performance"
             ],
@@ -2987,12 +2987,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the role of NVIDIA vGPU in virtualizing AI infrastructure for enterprise use cases?",
             "options": [
                 "A) A tool for combining multiple physical GPUs into a single virtual GPU",
-                "B) NVIDIA's software-based GPU virtualization allowing a single physical GPU to be shared among multiple VMs with dedicated vGPU profiles \u2014 enabling GPU-accelerated virtual workstations, inference, and lightweight training in virtualized enterprise environments",
+                "B) NVIDIA's software-based GPU virtualization allowing a single physical GPU to be shared among multiple VMs with dedicated vGPU profiles — enabling GPU-accelerated virtual workstations, inference, and lightweight training in virtualized enterprise environments",
                 "C) An emulation layer allowing non-GPU workloads to use GPU libraries",
                 "D) A hardware feature of H100 enabling direct GPU-to-VM passthrough"
             ],
             "answer": "B",
-            "explanation": "NVIDIA vGPU (licensed software) enables GPU time-sharing among VMs with configurable profiles (memory/compute fractions). It supports virtual desktops (Quadro vDWS), compute workloads (vComputeServer), and AI inferencing \u2014 with per-VM performance isolation."
+            "explanation": "NVIDIA vGPU (licensed software) enables GPU time-sharing among VMs with configurable profiles (memory/compute fractions). It supports virtual desktops (Quadro vDWS), compute workloads (vComputeServer), and AI inferencing — with per-VM performance isolation."
         },
         {
             "id": 213,
@@ -3001,7 +3001,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the challenge of 'straggler nodes' in large-scale distributed training, and what are the mitigation strategies?",
             "options": [
                 "A) Nodes with outdated GPU drivers that must be updated during training",
-                "B) In synchronous distributed training, all GPUs must wait for the slowest node (straggler) before synchronizing gradients \u2014 caused by hardware variability, thermal throttling, or noisy neighbors. Mitigated by: straggler detection and replacement, asynchronous gradient updates, gradient compression, or bounded staleness synchronization",
+                "B) In synchronous distributed training, all GPUs must wait for the slowest node (straggler) before synchronizing gradients — caused by hardware variability, thermal throttling, or noisy neighbors. Mitigated by: straggler detection and replacement, asynchronous gradient updates, gradient compression, or bounded staleness synchronization",
                 "C) Network switches that drop packets during all-reduce operations",
                 "D) Nodes that consume more power than their allocated budget"
             ],
@@ -3015,7 +3015,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is 'GPU fragmentation' in cluster scheduling and how can it be minimized?",
             "options": [
                 "A) Physical fragmentation of GPU hardware from thermal damage",
-                "B) GPU fragmentation occurs when many small jobs leave isolated GPU fractions unused across nodes \u2014 a 1000-GPU cluster might have 950 GPUs in use with 50 scattered single-GPU gaps that can't be combined for a 32-GPU job. Mitigated by bin-packing schedulers, job size bucketing, and preemption/defragmentation policies",
+                "B) GPU fragmentation occurs when many small jobs leave isolated GPU fractions unused across nodes — a 1000-GPU cluster might have 950 GPUs in use with 50 scattered single-GPU gaps that can't be combined for a 32-GPU job. Mitigated by bin-packing schedulers, job size bucketing, and preemption/defragmentation policies",
                 "C) GPU memory fragmentation within a single training job",
                 "D) Inconsistent GPU driver versions across cluster nodes"
             ],
@@ -3029,12 +3029,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the purpose of dynamic batching in NVIDIA Triton Inference Server and what are its trade-offs?",
             "options": [
                 "A) Dynamically adjusting model batch size during training to improve convergence",
-                "B) Triton automatically groups multiple arriving inference requests into batches for more efficient GPU execution \u2014 increasing throughput by amortizing kernel launch overhead. Trade-off: slightly higher latency per request (waiting to form a batch), configurable with max_queue_delay to bound latency increase",
+                "B) Triton automatically groups multiple arriving inference requests into batches for more efficient GPU execution — increasing throughput by amortizing kernel launch overhead. Trade-off: slightly higher latency per request (waiting to form a batch), configurable with max_queue_delay to bound latency increase",
                 "C) A memory management feature that batches GPU memory allocations",
                 "D) Dynamically selecting between CPU and GPU processing based on batch size"
             ],
             "answer": "B",
-            "explanation": "Dynamic batching coalesces individual inference requests into larger batches, improving GPU utilization (fewer, larger kernel launches are more efficient). The scheduler waits up to max_queue_delay microseconds to form a batch \u2014 trading marginal latency for significant throughput gain."
+            "explanation": "Dynamic batching coalesces individual inference requests into larger batches, improving GPU utilization (fewer, larger kernel launches are more efficient). The scheduler waits up to max_queue_delay microseconds to form a batch — trading marginal latency for significant throughput gain."
         },
         {
             "id": 216,
@@ -3043,12 +3043,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "How does NVIDIA MIG configuration affect Kubernetes GPU scheduling and what are operational implications?",
             "options": [
                 "A) MIG configurations cannot be used with Kubernetes",
-                "B) MIG creates sub-GPU resources (e.g., 1g.10gb) that must be configured per-node and exposed via NVIDIA Device Plugin to Kubernetes. Pods request specific MIG instance types as extended resources. The operational challenge: MIG profiles are static (require GPU reset to reconfigure), so operators must predict workload patterns when choosing profiles \u2014 wrong profiles waste capacity",
+                "B) MIG creates sub-GPU resources (e.g., 1g.10gb) that must be configured per-node and exposed via NVIDIA Device Plugin to Kubernetes. Pods request specific MIG instance types as extended resources. The operational challenge: MIG profiles are static (require GPU reset to reconfigure), so operators must predict workload patterns when choosing profiles — wrong profiles waste capacity",
                 "C) MIG configurations are automatically managed by Kubernetes without operator input",
                 "D) MIG instances in Kubernetes cannot run multiple tenants' workloads simultaneously"
             ],
             "answer": "B",
-            "explanation": "MIG on Kubernetes requires NVIDIA GPU Operator to configure profiles and expose them as Kubernetes extended resources (nvidia.com/mig-1g.10gb, etc.). Pods request specific profiles. The challenge: reconfiguring MIG profiles requires interrupting running workloads \u2014 careful capacity planning is critical."
+            "explanation": "MIG on Kubernetes requires NVIDIA GPU Operator to configure profiles and expose them as Kubernetes extended resources (nvidia.com/mig-1g.10gb, etc.). Pods request specific profiles. The challenge: reconfiguring MIG profiles requires interrupting running workloads — careful capacity planning is critical."
         },
         {
             "id": 217,
@@ -3062,7 +3062,7 @@ window.NCA_MOCK_TEST_POOL = {
                 "D) GPU efficiency is only measurable on A100 and newer hardware"
             ],
             "answer": "B",
-            "explanation": "Monitoring only SM utilization is misleading \u2014 a memory-bound kernel keeps SMs busy waiting for data, showing 100% utilization but 10% peak TFLOPS. Operators need profiling tools (nsight, DCGM profiling metrics) to distinguish busy-waiting from efficient computation."
+            "explanation": "Monitoring only SM utilization is misleading — a memory-bound kernel keeps SMs busy waiting for data, showing 100% utilization but 10% peak TFLOPS. Operators need profiling tools (nsight, DCGM profiling metrics) to distinguish busy-waiting from efficient computation."
         },
         {
             "id": 218,
@@ -3071,7 +3071,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is 'topology-aware gradient compression' in distributed AI training and how does it relate to cluster operations?",
             "options": [
                 "A) A scheduling optimization for network topology efficiency",
-                "B) Compressing gradients (e.g., top-k sparsification, error feedback) before all-reduce to reduce communication volume \u2014 particularly effective for bandwidth-constrained cluster links. Topology-aware variants apply different compression ratios to intra-node (NVLink, no compression needed) vs inter-node (InfiniBand, high compression) gradients to minimize accuracy loss while maximizing compression benefit where bandwidth is limiting",
+                "B) Compressing gradients (e.g., top-k sparsification, error feedback) before all-reduce to reduce communication volume — particularly effective for bandwidth-constrained cluster links. Topology-aware variants apply different compression ratios to intra-node (NVLink, no compression needed) vs inter-node (InfiniBand, high compression) gradients to minimize accuracy loss while maximizing compression benefit where bandwidth is limiting",
                 "C) Encrypting gradient tensors for secure multi-party training",
                 "D) Reducing gradient precision to FP8 for all communication in NDR InfiniBand clusters"
             ],
@@ -3099,12 +3099,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What are the specific monitoring requirements for NVIDIA NVLink health in multi-GPU training systems, and what failure modes should operators watch for?",
             "options": [
                 "A) NVLink health is monitored by DCGM and requires no operator attention",
-                "B) DCGM provides NVLink bandwidth counters per lane, error counters (NvLinkRecoveryErrorCount, NvLinkFatalErrorCount), and replay counts. Failures include: lane degradation (reduced bandwidth \u2192 training slowdown without obvious error), NVLink fatal errors (link down \u2192 likely pod failure and job crash), and asymmetric bandwidth (training hanging due to unequal link speeds)",
+                "B) DCGM provides NVLink bandwidth counters per lane, error counters (NvLinkRecoveryErrorCount, NvLinkFatalErrorCount), and replay counts. Failures include: lane degradation (reduced bandwidth → training slowdown without obvious error), NVLink fatal errors (link down → likely pod failure and job crash), and asymmetric bandwidth (training hanging due to unequal link speeds)",
                 "C) NVLink failures are always catastrophic and immediately visible; no proactive monitoring is needed",
                 "D) NVLink health is automatically recovered by NVIDIA drivers without monitoring"
             ],
             "answer": "B",
-            "explanation": "NVLink degradation can be subtle \u2014 a lane error that reduces bandwidth by 20% causes training slowdown that looks like a compute bottleneck. DCGM tracks per-link NVLink bandwidth, errors, and replay counts. Operators should alert on any NvLinkFatalErrorCount increment."
+            "explanation": "NVLink degradation can be subtle — a lane error that reduces bandwidth by 20% causes training slowdown that looks like a compute bottleneck. DCGM tracks per-link NVLink bandwidth, errors, and replay counts. Operators should alert on any NvLinkFatalErrorCount increment."
         },
         {
             "id": 221,
@@ -3113,7 +3113,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "How does the choice between synchronous and asynchronous gradient descent affect both training convergence and cluster operations?",
             "options": [
                 "A) Asynchronous always converges faster; synchronous always achieves better accuracy",
-                "B) Synchronous: all workers update simultaneously \u2014 mathematically equivalent to larger batch training, better convergence guarantees, but straggler-sensitive (one slow node bottlenecks all). Asynchronous: workers update independently \u2014 straggler-tolerant but gradient staleness introduces noise affecting convergence and requiring careful learning rate tuning. Cluster operators must choose based on hardware homogeneity and convergence sensitivity",
+                "B) Synchronous: all workers update simultaneously — mathematically equivalent to larger batch training, better convergence guarantees, but straggler-sensitive (one slow node bottlenecks all). Asynchronous: workers update independently — straggler-tolerant but gradient staleness introduces noise affecting convergence and requiring careful learning rate tuning. Cluster operators must choose based on hardware homogeneity and convergence sensitivity",
                 "C) The choice has no impact on operational considerations; it only affects model accuracy",
                 "D) Asynchronous training is always preferred for NVIDIA DGX systems"
             ],
@@ -3127,12 +3127,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the significance of 'memory bandwidth saturation' as a GPU operational metric, and how does it differ in training vs inference contexts?",
             "options": [
                 "A) Memory bandwidth saturation is only relevant for gaming workloads",
-                "B) Memory bandwidth saturation occurs when workloads require more data movement than HBM can provide. In training: large activation tensors and gradient accumulation can saturate HBM bandwidth, reducing TFLOPS efficiency. In inference: LLM autoregressive decoding is heavily memory-bandwidth-bound (fetching all model weights per token) \u2014 H100's 3.35 TB/s HBM3 is the key constraint for single-token generation throughput",
+                "B) Memory bandwidth saturation occurs when workloads require more data movement than HBM can provide. In training: large activation tensors and gradient accumulation can saturate HBM bandwidth, reducing TFLOPS efficiency. In inference: LLM autoregressive decoding is heavily memory-bandwidth-bound (fetching all model weights per token) — H100's 3.35 TB/s HBM3 is the key constraint for single-token generation throughput",
                 "C) Memory bandwidth saturation only affects inference, not training",
                 "D) Memory bandwidth saturation is fully resolved by using FP16 instead of FP32"
             ],
             "answer": "B",
-            "explanation": "LLM inference (small batch, autoregressive) is classically memory-bandwidth-bound: each token generation reads all model weights but performs little compute (low arithmetic intensity). H100 HBM3's 3.35 TB/s makes it 2x faster than A100 for inference \u2014 bandwidth, not TFLOPS, is the constraint."
+            "explanation": "LLM inference (small batch, autoregressive) is classically memory-bandwidth-bound: each token generation reads all model weights but performs little compute (low arithmetic intensity). H100 HBM3's 3.35 TB/s makes it 2x faster than A100 for inference — bandwidth, not TFLOPS, is the constraint."
         },
         {
             "id": 223,
@@ -3141,12 +3141,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What are the challenges and best practices for 'elastic training' (dynamically adding/removing GPUs during a training run) in a production AI cluster?",
             "options": [
                 "A) Elastic training is not possible with current NVIDIA hardware or frameworks",
-                "B) Elastic training allows adding nodes when resources free up or removing failed nodes \u2014 supported by PyTorch Elastic (torchrun with rendezvous) and Horovod elastic. Challenges: repartitioning the distributed optimizer state, resharding data loaders, and re-establishing communication topology. Best practices: checkpoint before scaling events, use gradient accumulation to decouple effective batch size from GPU count, and validate convergence stability after node count changes",
+                "B) Elastic training allows adding nodes when resources free up or removing failed nodes — supported by PyTorch Elastic (torchrun with rendezvous) and Horovod elastic. Challenges: repartitioning the distributed optimizer state, resharding data loaders, and re-establishing communication topology. Best practices: checkpoint before scaling events, use gradient accumulation to decouple effective batch size from GPU count, and validate convergence stability after node count changes",
                 "C) Elastic training requires specialized hardware beyond standard DGX systems",
                 "D) Elastic training is only supported with fully synchronous gradient updates"
             ],
             "answer": "B",
-            "explanation": "Elastic training adapts to resource availability \u2014 useful in cloud (spot instances) and heterogeneous clusters. PyTorch torchrun handles worker rendezvous and re-initialization. The critical operation challenge is checkpoint synchronization during membership changes to prevent data or gradient inconsistency."
+            "explanation": "Elastic training adapts to resource availability — useful in cloud (spot instances) and heterogeneous clusters. PyTorch torchrun handles worker rendezvous and re-initialization. The critical operation challenge is checkpoint synchronization during membership changes to prevent data or gradient inconsistency."
         },
         {
             "id": 224,
@@ -3169,7 +3169,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the purpose of 'loss scaling' in mixed-precision training, and how does it relate to GPU operations monitoring?",
             "options": [
                 "A) Scaling the loss function to improve convergence speed",
-                "B) FP16 gradients can underflow to zero for small values (range limitation). Loss scaling multiplies the loss by a large scalar before backward pass, scaling gradients up to avoid underflow, then divides by the same scalar before weight update. Dynamic loss scaling automatically adjusts the scale factor \u2014 operators should monitor overflow events (scale factor reduction) as frequent overflows indicate training instability that may require intervention",
+                "B) FP16 gradients can underflow to zero for small values (range limitation). Loss scaling multiplies the loss by a large scalar before backward pass, scaling gradients up to avoid underflow, then divides by the same scalar before weight update. Dynamic loss scaling automatically adjusts the scale factor — operators should monitor overflow events (scale factor reduction) as frequent overflows indicate training instability that may require intervention",
                 "C) A storage optimization for saving model checkpoints at reduced precision",
                 "D) A technique for reducing GPU memory usage during gradient accumulation"
             ],
@@ -3183,12 +3183,12 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What is the 'all-reduce ring algorithm' and how does it scale with cluster size, and what are its implications for AI cluster design?",
             "options": [
                 "A) An algorithm for allocating GPUs in a circular priority queue",
-                "B) Ring all-reduce divides gradient tensors into N chunks for N GPUs, sending chunks around a logical ring in 2(N-1) steps. Communication time = 2(N-1)/N \u00d7 M/B, which converges to 2M/B (independent of N for large N, where M=gradient size, B=bandwidth). Implication: ring all-reduce scales well in bandwidth but latency still increases with N \u2014 motivating InfiniBand for low latency and switch-based SHArP for O(log N) latency reduction",
+                "B) Ring all-reduce divides gradient tensors into N chunks for N GPUs, sending chunks around a logical ring in 2(N-1) steps. Communication time = 2(N-1)/N × M/B, which converges to 2M/B (independent of N for large N, where M=gradient size, B=bandwidth). Implication: ring all-reduce scales well in bandwidth but latency still increases with N — motivating InfiniBand for low latency and switch-based SHArP for O(log N) latency reduction",
                 "C) A routing algorithm used in InfiniBand fabrics for gradient traffic",
                 "D) The algorithm used by CUDA for GPU memory ring buffers during training"
             ],
             "answer": "B",
-            "explanation": "Ring all-reduce's bandwidth complexity is O(M) independent of N \u2014 good bandwidth scaling. But its latency is O(N \u00d7 message_latency) \u2014 problematic at large N with high-latency networks. This is why low-latency InfiniBand and SHArP (which reduces to O(log N) latency) matter for large clusters."
+            "explanation": "Ring all-reduce's bandwidth complexity is O(M) independent of N — good bandwidth scaling. But its latency is O(N × message_latency) — problematic at large N with high-latency networks. This is why low-latency InfiniBand and SHArP (which reduces to O(log N) latency) matter for large clusters."
         },
         {
             "id": 227,
@@ -3197,7 +3197,7 @@ window.NCA_MOCK_TEST_POOL = {
             "question": "What operational procedures should be followed when a GPU in a multi-node AI training cluster shows rising ECC single-bit error (SBE) rates but no double-bit errors (DBE)?",
             "options": [
                 "A) SBEs are always hardware failures requiring immediate GPU replacement",
-                "B) Rising SBEs indicate degrading memory cells but errors are currently corrected. Operational response: flag in DCGM health dashboard, drain new jobs from the node (cordon in Kubernetes), allow running jobs to complete, schedule maintenance window to retire the GPU, run DCGM diagnostics (dcgmi diag -r 3) to confirm hardware health, and replace if DCGM confirms hardware fault \u2014 prevent SBE-affected GPUs from running long training jobs where eventual DBE would cause catastrophic data loss",
+                "B) Rising SBEs indicate degrading memory cells but errors are currently corrected. Operational response: flag in DCGM health dashboard, drain new jobs from the node (cordon in Kubernetes), allow running jobs to complete, schedule maintenance window to retire the GPU, run DCGM diagnostics (dcgmi diag -r 3) to confirm hardware health, and replace if DCGM confirms hardware fault — prevent SBE-affected GPUs from running long training jobs where eventual DBE would cause catastrophic data loss",
                 "C) SBEs should be ignored unless they impact model accuracy metrics",
                 "D) Reboot the server to clear SBEs; they are transient and require no follow-up"
             ],
@@ -3217,6 +3217,944 @@ window.NCA_MOCK_TEST_POOL = {
             ],
             "answer": "B",
             "explanation": "Serving 70B+ models requires tensor parallelism across multiple GPUs. Operations challenges: the serving group is a single logical unit (all GPUs must be healthy), communication overhead increases p50 latency vs single-GPU serving, and autoscaling must allocate/deallocate groups of GPUs (not individual ones)."
+        },
+        {
+            "question": "What is NVIDIA's CUDA toolkit?",
+            "options": [
+                "A) A GPU hardware diagnostic tool",
+                "B) A set of development tools, compilers, and libraries for writing GPU-accelerated code",
+                "C) A cloud deployment platform for AI models",
+                "D) A network configuration toolkit for GPU clusters"
+            ],
+            "answer": "B",
+            "explanation": "The CUDA toolkit includes the nvcc compiler, debugging tools, profilers, and libraries (cuBLAS, cuDNN) needed to write and optimize GPU-accelerated applications.",
+            "id": 229,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Easy"
+        },
+        {
+            "question": "What does 'epoch' refer to in neural network training?",
+            "options": [
+                "A) A single gradient update",
+                "B) One full pass through the entire training dataset",
+                "C) A cluster of compute nodes",
+                "D) A type of activation function"
+            ],
+            "answer": "B",
+            "explanation": "An epoch is one complete cycle through all training samples. Multiple epochs are used so the model sees the data repeatedly, improving its ability to generalise.",
+            "id": 230,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Easy"
+        },
+        {
+            "question": "What is a convolutional neural network (CNN) primarily used for?",
+            "options": [
+                "A) Sequential text prediction",
+                "B) Image and video recognition tasks that exploit spatial structure",
+                "C) Tabular data classification only",
+                "D) Network traffic analysis"
+            ],
+            "answer": "B",
+            "explanation": "CNNs use convolutional filters to detect spatial features in images, making them the dominant architecture for computer vision tasks such as image classification and object detection.",
+            "id": 231,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Easy"
+        },
+        {
+            "question": "Which NVIDIA GPU generation introduced the Ampere architecture?",
+            "options": [
+                "A) Volta (V100)",
+                "B) Turing (T4)",
+                "C) Ampere (A100)",
+                "D) Hopper (H100)"
+            ],
+            "answer": "C",
+            "explanation": "The A100 is NVIDIA's flagship Ampere-architecture data centre GPU, introducing third-generation Tensor Cores, multi-instance GPU (MIG), and NVLink 3.0.",
+            "id": 232,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Easy"
+        },
+        {
+            "question": "What is the purpose of the NVIDIA driver in an AI system?",
+            "options": [
+                "A) To train neural networks directly",
+                "B) To provide the software interface between the OS and GPU hardware, enabling CUDA applications to run",
+                "C) To manage cluster-level job scheduling",
+                "D) To compress model weights for deployment"
+            ],
+            "answer": "B",
+            "explanation": "The NVIDIA GPU driver exposes the GPU hardware to the OS and user-space software, allowing CUDA and other frameworks to communicate with the GPU.",
+            "id": 233,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Easy"
+        },
+        {
+            "question": "What type of memory does a GPU use for storing model weights during inference?",
+            "options": [
+                "A) System RAM (DDR5)",
+                "B) GPU VRAM (HBM or GDDR)",
+                "C) NVMe SSD cache",
+                "D) CPU L3 cache"
+            ],
+            "answer": "B",
+            "explanation": "Model weights must reside in the GPU's on-device memory (VRAM — either HBM in data centre GPUs or GDDR in consumer GPUs) to be directly accessed by the GPU compute units.",
+            "id": 234,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Easy"
+        },
+        {
+            "question": "What is PyTorch in the context of AI development?",
+            "options": [
+                "A) NVIDIA's proprietary training framework",
+                "B) An open-source deep learning framework widely used for research and production model training",
+                "C) A GPU cluster orchestration tool",
+                "D) A model inference server"
+            ],
+            "answer": "B",
+            "explanation": "PyTorch (developed by Meta AI) is the most widely-used open-source deep learning framework, known for its dynamic computation graph and ease of use in both research and production.",
+            "id": 235,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Easy"
+        },
+        {
+            "question": "Which of the following best describes a recurrent neural network (RNN)?",
+            "options": [
+                "A) A network designed to process grid-structured data like images",
+                "B) A network that processes sequential data by maintaining hidden state across time steps",
+                "C) A generative model that produces images from text",
+                "D) A network used exclusively for tabular data"
+            ],
+            "answer": "B",
+            "explanation": "RNNs process sequences by passing hidden state from one time step to the next, making them suited for time-series and language data — though Transformers have largely replaced them for NLP.",
+            "id": 236,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Easy"
+        },
+        {
+            "question": "What is NVIDIA Isaac in the context of AI?",
+            "options": [
+                "A) A language model training platform",
+                "B) A platform for developing and simulating AI-powered robotics applications",
+                "C) A GPU monitoring toolkit",
+                "D) A cybersecurity AI framework"
+            ],
+            "answer": "B",
+            "explanation": "NVIDIA Isaac is a robotics development platform that includes simulation (Isaac Sim on Omniverse), perception libraries, and hardware (Jetson) for building AI-driven robots.",
+            "id": 237,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Easy"
+        },
+        {
+            "question": "What does 'GPU memory bandwidth' measure?",
+            "options": [
+                "A) The number of CUDA cores available",
+                "B) The rate at which data can be read from or written to GPU VRAM",
+                "C) The speed of PCIe data transfer",
+                "D) The GPU's floating-point throughput"
+            ],
+            "answer": "B",
+            "explanation": "Memory bandwidth (GB/s) measures how quickly the GPU can move data between the memory subsystem and compute units. It is the primary bottleneck for memory-bound workloads like LLM inference.",
+            "id": 238,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Easy"
+        },
+        {
+            "question": "What is the purpose of NVIDIA's Nsight tools?",
+            "options": [
+                "A) Cluster-level job scheduling",
+                "B) GPU application profiling and debugging to identify compute and memory bottlenecks",
+                "C) Network traffic monitoring for InfiniBand fabrics",
+                "D) Container image management"
+            ],
+            "answer": "B",
+            "explanation": "NVIDIA Nsight (Nsight Systems, Nsight Compute) are profiling and debugging tools that show GPU kernel timelines, SM utilisation, memory throughput, and compute efficiency for optimising AI workloads.",
+            "id": 239,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Easy"
+        },
+        {
+            "question": "In AI, what is 'data labelling'?",
+            "options": [
+                "A) Attaching metadata tags to GPU memory allocations",
+                "B) The process of annotating raw data with ground-truth labels so that supervised learning algorithms can learn from it",
+                "C) Encoding data into a GPU-compatible binary format",
+                "D) Partitioning a dataset across multiple storage nodes"
+            ],
+            "answer": "B",
+            "explanation": "Data labelling (annotation) assigns correct output labels (e.g., 'cat', bounding boxes, sentiment) to raw examples, creating the labelled dataset required for supervised machine learning.",
+            "id": 240,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Easy"
+        },
+        {
+            "question": "What is a hyperparameter in AI model training?",
+            "options": [
+                "A) A weight in the neural network updated by gradient descent",
+                "B) A configuration value set before training begins that controls the learning process, such as learning rate, batch size, or number of layers",
+                "C) A hardware setting on the GPU",
+                "D) A metric evaluated on the validation set"
+            ],
+            "answer": "B",
+            "explanation": "Hyperparameters are set by the practitioner before training (not learned from data) and include learning rate, batch size, number of epochs, and architecture choices — all affecting training dynamics.",
+            "id": 241,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Easy"
+        },
+        {
+            "question": "What is NVIDIA's L40S GPU primarily designed for?",
+            "options": [
+                "A) Consumer gaming",
+                "B) AI inference and graphics workloads in mainstream enterprise and cloud deployments",
+                "C) Edge IoT inferencing",
+                "D) Quantum computing research"
+            ],
+            "answer": "B",
+            "explanation": "The L40S is NVIDIA's Ada Lovelace-based enterprise GPU targeting AI inference, training, and professional visualisation for mainstream data centre deployments — offering a cost-effective alternative to H100.",
+            "id": 242,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Easy"
+        },
+        {
+            "question": "What does the term 'neural network layer' refer to?",
+            "options": [
+                "A) A physical tier in a data centre network",
+                "B) A grouping of neurons in a network that performs a specific transformation on its inputs",
+                "C) A GPU memory partition",
+                "D) A storage tier in a parallel filesystem"
+            ],
+            "answer": "B",
+            "explanation": "A layer in a neural network applies a transformation (e.g., linear, convolutional, attention) to its input tensor and passes the result to the next layer. Deep networks stack many such layers.",
+            "id": 243,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Easy"
+        },
+        {
+            "question": "What is 'AI at the edge' and why is NVIDIA Jetson relevant?",
+            "options": [
+                "A) Running AI in a cloud data centre with edge caching",
+                "B) Deploying AI inference directly on devices near the data source (cameras, robots, vehicles) to reduce latency and bandwidth — Jetson provides compact, efficient GPU-accelerated edge compute",
+                "C) Training models on smartphones",
+                "D) Edge refers to the outermost layers of a neural network"
+            ],
+            "answer": "B",
+            "explanation": "Edge AI runs inference on local devices rather than sending data to the cloud, reducing latency and bandwidth. Jetson modules (Orin, Xavier) provide GPU and DLA accelerators in a compact, power-efficient form factor.",
+            "id": 244,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Easy"
+        },
+        {
+            "question": "What is TensorFlow in the context of AI?",
+            "options": [
+                "A) NVIDIA's proprietary training framework",
+                "B) An open-source deep learning framework developed by Google, widely used for training and deploying ML models",
+                "C) A GPU virtualisation tool",
+                "D) A cluster management platform"
+            ],
+            "answer": "B",
+            "explanation": "TensorFlow (Google) is one of the two dominant open-source deep learning frameworks (alongside PyTorch), featuring static computation graphs, TensorFlow Serving for deployment, and TFLite for edge.",
+            "id": 245,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Easy"
+        },
+        {
+            "question": "What is the key reason AI adoption accelerated after 2012?",
+            "options": [
+                "A) Reduction in data centre power costs",
+                "B) The AlexNet breakthrough demonstrating that deep CNNs trained on GPUs dramatically outperformed traditional methods on ImageNet, sparking the deep learning revolution",
+                "C) Release of new SQL database standards",
+                "D) Standardisation of cloud computing APIs"
+            ],
+            "answer": "B",
+            "explanation": "AlexNet (2012) achieved a top-5 error of 15.3% on ImageNet, nearly halving the previous best. It demonstrated that GPU-trained deep networks could decisively beat hand-crafted features, triggering massive investment in deep learning.",
+            "id": 246,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Easy"
+        },
+        {
+            "question": "What is the purpose of the softmax function in a classification neural network's output layer?",
+            "options": [
+                "A) To normalise input features before training",
+                "B) To convert raw output logits into a probability distribution over classes summing to 1",
+                "C) To reduce overfitting during training",
+                "D) To accelerate backpropagation on Tensor Cores"
+            ],
+            "answer": "B",
+            "explanation": "Softmax exponentiates each logit and divides by the sum, producing a valid probability distribution. This allows the network's output to be interpreted as class probabilities for cross-entropy loss.",
+            "id": 247,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is the difference between FP8, FP16, and FP32 precision in AI training?",
+            "options": [
+                "A) They refer to GPU clock speed modes",
+                "B) They are floating-point formats with different bit widths — FP32 (32-bit, highest precision, baseline), FP16 (16-bit, 2× memory reduction, Tensor Core accelerated), FP8 (8-bit, H100 Transformer Engine, highest throughput with careful scaling)",
+                "C) FP8 is only used for inference; FP16 and FP32 are for training",
+                "D) They affect GPU fan speed, not compute"
+            ],
+            "answer": "B",
+            "explanation": "Reducing numerical precision saves memory and enables faster Tensor Core computation. FP32 is the baseline. FP16/BF16 is standard mixed precision. FP8 (H100) doubles throughput over FP16 but requires per-tensor scaling to maintain accuracy.",
+            "id": 248,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is NVIDIA's role in the AI ecosystem beyond GPU hardware?",
+            "options": [
+                "A) NVIDIA only manufactures GPUs and has no software role",
+                "B) NVIDIA provides a full-stack platform: GPU hardware, CUDA, libraries (cuDNN, cuBLAS), frameworks (NeMo, Triton), domain SDKs (Metropolis, Drive, Clara), NGC container registry, and cloud/on-prem AI platforms",
+                "C) NVIDIA only provides inference software, not training tools",
+                "D) NVIDIA's software role is limited to the CUDA compiler"
+            ],
+            "answer": "B",
+            "explanation": "NVIDIA has evolved into a full-stack AI company: hardware (GPU, DPU, networking), system software (CUDA, drivers, containers), AI frameworks and SDKs, and platforms for specific verticals — making it an end-to-end AI infrastructure provider.",
+            "id": 249,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'prompt engineering' in the context of LLM deployment?",
+            "options": [
+                "A) A technique to reduce GPU memory usage during LLM inference",
+                "B) The practice of carefully designing input prompts to guide LLM behaviour and improve output quality without changing model weights",
+                "C) A method for compressing LLM weights for edge deployment",
+                "D) A GPU scheduling optimisation for LLM serving"
+            ],
+            "answer": "B",
+            "explanation": "Prompt engineering crafts input text to elicit desired LLM behaviour through techniques like few-shot examples, chain-of-thought instructions, and role assignment — achieving task adaptation without fine-tuning.",
+            "id": 250,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What distinguishes a foundation model from a task-specific model?",
+            "options": [
+                "A) Foundation models are always smaller than task-specific models",
+                "B) Foundation models are trained on broad, large-scale data and can be adapted to many downstream tasks; task-specific models are trained from scratch for one narrow application",
+                "C) Foundation models only run on cloud infrastructure",
+                "D) There is no meaningful distinction"
+            ],
+            "answer": "B",
+            "explanation": "Foundation models (GPT, BERT, SAM) are large models trained on diverse data encoding general knowledge. They serve as a base for many applications via fine-tuning or prompting, amortising the enormous training cost across tasks.",
+            "id": 251,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is the role of the NVIDIA A100's Multi-Instance GPU (MIG) feature in shared deployments?",
+            "options": [
+                "A) To combine multiple A100s into a single logical GPU",
+                "B) To partition one A100 into up to 7 isolated GPU instances, each with dedicated memory and compute, enabling multiple independent workloads to safely share a single GPU",
+                "C) To enable GPU time-sharing without memory isolation",
+                "D) To synchronise A100s across InfiniBand for faster training"
+            ],
+            "answer": "B",
+            "explanation": "MIG creates hardware-isolated GPU partitions with dedicated SM sets, HBM capacity, and L2 cache slices. Each instance is fully independent with ECC protection, enabling safe multi-tenancy — critical for inference services where one tenant must not affect another's latency.",
+            "id": 252,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is the purpose of weight initialisation strategies (e.g., Xavier, He) in deep neural network training?",
+            "options": [
+                "A) To set GPU memory allocation patterns before training",
+                "B) To initialise model weights to values that prevent vanishing or exploding gradients at the start of training, enabling stable convergence",
+                "C) To determine the number of parameters in each layer",
+                "D) To configure Tensor Core precision modes"
+            ],
+            "answer": "B",
+            "explanation": "Poor initialisation causes vanishing (tiny gradients, no learning) or exploding (unstable) gradients. Xavier initialisation targets equal variance across layers for tanh/sigmoid; He initialisation (2× larger) is designed for ReLU networks.",
+            "id": 253,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is ONNX (Open Neural Network Exchange) and why is it relevant to AI deployment?",
+            "options": [
+                "A) A proprietary NVIDIA format for storing TensorRT models",
+                "B) An open format for representing ML models that enables interoperability between frameworks (e.g., PyTorch → ONNX → TensorRT) enabling framework-agnostic deployment and optimisation",
+                "C) A GPU memory management API",
+                "D) An InfiniBand networking protocol for AI clusters"
+            ],
+            "answer": "B",
+            "explanation": "ONNX defines a common graph representation for neural networks, allowing models trained in PyTorch or TensorFlow to be exported and then optimised/deployed with TensorRT, ONNX Runtime, or other inference engines.",
+            "id": 254,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'continual pre-training' in the context of LLMs?",
+            "options": [
+                "A) Running inference continuously on a deployed model",
+                "B) Extending the pre-training of an existing LLM on new domain-specific data to update its knowledge while retaining general capabilities, without full retraining from scratch",
+                "C) Monitoring LLM outputs continuously for quality",
+                "D) Storing LLM KV cache persistently between sessions"
+            ],
+            "answer": "B",
+            "explanation": "Continual pre-training updates an LLM's knowledge by continuing unsupervised training on new corpora (e.g., recent data, domain text), bridging the knowledge cutoff at lower cost than full retraining from scratch.",
+            "id": 255,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'hallucination' in generative AI models and why is it a production concern?",
+            "options": [
+                "A) When the GPU generates visual artefacts in model outputs",
+                "B) When a generative model produces confident but factually incorrect outputs, posing risks in production applications where accuracy matters (e.g., medical, legal, financial)",
+                "C) When the model produces outputs slower than expected",
+                "D) When model outputs are too verbose"
+            ],
+            "answer": "B",
+            "explanation": "LLM hallucinations are fluent but false outputs generated with unwarranted confidence. In high-stakes domains (medicine, finance), hallucinations can cause real harm, motivating RAG, fine-tuning, and constitutional AI techniques.",
+            "id": 256,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is NVIDIA TAO (Train, Adapt, Optimise) Toolkit used for?",
+            "options": [
+                "A) GPU thermal management and overclocking",
+                "B) A low-code AI model training and fine-tuning tool that enables domain customisation of NVIDIA pre-trained models without requiring deep AI expertise",
+                "C) Network topology management for InfiniBand clusters",
+                "D) Container security hardening for AI deployments"
+            ],
+            "answer": "B",
+            "explanation": "TAO Toolkit lets practitioners fine-tune NVIDIA's NGC pre-trained vision and speech models using their own data with minimal code, then export optimised TensorRT models — lowering the barrier to production AI.",
+            "id": 257,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'model pruning' in AI model optimisation?",
+            "options": [
+                "A) Removing entire training epochs from the training schedule",
+                "B) Removing weights or neurons with low importance (near-zero weights) from a trained model to reduce model size and inference latency, often followed by fine-tuning to recover accuracy",
+                "C) Reducing the number of training data samples",
+                "D) Lowering GPU clock speed to reduce inference power consumption"
+            ],
+            "answer": "B",
+            "explanation": "Pruning removes redundant parameters (structured: entire filters/heads; unstructured: individual weights), typically achieving 50–90% sparsity with minimal accuracy loss after fine-tuning, reducing memory and compute.",
+            "id": 258,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'knowledge distillation' in AI?",
+            "options": [
+                "A) Extracting training data from a deployed model",
+                "B) Training a smaller 'student' model to mimic the output distributions of a larger 'teacher' model, transferring the teacher's knowledge into a more efficient form",
+                "C) Compressing model weights using lossless compression",
+                "D) Summarising training logs into actionable metrics"
+            ],
+            "answer": "B",
+            "explanation": "Knowledge distillation trains the student not just on hard labels but on the teacher's soft probability outputs (dark knowledge), allowing the smaller model to learn richer representations than training on labels alone.",
+            "id": 259,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is the purpose of NVIDIA's cuSPARSE library?",
+            "options": [
+                "A) To provide GPU-accelerated dense matrix multiplication",
+                "B) To provide GPU-accelerated sparse linear algebra operations, enabling efficient computation on sparse matrices common in pruned models and recommendation systems",
+                "C) To manage GPU memory allocation for sparse training",
+                "D) To profile sparse model inference performance"
+            ],
+            "answer": "B",
+            "explanation": "cuSPARSE provides GPU-accelerated routines for sparse matrix operations (SpMM, SpGEMM), exploiting sparsity in pruned models and sparse attention to improve memory efficiency and throughput.",
+            "id": 260,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "How does NVIDIA's Ampere Sparse Tensor Core feature improve inference efficiency?",
+            "options": [
+                "A) By doubling clock speed for sparse workloads",
+                "B) By exploiting 2:4 structured sparsity (2 non-zero values per 4 elements) to achieve 2× throughput over dense computation with no accuracy loss using ASP-based fine-tuning",
+                "C) By automatically pruning any model to 50% sparsity",
+                "D) By enabling FP8 computation only on sparse layers"
+            ],
+            "answer": "B",
+            "explanation": "Ampere's 2:4 sparsity (every 4 consecutive weights have at most 2 non-zero) is decoded in hardware, delivering 2× INT8/FP16 throughput for eligible kernels. NVIDIA's ASP tool fine-tunes models to this sparsity pattern.",
+            "id": 261,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is the purpose of a vector database in an RAG-based AI architecture?",
+            "options": [
+                "A) To store GPU memory vectors during model training",
+                "B) To efficiently store and search high-dimensional embedding vectors by semantic similarity, enabling retrieval of relevant documents for LLM context augmentation",
+                "C) To manage distributed training communication buffers",
+                "D) To provide block storage for training datasets"
+            ],
+            "answer": "B",
+            "explanation": "Vector databases (Pinecone, Milvus, pgvector) store document embeddings and support approximate nearest-neighbour (ANN) search, enabling RAG systems to retrieve semantically similar documents given a query embedding.",
+            "id": 262,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is NVIDIA's Fleet Command for?",
+            "options": [
+                "A) Managing GPU clusters in a data centre",
+                "B) A cloud-managed edge AI platform for remotely deploying, monitoring, and updating AI applications across distributed edge devices",
+                "C) A storage management tool for AI datasets",
+                "D) A real-time GPU benchmarking service"
+            ],
+            "answer": "B",
+            "explanation": "Fleet Command lets organisations deploy containerised AI applications from NGC to distributed edge locations (retail stores, factories, hospitals), providing remote management, updates, and monitoring without physical access.",
+            "id": 263,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'semantic segmentation' in computer vision AI?",
+            "options": [
+                "A) Splitting training datasets by semantic category",
+                "B) Classifying each pixel in an image into a semantic category, producing a dense per-pixel label map rather than a single image-level class",
+                "C) Extracting text descriptions from images",
+                "D) Detecting objects using bounding boxes"
+            ],
+            "answer": "B",
+            "explanation": "Semantic segmentation assigns a class label to every pixel (e.g., road, car, pedestrian). It is critical for autonomous driving perception and medical image analysis, requiring dense output predictions.",
+            "id": 264,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is NVIDIA's Triton Inference Server's 'model ensemble' feature?",
+            "options": [
+                "A) Running the same model on multiple GPUs simultaneously",
+                "B) Defining a pipeline of models where the output of one model becomes the input of the next, executed efficiently as a single inference request within Triton",
+                "C) Combining multiple model checkpoints into a single model",
+                "D) Auto-scaling Triton instances based on load"
+            ],
+            "answer": "B",
+            "explanation": "Triton ensembles define a DAG of models (e.g., preprocessor → feature extractor → classifier) that execute as one pipeline call, reducing client-server round-trips and improving throughput for multi-stage inference.",
+            "id": 265,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is the significance of batch size in AI model training?",
+            "options": [
+                "A) Larger batch sizes always result in better model accuracy",
+                "B) Batch size controls how many samples are processed before a gradient update — larger batches improve GPU utilisation and training stability but may require learning rate scaling and can reduce generalisation; smaller batches introduce noise that can help escape local minima",
+                "C) Batch size determines the number of GPUs required",
+                "D) Batch size only affects memory consumption, not training quality"
+            ],
+            "answer": "B",
+            "explanation": "Batch size is a critical hyperparameter: small batches add stochastic noise (may help generalisation), large batches are GPU-efficient but may converge to sharp minima. Linear scaling rule (lr ∝ batch size) is used when scaling batch size across GPUs.",
+            "id": 266,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'causal language modelling' and how does it differ from masked language modelling?",
+            "options": [
+                "A) They are identical training objectives used by the same model families",
+                "B) Causal LM (GPT-style) predicts the next token given all previous tokens (unidirectional, suited for generation); masked LM (BERT-style) predicts masked tokens using both left and right context (bidirectional, better for understanding tasks)",
+                "C) Causal LM uses CNN architectures; masked LM uses transformers",
+                "D) Causal LM is only for code; masked LM is only for natural language"
+            ],
+            "answer": "B",
+            "explanation": "The choice of pre-training objective shapes model capabilities: causal LM produces autoregressive generators (GPT, Llama) used for text generation; masked LM produces bidirectional encoders (BERT, RoBERTa) used for classification and retrieval.",
+            "id": 267,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is NVIDIA Maxine?",
+            "options": [
+                "A) A GPU driver package for professional workstations",
+                "B) A cloud-native AI platform for video streaming with GPU-accelerated features like noise removal, super-resolution, and real-time avatar animation",
+                "C) A network management tool for InfiniBand clusters",
+                "D) An AI framework for autonomous vehicle training"
+            ],
+            "answer": "B",
+            "explanation": "NVIDIA Maxine provides GPU-accelerated video and audio AI features (noise cancellation, background removal, super-resolution, face re-lighting) for video conferencing and streaming applications.",
+            "id": 268,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'gradient accumulation' and when is it used in AI training?",
+            "options": [
+                "A) Storing gradients in GPU HBM for faster all-reduce",
+                "B) Summing gradients over multiple forward-backward passes before performing a single weight update, effectively simulating a larger batch size when memory constraints prevent fitting large batches on a single GPU",
+                "C) Accumulating gradients across multiple training epochs before updating",
+                "D) A technique for preventing gradient vanishing in deep networks"
+            ],
+            "answer": "B",
+            "explanation": "Gradient accumulation lets practitioners train with an effective batch size of N×M (N accumulation steps × M per-step batch) without requiring N×M samples in GPU memory simultaneously — enabling large-batch training on memory-constrained hardware.",
+            "id": 269,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is the purpose of the NVIDIA GPU Architecture's L2 cache in AI workloads?",
+            "options": [
+                "A) To store model checkpoints between training runs",
+                "B) To serve as a fast shared cache between all SMs on a GPU, reducing redundant HBM accesses for data reused across thread blocks — critical for attention operations and small-batch inference",
+                "C) To replace HBM memory in low-power modes",
+                "D) To cache PCIe DMA transfers from host memory"
+            ],
+            "answer": "B",
+            "explanation": "The L2 cache (60MB in H100) is shared across all SMs. When multiple SM thread blocks access the same data (e.g., model weight tensors in small-batch inference), L2 hits avoid expensive HBM accesses, improving throughput.",
+            "id": 270,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'model serving' in AI operations and what are the key requirements?",
+            "options": [
+                "A) Physically delivering AI hardware to customers",
+                "B) Exposing a trained AI model as a service via API (REST, gRPC) with requirements for low latency, high throughput, model versioning, health monitoring, and scalability to handle concurrent requests",
+                "C) Serving training datasets from storage to GPU nodes",
+                "D) Deploying model checkpoints to a version control system"
+            ],
+            "answer": "B",
+            "explanation": "Model serving makes models accessible to applications via APIs. Key requirements: sub-100ms latency (SLA), high request throughput, zero-downtime model updates, traffic splitting for A/B testing, and GPU autoscaling.",
+            "id": 271,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is the difference between a token and an embedding in LLM processing?",
+            "options": [
+                "A) They are identical concepts in LLMs",
+                "B) A token is a discrete unit of text (word piece, character) from the tokeniser's vocabulary; an embedding is its dense continuous vector representation learned by the model and used as input to the transformer layers",
+                "C) Tokens are used in training; embeddings are used in inference",
+                "D) Tokens are fixed-size; embeddings are variable-size"
+            ],
+            "answer": "B",
+            "explanation": "The tokeniser converts text to integer token IDs. The embedding layer maps each token ID to a learned dense vector (768–8192 dimensions in modern LLMs). The transformer then processes these embedding vectors, not raw tokens.",
+            "id": 272,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'context length' in an LLM and why does it matter for infrastructure?",
+            "options": [
+                "A) The length of the model's system prompt only",
+                "B) The maximum number of tokens an LLM can process in a single forward pass — longer context requires quadratically more attention compute (or linear with FlashAttention) and proportionally more KV cache GPU memory, affecting both latency and GPU memory requirements",
+                "C) Context length only affects training, not inference",
+                "D) Context length determines the model's parameter count"
+            ],
+            "answer": "B",
+            "explanation": "Context length determines how much text the model can 'see' at once. At 128K tokens, the KV cache alone can consume tens of GB of GPU memory per request. Infrastructure must be sized for both compute (attention) and memory (KV cache) at the target context length.",
+            "id": 273,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'instruction tuning' in the LLM training pipeline?",
+            "options": [
+                "A) Tuning GPU power limits for optimal LLM training efficiency",
+                "B) Fine-tuning a pre-trained LLM on a dataset of (instruction, response) pairs to make the model better at following user instructions and producing helpful, formatted outputs",
+                "C) Optimising the tokeniser vocabulary for specific instruction domains",
+                "D) A hardware configuration step before deploying LLMs on Triton"
+            ],
+            "answer": "B",
+            "explanation": "Instruction tuning (supervised fine-tuning on instruction-response pairs) bridges the gap between a pre-trained base model (next-token prediction) and an assistant that follows instructions, improving usability without full retraining.",
+            "id": 274,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is NVIDIA's EfficientViT model optimisation and what problem does it address?",
+            "options": [
+                "A) An efficient virtualisation technology for GPU resource management",
+                "B) A vision transformer architecture optimised for high-resolution real-time inference on edge/embedded hardware, addressing the quadratic complexity of standard ViT attention at high resolution",
+                "C) A video transcoding optimisation for Metropolis",
+                "D) An efficient NVLink topology for small-scale GPU clusters"
+            ],
+            "answer": "B",
+            "explanation": "EfficientViT replaces standard multi-head attention with a hardware-efficient multi-scale linear attention mechanism, enabling real-time high-resolution segmentation and classification on embedded GPUs (Jetson Orin).",
+            "id": 275,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is the relationship between CUDA, cuDNN, and PyTorch in the AI software stack?",
+            "options": [
+                "A) They are competing alternatives; only one is needed",
+                "B) CUDA provides the GPU programming foundation; cuDNN provides optimised GPU kernels for deep learning primitives; PyTorch sits on top and calls cuDNN/CUDA kernels automatically when tensors are on GPU — forming a layered stack",
+                "C) PyTorch replaces CUDA for modern AI workloads",
+                "D) cuDNN is only used for inference; CUDA is only for training"
+            ],
+            "answer": "B",
+            "explanation": "CUDA is the programming model (threads, memory management). cuDNN provides hand-optimised GPU implementations of convolutions, normalisation, and attention. PyTorch's GPU tensors call cuDNN/CUDA kernels automatically, abstracting low-level GPU programming.",
+            "id": 276,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'zero-shot' learning in the context of LLMs?",
+            "options": [
+                "A) Training a model with no labelled data",
+                "B) Using an LLM to perform a task it was not explicitly fine-tuned for, by describing the task in the prompt without providing any examples",
+                "C) Running inference with zero GPU memory overhead",
+                "D) A technique for reducing hallucinations to zero"
+            ],
+            "answer": "B",
+            "explanation": "Zero-shot prompting asks the model to perform a task with only a task description, relying on knowledge from pre-training. LLMs like GPT-4 can solve many tasks zero-shot, while few-shot prompting (providing examples) further improves accuracy.",
+            "id": 277,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is NVIDIA's role in the DGX Cloud offering?",
+            "options": [
+                "A) NVIDIA manufactures cloud networking hardware for major providers",
+                "B) NVIDIA partners with cloud providers (Azure, GCP, Oracle) to offer dedicated DGX AI supercomputing infrastructure as a cloud service, providing full NVIDIA software stack with enterprise support",
+                "C) DGX Cloud is an on-premises product unrelated to cloud providers",
+                "D) NVIDIA DGX Cloud only supports inference, not training"
+            ],
+            "answer": "B",
+            "explanation": "DGX Cloud offers dedicated NVIDIA DGX H100 and H200 systems hosted in major cloud providers' data centres, providing enterprises cloud-accessible AI supercomputing with NVIDIA AI Enterprise software and support.",
+            "id": 278,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'semantic search' and how does it differ from keyword search?",
+            "options": [
+                "A) Semantic search uses faster indexing algorithms",
+                "B) Semantic search uses embedding vectors to find results by meaning and context rather than exact keyword matching, returning relevant results even when the query words don't appear in the document",
+                "C) Semantic search only works on structured databases",
+                "D) Keyword search is always more accurate than semantic search"
+            ],
+            "answer": "B",
+            "explanation": "Keyword search relies on term frequency and exact matches. Semantic search encodes query and documents into embedding space (via models like BERT, text-embedding-ada), finding results by vector similarity — handling synonyms, paraphrases, and intent.",
+            "id": 279,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is the purpose of a CUDA kernel in GPU programming?",
+            "options": [
+                "A) The operating system kernel for managing GPU hardware",
+                "B) A GPU function that executes in parallel across thousands of threads simultaneously on the GPU's streaming multiprocessors",
+                "C) A data preprocessing function that runs on the CPU",
+                "D) A monitoring daemon for tracking GPU utilisation"
+            ],
+            "answer": "B",
+            "explanation": "A CUDA kernel is a C/C++/Python function launched on the GPU that executes with a grid of thread blocks. Each thread executes the kernel body in parallel — enabling massive parallelism for matrix operations in deep learning.",
+            "id": 280,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is NVIDIA's role with respect to JAX for AI training?",
+            "options": [
+                "A) NVIDIA developed JAX as an alternative to CUDA",
+                "B) NVIDIA provides XLA compiler integration and optimised CUDA/cuDNN/cuBLAS backends for JAX, enabling JAX workloads to efficiently use NVIDIA GPUs",
+                "C) JAX cannot run on NVIDIA GPUs",
+                "D) NVIDIA provides JAX only for inference, not training"
+            ],
+            "answer": "B",
+            "explanation": "JAX (Google) compiles through XLA, which has optimised NVIDIA GPU backends. NVIDIA cuDNN and cuBLAS are leveraged through XLA, allowing JAX's functional transformations (jit, vmap, pmap) to run efficiently on NVIDIA hardware.",
+            "id": 281,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is the purpose of NVIDIA's cuFFT library?",
+            "options": [
+                "A) GPU-accelerated Fast Fourier Transform for signal processing and certain CNN optimisations",
+                "B) A framework for fast fine-tuning of transformer models",
+                "C) A CUDA memory management library for FFT buffer allocation",
+                "D) A network fabric tuning tool for InfiniBand"
+            ],
+            "answer": "A",
+            "explanation": "cuFFT provides GPU-accelerated FFT/IFFT operations. FFTs are used in signal processing, medical imaging (MRI reconstruction), and in some CNN implementations that compute convolutions via the frequency domain.",
+            "id": 282,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'model drift' in production AI systems and why does it matter operationally?",
+            "options": [
+                "A) Gradual GPU memory degradation affecting model weights",
+                "B) The degradation of a deployed model's performance over time as the real-world data distribution shifts away from the training distribution — requires monitoring and triggering retraining or model updates",
+                "C) A GPU clock frequency variation during long inference runs",
+                "D) Weight decay regularisation applied during inference"
+            ],
+            "answer": "B",
+            "explanation": "Data drift occurs when input distributions change (seasonal shifts, new user behaviour). Concept drift occurs when the underlying relationship between inputs and outputs changes. Both cause deployed model accuracy to degrade, requiring drift detection metrics and retraining pipelines.",
+            "id": 283,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'few-shot prompting' and how does it improve LLM task performance?",
+            "options": [
+                "A) Training a model on a few examples before deployment",
+                "B) Including a small number of demonstration input-output examples in the prompt, showing the model the expected format and reasoning pattern, significantly improving accuracy on structured tasks",
+                "C) A technique for reducing GPU memory usage during LLM inference",
+                "D) An embedding technique for few-shot classification"
+            ],
+            "answer": "B",
+            "explanation": "Few-shot prompting (in-context learning) provides 1–10 labelled examples directly in the prompt. The model infers the task pattern from demonstrations without weight updates, leveraging LLMs' ability to learn from context.",
+            "id": 284,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What distinguishes NVIDIA's H200 from the H100?",
+            "options": [
+                "A) H200 uses a different compute architecture (Blackwell vs Hopper)",
+                "B) H200 uses the same Hopper GPU die as H100 but with HBM3e memory (141 GB vs 80 GB, ~4.8 TB/s vs 3.35 TB/s bandwidth), significantly increasing memory capacity and bandwidth for LLM inference",
+                "C) H200 has lower compute performance but lower power consumption",
+                "D) H200 introduces the Transformer Engine not present in H100"
+            ],
+            "answer": "B",
+            "explanation": "H200 is an H100 die with upgraded HBM3e: 141GB capacity (1.75× H100) at 4.8 TB/s bandwidth (1.43× H100). The extra memory and bandwidth are directly beneficial for LLM inference where KV cache and model weights are memory-bound.",
+            "id": 285,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is a 'diffusion model' in generative AI?",
+            "options": [
+                "A) A model that diffuses training data across GPU nodes",
+                "B) A generative model that learns to reverse a gradual noising process, generating high-quality images, audio, or video by iteratively denoising from pure noise",
+                "C) A model architecture for spreading computation across multiple GPUs",
+                "D) A technique for distributing gradient updates in asynchronous training"
+            ],
+            "answer": "B",
+            "explanation": "Diffusion models (Stable Diffusion, DALL-E 3) train by adding noise to data and learning the reverse denoising process. At inference, they sample from Gaussian noise and iteratively denoise, producing high-quality, diverse samples.",
+            "id": 286,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is the purpose of NVIDIA's Holoscan platform?",
+            "options": [
+                "A) A GPU cluster monitoring platform",
+                "B) A real-time AI sensor processing platform for medical devices and industrial equipment, enabling inference on live sensor streams with ultra-low latency",
+                "C) A large-scale LLM training framework",
+                "D) An edge networking optimisation tool"
+            ],
+            "answer": "B",
+            "explanation": "Holoscan SDK is designed for latency-critical AI applications processing real-time sensor streams (ultrasound, endoscopy, industrial cameras), providing a graph-based dataflow framework optimised for NVIDIA hardware.",
+            "id": 287,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is the relationship between pre-training data quality and LLM capability?",
+            "options": [
+                "A) Data quantity is the only factor; quality does not matter",
+                "B) Both quantity and quality matter — diverse, high-quality, deduplicated data from web, books, code, and specialised sources (filtered for toxicity and quality) produces more capable, reliable models than raw unfiltered internet scrapes of equal size",
+                "C) Higher data quality always requires less compute",
+                "D) Pre-training data quality only affects fine-tuning performance"
+            ],
+            "answer": "B",
+            "explanation": "Recent research (Llama, Mistral, Falcon) shows that carefully curated, deduplicated, high-quality datasets produce models outperforming larger models trained on low-quality data. Quality filtering, deduplication, and source diversity are critical.",
+            "id": 288,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'tensor decomposition' as an AI model compression technique?",
+            "options": [
+                "A) Splitting tensors across GPUs for distributed training",
+                "B) Factorising large weight matrices into products of smaller matrices (e.g., SVD, CP decomposition), reducing the number of parameters and compute while approximating the original layer's function",
+                "C) Converting tensor data types from FP32 to FP16",
+                "D) Decomposing model graphs into subgraphs for parallel execution"
+            ],
+            "answer": "B",
+            "explanation": "Tensor decomposition (Tucker, CP, SVD) approximates large weight matrices as products of smaller factors, reducing both parameter count and FLOPs. It is used alongside pruning and quantisation for model compression.",
+            "id": 289,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'multi-modal AI' and what are some examples of NVIDIA solutions in this space?",
+            "options": [
+                "A) AI that runs on multiple GPU models simultaneously",
+                "B) AI that processes and combines multiple modalities (text, image, audio, video) — NVIDIA solutions include CLIP-based models, Flamingo-style VLMs, and NVIDIA's Cosmos world foundation model for multi-modal understanding",
+                "C) AI deployed across multiple data centre locations",
+                "D) Using multiple AI model types in a single inference pipeline"
+            ],
+            "answer": "B",
+            "explanation": "Multi-modal AI processes different data types together (e.g., image+text for visual question answering). NVIDIA's ecosystem includes optimised containers for vision-language models (LLaVA, InternVL) and the Cosmos world foundation model on NGC.",
+            "id": 290,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'activation function' in the context of neural networks and why does ReLU dominate deep learning?",
+            "options": [
+                "A) A GPU kernel that activates compute units",
+                "B) A non-linear function applied element-wise to layer outputs — ReLU (max(0,x)) dominates because it avoids the vanishing gradient problem of sigmoid/tanh, is computationally cheap, and enables sparse activations",
+                "C) A function that activates Tensor Cores for a compute kernel",
+                "D) The initialisation function for neural network weights"
+            ],
+            "answer": "B",
+            "explanation": "Activation functions introduce non-linearity (without which deep networks collapse to linear transformations). ReLU's gradient is 1 for positive inputs (no vanishing) and 0 for negative (sparsity). Variants: Leaky ReLU, GELU (used in transformers), SwiGLU.",
+            "id": 291,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'online learning' in AI and how does it differ from batch learning?",
+            "options": [
+                "A) Training a model using internet-sourced data",
+                "B) Online learning updates the model incrementally with each new data point or small batch as data arrives; batch learning trains on the full dataset at once — online is suitable for streaming data and evolving distributions but can be unstable",
+                "C) Training models that run directly on cloud infrastructure",
+                "D) Serving models via a web API"
+            ],
+            "answer": "B",
+            "explanation": "Online learning continuously updates model weights from streaming data (click streams, sensor readings), adapting to distribution shifts without full retraining. Challenges include catastrophic forgetting and learning rate management.",
+            "id": 292,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is the purpose of the NVIDIA GPU's dedicated video encode/decode engine (NVENC/NVDEC)?",
+            "options": [
+                "A) It provides additional compute for AI training workloads",
+                "B) Dedicated fixed-function hardware that handles H.264/H.265/AV1 encode/decode without using CUDA cores, enabling high-throughput video processing pipelines (e.g., Metropolis video analytics) while leaving CUDA cores free for AI inference",
+                "C) It manages PCIe DMA transfers for video data",
+                "D) It provides memory bandwidth for video processing tasks"
+            ],
+            "answer": "B",
+            "explanation": "NVENC/NVDEC are separate fixed-function engines on NVIDIA GPUs. They handle video codec operations without consuming CUDA SM resources, enabling simultaneous high-throughput video decode and AI inference on the same GPU.",
+            "id": 293,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is 'contrastive learning' and what is CLIP an example of?",
+            "options": [
+                "A) A training method that uses adversarial examples to improve robustness",
+                "B) A self-supervised learning approach that trains a model to map similar pairs close together and dissimilar pairs far apart in embedding space — CLIP aligns image and text embeddings by contrasting matching pairs against non-matching ones",
+                "C) A gradient descent variant that alternates between layers",
+                "D) A technique for comparing two model checkpoints to select the best"
+            ],
+            "answer": "B",
+            "explanation": "Contrastive learning (SimCLR, MoCo, CLIP) pulls together embeddings of semantically similar items and pushes apart dissimilar ones. CLIP learns joint image-text embeddings from 400M image-caption pairs, enabling zero-shot image classification.",
+            "id": 294,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
+        },
+        {
+            "question": "What is NVIDIA's NeMo Guardrails and what problem does it solve?",
+            "options": [
+                "A) A physical security barrier for DGX server racks",
+                "B) A programmable framework for adding safety rails to LLM applications, defining rules that prevent the model from producing off-topic, harmful, or policy-violating outputs in production",
+                "C) A GPU memory guard against out-of-bounds CUDA accesses",
+                "D) A network security tool for InfiniBand cluster protection"
+            ],
+            "answer": "B",
+            "explanation": "NeMo Guardrails provides a Colang-based specification language for LLM conversation flows, enabling developers to define topics the assistant must avoid, require, or redirect — critical for deploying LLMs in regulated or customer-facing applications.",
+            "id": 295,
+            "section": "Essential AI Knowledge",
+            "difficulty": "Medium"
         }
     ]
 };

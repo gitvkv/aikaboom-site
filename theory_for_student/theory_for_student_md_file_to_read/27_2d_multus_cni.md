@@ -49,6 +49,28 @@ Without Multus, you would need to run separate Pods or use complex workarounds. 
 
 ---
 
+
+### 📊 Visual Representation: Multus CNI Multi-Interface Pod Bindings
+This diagram displays Multus CNI: attaching a primary management interface (flannel) and secondary RDMA network interfaces (SR-IOV) to a Pod.
+
+```mermaid
+flowchart LR
+    subgraph Pod["Pod Network Namespace"]
+        eth0["eth0 (Primary CNI - Control Plane / IP)"]
+        net1["net1 (Secondary CNI - Data Plane / RoCE)"]
+    end
+    Multus["Multus Multi-CNI Engine"] --> eth0
+    Multus --> net1
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Multus cpu;
+    class eth0,net1 memory;
+```
+
+
 ## 📋 Example Workflow (No Code Blocks)
 
 Here is a simplified workflow for attaching a second network interface to an AI training Pod:

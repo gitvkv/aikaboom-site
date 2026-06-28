@@ -61,6 +61,25 @@ Welcome to your first mock exam in the NVIDIA-Certified Associate: AI Infrastruc
 
 ---
 
+
+### 📊 Visual Representation: Mock Exam Foundations validation
+This diagram maps mock exam structures, auditing understanding of hardware specs and basic server configurations.
+
+```mermaid
+flowchart LR
+    Mock["Foundations Mock"] --> Core["Processor specs (Cores / Caches / NUMA)"]
+    Mock --> PowerTemp["Power & Cooling (CRAC / PUE / TDP)"]
+    Mock --> Bus["System Bus (PCIe widths / lanes)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Mock cpu;
+    class Core,PowerTemp,Bus memory;
+```
+
+
 ## 🕵️ Sample Exam Questions (With Explanations)
 
 ### Question 1

@@ -40,6 +40,50 @@ The physical distance between the cache and the CPU core directly affects **late
 
 **The golden rule**: Every millimeter of distance adds latency. Every cycle of latency slows down your application. Engineers design workloads to maximize "cache hits" (data found in L1) and minimize "cache misses" (data must be fetched from RAM).
 
+### 📊 Visual Representation: CPU Cache Hierarchy and Latency Levels
+
+This diagram visualizes the multi-level CPU cache hierarchy, showing how private L1 and L2 caches serve individual cores while a shared L3 cache acts as a buffer before main memory.
+
+```mermaid
+flowchart TD
+    subgraph Core0_Group["Core 0 Domain"]
+        Core0["CPU Core 0"]
+        L1_0["L1 Cache (Private, ~2-4 cycles)"]
+        L2_0["L2 Cache (Private, ~10-20 cycles)"]
+    end
+
+    subgraph Core1_Group["Core 1 Domain"]
+        Core1["CPU Core 1"]
+        L1_1["L1 Cache (Private, ~2-4 cycles)"]
+        L2_1["L2 Cache (Private, ~10-20 cycles)"]
+    end
+
+    L3["L3 Cache (Shared, ~30-50 cycles)"]
+    RAM["System RAM (~Hundreds of cycles)"]
+
+    %% Connections inside Core 0 Domain
+    Core0 --> L1_0
+    L1_0 --> L2_0
+    
+    %% Connections inside Core 1 Domain
+    Core1 --> L1_1
+    L1_1 --> L2_1
+
+    %% Core domains to L3 and RAM
+    L2_0 --> L3
+    L2_1 --> L3
+    L3 --> RAM
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Core0,Core1 cpu;
+    class L1_0,L2_0,L1_1,L2_1,L3 memory;
+    class RAM system;
+```
+
+
 ---
 
 ## 🛠️ How Engineers Use This Knowledge

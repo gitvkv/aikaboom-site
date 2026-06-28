@@ -32,6 +32,21 @@ The operation is: **output = input × weight_matrix + bias**
 
 ---
 
+### 📊 Visual Representation: Matrix 2D Tensor Grid
+This diagram displays a 2D tensor (matrix), arranging elements in rows and columns to represent grid-like datasets.
+
+```mermaid
+flowchart LR
+    Matrix["Matrix: 2 Rows x 3 Columns"] --> D2["2-Dimensional Tensor"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class D2 cpu;
+    class Matrix memory;
+```
+
 ## 🛠️ Visualizing a Simple Weight Matrix
 
 Imagine a tiny layer with 3 inputs and 2 outputs:
@@ -77,3 +92,4 @@ Consider a fully connected layer that processes a 28×28 grayscale image (784 pi
 ## 🧪 Key Takeaway for New Engineers
 
 The weight matrix is the "brain" of a fully connected layer — it stores the learned relationships between inputs and outputs. When you see a neural network diagram with arrows connecting circles, those arrows are all stored in a single 2D array called the weight matrix. Engineers optimize how this matrix is stored, moved, and multiplied to make AI training and inference faster.
+

@@ -53,6 +53,23 @@ A single 400 Gb/s InfiniBand link uses **8 optical fibers** (4 for transmitting,
 
 ---
 
+### 📊 Visual Representation: InfiniBand Fiber Cabling Paths
+This diagram displays InfiniBand fiber connections, showing optical transceiver interfaces modulating data signals over fiber cables.
+
+```mermaid
+flowchart LR
+    HCA["HCA OSFP Port"] -->|Laser Modulation| MPO["MPO Fiber Cable"]
+    MPO -->|Fiber Link| Switch["Quantum Switch Port"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class HCA cpu;
+    class MPO memory;
+    class Switch system;
+```
+
 ## 🕵️ Key Considerations for Engineers
 
 - **Polarity**: MTP/MPO connectors have a key orientation. Ensure your cabling follows the correct polarity method (Type A, B, or C) to match your transceivers.

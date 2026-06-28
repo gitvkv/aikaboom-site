@@ -35,6 +35,22 @@ The BlueField DPU contains specialized hardware engines that handle the followin
 
 ---
 
+### 📊 Visual Representation: BlueField DPU RoCE Offload Engine
+This diagram displays how BlueField DPUs offload network protocol overhead from host CPUs, running security and storage tasks on ARM cores.
+
+```mermaid
+flowchart LR
+    HostCPU["Host CPU (Zero overhead)"] --- DPU["BlueField DPU ARM Cores"]
+    DPU --- RoCE["Hardware RoCE Engines (Zero-copy DMA)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class DPU,RoCE cpu;
+    class HostCPU memory;
+```
+
 ## 📊 Comparison: CPU-Based vs. BlueField Hardware Offload
 
 | Feature | CPU-Based RoCE | BlueField Hardware Offload |

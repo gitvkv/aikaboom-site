@@ -46,6 +46,26 @@ When you install NVIDIA drivers using the official `.run` installer or through y
 
 ---
 
+
+### 📊 Visual Representation: Dynamic Kernel Module Support (DKMS) flow
+This flowchart shows DKMS: when host kernels update, DKMS automatically rebuilds proprietary NVIDIA driver modules in the background.
+
+```mermaid
+flowchart LR
+    KernelUpdate["Kernel Update Detected"] --> DKMS["DKMS Daemon Triggered"]
+    DKMS --> Build["Compile NVIDIA Driver for New Kernel"]
+    Build --> Load["Load module on next boot"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class DKMS cpu;
+    class Build,Load system;
+    class KernelUpdate memory;
+```
+
+
 ## 📊 DKMS vs. Manual Driver Management
 
 | Feature | With DKMS | Without DKMS |

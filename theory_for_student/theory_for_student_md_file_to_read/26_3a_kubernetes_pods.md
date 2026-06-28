@@ -52,6 +52,27 @@ This design is especially useful for:
 
 ---
 
+
+### 📊 Visual Representation: Kubernetes Pod Resource Sharing
+This diagram displays how containers inside a single Pod share namespaces (IP address, volume mounts, ports).
+
+```mermaid
+flowchart LR
+    subgraph Pod["Single Pod boundaries"]
+        NetNS["Shared Network Namespace (localhost IP)"]
+        C1["App Container (Port 80)"] --- NetNS
+        C2["Sidecar Container (Port 8080)"] --- NetNS
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NetNS cpu;
+    class C1,C2 memory;
+```
+
+
 ## 🕵️ Pod Lifecycle for AI Engineers
 
 Understanding how Pods behave is critical for troubleshooting AI workloads:

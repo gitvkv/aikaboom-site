@@ -4,11 +4,10 @@
 
 ---
 
-## 🧠 Context Introduction
-
 In AI infrastructure, GPUs are expensive and powerful resources that often need to be shared among multiple users. Instead of giving every user direct access to the GPU devices (which can lead to conflicts or security issues), Linux groups provide a clean way to control who can use the GPUs. This section covers two essential commands — **groupadd** and **gpasswd** — that help you create and manage these groups for shared GPU access.
 
 Think of a group as a "club membership." Once a user is added to the GPU group, they automatically get permission to use the GPU devices without needing special administrative rights every time.
+
 
 ---
 
@@ -85,6 +84,39 @@ Here is the logical flow of how groups work with GPUs:
 3. **Add users to the group** — Use **gpasswd -a** to add each engineer who needs GPU access.
 4. **User logs in again** — The user logs out and back in (or starts a new session) so the group membership takes effect.
 5. **User runs AI workloads** — The user can now run GPU-accelerated applications (like TensorFlow or PyTorch) without permission errors.
+
+### 📊 Visual Representation: Group-Based GPU Access Control
+This diagram shows how users are consolidated into a dedicated Linux group (e.g., `gpuusers`) to securely share write/read access to physical NVIDIA GPU device files, while unauthorized users are blocked.
+
+```mermaid
+flowchart TD
+    subgraph Users["System Users"]
+        Alice["User: Alice"]
+        Bob["User: Bob"]
+        Charlie["User: Charlie<br>(Not in gpuusers)"]
+    end
+
+    subgraph AccessGroup["Linux Group: gpuusers (GID: 1200)"]
+        Alice
+        Bob
+    end
+
+    subgraph HW["NVIDIA GPU Hardware Interfaces"]
+        dev0["/dev/nvidia0"]
+        dev1["/dev/nvidia1"]
+    end
+
+    AccessGroup -->|Read/Write Permission| HW
+    Charlie -->|Access Denied| HW
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class dev0,dev1 cpu;
+    class Alice,Bob,Charlie memory;
+    class AccessGroup,Users system;
+```
 
 ---
 

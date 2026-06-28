@@ -81,6 +81,25 @@ To run AI workloads on GPUs in K8s, engineers must:
 
 ---
 
+
+### 📊 Visual Representation: Mock Exam Software & Operations validation
+This diagram maps software mock exams, auditing understanding of docker runtimes, DCGM, and Kubernetes Operators.
+
+```mermaid
+flowchart LR
+    Mock["Software/Ops Mock"] --> Runtime["Runtimes (Container Toolkit / CDI)"]
+    Mock --> Ops["Monitoring (DCGM queries / Prometheus alerts)"]
+    Mock --> Orchestrators["Virtualization (MIG profiles / vGPU)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Mock cpu;
+    class Runtime,Ops,Orchestrators memory;
+```
+
+
 ## 📈 Monitoring AI Infrastructure
 
 ### 🔍 What to Monitor in AI Operations

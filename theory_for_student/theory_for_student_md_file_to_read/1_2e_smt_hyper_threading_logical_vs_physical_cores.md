@@ -109,6 +109,49 @@ When you run an AI training script:
 - With SMT: 8 threads running, but sharing resources in pairs
 - Performance gain: Typically 20-30% more throughput for mixed workloads
 
+### 📊 Visual Representation: Physical vs. Logical Core Mapping
+
+This diagram shows how SMT/Hyper-Threading maps 8 logical cores visible to the operating system onto 4 physical hardware CPU cores, illustrating execution resource sharing.
+
+```mermaid
+flowchart TD
+    subgraph OS_Layer["Operating System (OS) View: 8 Logical Cores"]
+        L0["Logical Core 0"]:::memory
+        L1["Logical Core 1"]:::memory
+        L2["Logical Core 2"]:::memory
+        L3["Logical Core 3"]:::memory
+        L4["Logical Core 4"]:::memory
+        L5["Logical Core 5"]:::memory
+        L6["Logical Core 6"]:::memory
+        L7["Logical Core 7"]:::memory
+    end
+
+    subgraph Hardware_Layer["Hardware Layer: 4 Physical Cores"]
+        Core0["Physical Core 0 (ALU, FPU, L1 Cache)"]:::cpu
+        Core1["Physical Core 1 (ALU, FPU, L1 Cache)"]:::cpu
+        Core2["Physical Core 2 (ALU, FPU, L1 Cache)"]:::cpu
+        Core3["Physical Core 3 (ALU, FPU, L1 Cache)"]:::cpu
+    end
+
+    L0 -->|Share execution units| Core0
+    L1 -->|Share execution units| Core0
+    L2 -->|Share execution units| Core1
+    L3 -->|Share execution units| Core1
+    L4 -->|Share execution units| Core2
+    L5 -->|Share execution units| Core2
+    L6 -->|Share execution units| Core3
+    L7 -->|Share execution units| Core3
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Core0,Core1,Core2,Core3 cpu;
+    class L0,L1,L2,L3,L4,L5,L6,L7 memory;
+    class OS_Layer,Hardware_Layer system;
+```
+
+
 ---
 
 ## ✅ Key Takeaways for New Engineers

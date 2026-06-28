@@ -32,6 +32,24 @@ The GPU memory hierarchy, from fastest/smallest to slowest/largest:
 
 ---
 
+### 📊 Visual Representation: Memory Latency vs. Bandwidth Performance Impact
+This flowchart demonstrates how latency (the delay before data transfer begins) and bandwidth (the data transfer rate) limit performance.
+
+```mermaid
+flowchart LR
+    Request["Memory Access Request"] --> Latency["Latency (Time to first byte / e.g., 200ns)"]
+    Latency --> Bandwidth["Bandwidth (Data throughput / e.g., 3.35 TB/s)"]
+    Bandwidth --> Process["GPU Core Compute"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Process cpu;
+    class Bandwidth memory;
+    class Request,Latency system;
+```
+
 ## 🕵️ Why Kernel Optimization Targets L1 / Shared Memory
 
 ### 1. 🚀 Latency Reduction
@@ -100,3 +118,4 @@ Consider a simple matrix multiply kernel:
 4. Study **bank conflicts** in shared memory — they can reduce performance if not handled.
 
 > 💡 **Rule of thumb for new engineers:** If your kernel spends more than 50% of its time waiting for memory (memory-bound), the first optimization to try is moving frequently accessed data from HBM to shared memory.
+

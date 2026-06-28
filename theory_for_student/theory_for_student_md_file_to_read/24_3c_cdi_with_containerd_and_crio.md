@@ -58,6 +58,25 @@ The **NVIDIA Container Toolkit** (specifically the `nvidia-ctk` command) is resp
 
 ---
 
+
+### 📊 Visual Representation: CRI containerd/CRI-O CDI support
+This diagram displays how modern Container Runtimes load CDI spec files to expose named devices directly.
+
+```mermaid
+flowchart LR
+    containerd["containerd Runtime"] -->|1. Load Specs| CDIDir["CDI Directory (/etc/cdi/)"]
+    CDIDir -->|2. Mount device configuration| Pod["Kubernetes Pod Container"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Pod cpu;
+    class CDIDir memory;
+    class containerd system;
+```
+
+
 ## 🧩 How Kubernetes Pods Request GPUs via CDI
 
 When you define a pod that needs a GPU, you specify it in the pod spec like this:

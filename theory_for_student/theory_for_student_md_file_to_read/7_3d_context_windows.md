@@ -51,6 +51,24 @@ The reason longer contexts require quadratically more memory lies in the **self-
 
 ---
 
+### 📊 Visual Representation: Context Window Scaling Memory Overhead
+This diagram displays the relationship between input/output sequence length and the quadratic scaling memory footprint of standard Self-Attention.
+
+```mermaid
+flowchart LR
+    Seq["Sequence Length (N)"] --> Attn["Attention Matrix (N x N)"]
+    Attn --> Quadratic["Quadratic Space Complexity O(N²)"]
+    Quadratic --> GPU_RAM["GPU VRAM Limit / Out of Memory"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Attn cpu;
+    class GPU_RAM memory;
+    class Seq,Quadratic system;
+```
+
 ## 🛠️ Why This Matters for Engineers
 
 ### Memory Bottlenecks

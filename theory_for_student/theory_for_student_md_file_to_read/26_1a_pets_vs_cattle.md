@@ -64,6 +64,28 @@ In modern AI infrastructure, servers are treated like cattle in a herd. Each ser
 
 ---
 
+
+### 📊 Visual Representation: Pets vs. Cattle Infrastructure Analogy
+This diagram contrasts 'Pets' infrastructure (manually configured, fragile servers) with 'Cattle' (stateless, automatically replaced container pods).
+
+```mermaid
+flowchart LR
+    subgraph Pets["Pets (Manual / Unique)"]
+        P1["AI Server 'Zeus' (Requires manual care)"]
+    end
+    subgraph Cattle["Cattle (Automated / Identical)"]
+        C1["Replica Pod 1"] --- C2["Replica Pod 2 (Replacements spawn instantly)"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class C1,C2 cpu;
+    class P1 memory;
+```
+
+
 ## ⚙️ Why This Shift Matters for AI Infrastructure
 
 AI workloads — especially training large models — require hundreds or thousands of GPUs working together. If you treat each GPU server as a pet, you face:

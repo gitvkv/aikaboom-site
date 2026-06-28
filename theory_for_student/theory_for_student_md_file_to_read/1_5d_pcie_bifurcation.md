@@ -38,6 +38,36 @@ Here are the typical configurations you'll encounter:
 | x16 | x4/x4/x4/x4 | 4 x4 links | Four NVMe drives or four low-power network cards |
 | x16 | x8/x4/x4 | 1 x8 + 2 x4 links | One GPU + two NVMe drives |
 
+### 📊 Visual Representation: PCIe Bifurcation Modes
+This diagram compares a standard non-bifurcated x16 slot with bifurcated configurations (x8/x8 and x4/x4/x4/x4), showing how physical traces are divided for separate devices.
+
+```mermaid
+flowchart TD
+    subgraph Mode1 [Standard: No Bifurcation]
+        Slot1[Physical x16 Slot] -->|Single Link| Dev1[NVIDIA GPU - x16]
+    end
+
+    subgraph Mode2 [Bifurcated: x8 / x8]
+        Slot2[Physical x16 Slot] -->|Link 1 - x8| Dev2a[NVIDIA GPU - x8]
+        Slot2 -->|Link 2 - x8| Dev2b[NVIDIA GPU - x8]
+    end
+
+    subgraph Mode3 [Bifurcated: x4 / x4 / x4 / x4]
+        Slot3[Physical x16 Slot] -->|Link 1 - x4| SSD1[NVMe SSD - x4]
+        Slot3 -->|Link 2 - x4| SSD2[NVMe SSD - x4]
+        Slot3 -->|Link 3 - x4| SSD3[NVMe SSD - x4]
+        Slot3 -->|Link 4 - x4| SSD4[NVMe SSD - x4]
+    end
+
+    class Slot1,Slot2,Slot3 system;
+    class Dev1,Dev2a,Dev2b memory;
+    class SSD1,SSD2,SSD3,SSD4 memory;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+```
+
 ---
 
 ## 🕵️ How Does Bifurcation Work Physically?

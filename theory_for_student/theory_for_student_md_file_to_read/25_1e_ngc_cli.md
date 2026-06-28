@@ -47,6 +47,25 @@ It replaces manual web downloads with a repeatable, scriptable interface.
 
 ---
 
+
+### 📊 Visual Representation: NGC CLI Command Modules
+This diagram outlines the subcommand groups of the NGC CLI used to download resources programmatically.
+
+```mermaid
+flowchart LR
+    NGCCLI["ngc Command Utility"] --> Config["ngc config (Setup API key)"]
+    NGCCLI --> Registry["ngc registry (Download containers)"]
+    NGCCLI --> Model["ngc model (Download weights)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NGCCLI cpu;
+    class Config,Registry,Model memory;
+```
+
+
 ## 🕵️ How It Works (Conceptual Flow)
 
 1. **Install** the NGC CLI on your system (Linux, macOS, or Windows).

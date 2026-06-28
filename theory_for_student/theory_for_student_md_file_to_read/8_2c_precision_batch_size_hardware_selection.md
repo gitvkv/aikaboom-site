@@ -47,6 +47,25 @@ Batch size determines how many training samples are processed before the model's
 
 ---
 
+### 📊 Visual Representation: Batch Size and Precision VRAM Trade-offs
+This flowchart maps out the parameters driving GPU hardware selection: balancing batch sizes and math precision choices against VRAM constraints.
+
+```mermaid
+flowchart LR
+    Precision["Precision Selection (FP32/FP16/FP8)"] --> VRAM{"VRAM Constraints"}
+    Batch["Batch Size (16, 32, 64...)"] --> VRAM
+    VRAM -->|Fits in Cache| High_Util["High Tensor Core Utilization"]
+    VRAM -->|Exceeds VRAM| OutOfMem["Out of Memory (OOM) Error"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class High_Util cpu;
+    class VRAM,OutOfMem memory;
+    class Precision,Batch system;
+```
+
 ## 🖥️ Hardware — Matching Architecture to Workload
 
 Hardware choice determines what precision and batch sizes are feasible. Different GPUs and accelerators have different compute capabilities, memory sizes, and specialized units.

@@ -4,13 +4,12 @@
 
 ---
 
-## 🧭 Context Introduction
-
 In AI infrastructure operations, many routine tasks — such as installing GPU drivers, managing storage volumes, or restarting services — require **administrative (root) privileges**. However, handing out the root password to every engineer is a serious security risk. Instead, Linux provides a controlled mechanism called **sudo** (short for "superuser do").
 
 The **sudoers file** is the configuration file that defines *who* can run *what* commands as *which* user. The **visudo** command is the safe, recommended way to edit this file — it prevents syntax errors that could lock everyone out of administrative access.
 
 This topic covers how to safely grant and manage administrative privileges for engineers working with AI infrastructure.
+
 
 ---
 
@@ -43,6 +42,27 @@ The sudoers file (located at **/etc/sudoers**) is the central policy file for th
 - Make changes to the sudoers file
 - Save and exit — visudo automatically validates the syntax
 - If errors exist, visudo shows the problem line and asks what to do (edit again, quit, or force save — the last option is dangerous)
+
+### 📊 Visual Representation: The visudo Verification Process
+This flowchart illustrates the editing and verification lifecycle of `visudo`, highlighting how syntax validation prevents corrupted configurations in `/etc/sudoers`.
+
+```mermaid
+flowchart LR
+    start["1. Run sudo visudo"] --> edit["2. Edit /etc/sudoers"]
+    edit --> save["3. Save & Exit"]
+    save --> check{"4. Syntax Valid?"}
+    check -->|Yes| apply["5. Apply Changes Safely"]
+    check -->|No| prompt["6. Warning: Re-edit / Abort"]
+    prompt --> edit
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class check cpu;
+    class edit,prompt memory;
+    class start,save,apply system;
+```
 
 ---
 

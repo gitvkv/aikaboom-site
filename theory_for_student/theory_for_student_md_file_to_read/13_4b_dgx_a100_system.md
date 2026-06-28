@@ -52,6 +52,24 @@ The DGX A100 is built around three core components that work in harmony:
 
 ---
 
+### 📊 Visual Representation: DGX A100 System Architecture Layout
+This diagram displays the hardware layout of a DGX A100 system, including x8 A100 GPUs, 6 NVSwitch boards, and dual AMD EPYC Host CPUs.
+
+```mermaid
+flowchart LR
+    AMD_EPYC["Dual AMD EPYC CPUs"] -->|PCIe Gen4| GPUs["8 x A100 GPUs (SXM)"]
+    GPUs -->|NVLink Mesh| NVSwitches["6 x NVSwitches"]
+    GPUs -->|PCIe Gen4| NICs["8 x Mellanox HDR InfiniBand NICs"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPUs cpu;
+    class AMD_EPYC memory;
+    class NVSwitches,NICs system;
+```
+
 ## 🛠️ Why This Matters for Engineers
 
 - **No Bottlenecks:** The balanced design ensures GPUs are never starved of data.

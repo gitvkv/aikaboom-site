@@ -66,6 +66,24 @@ Test the fine-tuned model on a held-out validation set. If performance is poor, 
 
 ---
 
+### 📊 Visual Representation: Supervised Fine-Tuning (SFT) and parameter-efficient LoRA
+This diagram displays how a general foundation base model is adapted to specific domains using labeled datasets and Parameter-Efficient Fine-Tuning (PEFT/LoRA).
+
+```mermaid
+flowchart LR
+    Base["Foundation Base Model"] --> SFT["Supervised Fine-Tuning (SFT)"]
+    DomainData["Instruction-Labeled Data"] --> SFT
+    SFT --> LoRA["LoRA Adapter Weights (PEFT)"]
+    LoRA --> Final["Instruct-Tuned Model (Aligned)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class SFT cpu;
+    class Base,LoRA,DomainData,Final memory;
+```
+
 ## 🕵️ Real-World Example: Fine-Tuning a Legal Document Classifier
 
 **Scenario:** A law firm wants to automatically classify court documents into categories (motion, brief, order, etc.).
@@ -119,3 +137,4 @@ Test the fine-tuned model on a held-out validation set. If performance is poor, 
 Fine-tuning is the **secret weapon** of modern AI engineering. It allows you to build highly specialized, production-ready models without the astronomical cost of training from scratch. As an engineer, mastering fine-tuning means you can deliver domain-specific AI solutions faster, cheaper, and with less data — making you invaluable to any organization deploying AI at scale.
 
 **Remember:** The best model for your task is often not one you train from scratch, but one you adapt from something already great.
+

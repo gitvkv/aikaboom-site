@@ -30,6 +30,25 @@ In traditional AI data pipelines, data travels from storage (NVMe SSDs) to the C
 
 ---
 
+
+### 📊 Visual Representation: GDS vs. Standard Path Bandwidth Scaling
+This diagram contrasts standard POSIX read bandwidth limits with the linear scaling throughput enabled by GDS.
+
+```mermaid
+flowchart LR
+    POSIX["Standard POSIX Path"] -->|Saturates at CPU limit| Bandwidth1["Max 10-15 GB/s"]
+    GDS["GPUDirect Storage (GDS)"] -->|Scales with PCIe lanes| Bandwidth2["Max 50-90+ GB/s (Multi-NIC/SSD)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Bandwidth2 cpu;
+    class Bandwidth1 memory;
+    class POSIX,GDS system;
+```
+
+
 ## 🛠️ Enabling GDS in Your Environment
 
 To achieve the 2x throughput improvement, engineers need to:

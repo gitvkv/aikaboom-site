@@ -70,6 +70,24 @@ The opposite of Write. The local machine reads data directly from the remote mac
 
 ---
 
+### 📊 Visual Representation: RDMA Verbs Client Memory Registration
+This diagram displays how memory pages are locked and registered with the local HCA using the Verbs API.
+
+```mermaid
+flowchart LR
+    App["Application Memory"] -->|ibv_reg_mr| Pin["Pin Memory (No Swapping)"]
+    Pin --> Key["Generate L_Key / R_Key Keys"]
+    Key --> HCA["Register with host HCA DMA Engine"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Pin cpu;
+    class Key,HCA memory;
+    class App system;
+```
+
 ## 🧩 How Verbs Work in Practice
 
 When you write an RDMA application, you follow a sequence of steps:

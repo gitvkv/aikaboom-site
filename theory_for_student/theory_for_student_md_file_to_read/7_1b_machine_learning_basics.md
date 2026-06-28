@@ -67,6 +67,25 @@ The algorithm learns by interacting with an environment, receiving rewards or pe
 
 ---
 
+### 📊 Visual Representation: Machine Learning Model Training and Inference Loop
+This flowchart maps out how raw training data is parsed to fit model weights, which are subsequently deployed to predict results from new data.
+
+```mermaid
+flowchart LR
+    Data["Training Data"] --> Train["Model Training (Optimization)"]
+    Train --> Model["Trained Model Parameters"]
+    NewData["New Inference Input"] --> Model
+    Model --> Predict["Prediction / Output"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Train cpu;
+    class Model memory;
+    class Data,NewData,Predict system;
+```
+
 ## 🛠️ Common ML Algorithms for Beginners
 
 - **Linear Regression** — Predicts a continuous value (e.g., house price based on size).
@@ -121,3 +140,4 @@ Machine Learning is not magic — it is a systematic approach to finding pattern
 - Infrastructure must support the entire ML lifecycle, not just the training step.
 
 As you progress, you will learn to evaluate models, tune hyperparameters, and deploy ML systems at scale — but understanding these fundamentals is your first step.
+

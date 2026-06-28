@@ -54,6 +54,25 @@ A **queue pair (QP)** is the communication channel between a host and a controll
 
 ---
 
+
+### 📊 Visual Representation: NVMe-oF Initiator-Target Subsystem Mapping
+This diagram displays the relationship between the host Initiator, the fabric, and the target controller subsystems in NVMe-oF.
+
+```mermaid
+flowchart LR
+    Host["Host System (Initiator)"] -->|Fabric Connect| TargetPort["Target Controller Port"]
+    TargetPort -->|Map subsystem| Namespace["NVMe Subsystem (Logical Namespaces)"]
+    Namespace --> SSD["Physical SSD Controller Flash Units"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class TargetPort cpu;
+    class Host,Namespace,SSD memory;
+```
+
+
 ## 📊 Comparison Table: Namespaces vs. Controllers vs. Queue Pairs
 
 | Component | Role | Scope | Example in AI Context |

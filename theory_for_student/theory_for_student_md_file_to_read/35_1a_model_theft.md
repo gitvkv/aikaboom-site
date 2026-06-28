@@ -69,6 +69,25 @@ Model theft occurs when an unauthorized party gains access to a trained model's 
 
 ---
 
+
+### 📊 Visual Representation: Model Weights exfiltration path
+This diagram displays model theft: unauthorized download of model weights files through exposed storage endpoints.
+
+```mermaid
+flowchart LR
+    Storage["Exposed Model storage bucket"] --> Download["Unauthorized Copy (Model weights file)"]
+    Download --> Reconstruct["Run stolen weights on local system"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Storage cpu;
+    class Download memory;
+    class Reconstruct system;
+```
+
+
 ## 🕵️ Real-World Example: Protecting a Model in Storage
 
 Imagine you have a trained model file called **model_weights.h5** stored in a cloud bucket. Here is how a secure workflow might look:

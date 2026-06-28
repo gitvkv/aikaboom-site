@@ -36,6 +36,24 @@ NVLink-C2C (Chip-to-Chip) is a **die-to-die** interconnect designed to connect t
 
 ---
 
+### 📊 Visual Representation: NVLink-C2C vs. Standard NVLink Interconnects
+This diagram contrasts NVLink-C2C (connecting CPUs to GPUs on the same package) against standard NVLink (connecting discrete GPUs).
+
+```mermaid
+flowchart LR
+    Interconnects["Interconnect Types"] --> C2C["NVLink-C2C (CPU-to-GPU / Coherent Memory)"]
+    Interconnects --> NV["Standard NVLink (GPU-to-GPU / MMA Clusters)"]
+    C2C -->|900 GB/s| GH200["GH200 / GB200 Superchip"]
+    NV -->|900-1800 GB/s| SXM_Nodes["HGX Baseboard Nodes"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GH200,SXM_Nodes cpu;
+    class C2C,NV memory;
+```
+
 ## 📊 Comparison Table: NVLink-C2C vs. Standard NVLink
 
 | Feature | Standard NVLink | NVLink-C2C |

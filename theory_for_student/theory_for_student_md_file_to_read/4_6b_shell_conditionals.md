@@ -6,7 +6,7 @@
 
 In AI infrastructure operations, your scripts often need to make decisions based on system states — like checking if a GPU is available, verifying disk space, or confirming that a model file exists. Conditionals are the decision-making tools that allow your Bash scripts to respond intelligently to different situations. This section covers the fundamental conditional structures: **if/elif/else**, **test expressions**, and **compound conditions**.
 
----
+
 
 ## ⚙️ The Basic if Statement
 
@@ -51,6 +51,26 @@ else
 fi
 ```
 📤 Output: **Standard GPU configuration**
+
+### 📊 Visual Representation: Conditional Branching Logic (if/elif/else)
+This flowchart maps the decision-making branching logic of an `if-elif-else` conditional evaluation check for GPU cluster scaling resources.
+
+```mermaid
+flowchart LR
+    Start["Check GPUs"] --> check8{"Count >= 8?"}
+    check8 -->|Yes| High["High-Perf Cluster"]
+    check8 -->|No| check4{"Count >= 4?"}
+    check4 -->|Yes| Standard["Standard Config"]
+    check4 -->|No| Insufficient["Insufficient Resources"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class check8,check4 cpu;
+    class High,Standard memory;
+    class Start,Insufficient system;
+```
 
 ---
 

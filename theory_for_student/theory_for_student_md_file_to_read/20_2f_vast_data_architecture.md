@@ -31,6 +31,25 @@ VAST Data uses a **shared-nothing architecture** with a global namespace. Here�
 
 ---
 
+
+### 📊 Visual Representation: VAST Data DASE (Disaggregated Shared Everything)
+This diagram displays VAST Data's DASE architecture, showing stateless containers accessing a shared pool of NVMe-oF flash storage over NVLink/RoCE fabrics.
+
+```mermaid
+flowchart LR
+    Hosts["Stateless VAST Container Nodes"] -->|NVMe-oF fabric| Fabric["RoCE / InfiniBand Fabric"]
+    Fabric --> Storage["Shared Pool of NVMe-oF SSDs (DASE)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Hosts cpu;
+    class Storage memory;
+    class Fabric system;
+```
+
+
 ## 📊 Comparison: VAST Data vs. Traditional Storage
 
 | Feature | Traditional Storage | VAST Data (Disaggregated NFS+S3) |

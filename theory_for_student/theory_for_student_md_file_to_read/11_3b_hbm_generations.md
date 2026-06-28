@@ -43,6 +43,21 @@ HBM3 was introduced with the H100 GPU. It fundamentally redesigned the memory in
 
 ---
 
+### 📊 Visual Representation: HBM Bandwidth and Capacity Generational Progress
+This flowchart tracks the evolution of HBM metrics across HBM2, HBM3, and HBM3e generations.
+
+```mermaid
+flowchart LR
+    HBM2["HBM2 (1.0 TB/s / 16GB)"] --> HBM3["HBM3 (3.35 TB/s / 80GB)"]
+    HBM3 --> HBM3e["HBM3e (4.8 TB/s / 141GB / 24Gb Monolithic)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class HBM2,HBM3,HBM3e memory;
+```
+
 ## 🛠️ HBM3e — The Current Peak
 
 HBM3e (enhanced) is the latest generation, featured in the H200 GPU. It pushes both bandwidth and capacity further.
@@ -84,3 +99,4 @@ HBM3e (enhanced) is the latest generation, featured in the H200 GPU. It pushes b
 - **HBM3e** → Powers today's frontier models (GPT-4, Llama 3)
 
 When you see a GPU spec sheet, look for **memory bandwidth** (TB/s) and **memory capacity** (GB). These two numbers tell you how much data the GPU can hold and how fast it can access it — the two most critical factors for AI performance.
+

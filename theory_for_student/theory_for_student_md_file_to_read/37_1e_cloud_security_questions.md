@@ -162,6 +162,25 @@ Welcome, new engineer! This section covers two critical domains for the NVIDIA-C
 
 ---
 
+
+### 📊 Visual Representation: Cloud & Security Exam concept mapping
+This diagram displays security exam scopes, grouping modelHub supply chains, CVE container scans, and compliance levels.
+
+```mermaid
+flowchart LR
+    Exam["Security Exam"] --> Threat["Threats (Model theft / cryptojacking)"]
+    Exam --> Security["Securing (SBOM / cosign / scan)"]
+    Exam --> Compliance["Compliance (HIPAA / SOC2 / Export)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Exam cpu;
+    class Threat,Security,Compliance memory;
+```
+
+
 ## 📊 Comparison Table: Cloud vs. On-Premises Security Responsibilities
 
 | Aspect | Cloud (IaaS) | On-Premises |

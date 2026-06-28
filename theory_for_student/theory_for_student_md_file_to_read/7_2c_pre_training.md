@@ -39,6 +39,22 @@ Pre-training is the foundational stage where an AI model learns language pattern
 
 ---
 
+### 📊 Visual Representation: Self-Supervised Pre-Training Stage
+This flowchart shows the unsupervised pre-training phase where a model is fed massive text corpuses to learn general language representation.
+
+```mermaid
+flowchart LR
+    Corpus["Massive Unlabeled Corpus"] --> Pretrain["Pre-Training (Masked/Causal LM)"]
+    Pretrain --> Base["Foundation Base Model (e.g., Llama-3-Base)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Pretrain cpu;
+    class Corpus,Base memory;
+```
+
 ## 🕵️ Common Challenges Engineers Face
 
 - **GPU Memory Limits**: Models often exceed single GPU memory, requiring techniques like model parallelism (splitting the model across GPUs) or pipeline parallelism (layers distributed across GPUs).

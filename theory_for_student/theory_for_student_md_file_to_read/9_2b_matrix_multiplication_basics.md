@@ -72,6 +72,24 @@ A **dot product** is the simplest operation that combines two vectors to produce
 
 ---
 
+### 📊 Visual Representation: Standard Row-Column Matrix Multiplication
+This diagram displays how matrix multiplication computes individual elements of the output matrix by taking the dot product of rows and columns.
+
+```mermaid
+flowchart LR
+    Row["Matrix A (Row i)"] --> DotProduct["Dot Product calculation"]
+    Col["Matrix B (Column j)"] --> DotProduct
+    DotProduct --> Output["Matrix C (Element i, j)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class DotProduct cpu;
+    class Output memory;
+    class Row,Col system;
+```
+
 ## 🔍 Comparison Table — When to Use Each Operation
 
 | Operation | Input | Output | Typical Use Case | Hardware Impact |

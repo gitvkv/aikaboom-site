@@ -72,6 +72,27 @@ export NGC_API_KEY=your_actual_api_key_here
 
 ---
 
+
+### 📊 Visual Representation: NGC API Token Validation
+This flowchart displays token validation: verifying credentials and matching scopes before granting repository access.
+
+```mermaid
+flowchart LR
+    Req["Client Request"] --> TokenCheck{"Valid API Key?"}
+    TokenCheck -->|Yes| ScopeCheck{"Authorize Scopes?"}
+    TokenCheck -->|No| Reject["401 Unauthorized Response"]
+    ScopeCheck -->|Yes| Grant["Grant Pull / Push Access"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class TokenCheck cpu;
+    class ScopeCheck memory;
+    class Reject,Grant system;
+```
+
+
 ## 🕵️ Step 3: Verifying Your Authentication Works
 
 After configuring your key, always verify it works:

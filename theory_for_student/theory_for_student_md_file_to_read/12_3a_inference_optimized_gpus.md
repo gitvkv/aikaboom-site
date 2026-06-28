@@ -42,6 +42,22 @@ Inference-optimized GPUs differ from training-focused GPUs in several ways:
 
 ---
 
+### 📊 Visual Representation: Inference GPU Platforms Hierarchy
+This diagram displays inference-optimized GPUs (L4, L40S, H100 NVL) and their target workload placements.
+
+```mermaid
+flowchart LR
+    Inference["Inference Workloads"] --> L4["L4 (Single-Slot, Low-Power, Edge)"]
+    Inference --> L40s["L40S (Multi-Modal & High-Throughput)"]
+    Inference --> H100_NVL["H100 NVL (LLM Inference Scale)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class L4,L40s,H100_NVL cpu;
+```
+
 ## 🕵️ Deep Dive: When to Use Each Card
 
 ### 🟢 NVIDIA A30 — The Balanced Workhorse

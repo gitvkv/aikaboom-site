@@ -88,6 +88,32 @@ When setting up new AI infrastructure, follow these guidelines:
 | **Upgrade frequency** | Every 2 years | Every 6 months |
 | **Security updates** | Consistent for 5+ years | Only during 9-month window |
 
+### 📊 Visual Representation: Ubuntu LTS vs. Interim Support Lifecycle
+
+This timeline flowchart contrasts the long-term stable support window of Ubuntu LTS releases against the brief lifecycle of Interim releases, highlighting standard and extended maintenance.
+
+```mermaid
+flowchart LR
+    subgraph LTSCycle["LTS Release Cycle (Every 2 Years)"]
+        direction LR
+        LTS1["LTS Release (e.g., 24.04)"] -->|Standard Maintenance: 5 Years| Standard["Standard Updates (No Cost)"]
+        Standard -->|Optional Pro: +5 Years| ESM["Extended Security (ESM)"]
+    end
+
+    subgraph InterimCycle["Interim Release Cycle (Every 6 Months)"]
+        direction LR
+        Interim["Interim Release (e.g., 24.10)"] -->|Short Lifecycle: 9 Months| DevSupport["Development & Test Support"]
+        DevSupport -->|EOL / Mandatory Upgrade| Upgrade["LTS or Next Interim"]
+    end
+
+    class LTS1,Standard,ESM cpu;
+    class Interim,DevSupport,Upgrade system;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+```
+
 ---
 
 ## ✅ Summary for New Engineers

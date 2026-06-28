@@ -68,6 +68,24 @@ Even the fastest HBM3 memory (3,900 GB/s) is not enough for *every core to run a
 
 ---
 
+### 📊 Visual Representation: GPU VRAM Allocations during Training
+This diagram outlines the major layers that allocate VRAM space during model training: model parameters, gradients, optimizer states, and batch activations.
+
+```mermaid
+flowchart LR
+    VRAM["Total GPU VRAM"] --> Model["Model Parameters"]
+    VRAM --> Grads["Gradients"]
+    VRAM --> Opt["Optimizer States"]
+    VRAM --> Act["Activations (Scales with Batch Size)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class VRAM cpu;
+    class Model,Grads,Opt,Act memory;
+```
+
 ## 📈 The Architecture Difference: Wide vs. Narrow Buses
 
 - **System DDR** uses a **64-bit or 128-bit memory bus** (narrow).

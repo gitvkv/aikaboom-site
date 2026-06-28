@@ -90,6 +90,24 @@ The A-series profiles are designed for **virtual desktop infrastructure (VDI)** 
 
 ---
 
+
+### 📊 Visual Representation: vGPU Profile sizing and naming structure
+This diagram breaks down vGPU profiles: assigning fixed VRAM slices and matching specific compute targets.
+
+```mermaid
+flowchart LR
+    Profile["vGPU Profile (e.g., A100-4C)"] --> VRAM["4GB Framebuffer Allocation"]
+    Profile --> Class["'C' Class (Compute Workloads / CUDA support)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Profile cpu;
+    class VRAM,Class memory;
+```
+
+
 ## 🕵️ How to Choose the Right Profile
 
 Choosing between Q, C, and A series depends on three questions:

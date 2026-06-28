@@ -1,0 +1,739 @@
+[
+    {
+        "question": "What is NVIDIA's CUDA toolkit?",
+        "options": [
+            "A) A GPU hardware diagnostic tool",
+            "B) A set of development tools, compilers, and libraries for writing GPU-accelerated code",
+            "C) A cloud deployment platform for AI models",
+            "D) A network configuration toolkit for GPU clusters"
+        ],
+        "answer": "B",
+        "explanation": "The CUDA toolkit includes the nvcc compiler, debugging tools, profilers, and libraries (cuBLAS, cuDNN) needed to write and optimize GPU-accelerated applications."
+    },
+    {
+        "question": "What does 'epoch' refer to in neural network training?",
+        "options": [
+            "A) A single gradient update",
+            "B) One full pass through the entire training dataset",
+            "C) A cluster of compute nodes",
+            "D) A type of activation function"
+        ],
+        "answer": "B",
+        "explanation": "An epoch is one complete cycle through all training samples. Multiple epochs are used so the model sees the data repeatedly, improving its ability to generalise."
+    },
+    {
+        "question": "What is a convolutional neural network (CNN) primarily used for?",
+        "options": [
+            "A) Sequential text prediction",
+            "B) Image and video recognition tasks that exploit spatial structure",
+            "C) Tabular data classification only",
+            "D) Network traffic analysis"
+        ],
+        "answer": "B",
+        "explanation": "CNNs use convolutional filters to detect spatial features in images, making them the dominant architecture for computer vision tasks such as image classification and object detection."
+    },
+    {
+        "question": "Which NVIDIA GPU generation introduced the Ampere architecture?",
+        "options": [
+            "A) Volta (V100)",
+            "B) Turing (T4)",
+            "C) Ampere (A100)",
+            "D) Hopper (H100)"
+        ],
+        "answer": "C",
+        "explanation": "The A100 is NVIDIA's flagship Ampere-architecture data centre GPU, introducing third-generation Tensor Cores, multi-instance GPU (MIG), and NVLink 3.0."
+    },
+    {
+        "question": "What is the purpose of the NVIDIA driver in an AI system?",
+        "options": [
+            "A) To train neural networks directly",
+            "B) To provide the software interface between the OS and GPU hardware, enabling CUDA applications to run",
+            "C) To manage cluster-level job scheduling",
+            "D) To compress model weights for deployment"
+        ],
+        "answer": "B",
+        "explanation": "The NVIDIA GPU driver exposes the GPU hardware to the OS and user-space software, allowing CUDA and other frameworks to communicate with the GPU."
+    },
+    {
+        "question": "What type of memory does a GPU use for storing model weights during inference?",
+        "options": [
+            "A) System RAM (DDR5)",
+            "B) GPU VRAM (HBM or GDDR)",
+            "C) NVMe SSD cache",
+            "D) CPU L3 cache"
+        ],
+        "answer": "B",
+        "explanation": "Model weights must reside in the GPU's on-device memory (VRAM — either HBM in data centre GPUs or GDDR in consumer GPUs) to be directly accessed by the GPU compute units."
+    },
+    {
+        "question": "What is PyTorch in the context of AI development?",
+        "options": [
+            "A) NVIDIA's proprietary training framework",
+            "B) An open-source deep learning framework widely used for research and production model training",
+            "C) A GPU cluster orchestration tool",
+            "D) A model inference server"
+        ],
+        "answer": "B",
+        "explanation": "PyTorch (developed by Meta AI) is the most widely-used open-source deep learning framework, known for its dynamic computation graph and ease of use in both research and production."
+    },
+    {
+        "question": "Which of the following best describes a recurrent neural network (RNN)?",
+        "options": [
+            "A) A network designed to process grid-structured data like images",
+            "B) A network that processes sequential data by maintaining hidden state across time steps",
+            "C) A generative model that produces images from text",
+            "D) A network used exclusively for tabular data"
+        ],
+        "answer": "B",
+        "explanation": "RNNs process sequences by passing hidden state from one time step to the next, making them suited for time-series and language data — though Transformers have largely replaced them for NLP."
+    },
+    {
+        "question": "What is NVIDIA Isaac in the context of AI?",
+        "options": [
+            "A) A language model training platform",
+            "B) A platform for developing and simulating AI-powered robotics applications",
+            "C) A GPU monitoring toolkit",
+            "D) A cybersecurity AI framework"
+        ],
+        "answer": "B",
+        "explanation": "NVIDIA Isaac is a robotics development platform that includes simulation (Isaac Sim on Omniverse), perception libraries, and hardware (Jetson) for building AI-driven robots."
+    },
+    {
+        "question": "What does 'GPU memory bandwidth' measure?",
+        "options": [
+            "A) The number of CUDA cores available",
+            "B) The rate at which data can be read from or written to GPU VRAM",
+            "C) The speed of PCIe data transfer",
+            "D) The GPU's floating-point throughput"
+        ],
+        "answer": "B",
+        "explanation": "Memory bandwidth (GB/s) measures how quickly the GPU can move data between the memory subsystem and compute units. It is the primary bottleneck for memory-bound workloads like LLM inference."
+    },
+    {
+        "question": "What is the purpose of NVIDIA's Nsight tools?",
+        "options": [
+            "A) Cluster-level job scheduling",
+            "B) GPU application profiling and debugging to identify compute and memory bottlenecks",
+            "C) Network traffic monitoring for InfiniBand fabrics",
+            "D) Container image management"
+        ],
+        "answer": "B",
+        "explanation": "NVIDIA Nsight (Nsight Systems, Nsight Compute) are profiling and debugging tools that show GPU kernel timelines, SM utilisation, memory throughput, and compute efficiency for optimising AI workloads."
+    },
+    {
+        "question": "In AI, what is 'data labelling'?",
+        "options": [
+            "A) Attaching metadata tags to GPU memory allocations",
+            "B) The process of annotating raw data with ground-truth labels so that supervised learning algorithms can learn from it",
+            "C) Encoding data into a GPU-compatible binary format",
+            "D) Partitioning a dataset across multiple storage nodes"
+        ],
+        "answer": "B",
+        "explanation": "Data labelling (annotation) assigns correct output labels (e.g., 'cat', bounding boxes, sentiment) to raw examples, creating the labelled dataset required for supervised machine learning."
+    },
+    {
+        "question": "What is a hyperparameter in AI model training?",
+        "options": [
+            "A) A weight in the neural network updated by gradient descent",
+            "B) A configuration value set before training begins that controls the learning process, such as learning rate, batch size, or number of layers",
+            "C) A hardware setting on the GPU",
+            "D) A metric evaluated on the validation set"
+        ],
+        "answer": "B",
+        "explanation": "Hyperparameters are set by the practitioner before training (not learned from data) and include learning rate, batch size, number of epochs, and architecture choices — all affecting training dynamics."
+    },
+    {
+        "question": "What is NVIDIA's L40S GPU primarily designed for?",
+        "options": [
+            "A) Consumer gaming",
+            "B) AI inference and graphics workloads in mainstream enterprise and cloud deployments",
+            "C) Edge IoT inferencing",
+            "D) Quantum computing research"
+        ],
+        "answer": "B",
+        "explanation": "The L40S is NVIDIA's Ada Lovelace-based enterprise GPU targeting AI inference, training, and professional visualisation for mainstream data centre deployments — offering a cost-effective alternative to H100."
+    },
+    {
+        "question": "What does the term 'neural network layer' refer to?",
+        "options": [
+            "A) A physical tier in a data centre network",
+            "B) A grouping of neurons in a network that performs a specific transformation on its inputs",
+            "C) A GPU memory partition",
+            "D) A storage tier in a parallel filesystem"
+        ],
+        "answer": "B",
+        "explanation": "A layer in a neural network applies a transformation (e.g., linear, convolutional, attention) to its input tensor and passes the result to the next layer. Deep networks stack many such layers."
+    },
+    {
+        "question": "What is 'AI at the edge' and why is NVIDIA Jetson relevant?",
+        "options": [
+            "A) Running AI in a cloud data centre with edge caching",
+            "B) Deploying AI inference directly on devices near the data source (cameras, robots, vehicles) to reduce latency and bandwidth — Jetson provides compact, efficient GPU-accelerated edge compute",
+            "C) Training models on smartphones",
+            "D) Edge refers to the outermost layers of a neural network"
+        ],
+        "answer": "B",
+        "explanation": "Edge AI runs inference on local devices rather than sending data to the cloud, reducing latency and bandwidth. Jetson modules (Orin, Xavier) provide GPU and DLA accelerators in a compact, power-efficient form factor."
+    },
+    {
+        "question": "What is TensorFlow in the context of AI?",
+        "options": [
+            "A) NVIDIA's proprietary training framework",
+            "B) An open-source deep learning framework developed by Google, widely used for training and deploying ML models",
+            "C) A GPU virtualisation tool",
+            "D) A cluster management platform"
+        ],
+        "answer": "B",
+        "explanation": "TensorFlow (Google) is one of the two dominant open-source deep learning frameworks (alongside PyTorch), featuring static computation graphs, TensorFlow Serving for deployment, and TFLite for edge."
+    },
+    {
+        "question": "What is the key reason AI adoption accelerated after 2012?",
+        "options": [
+            "A) Reduction in data centre power costs",
+            "B) The AlexNet breakthrough demonstrating that deep CNNs trained on GPUs dramatically outperformed traditional methods on ImageNet, sparking the deep learning revolution",
+            "C) Release of new SQL database standards",
+            "D) Standardisation of cloud computing APIs"
+        ],
+        "answer": "B",
+        "explanation": "AlexNet (2012) achieved a top-5 error of 15.3% on ImageNet, nearly halving the previous best. It demonstrated that GPU-trained deep networks could decisively beat hand-crafted features, triggering massive investment in deep learning."
+    },
+    {
+        "question": "What is the purpose of the softmax function in a classification neural network's output layer?",
+        "options": [
+            "A) To normalise input features before training",
+            "B) To convert raw output logits into a probability distribution over classes summing to 1",
+            "C) To reduce overfitting during training",
+            "D) To accelerate backpropagation on Tensor Cores"
+        ],
+        "answer": "B",
+        "explanation": "Softmax exponentiates each logit and divides by the sum, producing a valid probability distribution. This allows the network's output to be interpreted as class probabilities for cross-entropy loss."
+    },
+    {
+        "question": "What is the difference between FP8, FP16, and FP32 precision in AI training?",
+        "options": [
+            "A) They refer to GPU clock speed modes",
+            "B) They are floating-point formats with different bit widths — FP32 (32-bit, highest precision, baseline), FP16 (16-bit, 2× memory reduction, Tensor Core accelerated), FP8 (8-bit, H100 Transformer Engine, highest throughput with careful scaling)",
+            "C) FP8 is only used for inference; FP16 and FP32 are for training",
+            "D) They affect GPU fan speed, not compute"
+        ],
+        "answer": "B",
+        "explanation": "Reducing numerical precision saves memory and enables faster Tensor Core computation. FP32 is the baseline. FP16/BF16 is standard mixed precision. FP8 (H100) doubles throughput over FP16 but requires per-tensor scaling to maintain accuracy."
+    },
+    {
+        "question": "What is NVIDIA's role in the AI ecosystem beyond GPU hardware?",
+        "options": [
+            "A) NVIDIA only manufactures GPUs and has no software role",
+            "B) NVIDIA provides a full-stack platform: GPU hardware, CUDA, libraries (cuDNN, cuBLAS), frameworks (NeMo, Triton), domain SDKs (Metropolis, Drive, Clara), NGC container registry, and cloud/on-prem AI platforms",
+            "C) NVIDIA only provides inference software, not training tools",
+            "D) NVIDIA's software role is limited to the CUDA compiler"
+        ],
+        "answer": "B",
+        "explanation": "NVIDIA has evolved into a full-stack AI company: hardware (GPU, DPU, networking), system software (CUDA, drivers, containers), AI frameworks and SDKs, and platforms for specific verticals — making it an end-to-end AI infrastructure provider."
+    },
+    {
+        "question": "What is 'prompt engineering' in the context of LLM deployment?",
+        "options": [
+            "A) A technique to reduce GPU memory usage during LLM inference",
+            "B) The practice of carefully designing input prompts to guide LLM behaviour and improve output quality without changing model weights",
+            "C) A method for compressing LLM weights for edge deployment",
+            "D) A GPU scheduling optimisation for LLM serving"
+        ],
+        "answer": "B",
+        "explanation": "Prompt engineering crafts input text to elicit desired LLM behaviour through techniques like few-shot examples, chain-of-thought instructions, and role assignment — achieving task adaptation without fine-tuning."
+    },
+    {
+        "question": "What distinguishes a foundation model from a task-specific model?",
+        "options": [
+            "A) Foundation models are always smaller than task-specific models",
+            "B) Foundation models are trained on broad, large-scale data and can be adapted to many downstream tasks; task-specific models are trained from scratch for one narrow application",
+            "C) Foundation models only run on cloud infrastructure",
+            "D) There is no meaningful distinction"
+        ],
+        "answer": "B",
+        "explanation": "Foundation models (GPT, BERT, SAM) are large models trained on diverse data encoding general knowledge. They serve as a base for many applications via fine-tuning or prompting, amortising the enormous training cost across tasks."
+    },
+    {
+        "question": "What is the role of the NVIDIA A100's Multi-Instance GPU (MIG) feature in shared deployments?",
+        "options": [
+            "A) To combine multiple A100s into a single logical GPU",
+            "B) To partition one A100 into up to 7 isolated GPU instances, each with dedicated memory and compute, enabling multiple independent workloads to safely share a single GPU",
+            "C) To enable GPU time-sharing without memory isolation",
+            "D) To synchronise A100s across InfiniBand for faster training"
+        ],
+        "answer": "B",
+        "explanation": "MIG creates hardware-isolated GPU partitions with dedicated SM sets, HBM capacity, and L2 cache slices. Each instance is fully independent with ECC protection, enabling safe multi-tenancy — critical for inference services where one tenant must not affect another's latency."
+    },
+    {
+        "question": "What is the purpose of weight initialisation strategies (e.g., Xavier, He) in deep neural network training?",
+        "options": [
+            "A) To set GPU memory allocation patterns before training",
+            "B) To initialise model weights to values that prevent vanishing or exploding gradients at the start of training, enabling stable convergence",
+            "C) To determine the number of parameters in each layer",
+            "D) To configure Tensor Core precision modes"
+        ],
+        "answer": "B",
+        "explanation": "Poor initialisation causes vanishing (tiny gradients, no learning) or exploding (unstable) gradients. Xavier initialisation targets equal variance across layers for tanh/sigmoid; He initialisation (2× larger) is designed for ReLU networks."
+    },
+    {
+        "question": "What is ONNX (Open Neural Network Exchange) and why is it relevant to AI deployment?",
+        "options": [
+            "A) A proprietary NVIDIA format for storing TensorRT models",
+            "B) An open format for representing ML models that enables interoperability between frameworks (e.g., PyTorch → ONNX → TensorRT) enabling framework-agnostic deployment and optimisation",
+            "C) A GPU memory management API",
+            "D) An InfiniBand networking protocol for AI clusters"
+        ],
+        "answer": "B",
+        "explanation": "ONNX defines a common graph representation for neural networks, allowing models trained in PyTorch or TensorFlow to be exported and then optimised/deployed with TensorRT, ONNX Runtime, or other inference engines."
+    },
+    {
+        "question": "What is 'continual pre-training' in the context of LLMs?",
+        "options": [
+            "A) Running inference continuously on a deployed model",
+            "B) Extending the pre-training of an existing LLM on new domain-specific data to update its knowledge while retaining general capabilities, without full retraining from scratch",
+            "C) Monitoring LLM outputs continuously for quality",
+            "D) Storing LLM KV cache persistently between sessions"
+        ],
+        "answer": "B",
+        "explanation": "Continual pre-training updates an LLM's knowledge by continuing unsupervised training on new corpora (e.g., recent data, domain text), bridging the knowledge cutoff at lower cost than full retraining from scratch."
+    },
+    {
+        "question": "What is 'hallucination' in generative AI models and why is it a production concern?",
+        "options": [
+            "A) When the GPU generates visual artefacts in model outputs",
+            "B) When a generative model produces confident but factually incorrect outputs, posing risks in production applications where accuracy matters (e.g., medical, legal, financial)",
+            "C) When the model produces outputs slower than expected",
+            "D) When model outputs are too verbose"
+        ],
+        "answer": "B",
+        "explanation": "LLM hallucinations are fluent but false outputs generated with unwarranted confidence. In high-stakes domains (medicine, finance), hallucinations can cause real harm, motivating RAG, fine-tuning, and constitutional AI techniques."
+    },
+    {
+        "question": "What is NVIDIA TAO (Train, Adapt, Optimise) Toolkit used for?",
+        "options": [
+            "A) GPU thermal management and overclocking",
+            "B) A low-code AI model training and fine-tuning tool that enables domain customisation of NVIDIA pre-trained models without requiring deep AI expertise",
+            "C) Network topology management for InfiniBand clusters",
+            "D) Container security hardening for AI deployments"
+        ],
+        "answer": "B",
+        "explanation": "TAO Toolkit lets practitioners fine-tune NVIDIA's NGC pre-trained vision and speech models using their own data with minimal code, then export optimised TensorRT models — lowering the barrier to production AI."
+    },
+    {
+        "question": "What is 'model pruning' in AI model optimisation?",
+        "options": [
+            "A) Removing entire training epochs from the training schedule",
+            "B) Removing weights or neurons with low importance (near-zero weights) from a trained model to reduce model size and inference latency, often followed by fine-tuning to recover accuracy",
+            "C) Reducing the number of training data samples",
+            "D) Lowering GPU clock speed to reduce inference power consumption"
+        ],
+        "answer": "B",
+        "explanation": "Pruning removes redundant parameters (structured: entire filters/heads; unstructured: individual weights), typically achieving 50–90% sparsity with minimal accuracy loss after fine-tuning, reducing memory and compute."
+    },
+    {
+        "question": "What is 'knowledge distillation' in AI?",
+        "options": [
+            "A) Extracting training data from a deployed model",
+            "B) Training a smaller 'student' model to mimic the output distributions of a larger 'teacher' model, transferring the teacher's knowledge into a more efficient form",
+            "C) Compressing model weights using lossless compression",
+            "D) Summarising training logs into actionable metrics"
+        ],
+        "answer": "B",
+        "explanation": "Knowledge distillation trains the student not just on hard labels but on the teacher's soft probability outputs (dark knowledge), allowing the smaller model to learn richer representations than training on labels alone."
+    },
+    {
+        "question": "What is the purpose of NVIDIA's cuSPARSE library?",
+        "options": [
+            "A) To provide GPU-accelerated dense matrix multiplication",
+            "B) To provide GPU-accelerated sparse linear algebra operations, enabling efficient computation on sparse matrices common in pruned models and recommendation systems",
+            "C) To manage GPU memory allocation for sparse training",
+            "D) To profile sparse model inference performance"
+        ],
+        "answer": "B",
+        "explanation": "cuSPARSE provides GPU-accelerated routines for sparse matrix operations (SpMM, SpGEMM), exploiting sparsity in pruned models and sparse attention to improve memory efficiency and throughput."
+    },
+    {
+        "question": "How does NVIDIA's Ampere Sparse Tensor Core feature improve inference efficiency?",
+        "options": [
+            "A) By doubling clock speed for sparse workloads",
+            "B) By exploiting 2:4 structured sparsity (2 non-zero values per 4 elements) to achieve 2× throughput over dense computation with no accuracy loss using ASP-based fine-tuning",
+            "C) By automatically pruning any model to 50% sparsity",
+            "D) By enabling FP8 computation only on sparse layers"
+        ],
+        "answer": "B",
+        "explanation": "Ampere's 2:4 sparsity (every 4 consecutive weights have at most 2 non-zero) is decoded in hardware, delivering 2× INT8/FP16 throughput for eligible kernels. NVIDIA's ASP tool fine-tunes models to this sparsity pattern."
+    },
+    {
+        "question": "What is the purpose of a vector database in an RAG-based AI architecture?",
+        "options": [
+            "A) To store GPU memory vectors during model training",
+            "B) To efficiently store and search high-dimensional embedding vectors by semantic similarity, enabling retrieval of relevant documents for LLM context augmentation",
+            "C) To manage distributed training communication buffers",
+            "D) To provide block storage for training datasets"
+        ],
+        "answer": "B",
+        "explanation": "Vector databases (Pinecone, Milvus, pgvector) store document embeddings and support approximate nearest-neighbour (ANN) search, enabling RAG systems to retrieve semantically similar documents given a query embedding."
+    },
+    {
+        "question": "What is NVIDIA's Fleet Command for?",
+        "options": [
+            "A) Managing GPU clusters in a data centre",
+            "B) A cloud-managed edge AI platform for remotely deploying, monitoring, and updating AI applications across distributed edge devices",
+            "C) A storage management tool for AI datasets",
+            "D) A real-time GPU benchmarking service"
+        ],
+        "answer": "B",
+        "explanation": "Fleet Command lets organisations deploy containerised AI applications from NGC to distributed edge locations (retail stores, factories, hospitals), providing remote management, updates, and monitoring without physical access."
+    },
+    {
+        "question": "What is 'semantic segmentation' in computer vision AI?",
+        "options": [
+            "A) Splitting training datasets by semantic category",
+            "B) Classifying each pixel in an image into a semantic category, producing a dense per-pixel label map rather than a single image-level class",
+            "C) Extracting text descriptions from images",
+            "D) Detecting objects using bounding boxes"
+        ],
+        "answer": "B",
+        "explanation": "Semantic segmentation assigns a class label to every pixel (e.g., road, car, pedestrian). It is critical for autonomous driving perception and medical image analysis, requiring dense output predictions."
+    },
+    {
+        "question": "What is NVIDIA's Triton Inference Server's 'model ensemble' feature?",
+        "options": [
+            "A) Running the same model on multiple GPUs simultaneously",
+            "B) Defining a pipeline of models where the output of one model becomes the input of the next, executed efficiently as a single inference request within Triton",
+            "C) Combining multiple model checkpoints into a single model",
+            "D) Auto-scaling Triton instances based on load"
+        ],
+        "answer": "B",
+        "explanation": "Triton ensembles define a DAG of models (e.g., preprocessor → feature extractor → classifier) that execute as one pipeline call, reducing client-server round-trips and improving throughput for multi-stage inference."
+    },
+    {
+        "question": "What is the significance of batch size in AI model training?",
+        "options": [
+            "A) Larger batch sizes always result in better model accuracy",
+            "B) Batch size controls how many samples are processed before a gradient update — larger batches improve GPU utilisation and training stability but may require learning rate scaling and can reduce generalisation; smaller batches introduce noise that can help escape local minima",
+            "C) Batch size determines the number of GPUs required",
+            "D) Batch size only affects memory consumption, not training quality"
+        ],
+        "answer": "B",
+        "explanation": "Batch size is a critical hyperparameter: small batches add stochastic noise (may help generalisation), large batches are GPU-efficient but may converge to sharp minima. Linear scaling rule (lr ∝ batch size) is used when scaling batch size across GPUs."
+    },
+    {
+        "question": "What is 'causal language modelling' and how does it differ from masked language modelling?",
+        "options": [
+            "A) They are identical training objectives used by the same model families",
+            "B) Causal LM (GPT-style) predicts the next token given all previous tokens (unidirectional, suited for generation); masked LM (BERT-style) predicts masked tokens using both left and right context (bidirectional, better for understanding tasks)",
+            "C) Causal LM uses CNN architectures; masked LM uses transformers",
+            "D) Causal LM is only for code; masked LM is only for natural language"
+        ],
+        "answer": "B",
+        "explanation": "The choice of pre-training objective shapes model capabilities: causal LM produces autoregressive generators (GPT, Llama) used for text generation; masked LM produces bidirectional encoders (BERT, RoBERTa) used for classification and retrieval."
+    },
+    {
+        "question": "What is NVIDIA Maxine?",
+        "options": [
+            "A) A GPU driver package for professional workstations",
+            "B) A cloud-native AI platform for video streaming with GPU-accelerated features like noise removal, super-resolution, and real-time avatar animation",
+            "C) A network management tool for InfiniBand clusters",
+            "D) An AI framework for autonomous vehicle training"
+        ],
+        "answer": "B",
+        "explanation": "NVIDIA Maxine provides GPU-accelerated video and audio AI features (noise cancellation, background removal, super-resolution, face re-lighting) for video conferencing and streaming applications."
+    },
+    {
+        "question": "What is 'gradient accumulation' and when is it used in AI training?",
+        "options": [
+            "A) Storing gradients in GPU HBM for faster all-reduce",
+            "B) Summing gradients over multiple forward-backward passes before performing a single weight update, effectively simulating a larger batch size when memory constraints prevent fitting large batches on a single GPU",
+            "C) Accumulating gradients across multiple training epochs before updating",
+            "D) A technique for preventing gradient vanishing in deep networks"
+        ],
+        "answer": "B",
+        "explanation": "Gradient accumulation lets practitioners train with an effective batch size of N×M (N accumulation steps × M per-step batch) without requiring N×M samples in GPU memory simultaneously — enabling large-batch training on memory-constrained hardware."
+    },
+    {
+        "question": "What is the purpose of the NVIDIA GPU Architecture's L2 cache in AI workloads?",
+        "options": [
+            "A) To store model checkpoints between training runs",
+            "B) To serve as a fast shared cache between all SMs on a GPU, reducing redundant HBM accesses for data reused across thread blocks — critical for attention operations and small-batch inference",
+            "C) To replace HBM memory in low-power modes",
+            "D) To cache PCIe DMA transfers from host memory"
+        ],
+        "answer": "B",
+        "explanation": "The L2 cache (60MB in H100) is shared across all SMs. When multiple SM thread blocks access the same data (e.g., model weight tensors in small-batch inference), L2 hits avoid expensive HBM accesses, improving throughput."
+    },
+    {
+        "question": "What is 'model serving' in AI operations and what are the key requirements?",
+        "options": [
+            "A) Physically delivering AI hardware to customers",
+            "B) Exposing a trained AI model as a service via API (REST, gRPC) with requirements for low latency, high throughput, model versioning, health monitoring, and scalability to handle concurrent requests",
+            "C) Serving training datasets from storage to GPU nodes",
+            "D) Deploying model checkpoints to a version control system"
+        ],
+        "answer": "B",
+        "explanation": "Model serving makes models accessible to applications via APIs. Key requirements: sub-100ms latency (SLA), high request throughput, zero-downtime model updates, traffic splitting for A/B testing, and GPU autoscaling."
+    },
+    {
+        "question": "What is the difference between a token and an embedding in LLM processing?",
+        "options": [
+            "A) They are identical concepts in LLMs",
+            "B) A token is a discrete unit of text (word piece, character) from the tokeniser's vocabulary; an embedding is its dense continuous vector representation learned by the model and used as input to the transformer layers",
+            "C) Tokens are used in training; embeddings are used in inference",
+            "D) Tokens are fixed-size; embeddings are variable-size"
+        ],
+        "answer": "B",
+        "explanation": "The tokeniser converts text to integer token IDs. The embedding layer maps each token ID to a learned dense vector (768–8192 dimensions in modern LLMs). The transformer then processes these embedding vectors, not raw tokens."
+    },
+    {
+        "question": "What is 'context length' in an LLM and why does it matter for infrastructure?",
+        "options": [
+            "A) The length of the model's system prompt only",
+            "B) The maximum number of tokens an LLM can process in a single forward pass — longer context requires quadratically more attention compute (or linear with FlashAttention) and proportionally more KV cache GPU memory, affecting both latency and GPU memory requirements",
+            "C) Context length only affects training, not inference",
+            "D) Context length determines the model's parameter count"
+        ],
+        "answer": "B",
+        "explanation": "Context length determines how much text the model can 'see' at once. At 128K tokens, the KV cache alone can consume tens of GB of GPU memory per request. Infrastructure must be sized for both compute (attention) and memory (KV cache) at the target context length."
+    },
+    {
+        "question": "What is 'instruction tuning' in the LLM training pipeline?",
+        "options": [
+            "A) Tuning GPU power limits for optimal LLM training efficiency",
+            "B) Fine-tuning a pre-trained LLM on a dataset of (instruction, response) pairs to make the model better at following user instructions and producing helpful, formatted outputs",
+            "C) Optimising the tokeniser vocabulary for specific instruction domains",
+            "D) A hardware configuration step before deploying LLMs on Triton"
+        ],
+        "answer": "B",
+        "explanation": "Instruction tuning (supervised fine-tuning on instruction-response pairs) bridges the gap between a pre-trained base model (next-token prediction) and an assistant that follows instructions, improving usability without full retraining."
+    },
+    {
+        "question": "What is NVIDIA's EfficientViT model optimisation and what problem does it address?",
+        "options": [
+            "A) An efficient virtualisation technology for GPU resource management",
+            "B) A vision transformer architecture optimised for high-resolution real-time inference on edge/embedded hardware, addressing the quadratic complexity of standard ViT attention at high resolution",
+            "C) A video transcoding optimisation for Metropolis",
+            "D) An efficient NVLink topology for small-scale GPU clusters"
+        ],
+        "answer": "B",
+        "explanation": "EfficientViT replaces standard multi-head attention with a hardware-efficient multi-scale linear attention mechanism, enabling real-time high-resolution segmentation and classification on embedded GPUs (Jetson Orin)."
+    },
+    {
+        "question": "What is the relationship between CUDA, cuDNN, and PyTorch in the AI software stack?",
+        "options": [
+            "A) They are competing alternatives; only one is needed",
+            "B) CUDA provides the GPU programming foundation; cuDNN provides optimised GPU kernels for deep learning primitives; PyTorch sits on top and calls cuDNN/CUDA kernels automatically when tensors are on GPU — forming a layered stack",
+            "C) PyTorch replaces CUDA for modern AI workloads",
+            "D) cuDNN is only used for inference; CUDA is only for training"
+        ],
+        "answer": "B",
+        "explanation": "CUDA is the programming model (threads, memory management). cuDNN provides hand-optimised GPU implementations of convolutions, normalisation, and attention. PyTorch's GPU tensors call cuDNN/CUDA kernels automatically, abstracting low-level GPU programming."
+    },
+    {
+        "question": "What is 'zero-shot' learning in the context of LLMs?",
+        "options": [
+            "A) Training a model with no labelled data",
+            "B) Using an LLM to perform a task it was not explicitly fine-tuned for, by describing the task in the prompt without providing any examples",
+            "C) Running inference with zero GPU memory overhead",
+            "D) A technique for reducing hallucinations to zero"
+        ],
+        "answer": "B",
+        "explanation": "Zero-shot prompting asks the model to perform a task with only a task description, relying on knowledge from pre-training. LLMs like GPT-4 can solve many tasks zero-shot, while few-shot prompting (providing examples) further improves accuracy."
+    },
+    {
+        "question": "What is NVIDIA's role in the DGX Cloud offering?",
+        "options": [
+            "A) NVIDIA manufactures cloud networking hardware for major providers",
+            "B) NVIDIA partners with cloud providers (Azure, GCP, Oracle) to offer dedicated DGX AI supercomputing infrastructure as a cloud service, providing full NVIDIA software stack with enterprise support",
+            "C) DGX Cloud is an on-premises product unrelated to cloud providers",
+            "D) NVIDIA DGX Cloud only supports inference, not training"
+        ],
+        "answer": "B",
+        "explanation": "DGX Cloud offers dedicated NVIDIA DGX H100 and H200 systems hosted in major cloud providers' data centres, providing enterprises cloud-accessible AI supercomputing with NVIDIA AI Enterprise software and support."
+    },
+    {
+        "question": "What is 'semantic search' and how does it differ from keyword search?",
+        "options": [
+            "A) Semantic search uses faster indexing algorithms",
+            "B) Semantic search uses embedding vectors to find results by meaning and context rather than exact keyword matching, returning relevant results even when the query words don't appear in the document",
+            "C) Semantic search only works on structured databases",
+            "D) Keyword search is always more accurate than semantic search"
+        ],
+        "answer": "B",
+        "explanation": "Keyword search relies on term frequency and exact matches. Semantic search encodes query and documents into embedding space (via models like BERT, text-embedding-ada), finding results by vector similarity — handling synonyms, paraphrases, and intent."
+    },
+    {
+        "question": "What is the purpose of a CUDA kernel in GPU programming?",
+        "options": [
+            "A) The operating system kernel for managing GPU hardware",
+            "B) A GPU function that executes in parallel across thousands of threads simultaneously on the GPU's streaming multiprocessors",
+            "C) A data preprocessing function that runs on the CPU",
+            "D) A monitoring daemon for tracking GPU utilisation"
+        ],
+        "answer": "B",
+        "explanation": "A CUDA kernel is a C/C++/Python function launched on the GPU that executes with a grid of thread blocks. Each thread executes the kernel body in parallel — enabling massive parallelism for matrix operations in deep learning."
+    },
+    {
+        "question": "What is NVIDIA's role with respect to JAX for AI training?",
+        "options": [
+            "A) NVIDIA developed JAX as an alternative to CUDA",
+            "B) NVIDIA provides XLA compiler integration and optimised CUDA/cuDNN/cuBLAS backends for JAX, enabling JAX workloads to efficiently use NVIDIA GPUs",
+            "C) JAX cannot run on NVIDIA GPUs",
+            "D) NVIDIA provides JAX only for inference, not training"
+        ],
+        "answer": "B",
+        "explanation": "JAX (Google) compiles through XLA, which has optimised NVIDIA GPU backends. NVIDIA cuDNN and cuBLAS are leveraged through XLA, allowing JAX's functional transformations (jit, vmap, pmap) to run efficiently on NVIDIA hardware."
+    },
+    {
+        "question": "What is the purpose of NVIDIA's cuFFT library?",
+        "options": [
+            "A) GPU-accelerated Fast Fourier Transform for signal processing and certain CNN optimisations",
+            "B) A framework for fast fine-tuning of transformer models",
+            "C) A CUDA memory management library for FFT buffer allocation",
+            "D) A network fabric tuning tool for InfiniBand"
+        ],
+        "answer": "A",
+        "explanation": "cuFFT provides GPU-accelerated FFT/IFFT operations. FFTs are used in signal processing, medical imaging (MRI reconstruction), and in some CNN implementations that compute convolutions via the frequency domain."
+    },
+    {
+        "question": "What is 'model drift' in production AI systems and why does it matter operationally?",
+        "options": [
+            "A) Gradual GPU memory degradation affecting model weights",
+            "B) The degradation of a deployed model's performance over time as the real-world data distribution shifts away from the training distribution — requires monitoring and triggering retraining or model updates",
+            "C) A GPU clock frequency variation during long inference runs",
+            "D) Weight decay regularisation applied during inference"
+        ],
+        "answer": "B",
+        "explanation": "Data drift occurs when input distributions change (seasonal shifts, new user behaviour). Concept drift occurs when the underlying relationship between inputs and outputs changes. Both cause deployed model accuracy to degrade, requiring drift detection metrics and retraining pipelines."
+    },
+    {
+        "question": "What is 'few-shot prompting' and how does it improve LLM task performance?",
+        "options": [
+            "A) Training a model on a few examples before deployment",
+            "B) Including a small number of demonstration input-output examples in the prompt, showing the model the expected format and reasoning pattern, significantly improving accuracy on structured tasks",
+            "C) A technique for reducing GPU memory usage during LLM inference",
+            "D) An embedding technique for few-shot classification"
+        ],
+        "answer": "B",
+        "explanation": "Few-shot prompting (in-context learning) provides 1–10 labelled examples directly in the prompt. The model infers the task pattern from demonstrations without weight updates, leveraging LLMs' ability to learn from context."
+    },
+    {
+        "question": "What distinguishes NVIDIA's H200 from the H100?",
+        "options": [
+            "A) H200 uses a different compute architecture (Blackwell vs Hopper)",
+            "B) H200 uses the same Hopper GPU die as H100 but with HBM3e memory (141 GB vs 80 GB, ~4.8 TB/s vs 3.35 TB/s bandwidth), significantly increasing memory capacity and bandwidth for LLM inference",
+            "C) H200 has lower compute performance but lower power consumption",
+            "D) H200 introduces the Transformer Engine not present in H100"
+        ],
+        "answer": "B",
+        "explanation": "H200 is an H100 die with upgraded HBM3e: 141GB capacity (1.75× H100) at 4.8 TB/s bandwidth (1.43× H100). The extra memory and bandwidth are directly beneficial for LLM inference where KV cache and model weights are memory-bound."
+    },
+    {
+        "question": "What is a 'diffusion model' in generative AI?",
+        "options": [
+            "A) A model that diffuses training data across GPU nodes",
+            "B) A generative model that learns to reverse a gradual noising process, generating high-quality images, audio, or video by iteratively denoising from pure noise",
+            "C) A model architecture for spreading computation across multiple GPUs",
+            "D) A technique for distributing gradient updates in asynchronous training"
+        ],
+        "answer": "B",
+        "explanation": "Diffusion models (Stable Diffusion, DALL-E 3) train by adding noise to data and learning the reverse denoising process. At inference, they sample from Gaussian noise and iteratively denoise, producing high-quality, diverse samples."
+    },
+    {
+        "question": "What is the purpose of NVIDIA's Holoscan platform?",
+        "options": [
+            "A) A GPU cluster monitoring platform",
+            "B) A real-time AI sensor processing platform for medical devices and industrial equipment, enabling inference on live sensor streams with ultra-low latency",
+            "C) A large-scale LLM training framework",
+            "D) An edge networking optimisation tool"
+        ],
+        "answer": "B",
+        "explanation": "Holoscan SDK is designed for latency-critical AI applications processing real-time sensor streams (ultrasound, endoscopy, industrial cameras), providing a graph-based dataflow framework optimised for NVIDIA hardware."
+    },
+    {
+        "question": "What is the relationship between pre-training data quality and LLM capability?",
+        "options": [
+            "A) Data quantity is the only factor; quality does not matter",
+            "B) Both quantity and quality matter — diverse, high-quality, deduplicated data from web, books, code, and specialised sources (filtered for toxicity and quality) produces more capable, reliable models than raw unfiltered internet scrapes of equal size",
+            "C) Higher data quality always requires less compute",
+            "D) Pre-training data quality only affects fine-tuning performance"
+        ],
+        "answer": "B",
+        "explanation": "Recent research (Llama, Mistral, Falcon) shows that carefully curated, deduplicated, high-quality datasets produce models outperforming larger models trained on low-quality data. Quality filtering, deduplication, and source diversity are critical."
+    },
+    {
+        "question": "What is 'tensor decomposition' as an AI model compression technique?",
+        "options": [
+            "A) Splitting tensors across GPUs for distributed training",
+            "B) Factorising large weight matrices into products of smaller matrices (e.g., SVD, CP decomposition), reducing the number of parameters and compute while approximating the original layer's function",
+            "C) Converting tensor data types from FP32 to FP16",
+            "D) Decomposing model graphs into subgraphs for parallel execution"
+        ],
+        "answer": "B",
+        "explanation": "Tensor decomposition (Tucker, CP, SVD) approximates large weight matrices as products of smaller factors, reducing both parameter count and FLOPs. It is used alongside pruning and quantisation for model compression."
+    },
+    {
+        "question": "What is 'multi-modal AI' and what are some examples of NVIDIA solutions in this space?",
+        "options": [
+            "A) AI that runs on multiple GPU models simultaneously",
+            "B) AI that processes and combines multiple modalities (text, image, audio, video) — NVIDIA solutions include CLIP-based models, Flamingo-style VLMs, and NVIDIA's Cosmos world foundation model for multi-modal understanding",
+            "C) AI deployed across multiple data centre locations",
+            "D) Using multiple AI model types in a single inference pipeline"
+        ],
+        "answer": "B",
+        "explanation": "Multi-modal AI processes different data types together (e.g., image+text for visual question answering). NVIDIA's ecosystem includes optimised containers for vision-language models (LLaVA, InternVL) and the Cosmos world foundation model on NGC."
+    },
+    {
+        "question": "What is 'activation function' in the context of neural networks and why does ReLU dominate deep learning?",
+        "options": [
+            "A) A GPU kernel that activates compute units",
+            "B) A non-linear function applied element-wise to layer outputs — ReLU (max(0,x)) dominates because it avoids the vanishing gradient problem of sigmoid/tanh, is computationally cheap, and enables sparse activations",
+            "C) A function that activates Tensor Cores for a compute kernel",
+            "D) The initialisation function for neural network weights"
+        ],
+        "answer": "B",
+        "explanation": "Activation functions introduce non-linearity (without which deep networks collapse to linear transformations). ReLU's gradient is 1 for positive inputs (no vanishing) and 0 for negative (sparsity). Variants: Leaky ReLU, GELU (used in transformers), SwiGLU."
+    },
+    {
+        "question": "What is 'online learning' in AI and how does it differ from batch learning?",
+        "options": [
+            "A) Training a model using internet-sourced data",
+            "B) Online learning updates the model incrementally with each new data point or small batch as data arrives; batch learning trains on the full dataset at once — online is suitable for streaming data and evolving distributions but can be unstable",
+            "C) Training models that run directly on cloud infrastructure",
+            "D) Serving models via a web API"
+        ],
+        "answer": "B",
+        "explanation": "Online learning continuously updates model weights from streaming data (click streams, sensor readings), adapting to distribution shifts without full retraining. Challenges include catastrophic forgetting and learning rate management."
+    },
+    {
+        "question": "What is the purpose of the NVIDIA GPU's dedicated video encode/decode engine (NVENC/NVDEC)?",
+        "options": [
+            "A) It provides additional compute for AI training workloads",
+            "B) Dedicated fixed-function hardware that handles H.264/H.265/AV1 encode/decode without using CUDA cores, enabling high-throughput video processing pipelines (e.g., Metropolis video analytics) while leaving CUDA cores free for AI inference",
+            "C) It manages PCIe DMA transfers for video data",
+            "D) It provides memory bandwidth for video processing tasks"
+        ],
+        "answer": "B",
+        "explanation": "NVENC/NVDEC are separate fixed-function engines on NVIDIA GPUs. They handle video codec operations without consuming CUDA SM resources, enabling simultaneous high-throughput video decode and AI inference on the same GPU."
+    },
+    {
+        "question": "What is 'contrastive learning' and what is CLIP an example of?",
+        "options": [
+            "A) A training method that uses adversarial examples to improve robustness",
+            "B) A self-supervised learning approach that trains a model to map similar pairs close together and dissimilar pairs far apart in embedding space — CLIP aligns image and text embeddings by contrasting matching pairs against non-matching ones",
+            "C) A gradient descent variant that alternates between layers",
+            "D) A technique for comparing two model checkpoints to select the best"
+        ],
+        "answer": "B",
+        "explanation": "Contrastive learning (SimCLR, MoCo, CLIP) pulls together embeddings of semantically similar items and pushes apart dissimilar ones. CLIP learns joint image-text embeddings from 400M image-caption pairs, enabling zero-shot image classification."
+    },
+    {
+        "question": "What is NVIDIA's NeMo Guardrails and what problem does it solve?",
+        "options": [
+            "A) A physical security barrier for DGX server racks",
+            "B) A programmable framework for adding safety rails to LLM applications, defining rules that prevent the model from producing off-topic, harmful, or policy-violating outputs in production",
+            "C) A GPU memory guard against out-of-bounds CUDA accesses",
+            "D) A network security tool for InfiniBand cluster protection"
+        ],
+        "answer": "B",
+        "explanation": "NeMo Guardrails provides a Colang-based specification language for LLM conversation flows, enabling developers to define topics the assistant must avoid, require, or redirect — critical for deploying LLMs in regulated or customer-facing applications."
+    }
+]

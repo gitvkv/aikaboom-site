@@ -57,6 +57,25 @@ Health checks are automated diagnostics that test your GPUs for common issues. d
 
 ---
 
+
+### 📊 Visual Representation: dcgmi Cheat Sheet commands
+This diagram groups key dcgmi commands for managing GPU groups, monitoring field groups, and querying health statuses.
+
+```mermaid
+flowchart LR
+    dcgmi["dcgmi Commands"] --> Group["Group (-g / Create GPU groups)"]
+    dcgmi --> Field["FieldGroup (-f / Select metric lists)"]
+    dcgmi --> Diag["Diag (-r / Execute tests)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class dcgmi cpu;
+    class Group,Field,Diag memory;
+```
+
+
 ## 🕵️ Job Monitoring Commands
 
 Job monitoring helps you watch GPU performance during AI training or inference. dcgmi can track metrics over time and alert you to issues.

@@ -45,6 +45,23 @@ To prevent this, InfiniBand supports **SM high availability** using a **master a
 
 ---
 
+### 📊 Visual Representation: Subnet Manager Active-Standby Failover
+This diagram displays High Availability failover: Standby SMs monitor the Active SM and assume control if failures occur.
+
+```mermaid
+flowchart LR
+    Active["Active Subnet Manager (Priority 15)"] -.->|Heartbeat Monitoring| Standby["Standby Subnet Manager (Priority 1)"]
+    Active -->|System Failure| Standby
+    Standby -->|"Failover (Takeover control)"| ActiveState["New Active Subnet Manager"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Active,ActiveState cpu;
+    class Standby memory;
+```
+
 ## 📊 Comparison: Master SM vs. Standby SM
 
 | Feature | Master SM | Standby SM |

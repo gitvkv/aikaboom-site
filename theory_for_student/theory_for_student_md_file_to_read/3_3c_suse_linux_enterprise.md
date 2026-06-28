@@ -78,6 +78,43 @@ A financial firm deploys SLE with the **Realtime Linux** kernel on dedicated ser
 | **Uptime Requirement** | High (but batch jobs can restart) | Critical (no downtime tolerated) |
 | **Kernel Tuning** | For parallel I/O and GPU memory | For deterministic, low-latency response |
 
+### 📊 Visual Representation: SUSE Linux Enterprise Deployment Archetypes
+
+This diagram maps how the core SUSE Linux Enterprise operating system branches into two distinct specialized architectures depending on the enterprise workload requirements.
+
+```mermaid
+flowchart TD
+    subgraph SLECore["SUSE Linux Enterprise (SLES) Core Operating System"]
+        direction TB
+        Core["Common Core: YaST, Zypper, AppArmor, Systemd"]
+    end
+
+    SLECore --> HPCDir["HPC Deployment Path"]
+    SLECore --> FinDir["Financial Deployment Path"]
+
+    subgraph HPCDir["HPC Deployment Path"]
+        direction TB
+        HPC_Ext["SUSE Linux Enterprise HPC"] --> HPC_Tools["Warewulf & Slurm (Scheduler)"]
+        HPC_Tools --> HPC_Perf["MPI Parallelism & High-Speed InfiniBand"]
+        HPC_Perf --> HPC_HW["NVIDIA A100/H100 GPUs & Lustre / GPFS"]
+    end
+
+    subgraph FinDir["Financial Deployment Path"]
+        direction TB
+        Fin_Ext["SLES Realtime & High Availability"] --> Fin_Tools["Live Patching & AppArmor"]
+        Fin_Tools --> Fin_Perf["Low-Latency Kernel & High Availability Cluster"]
+        Fin_Perf --> Fin_HW["Low-Latency NICs & Redundant SSD Arrays"]
+    end
+
+    class HPC_HW,Fin_HW cpu;
+    class Core,HPC_Ext,Fin_Ext system;
+    class HPC_Tools,Fin_Tools,HPC_Perf,Fin_Perf memory;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+```
+
 ---
 
 ## 🕵️ Key Tools and Features for Engineers

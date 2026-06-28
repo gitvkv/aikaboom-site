@@ -48,6 +48,27 @@ Modern AFAs include several capabilities specifically useful for AI pipelines:
 
 ---
 
+
+### 📊 Visual Representation: All-Flash Array (AFA) Controller Redundancy
+This diagram displays AFA architecture, showing redundant storage controllers managing SAS/NVMe SSD pools for host clusters.
+
+```mermaid
+flowchart LR
+    HostCluster["Compute Host Cluster"] --> ControllerA["Storage Controller A"]
+    HostCluster --> ControllerB["Storage Controller B"]
+    ControllerA --- NVMePool["Shared NVMe SSD Pool"]
+    ControllerB --- NVMePool
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class ControllerA,ControllerB cpu;
+    class NVMePool memory;
+    class HostCluster system;
+```
+
+
 ## 🕵️ AI Use Cases for All-Flash Arrays
 
 Here are the most common scenarios where AFAs shine in AI environments:

@@ -98,6 +98,24 @@ A **router** is a networking device that forwards data packets between computer 
 
 ---
 
+### 📊 Visual Representation: OSI Layer 3 IP Packet Routing
+This diagram displays Layer 3 routing logic, wrapping TCP segments in IP headers containing logical source/destination IP addresses.
+
+```mermaid
+flowchart LR
+    IPHeader["IP Header (Source/Dest IPs)"] --> Segment["TCP Segment"]
+    Segment --> Route{"Router Routing Table Check"}
+    Route --> NextHop["Next Hop Interface"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Route cpu;
+    class IPHeader,Segment memory;
+    class NextHop system;
+```
+
 ## 🔄 How Layer 3 Works in an AI Data Center
 
 Imagine an AI training job running across 64 GPUs in 8 different racks. Each rack has its own subnet (e.g., `10.0.1.0/24`, `10.0.2.0/24`, etc.).

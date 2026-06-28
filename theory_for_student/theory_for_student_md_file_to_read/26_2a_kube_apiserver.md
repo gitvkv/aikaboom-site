@@ -55,6 +55,26 @@ The API server processes this, queries etcd, and returns the list of pods as a J
 
 ---
 
+
+### 📊 Visual Representation: kube-apiserver Cluster Communication Hub
+This diagram displays the API Server as the central entrypoint: all cluster queries and writes pass through authentication filters first.
+
+```mermaid
+flowchart LR
+    Client["kubectl / Users"] -->|API Call| APIServer["kube-apiserver"]
+    APIServer --> Auth{"AuthN / AuthZ / Admission Check"}
+    Auth -->|Success| etcd["etcd Database (State Storage)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class APIServer cpu;
+    class Auth memory;
+    class Client,etcd system;
+```
+
+
 ## 🔗 Key Relationships with Other Components
 
 - **etcd**: The only component that directly talks to the database. The API server is the **sole writer** to etcd.

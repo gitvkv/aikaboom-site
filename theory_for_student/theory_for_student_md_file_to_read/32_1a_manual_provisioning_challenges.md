@@ -38,6 +38,26 @@ Repeating this for 1,000 nodes means **thousands of hours** of repetitive, error
 
 ---
 
+
+### 📊 Visual Representation: Manual Server Setup scalability limits
+This flowchart demonstrates the challenges of manual host setup: time-consuming installation steps and potential human typing mistakes.
+
+```mermaid
+flowchart LR
+    Deploy["Scale to 32 Nodes"] --> Manual["1. Manual OS installation via USB (1hr/node)"]
+    Manual --> Drift["2. Missing package versions on Node 15"]
+    Drift --> Outage["Cluster initialization crashes"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Manual cpu;
+    class Drift memory;
+    class Deploy,Outage system;
+```
+
+
 ## 📊 Why Manual Provisioning Fails for AI Clusters
 
 AI clusters have unique requirements that make manual provisioning especially painful:

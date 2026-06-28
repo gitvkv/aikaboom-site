@@ -60,6 +60,25 @@ Below are the key DLI courses that align with the NCA-AIIO exam blueprint. Each 
 
 ---
 
+
+### 📊 Visual Representation: NVIDIA DLI Course curriculum path
+This diagram maps primary Deep Learning Institute learning paths, ranging from basic CUDA programming to advanced cluster scheduling.
+
+```mermaid
+flowchart LR
+    DLI["DLI Curriculum"] --> CUDA["CUDA Fundamentals"]
+    DLI --> Ops["Containerized GPU Cluster Operations"]
+    DLI --> LLM["Distributed LLM Training at Scale"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class DLI cpu;
+    class CUDA,Ops,LLM memory;
+```
+
+
 ## 📋 Quick Comparison Table
 
 | Course Title | Primary Focus | NCA-AIIO Domain Covered | Recommended Prerequisites |

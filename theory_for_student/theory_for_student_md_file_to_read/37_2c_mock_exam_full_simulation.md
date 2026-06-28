@@ -82,6 +82,26 @@ You will receive a detailed score analysis including:
 
 ---
 
+
+### 📊 Visual Representation: Full Simulator scoring pipeline
+This flowchart maps simulator pipelines: taking exam questions, scoring output results, and generating certificate reports.
+
+```mermaid
+flowchart LR
+    Start["Start full simulator"] --> Questions["Answer random exam pool questions"]
+    Questions --> Score["Calculate percentage (Pass threshold: 70%)"]
+    Score --> Report["Generate weak domain analysis report"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Questions cpu;
+    class Score memory;
+    class Start,Report system;
+```
+
+
 ## 🕵️ Score Analysis Example
 
 Here is what your score report might look like after completing the simulation:

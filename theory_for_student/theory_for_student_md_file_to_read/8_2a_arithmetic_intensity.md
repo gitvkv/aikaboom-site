@@ -44,6 +44,24 @@ A higher arithmetic intensity means you are doing more computation per data load
 
 ---
 
+### 📊 Visual Representation: Arithmetic Intensity Formula Flow
+This diagram displays how arithmetic intensity is derived by dividing total floating-point FLOP operations by the volume of DRAM memory bytes loaded.
+
+```mermaid
+flowchart LR
+    FLOPs["Math Operations (FLOPs)"] --> Ratio{"FLOPs / Memory Bytes"}
+    Bytes["Memory Traffic (Bytes)"] --> Ratio
+    Ratio --> Intensity["Arithmetic Intensity (FLOPs/Byte)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Ratio cpu;
+    class Bytes,Intensity memory;
+    class FLOPs system;
+```
+
 ## 🕵️ How to Calculate Arithmetic Intensity
 
 Let's walk through a simple example: **multiplying two matrices** of size **N x N**.

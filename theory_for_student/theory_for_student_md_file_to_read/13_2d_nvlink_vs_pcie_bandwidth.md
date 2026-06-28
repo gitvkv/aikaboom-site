@@ -46,6 +46,23 @@ NVLink is NVIDIA's proprietary, high-bandwidth, low-latency interconnect designe
 
 ---
 
+### 📊 Visual Representation: NVLink vs. PCIe Gen4/Gen5 Bandwidth Comparison
+This diagram contrasts the bidirectional bandwidth of NVLink (900 GB/s) against PCIe Gen4 (64 GB/s) and PCIe Gen5 (128 GB/s).
+
+```mermaid
+flowchart LR
+    Bus["Interconnect Types"] --> NV["NVLink 4 (900 GB/s)"]
+    Bus --> PCIe5["PCIe Gen5 x16 (128 GB/s)"]
+    Bus --> PCIe4["PCIe Gen4 x16 (64 GB/s)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NV cpu;
+    class PCIe5,PCIe4 memory;
+```
+
 ## 📊 The 28x Improvement — Side-by-Side Comparison
 
 Let's put the numbers in perspective:

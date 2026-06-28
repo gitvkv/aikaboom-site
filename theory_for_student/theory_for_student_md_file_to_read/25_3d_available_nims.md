@@ -85,6 +85,25 @@ Stable Diffusion is a family of text-to-image generation models that create imag
 
 ---
 
+
+### 📊 Visual Representation: NGC NIM Microservice categories
+This diagram maps the primary NIM variants: Text generation, Vision, Speech translation, and Bioscience.
+
+```mermaid
+flowchart LR
+    NIMs["Available NIMs"] --> LLM["Text NIMs (Llama3 / Mistral)"]
+    NIMs --> Vision["Vision NIMs (Kosmos / ViT)"]
+    NIMs --> Audio["Speech NIMs (Riva translation)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NIMs cpu;
+    class LLM,Vision,Audio memory;
+```
+
+
 ## 🏥 Domain-Specific Models NIMs
 
 Domain-specific NIMs are pre-trained or fine-tuned models optimized for particular industries or tasks.

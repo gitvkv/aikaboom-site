@@ -74,6 +74,24 @@ For example:
 
 ---
 
+
+### 📊 Visual Representation: Container Image Registry Push-Pull Loop
+This flowchart shows the image loop: local images are pushed to secure registries and pulled down onto remote servers.
+
+```mermaid
+flowchart LR
+    Dev["Developer Host"] -->|docker push| Registry["Container Registry (NGC / DockerHub)"]
+    Registry -->|docker pull| Prod["DGX Server / Production Node"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Registry cpu;
+    class Dev,Prod system;
+```
+
+
 ## 🔐 Using Private Registries
 
 Private registries require authentication. This is critical for organizations that need to control access to proprietary AI models, custom CUDA configurations, or sensitive training data.

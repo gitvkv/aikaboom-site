@@ -34,6 +34,26 @@ For inference serving, latency targets often range from **single-digit milliseco
 
 ---
 
+
+### 📊 Visual Representation: Storage Latency Components
+This flowchart breaks down write latency: from the initial software system call down to physical NAND cell program operations.
+
+```mermaid
+flowchart LR
+    App["Write Syscall"] --> Driver["OS Device Driver (Queue latency)"]
+    Driver --> Bus["PCIe Bus Transmission"]
+    Bus --> Nand["NAND Flash Write (Cell Programming)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Driver cpu;
+    class App,Nand memory;
+    class Bus system;
+```
+
+
 ## 🛠️ What Causes Read Latency in AI Storage?
 
 Several factors contribute to how long it takes to read data for inference:

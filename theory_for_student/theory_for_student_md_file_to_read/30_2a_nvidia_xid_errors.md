@@ -70,6 +70,25 @@ Xid errors appear in several places. Here's where to look:
 
 ---
 
+
+### 📊 Visual Representation: NVIDIA Kernel Driver Xid Logging
+This diagram displays how the NVRM kernel driver detects internal hardware errors and logs numerical Xid events to syslog.
+
+```mermaid
+flowchart LR
+    ASIC["GPU ASIC Hardware Fault"] --> NVRM["Kernel NVRM Driver (nvidia.ko)"]
+    NVRM --> Syslog["syslog / dmesg: 'NVRM: Xid 31: GPU exception'"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NVRM cpu;
+    class Syslog memory;
+    class ASIC system;
+```
+
+
 ## 🛡️ What to Do When You See an Xid Error
 
 Here's a simple triage process for new engineers:

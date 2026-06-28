@@ -41,6 +41,22 @@ When deploying large AI models for inference—especially those with massive mem
 
 ---
 
+### 📊 Visual Representation: Memory-Intensive Inference in Grace Hopper
+This diagram shows how Grace Hopper speeds up inference on massive LLM models by storing larger weights in Grace LPDDR5X and calling them into Hopper HBM3 as needed.
+
+```mermaid
+flowchart LR
+    LPDDR5X["Host LPDDR5X Memory (Store Large Model Weights)"] -->|"NVLink-C2C (900 GB/s)"| HBM3["Device HBM3 Memory (Active Activations)"]
+    HBM3 --> TensorCores["Hopper Tensor Cores (Inference execution)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class TensorCores cpu;
+    class LPDDR5X,HBM3 memory;
+```
+
 ## 🕵️ Implications for Memory-Intensive Inference
 
 ### 1. 🧩 Model Parallelism Becomes Efficient

@@ -59,6 +59,25 @@ DGX Cloud is ideal for:
 
 ---
 
+
+### 📊 Visual Representation: NVIDIA DGX Cloud orchestration
+This diagram displays NVIDIA DGX Cloud: running NVIDIA Base Command Platform over multi-cloud provider infrastructure.
+
+```mermaid
+flowchart LR
+    BCP["Base Command Platform Portal"] --> DGXPod["DGX Cloud Infrastructure (DGX Nodes)"]
+    DGXPod --> BaseCloud["Underlying CSP (AWS / Azure / GCP / OCI)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class BCP cpu;
+    class DGXPod memory;
+    class BaseCloud system;
+```
+
+
 ## 📈 Comparison: DGX Cloud vs. On-Premises DGX Systems
 
 | Aspect | DGX Cloud (Subscription) | On-Premises DGX |

@@ -59,6 +59,24 @@ The NVIDIA A2 is a low-profile, low-power GPU designed specifically for AI infer
 
 ---
 
+### 📊 Visual Representation: GDDR vs. HBM Hardware Domain Positioning
+This diagram contrasts the primary applications of GDDR memory (workstations, gaming, L4 inference) against HBM memory (H100, B200 training pods).
+
+```mermaid
+flowchart LR
+    GPUArch["GPU Memory Types"] --> GDDR["GDDR (Cost-effective, standard PCB)"]
+    GPUArch --> HBM["HBM (Maximum bandwidth, 2.5D packaging)"]
+    GDDR --> GDDR_Use["Workstations, Gaming, L4 Inference"]
+    HBM --> HBM_Use["Enterprise Training & LLM Scale (H100 / B200)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GDDR,HBM memory;
+    class GDDR_Use,HBM_Use system;
+```
+
 ## 🕵️ Inference Cards — The GDDR Workhorses
 
 Several NVIDIA inference-focused cards rely on GDDR memory to balance cost and performance:
@@ -113,3 +131,4 @@ When selecting hardware for AI workloads, consider these GDDR-based options:
 ## 🔍 Key Takeaway
 
 GDDR memory is not obsolete — it is strategically deployed across NVIDIA's product lineup where cost, capacity, and power efficiency matter more than raw bandwidth. For engineers building AI infrastructure, understanding the trade-offs between GDDR and HBM is essential for designing cost-effective, scalable systems. The RTX series, A2, T4, L4, and A10 cards all demonstrate that GDDR remains a vital component in the AI hardware ecosystem, especially for inference workloads and smaller-scale training.
+

@@ -67,6 +67,23 @@ While Model Parallelism solves the memory problem, it introduces new challenges:
 
 ---
 
+### 📊 Visual Representation: Model Parallelism (MP) Execution Flow
+This diagram displays basic Model Parallelism (MP), where different layers of a model are placed on separate GPUs, executing sequentially.
+
+```mermaid
+flowchart LR
+    Input["Input Data"] --> GPU1["GPU 1 (Layers 1-10)"]
+    GPU1 -->|Intermediate Activations| GPU2["GPU 2 (Layers 11-20)"]
+    GPU2 --> Output["Final Loss Calculation"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPU1,GPU2 cpu;
+    class Input,Output memory;
+```
+
 ## 🔄 Pipeline Parallelism: An Improvement
 
 A more efficient version of Model Parallelism is **Pipeline Parallelism**. Instead of one GPU waiting for the previous one to finish, multiple micro-batches of data are processed in a staggered pipeline.

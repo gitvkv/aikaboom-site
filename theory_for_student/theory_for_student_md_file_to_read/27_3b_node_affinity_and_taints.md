@@ -74,6 +74,30 @@ This means only pods that have a toleration for `nvidia.com/gpu: present` with e
 
 ---
 
+
+### 📊 Visual Representation: Node Taints and Pod Tolerations matching
+This diagram displays how taints restrict GPU nodes to dedicated workload pods, preventing CPU workloads from running on expensive GPU systems.
+
+```mermaid
+flowchart LR
+    subgraph GPUNode["GPU Node (Tainted)"]
+        Taint["Taint: nvidia.com/gpu=true:NoSchedule"]
+    end
+    subgraph Workloads["Workloads"]
+        Pod1["Pod 1 (No toleration)"] -->|Blocked| GPUNode
+        Pod2["Pod 2 (Tolerates nvidia.com/gpu)"] -->|Scheduled| GPUNode
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Pod2 cpu;
+    class Pod1 memory;
+    class GPUNode system;
+```
+
+
 ## 🎯 Combining Node Affinity and Taints/Tolerations
 
 For production GPU workloads, you typically use both mechanisms together:

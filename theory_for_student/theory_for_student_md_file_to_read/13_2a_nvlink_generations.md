@@ -83,6 +83,23 @@ This guide breaks down each generation of NVLink (1.0 through 5.0) in simple ter
 
 ---
 
+### 📊 Visual Representation: NVLink Bandwidth Generational Progression
+This flowchart tracks the bidirectional bandwidth scaling per GPU across generations (NVLink 1 to NVLink 5).
+
+```mermaid
+flowchart LR
+    NVLink1["NVLink 1 (80 GB/s)"] --> NVLink2["NVLink 2 (150 GB/s)"]
+    NVLink2 --> NVLink3["NVLink 3 (600 GB/s)"]
+    NVLink3 --> NVLink4["NVLink 4 (900 GB/s)"]
+    NVLink4 --> NVLink5["NVLink 5 (1800 GB/s / Blackwell)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NVLink1,NVLink2,NVLink3,NVLink4,NVLink5 memory;
+```
+
 ## 🛠️ Practical Implications for Engineers
 
 ### When Designing AI Infrastructure:

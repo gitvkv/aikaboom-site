@@ -75,6 +75,27 @@ The **sd** prefix stands for **SCSI disk** or **SATA disk**. This naming scheme 
 
 ---
 
+### 📊 Visual Representation: Linux Block Device Naming Conventions
+This diagram details the device path naming schemes for SCSI/SATA drives, NVMe drives, and legacy IDE disks in Linux.
+
+```mermaid
+flowchart LR
+    dev["/dev/ (Devices)"] --> SCSI["/dev/sdX (SATA/SCSI)"]
+    dev --> NVMe["/dev/nvmeXnY (NVMe SSD)"]
+    dev --> IDE["/dev/hdX (Legacy IDE)"]
+
+    SCSI --> sdap1["/dev/sda1 (Partition 1)"]
+    NVMe --> nvme0n1p1["/dev/nvme0n1p1 (Controller 0, Namespace 1, Partition 1)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class dev cpu;
+    class SCSI,NVMe,IDE memory;
+    class sdap1,nvme0n1p1 system;
+```
+
 ## 🕵️ Comparison Table: sdX vs nvmeX
 
 | Feature | **/dev/sdX** | **/dev/nvmeXnY** |

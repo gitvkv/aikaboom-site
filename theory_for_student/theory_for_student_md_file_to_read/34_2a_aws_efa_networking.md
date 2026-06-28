@@ -46,6 +46,25 @@ In a P5 cluster, each instance has multiple EFAs. The network topology is design
 
 ---
 
+
+### 📊 Visual Representation: Elastic Fabric Adapter (EFA) OS Bypass
+This diagram displays EFA: bypasses kernel protocols to stream data directly into target VM instance memory.
+
+```mermaid
+flowchart LR
+    App["Distributed AI App"] -->|Scalable Reliable Datagram| EFA["EFA ASIC Device"]
+    EFA -->|Bypasses host OS kernel| RemoteNode["Remote GPU Node memory"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class EFA cpu;
+    class RemoteNode memory;
+    class App system;
+```
+
+
 ## 🧩 Setting Up EFA for a P5 Cluster
 
 To use EFA, engineers need to configure several components correctly:

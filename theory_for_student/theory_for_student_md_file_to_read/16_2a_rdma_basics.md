@@ -92,6 +92,27 @@ RDMA eliminates the middleman:
 
 ---
 
+### 📊 Visual Representation: Standard TCP Socket vs. RDMA Memory Transfer
+This diagram contrasts standard TCP sockets (requiring OS kernel copy overhead) with RDMA (bypassing the host OS for direct network-to-memory transfers).
+
+```mermaid
+flowchart LR
+    subgraph TCP["Standard TCP (Kernel Copies)"]
+        App1["Application"] -->|Copy| Kernel["Kernel Buffer"] -->|Copy| NIC1["Ethernet NIC"]
+    end
+    subgraph RDMA["RDMA (Zero-Copy)"]
+        App2["Application Space"] -->|Direct Bypass| RNIC["RDMA NIC"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class App1,App2 cpu;
+    class Kernel,RNIC memory;
+    class NIC1 system;
+```
+
 ## 📊 Comparison: Traditional vs. RDMA
 
 | Feature | Traditional TCP/IP | RDMA |

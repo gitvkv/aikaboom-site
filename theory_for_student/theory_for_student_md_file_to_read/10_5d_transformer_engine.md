@@ -44,6 +44,26 @@ Traditional mixed-precision training uses a single precision (e.g., FP16) for th
 
 ---
 
+### 📊 Visual Representation: NVIDIA Transformer Engine Dynamic FP8 Execution
+This flowchart outlines how the Transformer Engine dynamically scales tensor precision (FP8 vs. FP16) based on activation value ranges to maximize throughput.
+
+```mermaid
+flowchart LR
+    Input["High Precision Input (FP16)"] --> Range{"Check Value Range"}
+    Range -->|Fits in FP8| FP8["Dynamic Cast to FP8 (Double speed)"]
+    Range -->|Exceeds FP8| FP16["Preserve FP16 (Avoid Overflow)"]
+    FP8 --> MMA["Tensor Core Multiply"]
+    FP16 --> MMA
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Range cpu;
+    class FP8,FP16 memory;
+    class Input,MMA system;
+```
+
 ## 🛠️ Benefits for LLM Training and Inference
 
 ### 🚀 Training Speed Improvements

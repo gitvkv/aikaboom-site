@@ -73,6 +73,23 @@ NVLink is NVIDIA's high-speed interconnect technology that allows GPUs to commun
 
 ---
 
+### 📊 Visual Representation: Hopper H100 Architecture Blocks
+This diagram details the H100 GPU die, featuring 4th Gen Tensor Cores, the Transformer Engine, and HBM3 memory stacks.
+
+```mermaid
+flowchart LR
+    Cores["CUDA Cores"] --- TE["Transformer Engine (FP8/FP16)"]
+    TE --- TC["4th Gen Tensor Cores"]
+    TC --- HBM3["HBM3 Memory (3.35 TB/s)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Cores,TC,TE cpu;
+    class HBM3 memory;
+```
+
 ## 🛠️ HBM3 — High-Bandwidth Memory
 
 HBM3 is the third generation of High-Bandwidth Memory, designed to feed data to the GPU's compute units as fast as possible.

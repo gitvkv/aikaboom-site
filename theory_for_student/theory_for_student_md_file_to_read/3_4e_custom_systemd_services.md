@@ -126,6 +126,32 @@ WantedBy=multi-user.target
 | **Resource usage** | High (GPU, CPU, memory) | Low (periodic checks) |
 | **Logging focus** | Training metrics, errors | Health status, alerts |
 
+### 📊 Visual Representation: Training Service & Watchdog Architecture
+
+This block diagram illustrates how systemd co-manages a resource-heavy AI training service and its low-overhead health watchdog using systemd-specific bindings.
+
+```mermaid
+flowchart TD
+    subgraph systemd["systemd Service Manager"]
+        direction TB
+        Trainer["ai-training.service\n- Run: train.py\n- Restart: on-failure\n- Env: CUDA_VISIBLE_DEVICES"]
+        Watchdog["ai-watchdog.service\n- Run: watchdog.sh\n- Restart: always\n- BindsTo: ai-training.service"]
+    end
+
+    Watchdog -->|BindsTo & Monitors| Trainer
+    Trainer -->|Executes Compute on| GPU["NVIDIA GPU (CUDA Context)"]
+    Watchdog -->|Logs Health to| Journald["systemd-journald Log Database"]
+    Trainer -->|Logs Output to| Journald
+
+    class GPU cpu;
+    class Journald memory;
+    class Trainer,Watchdog system;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+```
+
 ---
 
 ## 🚀 Enabling and Managing Your Custom Units

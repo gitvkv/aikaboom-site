@@ -84,6 +84,26 @@ apptainer inspect my_container.sif
 
 ---
 
+
+### 📊 Visual Representation: Docker to Apptainer build conversion
+This flowchart shows how Apptainer pulls Docker layers from registries and compiles them directly into a local SIF file.
+
+```mermaid
+flowchart LR
+    Registry["Docker Registry (nvcr.io)"] -->|apptainer pull| Pull["Download & Unpack Layers"]
+    Pull --> Compile["Compile to SquashFS format"]
+    Compile --> SIF["Local image.sif file ready"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class SIF cpu;
+    class Compile memory;
+    class Registry,Pull system;
+```
+
+
 ## 🚀 Running the Converted Apptainer Container
 
 Once converted, you can run the container with GPU support using the `--nv` flag.

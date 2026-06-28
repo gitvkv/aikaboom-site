@@ -90,6 +90,25 @@ Now let's take that server and put it in a rack. A standard 42U rack can hold mu
 
 **Result:** You need a rack capable of delivering **~61 kW** of power and cooling.
 
+### 📊 Visual Representation: TDP and Rack Power Rollup
+This diagram shows the sequential aggregation of power consumption from individual NVIDIA GPUs up to the complete rack and facility power allocation including safety margins.
+
+```mermaid
+flowchart LR
+    GPUs["8x NVIDIA H100 GPUs<br>(700W each = 5600W)"] --> Server["Server Chassis Overhead<br>(CPUs, Memory, Fans = 700W)"]
+    Server --> ServerTotal["Total Server TDP<br>(6300W / 6.3 kW)"]
+    ServerTotal --> RackTotal["8x Servers + Networking<br>(51.05 kW Rack TDP)"]
+    RackTotal --> FacilityPower["Required Facility Feed<br>(~61 kW with 20% Safety Margin)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPUs cpu;
+    class Server,ServerTotal memory;
+    class RackTotal,FacilityPower system;
+```
+
 ---
 
 ## 📋 Comparison Table: Common GPU TDP Values

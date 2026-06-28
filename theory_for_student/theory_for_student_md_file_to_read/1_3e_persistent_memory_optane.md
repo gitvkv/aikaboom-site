@@ -32,6 +32,37 @@ For new engineers, think of PMem as "memory that doesn't forget." It changes how
 | **Interface** | Memory bus (direct CPU access) | Memory bus (direct CPU access) | PCIe/SATA (via controller) |
 | **Use Case** | Active working data | Large in-memory databases, AI models | Bulk storage, backups |
 
+### 📊 Visual Representation: Memory Bus vs. PCIe Bus Hierarchy
+
+This diagram shows how DRAM, Persistent Memory (PMem), and NAND SSDs connect to the CPU, highlighting their respective buses and latencies.
+
+```mermaid
+flowchart TD
+    CPU["Host CPU\n(Memory Controller & PCIe Controller)"]
+    
+    subgraph MemBus["System Memory Bus (Ultra Low Latency)"]
+        DRAM["DRAM DIMM\n(~100ns, Volatile)"]
+        PMEM["Persistent Memory (PMem)\n(~300ns, Non-Volatile)"]
+    end
+
+    subgraph PCIeBus["PCIe/SATA Bus (Higher Latency)"]
+        SSD["NAND SSD\n(~100µs, Non-Volatile)"]
+    end
+
+    CPU -->|Direct Channel Access| DRAM
+    CPU -->|Direct Channel Access| PMEM
+    CPU -->|PCIe / NVMe Protocol| SSD
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class CPU cpu;
+    class DRAM,PMEM memory;
+    class SSD,MemBus,PCIeBus system;
+```
+
+
 ---
 
 ## 🛠️ How Engineers Use PMem in Practice

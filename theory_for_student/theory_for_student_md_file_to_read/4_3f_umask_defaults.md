@@ -8,7 +8,7 @@
 
 When engineers create new files or directories in a Linux-based AI infrastructure, those items are automatically assigned a set of default permissions. Without careful control, these defaults could accidentally expose sensitive AI model weights, training data, or configuration files to unauthorized users. The **umask** (user file-creation mode mask) is the tool that defines which permission bits are *removed* (masked) from the default base permissions whenever a new file or directory is created. Understanding umask helps engineers maintain consistent security boundaries across shared AI compute environments.
 
----
+
 
 ## ⚙️ What Is umask?
 
@@ -54,6 +54,28 @@ The actual permissions for a new item are calculated as:
 - To set a new umask value temporarily (for the current session only), use **umask** followed by the desired three-digit octal value.
 - To make a umask change permanent for a user, add the umask command to the user's shell profile file (e.g., **~/.bashrc** or **~/.profile**).
 - For system-wide defaults, the umask is often set in files like **/etc/profile** or **/etc/login.defs**.
+
+### 📊 Visual Representation: umask Permission Filtering Logic
+This flowchart illustrates how a umask of `022` is applied to default base permissions during directory and file creation, resulting in the system's final permission settings.
+
+```mermaid
+flowchart LR
+    subgraph DirCalc["Directory Creation (Base 777)"]
+        base_dir["Base Perms:<br>777 (rwxrwxrwx)"] --> minus_dir["- Mask: 022 (----w--w-)"] --> res_dir["Final Perms:<br>755 (rwxr-xr-x)"]
+    end
+
+    subgraph FileCalc["File Creation (Base 666)"]
+        base_file["Base Perms:<br>666 (rw-rw-rw-)"] --> minus_file["- Mask: 022 (----w--w-)"] --> res_file["Final Perms:<br>644 (rw-r--r--)"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class base_dir,base_file system;
+    class minus_dir,minus_file memory;
+    class res_dir,res_file cpu;
+```
 
 ---
 

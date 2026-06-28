@@ -52,6 +52,28 @@ As a new engineer working with NVIDIA GPUs, you will frequently need to monitor 
 
 ---
 
+
+### 📊 Visual Representation: dcgm-exporter vs. nvidia-smi scrape profiles
+This diagram contrasts querying modes: comparing periodic CLI parsing scripts with continuous HTTP exporter metrics endpoints.
+
+```mermaid
+flowchart LR
+    subgraph Exporter["dcgm-exporter (Observability Stack)"]
+        Push["Exposes HTTP endpoint (10s scrape interval / No overhead)"]
+    end
+    subgraph Legacy["nvidia-smi script"]
+        Cron["Executes shell cron (High kernel interrupt overhead)"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Push cpu;
+    class Cron memory;
+```
+
+
 ## 📊 Comparison Table: nvidia-smi vs DCGM
 
 | Feature | nvidia-smi | DCGM |

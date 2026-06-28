@@ -47,6 +47,26 @@ Think of GenAI like a very advanced autocomplete. It learns from massive dataset
 
 ---
 
+### 📊 Visual Representation: Generative AI Pipeline: Prompt to Token Completion
+This flowchart details the autoregressive generation loop where input prompt tokens generate probability distributions to output subsequent text tokens.
+
+```mermaid
+flowchart LR
+    Prompt["Input Prompt (Text/Context)"] --> LLM["Autoregressive LLM Engine"]
+    LLM --> Probs["Next-Token Probabilities"]
+    Probs --> Sample["Sampling & Selection"]
+    Sample --> Token["Output Token"]
+    Token -->|Append to Input| Prompt
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class LLM cpu;
+    class Probs,Token memory;
+    class Prompt,Sample system;
+```
+
 ## 🕵️ Real-World Use Cases for Engineers
 
 As an engineer working with AI infrastructure, you'll encounter GenAI in these scenarios:

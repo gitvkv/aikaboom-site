@@ -60,6 +60,27 @@ PCIe has evolved through several generations. Each generation **doubles the data
 - A **Gen 4 x16** slot (typical for modern GPUs) provides **~31.5 GB/s** of bandwidth.
 - A **Gen 3 x4** slot (common for NVMe SSDs) provides **~3.94 GB/s**.
 
+### 📊 Visual Representation: PCIe Gen 5 Lane Allocation and Bandwidth Scaling
+This diagram shows how a CPU's PCIe Gen 5 controller allocates different lane widths (x16, x8, x4) to system devices, showing the direct relationship between lane count and bandwidth.
+
+```mermaid
+flowchart LR
+    CPU[CPU / PCIe Gen 5 Controller] -->|x16 Lanes\n63.0 GB/s| GPU[NVIDIA GPU]
+    CPU -->|x8 Lanes\n31.5 GB/s| NIC[High-Speed NIC]
+    CPU -->|x4 Lanes\n15.75 GB/s| SSD[NVMe SSD]
+    CPU -->|x1 Lane\n3.94 GB/s| WiCheck[Serial / Low-speed Node]
+
+    class CPU cpu;
+    class GPU memory;
+    class NIC system;
+    class SSD memory;
+    class WiCheck system;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+```
+
 ---
 
 ## 🕵️ Why This Matters for AI

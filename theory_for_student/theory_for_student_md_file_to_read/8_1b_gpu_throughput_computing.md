@@ -44,6 +44,24 @@ This is why matrix multiplications — the core operation in neural networks —
 
 ---
 
+### 📊 Visual Representation: Throughput Execution: Thread Hiding and Scheduling
+This diagram shows how GPUs achieve massive throughput by scheduling instruction warps in parallel, hiding long memory latencies behind thread switching.
+
+```mermaid
+flowchart LR
+    Warp1["Warp 1 (Execution)"] -->|Memory Fetch Delay| Warp2["Warp 2 (Instantly Scheduled)"]
+    Warp2 -->|Execution| Warp3["Warp 3 (Instantly Scheduled)"]
+    Warp3 -->|Memory Fetch Delay| Warp1["Warp 1 (Memory Done -> Resume)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Warp1 cpu;
+    class Warp2 memory;
+    class Warp3 system;
+```
+
 ## 📊 Why "Simple Cores" Matter for AI
 
 The simplicity of GPU cores is not a limitation — it's a feature that enables massive parallelism:
@@ -89,3 +107,4 @@ When designing or optimizing AI infrastructure, remember:
 - **Batching is critical** — to fully utilize GPU throughput, you must batch multiple inputs together. A single input leaves most cores idle.
 
 Understanding this design philosophy helps you make better decisions about when to use GPUs (parallel, data-heavy tasks) versus CPUs (sequential, branching, or latency-sensitive tasks) in your AI infrastructure.
+

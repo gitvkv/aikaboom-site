@@ -57,6 +57,25 @@ The relationship is simple:
 
 ---
 
+
+### 📊 Visual Representation: PersistentVolume (PV) and PVC allocation
+This diagram displays how user PVCs request storage resources, which are dynamically bound to matching cluster PersistentVolumes.
+
+```mermaid
+flowchart LR
+    Pod["User Pod"] -->|Mount| PVC["PersistentVolumeClaim (Request 100GB)"]
+    PVC -->|Bound to| PV["PersistentVolume (Physical LVM/NFS: 100GB)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class PVC cpu;
+    class PV memory;
+    class Pod system;
+```
+
+
 ## 🕵️ Common Access Modes
 
 Access modes define how many pods can access the storage and in what way:

@@ -52,6 +52,50 @@ Consider training a simple neural network with 1 million parameters.
 
 **Result:** The CPU is idle for roughly **80-90%** of the time, waiting for data to arrive over the bottleneck.
 
+### 📊 Visual Representation: CPU vs. GPU Architectural Comparison
+
+This diagram compares the traditional CPU serial architecture, constrained by a narrow shared bus bottleneck, with the highly parallel NVIDIA GPU architecture utilizing massive parallel links.
+
+```mermaid
+flowchart TD
+    Start["Architecture Comparison: CPU vs. GPU for AI"]
+    
+    Start --> CPU_Branch["Traditional CPU (Von Neumann Bottleneck)"]
+    Start --> GPU_Branch["NVIDIA GPU (Parallel Design)"]
+    
+    subgraph CPU_Sec ["CPU: Serial Architecture"]
+        CPU_Core["CPU Core (Serial Processing)"]
+        CPU_Bus["Narrow Shared Bus (Bottleneck)"]
+        CPU_Mem["System RAM"]
+        
+        CPU_Core -->|Slow Data Requests| CPU_Bus
+        CPU_Bus --> CPU_Mem
+    end
+    
+    subgraph GPU_Sec ["GPU: Parallel Architecture"]
+        GPU_Cores["Thousands of Cores (CUDA/Tensor)"]
+        GPU_HBM["High-Bandwidth Memory (VRAM/HBM)"]
+        
+        GPU_Cores -->|Massive Parallel Links| GPU_HBM
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class CPU_Core cpu;
+    class GPU_Cores cpu;
+    class CPU_Mem memory;
+    class GPU_HBM memory;
+    class Start system;
+    class CPU_Branch system;
+    class GPU_Branch system;
+    class CPU_Bus system;
+    class CPU_Sec system;
+    class GPU_Sec system;
+```
+
+
 ---
 
 ## 🛠️ Preview: How GPUs Break the Bottleneck

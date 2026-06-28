@@ -55,6 +55,24 @@ RDMA (Remote Direct Memory Access) allows one computer to directly read/write me
 
 ---
 
+### 📊 Visual Representation: Lossless Ethernet Goal: Switch Buffer Protection
+This flowchart demonstrates how packet drops trigger expensive RDMA retransmissions, requiring a lossless Ethernet environment.
+
+```mermaid
+flowchart LR
+    Drop["Packet Drop in Switch"] --> GoBackN["RDMA Go-Back-N Retransmission"]
+    GoBackN --> Resend["Resend all outstanding packets (High Latency)"]
+    Resend --> Throttle["Throughput drops to near zero"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GoBackN cpu;
+    class Resend memory;
+    class Drop,Throttle system;
+```
+
 ## 🛠️ Why Standard Ethernet Fails for RDMA
 
 Standard Ethernet was designed with **"best effort"** delivery — it tries its best but accepts that packets may be lost. This works for TCP because:

@@ -67,6 +67,25 @@ Regression testing ensures that changes to your model (new training data, archit
 
 ---
 
+### 📊 Visual Representation: Model Benchmark and Evaluation Framework
+This flowchart maps how a trained LLM is tested across multiple evaluation datasets (e.g., MMLU, GSM8K) to measure general accuracy.
+
+```mermaid
+flowchart LR
+    Model["Target Model"] --> Benchmark{"Benchmark Run"}
+    Benchmark --> MMLU["MMLU (Reasoning)"]
+    Benchmark --> GSM8K["GSM8K (Math)"]
+    Benchmark --> HumanEval["HumanEval (Coding)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Benchmark cpu;
+    class Model memory;
+    class MMLU,GSM8K,HumanEval system;
+```
+
 ## 🕵️ How These Three Work Together
 
 Model evaluation, benchmarking, and regression testing form a continuous quality loop:

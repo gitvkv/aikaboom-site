@@ -60,6 +60,24 @@ This entire process can happen in minutes, allowing you to provision hundreds of
 
 ---
 
+
+### 📊 Visual Representation: BCM Software Image provision
+This diagram displays BCM image management, showing how software profile updates are synchronized down to target compute nodes.
+
+```mermaid
+flowchart LR
+    Image["Software Image Profile (Head Node)"] -->|Synchronize| Node1["Compute Node 1 (OS in RAM)"]
+    Image -->|Synchronize| Node2["Compute Node 2 (OS in RAM)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Image cpu;
+    class Node1,Node2 memory;
+```
+
+
 ## 🛠️ Comparison: Golden Image vs. Image Profile vs. OS Provisioning
 
 | Concept | What It Is | What It Does | Example |

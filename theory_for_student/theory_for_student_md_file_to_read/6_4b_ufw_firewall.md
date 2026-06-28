@@ -71,6 +71,24 @@ When configuring ufw for an AI server, you'll typically create rules for:
 
 ---
 
+### 📊 Visual Representation: Uncomplicated Firewall (UFW) Policy Rule Processing
+This diagram displays how UFW sits as a user-friendly frontend managing netfilter rules, filtering inbound network traffic.
+
+```mermaid
+flowchart LR
+    Traffic["Network Traffic"] --> UFW["UFW Filter Engine"]
+    UFW -->|Allow Match| Port["Target Services (SSH / Triton)"]
+    UFW -->|Deny Match| Block["Packet Dropped"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class UFW cpu;
+    class Port memory;
+    class Traffic,Block system;
+```
+
 ## 🧩 Understanding ufw Rule Syntax
 
 ufw rules follow a simple pattern:
@@ -137,3 +155,4 @@ To verify your firewall configuration, you can check:
 ## 🎯 Summary
 
 ufw is your go-to firewall tool for Ubuntu-based AI servers. It provides a simple, readable way to control network traffic without the complexity of raw iptables. By understanding default policies, rule patterns, and best practices, you can secure your AI infrastructure while keeping it accessible for legitimate workloads. Start with a restrictive policy, add rules only as needed, and always verify your configuration before deploying to production.
+

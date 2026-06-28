@@ -62,6 +62,33 @@ When you press the power button on a server, the very first software that runs i
   - **Enroll your own keys** (MOK — Machine Owner Key) to sign custom kernels and modules.
   - **Use a signed bootloader** and only load signed modules.
 
+### 📊 Visual Representation: UEFI Secure Boot Verification Chain
+This flowchart depicts the step-by-step cryptographic validation process performed by UEFI Secure Boot when loading bootloaders, OS kernels, and device drivers.
+
+```mermaid
+flowchart LR
+    Power[Power On / Initialize Hardware] --> LoadFirm[Load UEFI Firmware]
+    LoadFirm --> SecureCheck{Is Secure Boot Enabled?}
+    
+    SecureCheck -->|No| BootOS[Load Bootloader & Kernel without check]
+    SecureCheck -->|Yes| VerifyBoot[Check Bootloader Signature against DB]
+    
+    VerifyBoot -->|Valid Signature| VerifyKernel[Check Kernel & Drivers against DB / MOK]
+    VerifyBoot -->|Invalid Signature| BlockBoot[Block Boot / Display Error]
+    
+    VerifyKernel -->|Valid Signature| BootOS
+    VerifyKernel -->|"Invalid Signature (e.g. Unsigned NVIDIA Driver)"| BlockMod[Block Driver / Prevent Kernel Load]
+
+    class Power,LoadFirm system;
+    class SecureCheck,VerifyBoot,VerifyKernel system;
+    class BootOS memory;
+    class BlockBoot,BlockMod cpu;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+```
+
 ---
 
 ## 🧩 How to Check Which Firmware Your Linux System Uses

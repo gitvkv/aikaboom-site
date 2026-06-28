@@ -52,6 +52,26 @@ DOCA libraries are the building blocks for custom DPU programming. They provide 
 
 ---
 
+
+### 📊 Visual Representation: NVIDIA DOCA SDK Stack
+This diagram displays the DOCA software stack, showing how DOCA APIs bridge user applications with hardware-accelerated DPU engines.
+
+```mermaid
+flowchart LR
+    App["DOCA Application (Networking/Security)"] --> API["DOCA Runtime APIs (e.g., DOCA Flow)"]
+    API --> Driver["DPU Kernel Drivers"]
+    Driver --> Hardware["BlueField ASIC Acceleration Engines"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class App cpu;
+    class API,Driver memory;
+    class Hardware system;
+```
+
+
 ## 🛠️ DOCA Services
 
 DOCA services are background processes that run continuously on the DPU, managing infrastructure tasks automatically.

@@ -81,6 +81,27 @@ Most large AI fabrics use a **Clos topology** (also called leaf-spine). Here's h
 
 ---
 
+### 📊 Visual Representation: IGP vs. EGP Routing Scopes
+This diagram contrasts Interior Gateway Protocols (IGP, within an autonomous system) against Exterior Gateway Protocols (EGP, between autonomous systems).
+
+```mermaid
+flowchart LR
+    subgraph AS1["Autonomous System 1 (AS1)"]
+        R1["Router 1"] -->|IGP: OSPF / RIP| R2["Router 2"]
+    end
+    subgraph AS2["Autonomous System 2 (AS2)"]
+        R3["Router 3"]
+    end
+    R2 -->|EGP: BGP| R3
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class R1,R2 cpu;
+    class R3 memory;
+```
+
 ## 📊 Comparison: Static Routes vs. BGP for AI Fabrics
 
 | Aspect | Static Routes | BGP |

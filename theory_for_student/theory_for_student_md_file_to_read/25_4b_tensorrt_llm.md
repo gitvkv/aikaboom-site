@@ -30,6 +30,27 @@ The process of using TensorRT-LLM can be broken down into two main phases:
 
 ---
 
+
+### 📊 Visual Representation: TensorRT-LLM Parallel Execution Architecture
+This diagram displays TensorRT-LLM, enabling tensor-parallelism execution across multiple local GPUs.
+
+```mermaid
+flowchart LR
+    Model["LLM Weights"] --> TRT_Compiler["TensorRT-LLM Builder"]
+    TRT_Compiler -->|Compile| ParallelEngine["Tensor Parallel Engine"]
+    ParallelEngine --> GPU1["GPU 1 VRAM Slice"]
+    ParallelEngine --> GPU2["GPU 2 VRAM Slice"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class ParallelEngine cpu;
+    class Model memory;
+    class GPU1,GPU2 system;
+```
+
+
 ## 📊 TensorRT-LLM vs. Standard PyTorch Inference
 
 To understand the value, let's compare running an LLM with standard PyTorch versus using TensorRT-LLM.

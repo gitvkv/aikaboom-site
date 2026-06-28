@@ -51,6 +51,24 @@ Think of WEKA as a **data highway** that lets thousands of GPUs read and write d
 
 ---
 
+
+### 📊 Visual Representation: WekaFS Userspace Parallel Architecture
+This diagram displays WekaFS running in userspace via DPDK, communicating directly over InfiniBand networks to bypass kernel context switches.
+
+```mermaid
+flowchart LR
+    App["AI Application (PyTorch)"] -->|DPDK / Userspace Bypass| WekaClient["WekaFS Client Process"]
+    WekaClient -->|InfiniBand RDMA| WekaStorage["Distributed SSD Storage Nodes"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class WekaClient cpu;
+    class App,WekaStorage memory;
+```
+
+
 ## 📊 How WEKA Handles AI Workloads
 
 ### 🧠 Training Data Loading

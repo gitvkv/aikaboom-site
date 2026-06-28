@@ -98,6 +98,41 @@ The **/sys** filesystem is a newer, more structured virtual filesystem introduce
 | **Performance impact** | Minimal — data is generated on demand | Minimal — data is generated on demand |
 | **When to use** | Monitoring processes, memory, load | Configuring hardware, discovering devices |
 
+### 📊 Visual Representation: Virtual Filesystem Hierarchy
+
+This diagram maps how user space utilities query the `/proc` and `/sys` virtual filesystems, showing how the VFS layer dynamically retrieves state information directly from the kernel core and hardware drivers.
+
+```mermaid
+flowchart TD
+    User["User Space: Monitoring Tools / Scripts (cat, nvidia-smi)"] -->|Read/Write| VFS["Virtual File System (VFS) Layer"]
+    
+    subgraph VirtualFS["Virtual Filesystem Mounts (In-Memory Only)"]
+        direction LR
+        Proc["/proc (Process & System Stats)"]
+        Sys["/sys (Hardware & Device Tree)"]
+    end
+    
+    VFS --> Proc
+    VFS --> Sys
+
+    subgraph Kernel["Kernel Space & Drivers"]
+        direction LR
+        KernelCore["Kernel Core (Scheduler, MMU)"]
+        Drivers["Device Drivers (NVIDIA, NVMe)"]
+    end
+
+    Proc -.->|Dynamic Generation| KernelCore
+    Sys -.->|Dynamic Generation| Drivers
+
+    class User memory;
+    class VFS,Proc,Sys system;
+    class KernelCore,Drivers cpu;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+```
+
 ---
 
 ## 🧪 How to Read Data from /proc and /sys

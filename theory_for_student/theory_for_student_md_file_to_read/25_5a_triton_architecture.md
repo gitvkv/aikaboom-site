@@ -59,6 +59,27 @@ A **backend** is the component that knows how to run a specific type of model. T
 
 ---
 
+
+### 📊 Visual Representation: Triton Inference Server Request Pipeline
+This diagram displays the Triton pipeline, showing how requests are dynamically scheduled and routed to matching model backend engines.
+
+```mermaid
+flowchart LR
+    Client["HTTP / gRPC Client Request"] --> Queue["Triton Input Scheduler Queue"]
+    Queue --> Routing["Dynamic Model Routing Plane"]
+    Routing --> PyTorch["PyTorch Backend (libtorch)"]
+    Routing --> TensorRT["TensorRT Backend (libtriton_tensorrt)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Routing cpu;
+    class PyTorch,TensorRT memory;
+    class Queue system;
+```
+
+
 ## 🛠️ The C++ Inference Core — The Heart of Triton
 
 The **C++ inference core** is the low-level engine that orchestrates everything. It's written in C++ for maximum performance and minimal latency. This core handles:

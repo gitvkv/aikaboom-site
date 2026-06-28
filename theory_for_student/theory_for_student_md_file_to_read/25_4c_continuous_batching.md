@@ -42,6 +42,29 @@ This means at any given moment, the GPU is working on tokens from many different
 
 ---
 
+
+### 📊 Visual Representation: Traditional Batching vs. Continuous Batching
+This diagram contrasts static batching (blocking execution until all sequences exit) with continuous batching (running new requests immediately).
+
+```mermaid
+flowchart LR
+    subgraph Static["Static Batching (Wait for longest sequence)"]
+        S1["Seq 1 (Done)"] -.->|Wait| Exit["Batch Exit"]
+        S2["Seq 2 (Computing)"] --> Exit
+    end
+    subgraph Continuous["Continuous Batching (Dynamic Insert)"]
+        C1["Seq 1 Exits"] --> Insert["New Seq 3 Enters immediately"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Insert cpu;
+    class Exit memory;
+```
+
+
 ## 📊 Comparison: Static vs. In-Flight Batching
 
 | Feature | Static Batching | In-Flight Batching |

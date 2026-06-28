@@ -50,6 +50,22 @@ In AI infrastructure, high-performance computing (HPC) clusters rely on fast, re
 
 ---
 
+### 📊 Visual Representation: ICMP Echo Request/Reply Flow
+This diagram displays the basic ICMP ping round-trip transaction between a local monitoring node and a remote target host.
+
+```mermaid
+flowchart LR
+    Local["Local Host"] -->|ICMP Type 8 (Echo Request)| Remote["Remote Host"]
+    Remote -->|ICMP Type 0 (Echo Reply)| Local
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Local cpu;
+    class Remote memory;
+```
+
 ## 🔍 Common ping Scenarios and What They Mean
 
 - **Successful reply** — The target is reachable and responding. Check the time value for latency.
@@ -102,3 +118,4 @@ In AI infrastructure, high-performance computing (HPC) clusters rely on fast, re
 ## 📝 Final Thoughts for New Engineers
 
 ping and ping6 are your simplest yet most powerful tools for verifying network connectivity in AI infrastructure. They give you immediate feedback on whether two nodes can communicate, how fast the path is, and whether packets are being lost. Always start with ping when troubleshooting — it eliminates the network layer as a suspect before you dive into more complex diagnostics. As you gain experience, you'll learn to interpret the subtle patterns in ping output that hint at deeper issues like buffer bloat, asymmetric routing, or failing hardware.
+

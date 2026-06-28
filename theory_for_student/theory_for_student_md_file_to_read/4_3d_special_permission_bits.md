@@ -4,13 +4,11 @@
 
 ---
 
-## 🧠 Context Introduction
-
 In AI infrastructure operations, you will often manage shared storage, model repositories, and training scripts that multiple users or automated processes need to access. Standard Linux permissions (read, write, execute) are not always enough. This is where **special permission bits** come in — they allow you to control *how* permissions are inherited or applied when files and directories are accessed.
 
 For example, you might want a training script to always run with the permissions of its owner (not the person executing it), or you might want to prevent users from deleting each other's files in a shared dataset folder. The three special bits — **setuid**, **setgid**, and the **sticky bit** — solve these exact problems.
 
----
+
 
 ## ⚙️ What Are Special Bits?
 
@@ -39,6 +37,29 @@ When you list files with **ls -l**, special bits appear in the permission string
 - **-rwsr-xr-x** — setuid is set (owner has execute and setuid)
 - **-rwxr-sr-x** — setgid is set (group has execute and setgid)
 - **drwxrwxrwt** — sticky bit is set on a directory (others have execute and sticky bit)
+
+### 📊 Visual Representation: Linux Special Permission Bits
+This diagram summarizes the roles and practical system applications of the three special permission bits: setuid, setgid, and the sticky bit.
+
+```mermaid
+flowchart LR
+    special["Special Permission Bits"]
+    special --> suid["setuid (s on Owner)<br>Execute file as Owner"]
+    special --> sgid["setgid (s on Group)<br>Directories: Inherit Group GID"]
+    special --> sticky["sticky bit (t on Other)<br>Directories: Only Owner deletes file"]
+
+    suid --> suid_ex["Example: /usr/bin/passwd<br>(Runs as Root)"]
+    sgid --> sgid_ex["Example: /mnt/shared_datasets<br>(Inherits group ownership)"]
+    sticky --> sticky_ex["Example: /tmp<br>(Safe shared temp directory)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class suid,suid_ex cpu;
+    class sgid,sgid_ex memory;
+    class special,sticky,sticky_ex system;
+```
 
 ---
 

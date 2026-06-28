@@ -53,6 +53,26 @@ etcd is a **distributed, consistent key-value store** that acts as the single so
 
 ---
 
+
+### 📊 Visual Representation: etcd Raft Consensus Database
+This diagram displays etcd: storing the source-of-truth state across a distributed raft-replicated node cluster.
+
+```mermaid
+flowchart LR
+    APIServer["kube-apiserver Write"] --> Leader["etcd Leader Node"]
+    Leader -->|Raft Replication| Follower1["etcd Follower 1"]
+    Leader -->|Raft Replication| Follower2["etcd Follower 2"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Leader cpu;
+    class Follower1,Follower2 memory;
+    class APIServer system;
+```
+
+
 ## 🕵️ Why etcd Matters for AI Infrastructure
 
 - **GPU Workload Reliability**: If etcd is slow or unavailable, the scheduler cannot assign GPU pods to nodes. Your training jobs stall.

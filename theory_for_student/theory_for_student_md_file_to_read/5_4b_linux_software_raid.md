@@ -46,6 +46,24 @@ The process follows these steps:
 
 ---
 
+### 📊 Visual Representation: mdadm Software RAID Setup Workflow
+This flowchart outlines the steps to build a software RAID array, format it, and configure persistent boot mounts in Linux.
+
+```mermaid
+flowchart LR
+    mdadm["1. mdadm --create"] --> format["2. mkfs.xfs /dev/md0"]
+    format --> mount["3. mount /dev/md0"]
+    mount --> config["4. mdadm.conf & fstab configuration"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class format cpu;
+    class config memory;
+    class mdadm,mount system;
+```
+
 ## 🕵️ Monitoring and Maintenance
 
 Once your RAID array is running, you need to keep an eye on its health. mdadm provides several ways to do this:
@@ -100,3 +118,4 @@ During rebuild, performance may be degraded, but the array remains accessible.
 ## ✅ Summary
 
 Linux software RAID with **mdadm** gives engineers a powerful, flexible, and cost-effective way to manage storage for AI workloads. By understanding the different RAID levels, how to create and maintain arrays, and how to handle failures, you can build resilient storage systems that keep your AI pipelines running smoothly. The key takeaway is that mdadm turns ordinary disks into reliable, high-performance storage — no expensive hardware controllers needed.
+

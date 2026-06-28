@@ -66,6 +66,23 @@ With config, you define once and just type **ssh gpu1**.
 
 ---
 
+### 📊 Visual Representation: Bastion / Jump Host SSH Tunneling
+This diagram displays how a local client accesses a secure GPU node in a private subnet using a Jump Host proxy.
+
+```mermaid
+flowchart LR
+    Client["Local Client"] -->|SSH Connection| Jump["Jump Host (Bastion - Public IP)"]
+    Jump -->|Private SSH Tunnel| GPU_Node["Private GPU Server (Private IP)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPU_Node cpu;
+    class Jump memory;
+    class Client system;
+```
+
 ## 📊 Comparison: Direct SSH vs. Jump Host vs. SSH Config
 
 | Approach | Command Complexity | Reusability | Security | Best For |
@@ -105,3 +122,4 @@ With config, you define once and just type **ssh gpu1**.
 ---
 
 > 💡 **Key Takeaway**: SSH tunneling and jump hosts are your secure bridge into private AI clusters. The **~/.ssh/config** file turns complex multi-hop connections into simple, repeatable commands — saving you time and reducing errors when managing dozens of GPU nodes.
+

@@ -51,6 +51,24 @@ This prevents anyone on the network — including your IT department, internet s
 
 ---
 
+### 📊 Visual Representation: SSH Secure Connection Tunneling
+This diagram shows how a secure encrypted SSH tunnel is established over public networks using public-key cryptography.
+
+```mermaid
+flowchart LR
+    Client["SSH Client"] -->|Establish TCP Session| Network["Network Tunnel"]
+    Network -->|Authenticate & Key Exchange| Server["SSH Server (sshd)"]
+    Client -->|"Encrypted Shell Session (AES/ChaCha)"| Server
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Client cpu;
+    class Server memory;
+    class Network system;
+```
+
 ## 🛡️ Step 3: MAC — Ensuring Data Integrity
 
 Encryption alone doesn't prevent someone from **modifying** your data in transit. A **Message Authentication Code (MAC)** solves this.

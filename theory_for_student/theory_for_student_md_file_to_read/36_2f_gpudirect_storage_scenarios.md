@@ -40,6 +40,28 @@ GPUDirect Storage (GDS) is a technology that creates a direct data path between 
 
 ---
 
+
+### 📊 Visual Representation: GPUDirect Storage (GDS) vs. CPU read path
+This diagram contrasts GDS (direct NVMe-to-GPU data transfers) against legacy paths (CPU bounce buffers).
+
+```mermaid
+flowchart LR
+    subgraph Legacy["Legacy Copy Path"]
+        Drive1["NVMe SSD"] --> HostRAM["CPU host bounce buffer"] --> GPUMem1["GPU memory"]
+    end
+    subgraph GDS["GPUDirect Storage Path"]
+        Drive2["NVMe SSD"] -->|Direct DMA over PCIe| GPUMem2["GPU memory"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPUMem2 cpu;
+    class HostRAM memory;
+```
+
+
 ## 🕵️ Common Architecture Questions (Exam Focus)
 
 ### 1. "Does GDS require special hardware?"

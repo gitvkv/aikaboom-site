@@ -8,6 +8,7 @@
 
 When managing AI infrastructure, every process, container, and service runs under a specific user account. Understanding how Linux stores user information is essential for troubleshooting permissions, managing access to GPUs, and securing model training environments. Two critical files—**/etc/passwd** and **/etc/shadow**—hold the blueprint for every user on the system. This guide breaks down their structure so you can confidently inspect and interpret user account details.
 
+
 ---
 
 ## ⚙️ What is /etc/passwd?
@@ -98,6 +99,24 @@ nvidia:$6$xyz123hashvalue...:18934:0:99999:7:::
 | **Password aging** | Not included | Included (min/max age, warning, inactivity) |
 | **Account expiration** | Not included | Included |
 | **Typical fields** | 7 fields | 9 fields |
+
+### 📊 Visual Representation: User Authentication Flow
+This flowchart maps the verification sequence performed by the Linux PAM system using `/etc/passwd` for identity metadata and `/etc/shadow` for secure credentials.
+
+```mermaid
+flowchart LR
+    user["1. User Login Request<br>(Username & Password)"] --> passwd["2. Check /etc/passwd<br>(Verify Username, UID, Shell)"]
+    passwd --> shadow["3. Check /etc/shadow<br>(Compare Salted Hash & Expiry)"]
+    shadow --> success["4. Authenticated Session<br>(Launch Default Shell)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class shadow cpu;
+    class passwd memory;
+    class user,success system;
+```
 
 ---
 

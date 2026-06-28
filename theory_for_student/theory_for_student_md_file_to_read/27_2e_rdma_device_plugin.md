@@ -57,6 +57,25 @@ The RDMA device plugin typically advertises the following resource types:
 
 ---
 
+
+### 📊 Visual Representation: RDMA Device Plugin resource allocation
+This diagram displays how the RDMA Device Plugin registers InfiniBand devices as allocatable resources in the Kubernetes Scheduler.
+
+```mermaid
+flowchart LR
+    Plugin["RDMA Device Plugin"] -->|Discovers /dev/infiniband/*| Register["kube-apiserver allocatable resources"]
+    Register -->|Allows requests| Scheduler["nvidia.com/gpu & rdma/hca_shared resources"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Plugin cpu;
+    class Register memory;
+    class Scheduler system;
+```
+
+
 ## 🕵️ Key Concepts for New Engineers
 
 ### What Engineers Need to Understand:

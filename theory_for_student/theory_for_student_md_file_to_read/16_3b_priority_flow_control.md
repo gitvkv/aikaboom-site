@@ -35,6 +35,23 @@ PFC operates at Layer 2 (the data link layer) and works on a per-priority basis.
 
 ---
 
+### 📊 Visual Representation: Priority Flow Control (PFC) Pause Frame Mechanism
+This diagram displays Priority Flow Control (PFC), pausing transmission on specific class-of-service queues when switch buffers fill.
+
+```mermaid
+flowchart LR
+    Switch["Switch Port Buffer (Queue 3 Full)"] -->|Send PFC Pause Frame| Sender["Sender Queue 3"]
+    Sender -->|Halt Queue 3 traffic| Switch
+    Sender -->|Queue 4 traffic continues| Switch
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Switch cpu;
+    class Sender memory;
+```
+
 ## 🛠️ Configuring PFC in Practice
 
 When setting up PFC for AI workloads, engineers typically follow these steps:

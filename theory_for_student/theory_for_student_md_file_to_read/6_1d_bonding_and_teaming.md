@@ -38,6 +38,24 @@ Different modes offer different trade-offs between redundancy, bandwidth, and co
 
 ---
 
+### 📊 Visual Representation: Network Interface Bonding (Link Aggregation)
+This diagram displays how multiple physical network interfaces are combined into a single logical bond interface for redundancy and higher throughput.
+
+```mermaid
+flowchart LR
+    eth0["Physical NIC (eth0)"] --> Bond["Logical Interface (bond0)"]
+    eth1["Physical NIC (eth1)"] --> Bond
+    Bond --> Switch["Data Center Switch"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Bond cpu;
+    class eth0,eth1 memory;
+    class Switch system;
+```
+
 ## 📊 Redundancy vs. Bandwidth — What Matters for AI?
 
 - **Redundancy** is critical for long-running AI training jobs. A single network failure should not interrupt data streaming or checkpoint saving.
@@ -71,3 +89,4 @@ After setting up a bond, you can verify its status using standard Linux tools:
 ## ✅ Summary
 
 Bonding and teaming are fundamental techniques for building resilient, high-performance network connections in AI infrastructure. By aggregating multiple physical interfaces, you protect against hardware failures and increase available bandwidth for data-intensive workloads. Choose the mode that matches your switch capabilities and operational needs — **Mode 1** for simple redundancy, **Mode 4** for full aggregation with LACP. Always verify the configuration with real failover tests before putting the system into production.
+

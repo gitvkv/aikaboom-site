@@ -55,6 +55,25 @@ NVAIE is a **software suite** that bundles NVIDIA's AI tools into a single, supp
 
 ---
 
+
+### 📊 Visual Representation: CUDA Toolkit and library compilation layers
+This diagram displays how compiling application layers links nvcc outputs to low-level NVML drivers.
+
+```mermaid
+flowchart LR
+    App["PyTorch Code"] --> CUDA["CUDA Libraries (cuDNN / NCCL)"]
+    CUDA --> Driver["NVIDIA Driver (NVML API)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class CUDA cpu;
+    class Driver memory;
+    class App system;
+```
+
+
 ## 🕵️ How Containerization Works with NGC and NVAIE
 
 Containerization is the **packaging method** used to deliver NGC and NVAIE software. Containers ensure that AI workloads run consistently across different environments.

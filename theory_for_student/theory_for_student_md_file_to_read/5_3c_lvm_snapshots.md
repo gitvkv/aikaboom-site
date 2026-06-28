@@ -48,6 +48,24 @@ This process protects against:
 
 ---
 
+### 📊 Visual Representation: LVM Snapshot Copy-on-Write (CoW) Mechanism
+This diagram displays how LVM snapshots use Copy-on-Write to freeze data blocks, storing original data blocks only when modified on the origin volume.
+
+```mermaid
+flowchart LR
+    Origin["Origin LV (Active Writes)"] -->|Write to block A| CoW["Copy-on-Write Space"]
+    CoW -->|Saves original block A| Snapshot["Snapshot LV (Frozen Point-in-time)"]
+    Origin -->|Read unmodified blocks| Snapshot
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Origin cpu;
+    class Snapshot memory;
+    class CoW system;
+```
+
 ## 🕵️ Key Concepts for New Engineers
 
 - **Copy-on-Write (CoW)** — The snapshot does not copy data until the original volume changes. Only then does it store the old data.
@@ -114,3 +132,4 @@ lvconvert --merge /dev/vg_ai/ai_models_snap
 ## 🧠 Summary
 
 Snapshots are a simple yet powerful tool for protecting AI infrastructure during model updates. They allow engineers to experiment confidently, knowing they can always roll back to a known good state. By integrating snapshots into your update workflow, you reduce risk and maintain data integrity—essential for reliable AI operations.
+

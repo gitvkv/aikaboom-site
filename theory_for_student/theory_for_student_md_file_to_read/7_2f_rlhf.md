@@ -46,6 +46,25 @@ When implementing RLHF in production, engineers typically follow this sequence:
 
 ---
 
+### 📊 Visual Representation: RLHF Optimization Loop
+This flowchart traces reinforcement learning from human feedback, demonstrating how human evaluations train a reward model to align LLM responses.
+
+```mermaid
+flowchart LR
+    Prompt["User Query"] --> LLM["LLM Policy Agent"]
+    LLM -->|Response| Reward["Reward Model (Scoring)"]
+    Reward -->|Scalar Score| PPO["PPO Policy Optimizer"]
+    PPO -->|Update Parameters| LLM
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class LLM,PPO cpu;
+    class Reward memory;
+    class Prompt system;
+```
+
 ## 🕵️ Why This Matters for AI Infrastructure
 
 RLHF is computationally expensive. Here's what engineers need to know:

@@ -31,6 +31,24 @@ InfiniBand is a high-speed, low-latency interconnect technology widely used in A
 
 ---
 
+
+### 📊 Visual Representation: InfiniBand speed generation progression
+This diagram displays InfiniBand speed progression, showing transitions from HDR (200Gbps) to NDR (400Gbps) and XDR (800Gbps).
+
+```mermaid
+flowchart LR
+    HDR["HDR (200 Gbps)"] --> NDR["NDR (400 Gbps)"]
+    NDR --> XDR["XDR (800 Gbps)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NDR,XDR cpu;
+    class HDR memory;
+```
+
+
 ## 🛠️ Port Configuration Examples
 
 ### HDR (200 Gbps) Port Configurations

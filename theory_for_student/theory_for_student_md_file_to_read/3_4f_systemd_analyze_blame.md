@@ -70,6 +70,34 @@ Not all slow services can be fixed. Some are necessary for functionality. Focus 
 | **systemd-analyze plot** | Graphical timeline of boot | Visualizing the entire boot sequence |
 | **systemd-analyze time** | Total kernel + userspace boot time | Quick overall health check |
 
+### 📊 Visual Representation: systemd-analyze Profiling Toolkit
+
+This diagram maps the subcommands of `systemd-analyze`, highlighting how each profiling perspective reports boot duration, bottlenecks, and service ordering.
+
+```mermaid
+flowchart TD
+    subgraph ToolSuite["systemd-analyze Command Suite"]
+        direction TB
+        Main["systemd-analyze"] --> TimeS["time\n(Total Kernel & User Space Boot Duration)"]
+        Main --> BlameS["blame\n(Raw Service Activation Duration)"]
+        Main --> ChainS["critical-chain\n(Dependency Bottleneck Tree)"]
+        Main --> PlotS["plot\n(SVG Graphical Timeline Chart)"]
+    end
+
+    TimeS -->|Query Overall| ResultTime["e.g., Startup finished in 2.1s (kernel) + 12s (userspace)"]
+    BlameS -->|Query Service Cost| ResultBlame["e.g., 3.1s docker.service, 2.4s nvidia-persistenced"]
+    ChainS -->|Query Critical Path| ResultChain["e.g., multi-user.target -> docker.service -> network-online"]
+    PlotS -->|Export Timeline Visual| ResultPlot["e.g., boot-timeline.svg file"]
+
+    class ResultTime,ResultPlot memory;
+    class TimeS,BlameS,ChainS,PlotS system;
+    class Main cpu;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+```
+
 ---
 
 ## 🧠 Practical Tips for AI Infrastructure Operators

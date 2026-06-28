@@ -46,6 +46,31 @@ Unsupervised learning is like giving someone a pile of puzzle pieces with **no p
 
 ---
 
+### 📊 Visual Representation: Supervised, Unsupervised, and Reinforcement Learning
+This diagram contrasts the three primary learning paradigms based on data supervision type and feedback loops.
+
+```mermaid
+flowchart LR
+    subgraph Supervised["Supervised"]
+        Data1["Labeled Data (X, Y)"] --> Fit1["Mapping Function"]
+    end
+    subgraph Unsupervised["Unsupervised"]
+        Data2["Unlabeled Data (X)"] --> Fit2["Clustering / Patterns"]
+    end
+    subgraph RL["Reinforcement"]
+        Agent["Agent"] -->|Action| Env["Environment"]
+        Env -->|State & Reward| Agent
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Agent cpu;
+    class Data1,Data2 memory;
+    class Fit1,Fit2,Env system;
+```
+
 ## 🎮 Reinforcement Learning — Learning Through Trial and Error
 
 Reinforcement learning is like **training a dog with treats**. An agent learns by taking actions in an environment, receiving rewards or penalties, and optimizing its behavior over time.

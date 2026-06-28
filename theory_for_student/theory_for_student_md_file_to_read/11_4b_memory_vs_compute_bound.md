@@ -58,6 +58,26 @@ Running inference on a small model with a batch size of 1. The GPU spends most o
 
 ---
 
+### 📊 Visual Representation: Performance Limits: Compute-Bound vs. Memory-Bound
+This diagram shows the classification of operations (elementwise vs. matrix multiplications) based on their math limits.
+
+```mermaid
+flowchart LR
+    subgraph MemoryBound["Memory-Bound (Limited by HBM Speed)"]
+        Elem["Elementwise (ReLU, LayerNorm, Softmax)"]
+    end
+    subgraph ComputeBound["Compute-Bound (Limited by SM FLOPs)"]
+        GEMM["Matrix Multiplies (Fully-Connected, Conv)"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GEMM cpu;
+    class Elem memory;
+```
+
 ## 🛠️ Comparison table: Memory-bound vs. compute-bound
 
 | Feature | Compute-bound | Memory-bound |
@@ -118,3 +138,4 @@ Use profiling tools to measure utilization. Here's how to check with common tool
 - The same model can be memory-bound in one scenario (batch size 1) and compute-bound in another (batch size 128).
 
 As you grow in your AI infrastructure journey, you'll learn to spot these bottlenecks by instinct. For now, remember: **move less data, compute more efficiently, and always measure.**
+

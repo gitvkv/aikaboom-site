@@ -32,6 +32,31 @@ Each RAID level uses a different combination of these techniques.
 
 ---
 
+### 📊 Visual Representation: RAID Architecture Level Comparison
+This diagram displays how data blocks are distributed across physical drives in RAID 0 (striping), RAID 1 (mirroring), and RAID 5 (striping with parity).
+
+```mermaid
+flowchart LR
+    subgraph RAID0["RAID 0 (Striping)"]
+        D0_1["Drive 1: Block A, C"] --- D0_2["Drive 2: Block B, D"]
+    end
+
+    subgraph RAID1["RAID 1 (Mirroring)"]
+        D1_1["Drive 1: Block A, B"] --- D1_2["Drive 2: Block A, B"]
+    end
+
+    subgraph RAID5["RAID 5 (Parity)"]
+        D5_1["Drive 1: Block A, Parity"] --- D5_2["Drive 2: Block B, C"]
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class D0_1,D1_1,D5_1 memory;
+    class D0_2,D1_2,D5_2 system;
+```
+
 ## 🕵️ Detailed Breakdown of Each RAID Level
 
 ### 🚀 RAID 0 — Striping (Performance Only)
@@ -111,3 +136,4 @@ For large-scale archival storage of raw datasets that are rarely modified, **RAI
 ---
 
 *Understanding these trade-offs helps engineers design storage that keeps AI pipelines running fast while protecting valuable training data and model artifacts.*
+

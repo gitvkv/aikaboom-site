@@ -58,6 +58,23 @@ Use iperf3 when you suspect:
 
 ---
 
+### 📊 Visual Representation: iperf3 Network Performance Benchmark
+This diagram displays the active test loop between an iperf3 client generating traffic and an iperf3 server monitoring latency and bandwith throughput.
+
+```mermaid
+flowchart LR
+    Client["iperf3 Client (Generate Traffic)"] -->|TCP/UDP Stream| Network["Network Path"]
+    Network -->|Sustained Data| Server["iperf3 Server (Measure Bandwidth/Loss)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Client cpu;
+    class Server memory;
+    class Network system;
+```
+
 ## 🧪 Typical Test Scenarios
 
 **Scenario 1: Single-stream TCP test**

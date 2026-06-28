@@ -64,6 +64,24 @@ output = model(input_tensor)  # Tensor Cores automatically use TF32
 
 ---
 
+### 📊 Visual Representation: TensorFloat-32 (TF32) Bit Format Structure
+This diagram details the bit layout of TF32 (19 bits total), showing how it combines the 8-bit exponent of FP32 with the 10-bit mantissa of FP16.
+
+```mermaid
+flowchart LR
+    TF32["TF32 Word (19 Bits)"] --> Sign["Sign (1 Bit)"]
+    TF32 --> Exp["Exponent (8 Bits - Matches FP32 Range)"]
+    TF32 --> Mantissa["Mantissa (10 Bits - Matches FP16 Precision)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class TF32 cpu;
+    class Exp,Mantissa memory;
+    class Sign system;
+```
+
 ## 🕵️ When to Use TF32 vs. Other Formats
 
 | Scenario | Recommended Format | Reason |

@@ -47,6 +47,24 @@ A line might show **python3** with **PID 12345** and **NAME /dev/nvidia0**, mean
 
 ---
 
+### 📊 Visual Representation: Process and File Descriptor Mapping
+This diagram displays how lsof and fuser inspect the mappings between active system processes and open files or network sockets.
+
+```mermaid
+flowchart LR
+    Process["Linux Process (PID)"] -->|Holds FD| File["File / Socket / Directory"]
+    fuser["fuser (Target-centric)"] -->|Finds PIDs using| File
+    lsof["lsof (Process-centric)"] -->|Lists open| File
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Process cpu;
+    class File memory;
+    class fuser,lsof system;
+```
+
 ## 📊 Comparison: lsof vs fuser
 
 | Feature | lsof | fuser |
@@ -93,3 +111,4 @@ A line might show **python3** with **PID 12345** and **NAME /dev/nvidia0**, mean
 ## 🎯 Key Takeaway
 
 **lsof** and **fuser** are your go-to tools for investigating GPU file usage in Linux. They help you answer the critical question: *"Who is holding my GPU?"* By mastering these commands, you can quickly diagnose resource conflicts, identify runaway processes, and keep your AI infrastructure running smoothly.
+

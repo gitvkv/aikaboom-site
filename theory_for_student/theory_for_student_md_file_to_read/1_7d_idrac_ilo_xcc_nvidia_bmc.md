@@ -38,6 +38,31 @@ Each vendor calls their management controller by a different name, but the under
 | Lenovo | Lenovo XClarity Controller | **XCC** | 443 (HTTPS) |
 | NVIDIA | NVIDIA Baseboard Management Controller | **NVIDIA BMC** | 443 (HTTPS) |
 
+### 📊 Visual Representation: Vendor BMC Implementation Features
+This diagram outlines the major enterprise hardware vendors, their proprietary out-of-band management controllers, and their primary focus areas.
+
+```mermaid
+flowchart TD
+    Vendors[Enterprise OOB Solutions] --> Dell[Dell iDRAC]
+    Vendors --> HPE[HPE iLO]
+    Vendors --> Lenovo[Lenovo XCC]
+    Vendors --> NVIDIA[NVIDIA BMC]
+    
+    Dell --> DellFocus[Lifecycle Controller & Quick Sync]
+    HPE --> HPEFocus[Active Health & central iLO Amp]
+    Lenovo --> LenovoFocus[XClarity Admin & Video Redirection]
+    NVIDIA --> NVIDIAFocus[Direct GPU & NVSwitch Fabric Telemetry]
+
+    class Vendors system;
+    class Dell,HPE,Lenovo,NVIDIA system;
+    class DellFocus,HPEFocus,LenovoFocus memory;
+    class NVIDIAFocus cpu;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+```
+
 ---
 
 ## 🖥️ Dell iDRAC (Integrated Dell Remote Access Controller)

@@ -47,6 +47,28 @@ In **DPU-mode**, the BlueField DPU runs its own independent operating system (ty
 
 ---
 
+
+### 📊 Visual Representation: DPU Separated vs. Embedded operating modes
+This diagram contrasts DPU Separated mode (running its own OS domain completely isolated from host) and Embedded switch mode.
+
+```mermaid
+flowchart LR
+    subgraph HostDomain["Host Domain"]
+        HostOS["Host OS"] -->|PCIe Physical function| HostApps["Applications"]
+    end
+    subgraph DPUDomain["DPU Domain (Separated Mode)"]
+        DPUOS["Isolated DPU Linux OS"] -->|Virtual Functions| HostOS
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class HostOS,DPUOS cpu;
+    class HostApps memory;
+```
+
+
 ## 🛠️ Comparison Table: P-mode vs DPU-mode
 
 | Feature | P-mode (PCIe Endpoint) | DPU-mode (Autonomous Server) |

@@ -82,6 +82,31 @@ systemd is the init system that starts all user-space services after the kernel 
 | GPU not detected by OS | ✅ Check PCIe and driver messages | ❌ GPU service will fail |
 | Networking or SSH fails after boot | ❌ Kernel sees NIC | ✅ Check network service logs |
 
+### 📊 Visual Representation: Boot Failure Troubleshooting Decision Tree
+
+This flowchart helps engineers decide whether to inspect the kernel ring buffer (`dmesg`) or the systemd journal (`journalctl`) based on when and how the system fails during the boot process.
+
+```mermaid
+flowchart TD
+    BootFail["Boot Failure Detected"] --> ScreenCheck{"Where does the boot fail?"}
+    
+    ScreenCheck -->|Early Phase: Black Screen / UEFI| UEFI["Check hardware / UEFI POST"]
+    ScreenCheck -->|Kernel Phase: Hangs before login / Kernel Panic| DmesgPath["Use dmesg (Kernel Ring Buffer)"]
+    ScreenCheck -->|Service Phase: Boots partially / services hang| SysdPath["Use journalctl (systemd logs)"]
+    
+    UEFI -->|Look for| Beep["Motherboard Beep Codes / Diagnostic LEDs"]
+    DmesgPath -->|Look for| KErr["PCIe Bus Errors, NVRM Driver Failures, OOM"]
+    SysdPath -->|Look for| SErr["nvidia-persistenced.service, docker.service timeout"]
+
+    class UEFI,Beep system;
+    class DmesgPath,KErr memory;
+    class SysdPath,SErr cpu;
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+```
+
 ---
 
 ## 🧪 Practical Debugging Workflow for New Engineers

@@ -49,6 +49,25 @@ NGC hosts a library of **pre-trained AI models** that you can download and use i
 
 ---
 
+
+### 📊 Visual Representation: NVIDIA GPU Cloud (NGC) Resource Hub
+This diagram maps the NGC portal resources: container registries, pre-trained AI weights, and Helm charts.
+
+```mermaid
+flowchart LR
+    NGC["NVIDIA GPU Cloud (NGC)"] --> Containers["AI Optimized Containers"]
+    NGC --> Models["Pre-trained Foundation Model Weights"]
+    NGC --> Resources["Helm Charts / Training Recipes"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NGC cpu;
+    class Containers,Models,Resources memory;
+```
+
+
 ## 🛠️ Helm Charts
 
 Helm charts are **Kubernetes package managers**. NGC provides pre-built Helm charts that make deploying complex AI applications on Kubernetes clusters simple.

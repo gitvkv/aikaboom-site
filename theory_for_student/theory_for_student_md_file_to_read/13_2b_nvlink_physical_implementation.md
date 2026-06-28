@@ -31,6 +31,24 @@ SXM (Server eXpansion Module) is a form factor used by NVIDIA for high-performan
 
 ---
 
+### 📊 Visual Representation: NVLink Physical Board Connectivity
+This diagram displays how NVLink Mezzanine connectors interface directly with high-density copper PCB traces to bypass the slower PCIe bus.
+
+```mermaid
+flowchart LR
+    GPU1["GPU 1 Mezzanine"] -->|High-Density Trace| Baseboard["Copper PCB Substrate"]
+    Baseboard -->|High-Density Trace| GPU2["GPU 2 Mezzanine"]
+    GPU1 -->|Standard PCIe| Slot["Motherboard PCIe Bus"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPU1,GPU2 cpu;
+    class Slot memory;
+    class Baseboard system;
+```
+
 ## 🕵️ Bridges on PCIe Cards
 
 For GPUs that use a standard PCIe form factor (e.g., some NVIDIA RTX or older Tesla cards), NVLink connectivity is achieved through a physical **NVLink bridge**. This is a small, specialized circuit board that connects two adjacent GPUs.

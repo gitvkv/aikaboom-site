@@ -68,6 +68,23 @@ BPE is the most common tokenization algorithm used in modern LLMs. It works by i
 
 ---
 
+### 📊 Visual Representation: Byte-Pair Encoding (BPE) Tokenization Pipeline
+This diagram displays how raw text strings are parsed into subword token IDs and mapped to embedding indices in an LLM.
+
+```mermaid
+flowchart LR
+    Text["Raw Text: 'Pre-training'"] --> Tokenizer["BPE Tokenizer Engine"]
+    Tokenizer --> TokenIDs["Token IDs: [1029, 442, 59]"]
+    TokenIDs --> Embeddings["Dense Vectors (Embeddings)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Tokenizer cpu;
+    class Text,TokenIDs,Embeddings memory;
+```
+
 ## 🕵️ Tokenization in Practice — What Engineers Need to Know
 
 ### Token Count and Cost
@@ -149,3 +166,4 @@ Number of tokens: 6
 4. **Understand memory** — Practice calculating embedding memory for different vocabulary sizes and model dimensions
 
 Remember: Mastering tokens is the first step to understanding how LLMs actually "read" and "write" text. Every optimization in AI infrastructure — from GPU memory management to prompt engineering — starts with understanding tokens.
+

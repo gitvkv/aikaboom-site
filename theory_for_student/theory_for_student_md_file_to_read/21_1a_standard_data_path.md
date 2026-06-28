@@ -32,6 +32,26 @@ Every copy is a tax on performance. Here's what happens behind the scenes:
 
 ---
 
+
+### 📊 Visual Representation: Standard Storage-to-GPU Data Path (CPU bounce buffer)
+This diagram displays the standard data path, showing how data must be copied from storage into system memory bounce buffers before being sent to GPU memory.
+
+```mermaid
+flowchart LR
+    Storage["Storage (SSD/NVMe)"] -->|1. DMA Copy| HostRAM["Host System RAM (Bounce Buffer)"]
+    HostRAM -->|2. CPU Context Switch| CPU["Host CPU (Page translation)"]
+    CPU -->|3. DMA Copy| VRAM["GPU Memory (VRAM)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class VRAM cpu;
+    class HostRAM memory;
+    class CPU,Storage system;
+```
+
+
 ## 📊 Comparison: Standard Path vs. Ideal Path
 
 | Aspect | Standard Path (This Topic) | Ideal Path (GPUDirect Storage) |

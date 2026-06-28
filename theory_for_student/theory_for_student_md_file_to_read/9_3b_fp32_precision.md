@@ -51,6 +51,24 @@ FP32 was the natural starting point for deep learning for several practical reas
 
 ---
 
+### 📊 Visual Representation: Single Precision (FP32) Bit Breakdown
+This diagram details the bit allocations (1 sign bit, 8 exponent bits, 23 mantissa bits) of standard IEEE 754 Single Precision float formats.
+
+```mermaid
+flowchart LR
+    Bit32["FP32 Word (32 Bits)"] --> Sign["Sign (1 Bit)"]
+    Bit32 --> Exp["Exponent (8 Bits)"]
+    Bit32 --> Mantissa["Mantissa / Fraction (23 Bits)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Bit32 cpu;
+    class Exp,Mantissa memory;
+    class Sign system;
+```
+
 ## 🛠️ When to Use FP32 in Modern AI Infrastructure
 
 Even with faster alternatives, FP32 remains relevant in specific scenarios:

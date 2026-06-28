@@ -65,6 +65,24 @@ Each line contains six fields, separated by spaces or tabs:
 
 ---
 
+### 📊 Visual Representation: Mounting Directory Tree Binding
+This diagram displays how a physical disk device partition is mapped to a mount point directory within the root file system tree.
+
+```mermaid
+flowchart LR
+    Device["Disk Device (/dev/sdb1)"] -->|mount command| MountPoint["Mount Point (/data/datasets)"]
+    Root["Root Directory (/)"] --> MountPoint
+    fstab["/etc/fstab"] -->|Automatic Mount| Device
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Device cpu;
+    class MountPoint,Root memory;
+    class fstab system;
+```
+
 ## 🔄 Persistent Mounts — Surviving Reboots
 
 A **persistent mount** is a mount that is automatically recreated every time the system boots. This is achieved by adding an entry to `/etc/fstab`.
@@ -126,3 +144,4 @@ A **persistent mount** is a mount that is automatically recreated every time the
 - Test fstab entries with **mount -a** before rebooting to catch errors early.
 
 Understanding mounting is a foundational skill for managing AI infrastructure — it ensures your workloads always have access to the data they need, even after system restarts.
+

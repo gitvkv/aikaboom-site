@@ -52,6 +52,25 @@ Let's calculate the memory bandwidth for an **NVIDIA A100 GPU**:
 
 ---
 
+### 📊 Visual Representation: Memory Bandwidth Calculation Flow
+This diagram displays how GPU memory bandwidth is calculated from memory clock speed, bus width, and data rate multiplier.
+
+```mermaid
+flowchart LR
+    Clock["Memory Clock (MHz)"] --> Calc{"Clock * Bus Width * Data Rate / 8"}
+    BusWidth["Bus Width (Bits)"] --> Calc
+    DataRate["Data Rate Multiplier (DDR/PAM3)"] --> Calc
+    Calc --> Bandwidth["Bandwidth (GB/s or TB/s)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Calc cpu;
+    class Bandwidth memory;
+    class Clock,BusWidth,DataRate system;
+```
+
 ## 🕵️ Common Pitfalls for New Engineers
 
 - **Mixing units:** Always convert MHz to Hz (multiply by 10⁶) before calculating. Forgetting this step gives you a result that's off by a factor of one million.
@@ -92,3 +111,4 @@ Or more simply:
 ## 🧠 Final Thought
 
 As an engineer working with AI infrastructure, you'll use this calculation constantly — whether you're selecting hardware, debugging performance issues, or estimating how long a training job will take. Memorize the formula, watch your units, and always remember that **memory bandwidth is the hidden bottleneck** that can make or break your AI workloads.
+

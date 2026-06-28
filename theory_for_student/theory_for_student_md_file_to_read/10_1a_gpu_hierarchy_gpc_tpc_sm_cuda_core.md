@@ -69,6 +69,24 @@ Key points about TPCs:
 
 ---
 
+### 📊 Visual Representation: GPU Architectural Hierarchy
+This diagram displays the hardware layout of NVIDIA GPUs, mapping how full chips contain multiple GPCs, which house TPCs, SMs, and individual compute cores.
+
+```mermaid
+flowchart LR
+    GPU["Full GPU Chip"] --> GPC["Graphics Processing Cluster (GPC)"]
+    GPC --> TPC["Texture Processing Cluster (TPC)"]
+    TPC --> SM["Streaming Multiprocessor (SM)"]
+    SM --> Cores["CUDA Cores & Tensor Cores"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Cores cpu;
+    class GPU,GPC,TPC,SM system;
+```
+
 ## 🏢 Level 4: SM (Streaming Multiprocessor)
 
 The **SM** is the core execution unit of the GPU. This is where the real work happens.
@@ -161,3 +179,4 @@ Now that you understand the physical hierarchy, the next topic will explore how 
 ---
 
 *Keep this hierarchy in mind as you design and optimize AI workloads. The best engineers think in terms of SMs, warps, and memory hierarchies — not just code.*
+

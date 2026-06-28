@@ -65,6 +65,26 @@ The RAG pipeline has two main phases: **indexing** (preparing your data) and **i
 
 ---
 
+### 📊 Visual Representation: Retrieval-Augmented Generation (RAG) Flow
+This diagram displays the complete RAG loop, querying a vector store for context to augment the input prompt of the LLM.
+
+```mermaid
+flowchart LR
+    Query["User Query"] --> Embed["Vector Embeddings"]
+    Embed -->|Vector Similarity| DB["Vector Database (Chroma/pgvector)"]
+    DB -->|Relevant Context| Augment["Augmented Prompt"]
+    Query --> Augment
+    Augment --> LLM["LLM (Generates Grounded Response)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class LLM cpu;
+    class DB memory;
+    class Query,Embed,Augment system;
+```
+
 ## 📊 Comparison: Embedding Models vs. Rerankers
 
 | Feature | Embedding Models | Rerankers |

@@ -4,7 +4,7 @@
 
 When managing AI infrastructure, you'll frequently need to control who can read, write, or execute files and directories. This is critical for protecting model weights, training data, and configuration files. The three core commands for managing these permissions are **chmod** (change mode), **chown** (change owner), and **chgrp** (change group). This section explains how each works in simple, practical terms.
 
----
+
 
 ## ⚙️ Understanding Linux Permissions Basics
 
@@ -61,6 +61,24 @@ Add these values together for each category (owner, group, others). The result i
 - **chmod 755 inference_script.sh** — Owner gets 7 (4+2+1 = rwx), group gets 5 (4+0+1 = r-x), others get 5 (r-x)
 - **chmod 644 training_data.csv** — Owner gets 6 (4+2+0 = rw-), group gets 4 (r--), others gets 4 (r--)
 - **chmod 700 private_key.pem** — Owner gets full access (rwx), group and others get nothing (---)
+
+### 📊 Visual Representation: File Attributes Administration Commands
+This flowchart summarizes how the three administration commands (`chmod`, `chown`, and `chgrp`) modify different aspects of file security and ownership attributes.
+
+```mermaid
+flowchart LR
+    target["Target File:<br>model_weights.pt"] --> chmod["chmod 640<br>(Modify Access Mode / Permissions)"]
+    target --> chown["chown admin<br>(Change User Owner)"]
+    target --> chgrp["chgrp gpu-users<br>(Change Group Owner)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class target cpu;
+    class chmod memory;
+    class chown,chgrp system;
+```
 
 ---
 

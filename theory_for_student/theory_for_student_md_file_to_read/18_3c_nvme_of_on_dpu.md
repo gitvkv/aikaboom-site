@@ -40,6 +40,25 @@ In modern AI data centers, storage performance is critical. Traditionally, the h
 
 ---
 
+
+### 📊 Visual Representation: NVMe over Fabrics (NVMe-oF) DPU virtualization
+This diagram displays how the DPU virtualizes remote NVMe-oF block targets, presenting them to the host CPU as standard local PCIe NVMe drives.
+
+```mermaid
+flowchart LR
+    Target["Remote NVMe-oF Storage Target"] -->|RoCE/TCP| DPU["BlueField DPU (Initiator)"]
+    DPU -->|Virtual NVMe Emulation| Host["Host OS (Sees local physical SSD)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class DPU cpu;
+    class Host memory;
+    class Target system;
+```
+
+
 ## 🔧 Deployment Steps (High-Level Overview)
 
 1. **Prepare the DPU** — Ensure the BlueField DPU is running DOCA software and has the NVMe-oF initiator firmware loaded.

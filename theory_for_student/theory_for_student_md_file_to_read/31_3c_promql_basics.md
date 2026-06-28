@@ -74,6 +74,26 @@ To see if utilization is increasing or decreasing over the last 5 minutes:
 
 ---
 
+
+### 📊 Visual Representation: PromQL query evaluation
+This diagram displays how PromQL queries parse, filter, and aggregate time-series metric databases.
+
+```mermaid
+flowchart LR
+    Query["PromQL Query: sum(dcgm_gpu_temp)"] --> Engine["Prometheus Query Engine"]
+    Engine --> TSDB["TSDB Data Blocks"]
+    Engine --> Result["Computed Scalar / Vector results"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Engine cpu;
+    class Result memory;
+    class Query,TSDB system;
+```
+
+
 ## 🧠 Querying GPU Memory
 
 Memory is a finite resource — running out can crash your AI workloads. Monitoring memory usage helps you plan capacity.

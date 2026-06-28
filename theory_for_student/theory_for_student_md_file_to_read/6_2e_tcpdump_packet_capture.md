@@ -58,6 +58,23 @@ For new engineers, tcpdump is essential for diagnosing connectivity problems, ve
 
 ---
 
+### 📊 Visual Representation: tcpdump Packet Inspection and Filtering
+This diagram displays how packet streams from physical network cards are intercepted, filtered by pcap, and outputted by the tcpdump tool.
+
+```mermaid
+flowchart LR
+    NIC["Physical Network Card"] -->|Intercept| pcap["libpcap Ring Buffer"]
+    pcap -->|"Filter (e.g., tcp port 80)"| tcpdump["tcpdump Output (Terminal / PCAP file)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class pcap cpu;
+    class tcpdump memory;
+    class NIC system;
+```
+
 ## 🔍 Filtering Traffic with Expressions
 
 Filters allow engineers to focus on relevant traffic and ignore noise. Filters are written using the **Berkeley Packet Filter (BPF)** syntax.
@@ -129,3 +146,4 @@ In an AI cluster, tcpdump helps engineers:
 ---
 
 *Next step: Practice capturing a few packets between two servers in your lab environment using a simple filter like **host <server-IP>** and review the output to see the TCP handshake.*
+

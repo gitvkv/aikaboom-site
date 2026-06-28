@@ -42,6 +42,22 @@ The table below shows how CUDA core counts have grown from the Kepler architectu
 
 ---
 
+### 📊 Visual Representation: NVIDIA CUDA Core Generational Progression
+This flowchart tracks the evolution of CUDA Core capabilities from Volta (concurrent execution) up to Blackwell (integrated FP4/FP8 compute).
+
+```mermaid
+flowchart LR
+    Volta["Volta (Concurrent FP32/INT32)"] --> Ampere["Ampere (Double FP32 rate per SM)"]
+    Ampere --> Hopper["Hopper (DPX instructions for dynamic math)"]
+    Hopper --> Blackwell["Blackwell (Integrated FP4 & FP8 computation)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Volta,Ampere,Hopper,Blackwell cpu;
+```
+
 ## 🕵️ Why Core Counts Matter for AI Infrastructure
 
 - **Training speed:** More CUDA cores mean more parallel matrix multiplications per second — directly accelerating deep learning training.

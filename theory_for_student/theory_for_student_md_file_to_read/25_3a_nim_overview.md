@@ -51,6 +51,26 @@ You simply pull the container, run it, and send HTTP requests to get predictions
 
 ---
 
+
+### 📊 Visual Representation: NVIDIA Inference Microservice (NIM) Architecture
+This diagram displays how NIM wraps LLMs in standardized API services, optimizing inference using TensorRT.
+
+```mermaid
+flowchart LR
+    Request["HTTP REST / gRPC API Request"] --> NIM["NVIDIA NIM Container"]
+    NIM --> Engine["TensorRT-LLM Execution Engine"]
+    Engine --> GPU["Local GPU Core VRAM"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class NIM cpu;
+    class Engine memory;
+    class Request,GPU system;
+```
+
+
 ## 📊 NIM vs. Traditional Model Deployment
 
 | Aspect | Traditional Deployment | With NIM |

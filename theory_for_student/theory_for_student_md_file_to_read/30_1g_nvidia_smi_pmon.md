@@ -48,6 +48,24 @@ This allows engineers to quickly spot which PID is consuming the most resources,
 
 ---
 
+
+### 📊 Visual Representation: nvidia-smi pmon PID Process mapping
+This diagram displays how pmon maps active host PIDs to GPU memory utilization, identifying process owners.
+
+```mermaid
+flowchart LR
+    PID["Process PID: 1234 (PyTorch)"] --> pmon["nvidia-smi pmon Check"]
+    pmon --> GPU["Associated with GPU 0 (Allocates 12GB FB memory)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class pmon cpu;
+    class PID,GPU memory;
+```
+
+
 ## 🛠️ Practical Use Cases for Engineers
 
 - **Identifying resource hogs** — When a GPU is running at 100% and you need to know which PID is responsible

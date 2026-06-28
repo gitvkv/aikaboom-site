@@ -58,6 +58,25 @@ These flags help you detect hardware issues, thermal problems, and power constra
 
 ---
 
+
+### 📊 Visual Representation: nvidia-smi Cheat Sheet commands
+This diagram clusters essential nvidia-smi flags for query, monitoring, and active control operations.
+
+```mermaid
+flowchart LR
+    nvidiaSmi["nvidia-smi Flags"] --> Query["Query (e.g. -q -d MEMORY)"]
+    nvidiaSmi --> Monitor["Monitor (e.g. dmon / pmon)"]
+    nvidiaSmi --> Control["Control (e.g. -pl / -pm / -lgc)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class nvidiaSmi cpu;
+    class Query,Monitor,Control memory;
+```
+
+
 ## 🔄 Continuous Monitoring and Logging
 
 For ongoing observation during training or inference workloads.

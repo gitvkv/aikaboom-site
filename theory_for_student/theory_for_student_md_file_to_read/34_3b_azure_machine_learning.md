@@ -58,6 +58,25 @@ Compute clusters are the workhorses of Azure ML. They provide scalable CPU or GP
 
 ---
 
+
+### 📊 Visual Representation: Azure ML Workspace workspace layout
+This diagram displays Azure ML Workspace components: orchestrating compute instances, datasets, and pipelines.
+
+```mermaid
+flowchart LR
+    Workspace["Azure ML Workspace"] --> Compute["Compute Clusters (A100 VM pools)"]
+    Workspace --> Datastore["Datastores (Azure Blob Storage)"]
+    Workspace --> Run["Jobs / Pipelines (Run execution logs)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Workspace cpu;
+    class Compute,Datastore,Run memory;
+```
+
+
 ## 📊 MLflow Integration
 
 MLflow is an open-source platform for managing the machine learning lifecycle. Azure ML integrates deeply with MLflow, giving you experiment tracking, model registry, and deployment capabilities.

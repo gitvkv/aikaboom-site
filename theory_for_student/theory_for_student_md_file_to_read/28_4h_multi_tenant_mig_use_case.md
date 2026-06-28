@@ -74,6 +74,27 @@ Customers run their AI workloads (training, inference, etc.) directly on their a
 
 ---
 
+
+### 📊 Visual Representation: MIG Multi-Tenant Client mapping
+This diagram displays separate users running production workloads on dedicated MIG instances on a shared host server.
+
+```mermaid
+flowchart LR
+    Server["DGX Node"] --> InstanceA["MIG Instance A"]
+    Server --> InstanceB["MIG Instance B"]
+    InstanceA --> User1["User 1 (Running Inference API)"]
+    InstanceB --> User2["User 2 (Running Dev Jupyter)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class InstanceA,InstanceB cpu;
+    class User1,User2 memory;
+    class Server system;
+```
+
+
 ## 📊 Comparison: MIG vs. Other Multi-Tenant Approaches
 
 | Feature | MIG (Hardware Partitioning) | Time-Slicing (Software Sharing) | MPS (Software Sharing) |

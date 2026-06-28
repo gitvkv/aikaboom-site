@@ -58,6 +58,24 @@ NVIDIA provides several technologies to enable safe GPU sharing. Each offers dif
 
 ---
 
+
+### 📊 Visual Representation: Multi-Tenant GPU Shared pool
+This diagram displays how virtualization partitions a single physical GPU to safely host multiple separate tenant workloads.
+
+```mermaid
+flowchart LR
+    GPU["Physical GPU"] --> TenantA["Tenant A (Isolated partition)"]
+    GPU --> TenantB["Tenant B (Isolated partition)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class GPU cpu;
+    class TenantA,TenantB memory;
+```
+
+
 ## 📊 Comparison Table: Choosing the Right Approach
 
 | Feature | MIG | MPS | Time-Slicing |

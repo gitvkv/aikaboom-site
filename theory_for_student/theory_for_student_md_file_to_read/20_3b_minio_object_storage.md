@@ -51,6 +51,26 @@ MinIO is a high-performance, Kubernetes-native object storage system. It is desi
 
 ---
 
+
+### 📊 Visual Representation: MinIO Multi-Disk Erasure Coding Protection
+This diagram shows how MinIO divides object data into data and parity blocks, distributing them across disks for high redundancy.
+
+```mermaid
+flowchart LR
+    Object["Object Data write"] --> EC{"Erasure Coding Split"}
+    EC -->|Data Chunks| DiskPool1["DRAM / Disk Set 1"]
+    EC -->|Parity Chunks| DiskPool2["DRAM / Disk Set 2"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class EC cpu;
+    class DiskPool1,DiskPool2 memory;
+    class Object system;
+```
+
+
 ## 🔧 Deployment Options (No Commands — Just Concepts)
 
 - **Single-node (standalone)** — One server, one drive. Good for testing or small teams.

@@ -69,6 +69,25 @@ While **kubectl get** gives you a summary, **kubectl describe** gives you the fu
 
 ---
 
+
+### 📊 Visual Representation: kubectl Command categories
+This diagram groups essential kubectl subcommands for creating, checking, and debugging cluster objects.
+
+```mermaid
+flowchart LR
+    kubectl["kubectl CLI"] --> Check["get / describe (Read states)"]
+    kubectl --> Write["apply / delete (Modify resources)"]
+    kubectl --> Debug["logs / exec (Troubleshoot containers)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class kubectl cpu;
+    class Check,Write,Debug memory;
+```
+
+
 ## 📦 kubectl apply — The Deployment Engine
 
 **kubectl apply** is how you create or update resources in the cluster using a YAML or JSON configuration file. This is the declarative way to manage your infrastructure.

@@ -62,6 +62,23 @@ AI training (especially distributed deep learning) creates a completely differen
 
 ---
 
+### 📊 Visual Representation: Traditional Core-Aggregation-Access 3-Tier Network
+This diagram displays traditional 3-tier networking, organizing data paths hierarchically from core switches down to server cabinets.
+
+```mermaid
+flowchart LR
+    Core["Core Layer (Routing)"] --- Aggr["Aggregation Layer (Filtering)"]
+    Aggr --- Access["Access Layer (Server connections)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Access cpu;
+    class Aggr memory;
+    class Core system;
+```
+
 ## 🛠️ Comparison: Three-Tier vs. AI-Optimized Design
 
 | Feature | Three-Tier (Enterprise) | AI-Optimized (e.g., Fat-Tree, Dragonfly) |

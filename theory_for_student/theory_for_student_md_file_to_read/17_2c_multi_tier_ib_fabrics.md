@@ -81,6 +81,30 @@ Think of it like a highway system:
 
 ---
 
+### 📊 Visual Representation: Multi-Tier InfiniBand Spine-Leaf Fabric
+This diagram displays a 2-tier InfiniBand network topology, showing Leaf switch links routing to a central NVSwitch spine fabric.
+
+```mermaid
+flowchart LR
+    subgraph Spines["Spine switches (Director switch cabinets)"]
+        Spine1["Spine Switch 1"]
+        Spine2["Spine Switch 2"]
+    end
+    subgraph Leafs["Leaf switches (Top of Rack)"]
+        Leaf1["Leaf Switch 1"] --> Spine1
+        Leaf1 --> Spine2
+        Leaf2["Leaf Switch 2"] --> Spine1
+        Leaf2 --> Spine2
+    end
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Leafs cpu;
+    class Spines system;
+```
+
 ## 🕵️ How Traffic Flows Through the Tiers
 
 Imagine GPU-A in Rack 1 wants to send data to GPU-B in Rack 50:

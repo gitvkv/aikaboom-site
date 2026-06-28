@@ -55,6 +55,26 @@ Every time you run a deep learning job or a scientific simulation on an NVIDIA G
 
 ---
 
+### 📊 Visual Representation: Streaming Multiprocessor (SM) Core Blocks
+This diagram maps the internal compute, scheduling, and cache structures contained within a single Streaming Multiprocessor (SM).
+
+```mermaid
+flowchart LR
+    WarpSched["Warp Schedulers"] --> Reg["Register File"]
+    Reg --> ALUs["ALUs (FP32/INT32)"]
+    Reg --> Tensor["Tensor Cores"]
+    ALUs --> SharedMem["L1 Cache / Shared Memory"]
+    Tensor --> SharedMem
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class ALUs,Tensor cpu;
+    class Reg,SharedMem memory;
+    class WarpSched system;
+```
+
 ## 📦 Register File — The Ultra-Fast Scratchpad
 
 The **register file** is a massive, high-speed memory bank inside each SM that stores temporary data for active threads. Registers are the fastest memory in the GPU hierarchy (faster than shared memory or global memory).
@@ -103,3 +123,4 @@ Here’s a simplified flow inside an SM:
 - The SM is the heart of the GPU — understanding these four components will help you diagnose performance bottlenecks and write better AI workloads.
 
 You now have a solid foundation for SM internals. Next, you can explore how warps are scheduled or how memory hierarchy (shared memory, L1 cache) interacts with these components. Happy learning!
+

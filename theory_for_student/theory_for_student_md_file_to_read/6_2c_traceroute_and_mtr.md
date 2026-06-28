@@ -56,6 +56,24 @@ This information helps engineers pinpoint whether the problem is in their local 
 
 ---
 
+### 📊 Visual Representation: Traceroute TTL Increment Mechanism
+This diagram shows how traceroute identifies hops along a network path by incrementally increasing the IP packet TTL (Time to Live) limit.
+
+```mermaid
+flowchart LR
+    Source["Source Host"] -->|TTL = 1| Hop1["Hop 1 (Router - TTL Expired)"]
+    Source -->|TTL = 2| Hop2["Hop 2 (Router - TTL Expired)"]
+    Source -->|TTL = 3| Target["Target Host (Reachable)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class Source cpu;
+    class Target memory;
+    class Hop1,Hop2 system;
+```
+
 ## 🛠️ Comparison Table: traceroute vs. mtr
 
 | Feature | traceroute | mtr |
@@ -113,3 +131,4 @@ When investigating a performance issue in an AI training job:
 - Both tools are essential for diagnosing network issues that affect AI training performance
 - Focus on latency spikes and packet loss patterns to identify problematic hops
 - Use these tools proactively before and during large training runs to ensure network health
+

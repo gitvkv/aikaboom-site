@@ -60,6 +60,24 @@ The BM.GPU.H100.8 is a **single-tenant** instance, meaning only your workload ru
 
 ---
 
+
+### 📊 Visual Representation: OCI BM.GPU.H100 Bare-Metal instances
+This diagram displays OCI bare-metal offerings, featuring direct hardware exposure and high-bandwidth RDMA networks.
+
+```mermaid
+flowchart LR
+    OCI["OCI GPU Catalog"] --> BM_H100["BM.GPU.H100.8 (8 x H100 / RoCE network mesh)"]
+    OCI --> BM_A100["BM.GPU4.8 (8 x A100 / RoCE network mesh)"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class OCI cpu;
+    class BM_H100,BM_A100 memory;
+```
+
+
 ## 🔧 Provisioning a BM.GPU.H100.8 Instance
 
 To get started, engineers typically follow these steps in the OCI Console or via the OCI CLI:

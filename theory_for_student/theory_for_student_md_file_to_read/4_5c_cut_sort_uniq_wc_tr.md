@@ -4,13 +4,11 @@
 
 ---
 
-## 🧭 Context Introduction
-
 In AI infrastructure operations, you will constantly work with configuration files, log files, and datasets. These files often contain thousands of lines of text. Manually reading through them is impractical. Instead, you need to process, filter, sort, count, and transform text efficiently.
 
 This topic introduces five essential text-processing commands — **cut**, **sort**, **uniq**, **wc**, and **tr** — and shows you how to combine them using **pipes** and **redirection** to build powerful command pipelines. These pipelines allow you to extract meaningful information from raw data without writing complex scripts.
 
----
+
 
 ## ⚙️ The Five Core Commands
 
@@ -144,6 +142,26 @@ You can use pipes to process data and redirection to save the final result to a 
 - Remove duplicate entries from a dataset before training.
 - Count the number of rows in a CSV file.
 - Extract specific columns from a large dataset for analysis.
+
+### 📊 Visual Representation: Linux Command Pipeline Workflow
+This horizontal flowchart shows how individual text-manipulation utilities are chained together using pipes (`|`) to incrementally ingest, filter, count, and format raw text data.
+
+```mermaid
+flowchart LR
+    input["Input Data<br>(Raw Log Stream)"] --> cut["cut -d':' -f1<br>(Extract Fields)"]
+    cut --> sort["sort<br>(Group Rows)"]
+    sort --> uniq["uniq -c<br>(Count Duplicates)"]
+    uniq --> tr["tr '[a-z]' '[A-Z]'<br>(Format Case)"]
+    tr --> output["Clean Output Report"]
+
+    classDef cpu fill:#eafaf1,stroke:#76b900,stroke-width:2px,rx:6px,ry:6px;
+    classDef memory fill:#f0f7ff,stroke:#3498db,stroke-width:1.5px,rx:4px,ry:4px;
+    classDef system fill:#f1f5f9,stroke:#64748b,stroke-width:1.5px;
+
+    class cut,sort cpu;
+    class uniq,tr memory;
+    class input,output system;
+```
 
 ---
 
