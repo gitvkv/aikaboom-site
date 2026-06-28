@@ -72,6 +72,20 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    // Attach click listeners to badges on roadmap pages to toggle status directly
+    const roadmapBadges = document.querySelectorAll(".roadmap-badge");
+    roadmapBadges.forEach(function (badge) {
+        const lessonId = badge.getAttribute("data-lesson-id");
+        if (lessonId) {
+            badge.setAttribute("title", "Click to toggle completion status");
+            badge.addEventListener("click", function () {
+                const currentStatus = localStorage.getItem(KEY_PREFIX + lessonId) === "true";
+                localStorage.setItem(KEY_PREFIX + lessonId, currentStatus ? "false" : "true");
+                updateRoadmapUI();
+            });
+        }
+    });
+
     // Initialize roadmap UI elements
     updateRoadmapUI();
 
