@@ -287,8 +287,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             // Fallback for older browsers
                             cleanSentence = cleanSentence.replace(/[\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDC00-\uDFFF]/g, '');
                         }
-                        // Clean up any double spaces and strip paragraph links (¶ symbol)
-                        cleanSentence = cleanSentence.replace(/¶/g, '').replace(/\s+/g, ' ').trim();
+                        // Clean up any double spaces left behind by stripped emojis
+                        cleanSentence = cleanSentence.replace(/\s+/g, ' ').trim();
 
                         if (cleanSentence.length > 1) {
                             sentences.push(cleanSentence);
