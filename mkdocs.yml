@@ -27,7 +27,7 @@ nav:
     - Home: index.md
     - Practice Quiz: practice_quiz.md
     - Exam Mock Test: mock_test.md
-    - 1. Physical Realm:
+    - Physical Realm:
         - Roadmap: 01_physical_realm/roadmap.md
         - 1 What Is a Computer? Core Architecture for Absolute Beginners:
             - 1.1 The Von Neumann Architecture — How Every Computer Is Designed:
@@ -99,7 +99,7 @@ nav:
                 - 2.4a Badge access systems, mantrap entries, and biometric authentication: 01_physical_realm/chapter_2/2.4a_24a_badge_access_systems_mantrap_entries_and_biometric_authentication.md
                 - 2.4b CCTV, auditing, and chain-of-custody for hardware: 01_physical_realm/chapter_2/2.4b_24b_cctv_auditing_and_chain.md
                 - 2.4c Secure hardware decommissioning and drive destruction standards: 01_physical_realm/chapter_2/2.4c_24c_secure_hardware_decommissioning_and_drive_destruction_standards.md
-    - 2. Operating System Layer:
+    - Operating System Layer:
         - Roadmap: 02_operating_system_layer/roadmap.md
         - 3 Linux System Fundamentals — The OS From the Ground Up:
             - 3.1 What Is an Operating System? Kernel vs. User Space:
@@ -213,7 +213,7 @@ nav:
                 - "6.4c fail2ban: automatic IP blocking after failed SSH attempts": 02_operating_system_layer/chapter_6/6.4c_64c_fail2ban.md
                 - "6.4d Security-Enhanced Linux (SELinux) and AppArmor: mandatory access control": 02_operating_system_layer/chapter_6/6.4d_64d_security.md
                 - "6.4e audit daemon (auditd): tracking system calls for security compliance": 02_operating_system_layer/chapter_6/6.4e_64e_audit_daemon_auditd.md
-    - 3. Mathematical Imperative:
+    - Mathematical Imperative:
         - Roadmap: 03_mathematical_imperative/roadmap.md
         - 7 Deconstructing Artificial Intelligence Workloads:
             - 7.1 The AI Umbrella — Defining the Terms Precisely:
@@ -266,7 +266,7 @@ nav:
                 - "9.3f FP8 (E4M3/E5M2): NVIDIA Hopper's new training format": 03_mathematical_imperative/chapter_9/9.3f_93f_fp8_e4m3e5m2.md
                 - "9.3g Mixed-precision training: using FP16/BF16 for forward pass, FP32 for master weights": 03_mathematical_imperative/chapter_9/9.3g_93g_mixed.md
                 - "9.3h Loss scaling: preventing underflow in half-precision gradients": 03_mathematical_imperative/chapter_9/9.3h_93h_loss_scaling.md
-    - 4. Nvidia GPU Architecture:
+    - Nvidia GPU Architecture:
         - Roadmap: 04_nvidia_gpu_architecture/roadmap.md
         - 10 GPU Microarchitecture — Inside an NVIDIA Data Center GPU:
             - 10.1 The GPU Architecture Hierarchy — From Die to Thread:
@@ -367,7 +367,7 @@ nav:
                 - "13.5a NVLink-C2C vs. standard NVLink: die-to-die vs. node-to-node": 04_nvidia_gpu_architecture/chapter_13/13.5a_135a_nvlink.md
                 - "13.5b Grace Hopper Superchip: CPU and GPU sharing a coherent memory space": 04_nvidia_gpu_architecture/chapter_13/13.5b_135b_grace_hopper_superchip.md
                 - 13.5c Implications for memory-intensive inference (no PCIe bottleneck): 04_nvidia_gpu_architecture/chapter_13/13.5c_135c_implications_for_memory.md
-    - 5. AI Data Center Networking:
+    - AI Data Center Networking:
         - Roadmap: 05_ai_data_center_networking/roadmap.md
         - 14 Enterprise Networking Baseline:
             - 14.1 The OSI Model — A Conceptual Framework for Network Communication:
@@ -499,7 +499,7 @@ nav:
                 - 21.3a Combining GDS and GPUDirect RDMA for network storage servers: 05_ai_data_center_networking/chapter_21/21.3a_213a_combining_gds_and_gpudirect_rdma_for_network_storage_servers.md
                 - "21.3b Storage fabric scenarios: Lustre over InfiniBand with GDS enabled": 05_ai_data_center_networking/chapter_21/21.3b_213b_storage_fabric_scenarios.md
                 - 21.3c Dataset pre-caching strategies and prefetch pipelines: 05_ai_data_center_networking/chapter_21/21.3c_213c_dataset_pre.md
-    - 6. Nvidia Software Stack:
+    - Nvidia Software Stack:
         - Roadmap: 06_nvidia_software_stack/roadmap.md
         - 22 Base Drivers, CUDA, and Core Libraries:
             - 22.1 NVIDIA Data Center GPU Drivers:
@@ -589,7 +589,7 @@ nav:
                 - "25.5b Supported backends: TensorRT, ONNX, PyTorch TorchScript, Python, OpenVINO": 06_nvidia_software_stack/chapter_25/25.5b_255b_supported_backends.md
                 - 25.5c Dynamic batching and model instances for maximum GPU utilization: 06_nvidia_software_stack/chapter_25/25.5c_255c_dynamic_batching_and_model_instances_for_maximum_gpu_utilization.md
                 - 25.5d gRPC and REST APIs, Prometheus metrics, and model lifecycle management: 06_nvidia_software_stack/chapter_25/25.5d_255d_grpc_and_rest_apis_prometheus_metrics_and_model_lifecycle_management.md
-    - 7. Cluster Orchestration:
+    - Cluster Orchestration:
         - Roadmap: 07_cluster_orchestration/roadmap.md
         - 26 Kubernetes Fundamentals — Container Orchestration from Scratch:
             - 26.1 Why Kubernetes Exists — The Problem of Scale:
@@ -677,7 +677,7 @@ nav:
                 - "29.2c SIF (Singularity Image Format): single-file immutable container images": 07_cluster_orchestration/chapter_29/29.2c_292c_sif_singularity_image_format.md
                 - 29.2d Converting Docker/NGC containers to Apptainer format: 07_cluster_orchestration/chapter_29/29.2d_292d_converting_dockerngc_containers_to_apptainer_format.md
                 - "29.2e Running GPU workloads with Apptainer: --nv flag for NVIDIA support": 07_cluster_orchestration/chapter_29/29.2e_292e_running_gpu_workloads_with_apptainer.md
-    - 8. Virtualization and Cloud:
+    - Virtualization and Cloud:
         - Roadmap: 08_virtualization_and_cloud/roadmap.md
         - 30 GPU Diagnostics and nvidia-smi Mastery:
             - 30.1 nvidia-smi — The Primary GPU Management Tool:
@@ -778,7 +778,7 @@ nav:
                 - "34.3b Azure Machine Learning: workspaces, compute clusters, and MLflow integration": 08_virtualization_and_cloud/chapter_34/34.3b_343b_azure_machine_learning.md
                 - "34.3c Google Vertex AI: training pipelines and model registry": 08_virtualization_and_cloud/chapter_34/34.3c_343c_google_vertex_ai.md
                 - "34.3d NVIDIA DGX Cloud: NVIDIA-managed AI supercomputing as a subscription service": 08_virtualization_and_cloud/chapter_34/34.3d_343d_nvidia_dgx_cloud.md
-    - 9. AI Infra Security & Compliance:
+    - AI Infra Security & Compliance:
         - Roadmap: 09_ai_infra_security_compliance/roadmap.md
         - 35 Securing the AI Infrastructure Stack:
             - 35.1 The AI-Specific Threat Landscape:
@@ -802,7 +802,7 @@ nav:
                 - "35.4c FedRAMP: U.S. government AI infrastructure authorization": 09_ai_infra_security_compliance/chapter_35/35.4c_354c_fedramp.md
                 - "35.4d Export controls (EAR/ITAR): implications for H100 and A100 deployment in restricted countries": 09_ai_infra_security_compliance/chapter_35/35.4d_354d_export_controls_earitar.md
                 - "35.4e EU AI Act: compliance considerations for AI system operators": 09_ai_infra_security_compliance/chapter_35/35.4e_354e_eu_ai_act.md
-    - 10. Exam Prep & Certification:
+    - Exam Prep & Certification:
         - Roadmap: 10_exam_prep_certification/roadmap.md
         - 36 NCA-AIIO Blueprint Deep Dive — Domain-by-Domain Analysis:
             - 36.1 Official Exam Blueprint Domain Breakdown and Weightings:

@@ -426,7 +426,7 @@ Simulate the actual proctored exam experience. This simulator dynamically genera
         if part_short_title.lower().startswith("the "):
             part_short_title = part_short_title[4:].strip()
             
-        part_title = f"{part['idx']}. {part_short_title}"
+        part_title = part_short_title
         nav_tree.append({part_title: part_nav})
         
         # Generate module roadmap.md timeline syllabus
