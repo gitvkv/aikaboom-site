@@ -1,0 +1,2291 @@
+/* Hide breadcrumbs navigation trail at the top of the reading panel */
+[aria-label="breadcrumbs navigation"] {
+    display: none !important;
+}
+
+/* Overrides to support 100% full-screen reading width (no max-width cap) */
+.wy-nav-content {
+    max-width: 100% !important;
+}
+
+/* Left sidebar title single-line truncation with ellipsis (...) */
+.wy-menu-vertical li a {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+/* Custom tag styling for categories below the main title */
+.lesson-tags {
+    margin-bottom: 25px;
+    margin-top: -10px;
+}
+.lesson-tag {
+    display: inline-block;
+    background-color: #f1f3f5;
+    color: #495057;
+    padding: 4px 10px;
+    margin-right: 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: 600;
+    border: 1px solid #dee2e6;
+}
+
+/* Interactive "Mark as Complete" Button */
+.completion-btn {
+    display: inline-flex;
+    align-items: center;
+    background-color: #2980b9;
+    color: #ffffff !important;
+    border: none;
+    padding: 8px 16px;
+    font-size: 0.9em;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    user-select: none;
+}
+.completion-btn:hover {
+    background-color: #216f9e;
+}
+.completion-btn:active {
+    transform: scale(0.98);
+}
+.completion-btn.completed {
+    background-color: #2ecc71;
+}
+.completion-btn.completed:hover {
+    background-color: #27ae60;
+}
+.completion-btn svg {
+    margin-right: 8px;
+    fill: currentColor;
+    width: 16px;
+    height: 16px;
+}
+
+/* Progress Bar (Module Roadmaps) */
+.progress-container {
+    background-color: #e9ecef;
+    border-radius: 6px;
+    height: 24px;
+    width: 100%;
+    margin-bottom: 25px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #ced4da;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.progress-bar {
+    background-color: #2ecc71;
+    height: 100%;
+    width: 0%;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.85em;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Roadmap timeline checkboxes */
+.roadmap-badge {
+    font-size: 1.25em;
+    margin-right: 8px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.1s ease;
+}
+.roadmap-badge:hover {
+    transform: scale(1.2);
+}
+.roadmap-badge.completed {
+    color: #2ecc71;
+}
+.roadmap-badge.incomplete {
+    color: #adb5bd;
+}
+
+/* Progress Backup/Restore utility widget style */
+.progress-utility-widget {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.progress-utility-widget h4 {
+    margin-top: 0 !important;
+    margin-bottom: 10px !important;
+}
+.widget-btn {
+    background-color: #6c757d;
+    color: white !important;
+    border: none;
+    padding: 6px 12px;
+    font-size: 0.85em;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-right: 10px;
+    text-decoration: none !important;
+}
+.widget-btn:hover {
+    background-color: #5a6268;
+}
+.widget-btn-restore {
+    background-color: #17a2b8;
+}
+.widget-btn-restore:hover {
+    background-color: #138496;
+}
+input[type="file"]#restore-file-input {
+    display: none;
+}
+
+/* --- COLLAPSIBLE SIDEBAR ACCORDION MENU --- */
+/* Hide all top-level module lists by default */
+.wy-menu-vertical > p.caption + ul {
+    display: none;
+}
+
+/* Show module list when expanded */
+.wy-menu-vertical > p.caption + ul.expanded {
+    display: block;
+}
+
+/* Style for module captions to show clickability and state */
+.wy-menu-vertical p.caption {
+    position: relative;
+    padding-left: 24px !important;
+    cursor: pointer;
+    user-select: none;
+}
+
+.wy-menu-vertical p.caption,
+.wy-menu-vertical p.caption span {
+    color: #abb2b9 !important; /* Muted slate grey color by default */
+    transition: color 0.2s ease;
+}
+
+/* Hover state: light up in Tech Teal to show clickability */
+.wy-menu-vertical p.caption:hover,
+.wy-menu-vertical p.caption:hover span {
+    color: #1abc9c !important;
+}
+
+.wy-menu-vertical p.caption::before {
+    content: "▸";
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.25s ease, color 0.2s ease;
+    color: #abb2b9;
+    font-weight: bold;
+}
+
+.wy-menu-vertical p.caption:hover::before {
+    color: #1abc9c;
+}
+
+/* Expanded module state: Tech Teal color */
+.wy-menu-vertical p.caption.expanded,
+.wy-menu-vertical p.caption.expanded span {
+    color: #1abc9c !important; /* Modern Tech Teal for active module */
+}
+
+.wy-menu-vertical p.caption.expanded::before {
+    transform: translateY(-50%) rotate(90deg);
+    color: #1abc9c !important;
+}
+
+/* Style for left top section of panel (search & brand area) - Sticky to stay fixed on scroll */
+.wy-side-nav-search {
+    background-color: #27ae60 !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000 !important;
+}
+
+.wy-side-nav-search > a, 
+.wy-side-nav-search > a:visited, 
+.wy-side-nav-search > a:hover, 
+.wy-side-nav-search > a:active {
+    color: #000000 !important;
+}
+
+/* Start Learning CTA Button on Home Page */
+.start-learning-btn {
+    display: inline-block;
+    background-color: #27ae60; /* Brand green */
+    color: #ffffff !important;
+    padding: 12px 24px;
+    font-size: 1.1em;
+    font-weight: 700;
+    border-radius: 30px;
+    text-decoration: none !important;
+    margin: 20px 0;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.start-learning-btn:hover {
+    background-color: #2ecc71; /* Lighter green on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+.start-learning-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* TTS Player Container styling */
+.tts-player-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    background-color: #f8f9fa;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.tts-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tts-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    font-size: 0.9em;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid #cbd5e1;
+    background-color: #ffffff;
+    color: #334155;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.tts-btn:hover {
+    background-color: #f1f5f9;
+    border-color: #94a3b8;
+}
+
+.tts-btn:active {
+    transform: scale(0.98);
+}
+
+.tts-btn.active {
+    background-color: #1abc9c;
+    border-color: #16a085;
+    color: #ffffff;
+}
+
+.tts-btn-play {
+    min-width: 80px;
+}
+
+.tts-speed-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9em;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.tts-speed-select {
+    padding: 4px 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #334155;
+    cursor: pointer;
+    font-size: 0.95em;
+}
+
+.tts-speed-select:focus {
+    outline: none;
+    border-color: #1abc9c;
+}
+
+.tts-status {
+    font-size: 0.85em;
+    color: #64748b;
+    font-style: italic;
+    margin-left: auto;
+}
+
+/* Highlight effect for the currently read paragraph */
+.tts-reading-highlight {
+    background-color: rgba(26, 188, 156, 0.08);
+    border-left: 3px solid #1abc9c;
+    padding-left: 8px;
+    transition: background-color 0.3s ease, border-left-color 0.3s ease;
+}
+
+/* Tap-to-Jump interactive hover and cursor styles */
+.tts-jump-mode-active h2,
+.tts-jump-mode-active h3,
+.tts-jump-mode-active h4,
+.tts-jump-mode-active p,
+.tts-jump-mode-active li,
+.tts-jump-mode-active blockquote {
+    cursor: pointer !important;
+    transition: background-color 0.2s ease, outline 0.2s ease;
+}
+
+.tts-jump-mode-active h2:hover,
+.tts-jump-mode-active h3:hover,
+.tts-jump-mode-active h4:hover,
+.tts-jump-mode-active p:hover,
+.tts-jump-mode-active li:hover,
+.tts-jump-mode-active blockquote:hover {
+    background-color: rgba(26, 188, 156, 0.04);
+    outline: 1px dashed rgba(26, 188, 156, 0.4);
+}
+
+/* Responsive TTS player styles for mobile screens */
+@media (max-width: 600px) {
+    .tts-player-container {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 8px 10px !important;
+        gap: 8px !important;
+    }
+    
+    .tts-controls {
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        flex-grow: 1 !important;
+        justify-content: space-between !important;
+        margin-right: 10px !important;
+    }
+    
+    .tts-btn-text {
+        display: none !important;
+    }
+    
+    .tts-btn {
+        flex: 1 !important;
+        max-width: 42px !important;
+        padding: 6px 0 !important;
+        justify-content: center !important;
+        min-width: 0 !important;
+    }
+    
+    .tts-btn-play {
+        min-width: 0 !important;
+    }
+    
+    .tts-speed-container {
+        display: flex !important;
+        align-items: center !important;
+        margin-left: auto !important;
+    }
+    
+    .tts-speed-container span {
+        display: none !important;
+    }
+    
+    .tts-speed-select {
+        padding: 4px 6px !important;
+        font-size: 0.9em !important;
+    }
+}
+
+/* Adjust sticky top offset for tablet/mobile screens where the top nav header is active */
+@media (max-width: 768px) {
+    .tts-player-container {
+        top: 50px !important;
+    }
+}
+
+/* --- PRACTICE QUIZ SIMULATOR STYLING --- */
+#quiz-container {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 25px;
+    margin-top: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.quiz-progress-text {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+.quiz-progress-bar-bg {
+    background-color: #f1f5f9;
+    border-radius: 4px;
+    height: 8px;
+    width: 100%;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.quiz-progress-bar-fill {
+    background-color: #1abc9c;
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.quiz-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.quiz-question-text {
+    font-size: 1.15em;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.quiz-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.quiz-option {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border: 2px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 14px 18px;
+    font-size: 0.95em;
+    font-weight: 500;
+    color: #334155;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+    user-select: none;
+    line-height: 1.4;
+}
+
+.quiz-option:hover {
+    background-color: #f8fafc;
+    border-color: #94a3b8;
+    text-decoration: none !important;
+}
+
+.quiz-option.selected {
+    border-color: #3b82f6;
+    background-color: #eff6ff;
+}
+
+.quiz-option.correct {
+    border-color: #22c55e;
+    background-color: #f0fdf4;
+    color: #15803d;
+    font-weight: 600;
+}
+
+.quiz-option.incorrect {
+    border-color: #ef4444;
+    background-color: #fef2f2;
+    color: #b91c1c;
+}
+
+.quiz-option.disabled {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.quiz-option-marker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #e2e8f0;
+    color: #475569;
+    font-size: 0.85em;
+    font-weight: 700;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.quiz-option.selected .quiz-option-marker {
+    background-color: #3b82f6;
+    color: #ffffff;
+}
+
+.quiz-option.correct .quiz-option-marker {
+    background-color: #22c55e;
+    color: #ffffff;
+}
+
+.quiz-option.incorrect .quiz-option-marker {
+    background-color: #ef4444;
+    color: #ffffff;
+}
+
+.quiz-explanation {
+    background-color: #f8fafc;
+    border-left: 4px solid #3b82f6;
+    border-radius: 0 6px 6px 0;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    display: none;
+    animation: quizFadeIn 0.3s ease;
+}
+
+.quiz-explanation.visible {
+    display: block;
+}
+
+.quiz-explanation-title {
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 6px;
+    font-size: 0.95em;
+}
+
+.quiz-explanation-text {
+    font-size: 0.9em;
+    color: #475569;
+    line-height: 1.5;
+}
+
+.quiz-action-bar {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.quiz-next-btn {
+    background-color: #1abc9c;
+    color: #ffffff !important;
+    border: none;
+    padding: 10px 22px;
+    font-size: 0.95em;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.quiz-next-btn:hover {
+    background-color: #16a085;
+}
+
+/* Scorecard styles */
+.quiz-scorecard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px 0;
+    animation: quizFadeIn 0.4s ease;
+}
+
+.quiz-scorecard h3 {
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.quiz-scorecard-result {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.quiz-score-circle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #f1f5f9;
+    border: 6px solid #cbd5e1;
+}
+
+.quiz-score-circle.pass {
+    border-color: #22c55e;
+}
+
+.quiz-score-circle.fail {
+    border-color: #ef4444;
+}
+
+.quiz-score-num {
+    font-size: 1.8em;
+    font-weight: 800;
+    color: #1e293b;
+    line-height: 1;
+}
+
+.quiz-score-label {
+    font-size: 0.75em;
+    font-weight: 600;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+.quiz-status-badge {
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.quiz-status-badge.pass {
+    background-color: #22c55e;
+}
+
+.quiz-status-badge.fail {
+    background-color: #ef4444;
+}
+
+.quiz-details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 30px;
+}
+
+.quiz-detail-card {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 12px;
+}
+
+.quiz-detail-val {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.quiz-detail-lbl {
+    font-size: 0.75em;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.quiz-retry-btn {
+    background-color: #3b82f6;
+    color: #ffffff !important;
+    border: none;
+    padding: 12px 28px;
+    font-size: 1em;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.quiz-retry-btn:hover {
+    background-color: #2563eb;
+}
+
+@keyframes quizFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 480px) {
+    .quiz-details-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}
+
+/* --- PRACTICE EXAM HUB DASHBOARD STYLING --- */
+.quiz-hub-header {
+    margin-bottom: 25px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 15px;
+}
+
+.quiz-hub-header h3 {
+    font-size: 1.6em;
+    font-weight: 800;
+    color: #1e293b;
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.quiz-hub-header p {
+    font-size: 0.95em;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+.quiz-hub-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.quiz-search-wrapper {
+    position: relative;
+    flex: 1;
+    min-width: 250px;
+    max-width: 400px;
+}
+
+.quiz-search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    pointer-events: none;
+    font-size: 0.9em;
+}
+
+#quiz-search {
+    width: 100%;
+    padding: 10px 12px 10px 38px;
+    font-size: 0.9em;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #334155;
+    transition: all 0.2s ease;
+}
+
+#quiz-search:focus {
+    outline: none;
+    border-color: #1abc9c;
+    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.15);
+}
+
+.quiz-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.quiz-filter-btn {
+    padding: 8px 16px;
+    font-size: 0.85em;
+    font-weight: 600;
+    color: #475569;
+    background-color: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.quiz-filter-btn:hover {
+    background-color: #e2e8f0;
+    color: #1e293b;
+}
+
+.quiz-filter-btn.active {
+    background-color: #1abc9c;
+    color: #ffffff;
+    border-color: #1abc9c;
+}
+
+.quiz-hub-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    animation: quizFadeIn 0.3s ease;
+}
+
+.quiz-hub-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.quiz-hub-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    border-color: #cbd5e1;
+}
+
+.quiz-card-badge-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.quiz-card-badge {
+    font-size: 0.75em;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+}
+
+.quiz-card-badge.badge-empty {
+    background-color: #f1f5f9;
+    color: #475569;
+}
+
+.quiz-card-badge.badge-pass {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.quiz-card-badge.badge-fail {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.quiz-card-score-lbl {
+    font-size: 0.75em;
+    color: #64748b;
+}
+
+.quiz-card-title {
+    font-size: 1.05em;
+    font-weight: 700;
+    color: #1e293b;
+    margin-top: 0;
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+.quiz-card-desc {
+    font-size: 0.85em;
+    color: #64748b;
+    line-height: 1.4;
+    margin-bottom: 18px;
+    flex-grow: 1;
+}
+
+.quiz-card-start-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 0.9em;
+    font-weight: 700;
+    color: #ffffff;
+    background-color: #1abc9c;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-align: center;
+}
+
+.quiz-card-start-btn:hover {
+    background-color: #16a085;
+}
+
+/* --- ACTIVE QUIZ SESSION HEADER BAR --- */
+.quiz-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+}
+
+.quiz-exit-btn {
+    font-size: 0.85em;
+    font-weight: 700;
+    color: #ef4444 !important;
+    background-color: #fef2f2;
+    border: 1px solid #fee2e2;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quiz-exit-btn:hover {
+    background-color: #fee2e2;
+    color: #b91c1c !important;
+}
+
+.quiz-header-title {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #1e293b;
+}/* --- EXAM MOCK TEST SIMULATOR STYLING --- */
+.mock-home-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 25px;
+    margin-top: 15px;
+}
+
+.mock-badge {
+    display: inline-block;
+    background-color: #e0f2fe;
+    color: #0369a1;
+    font-size: 0.75em;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.mock-rules-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+    background-color: #f8fafc;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+.mock-rule-item {
+    font-size: 0.9em;
+    color: #475569;
+}
+
+.mock-blueprint-table {
+    margin-bottom: 25px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.mock-bp-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    font-size: 0.9em;
+    border-bottom: 1px solid #e2e8f0;
+    background-color: #ffffff;
+}
+
+.mock-bp-row.header {
+    background-color: #f1f5f9;
+    font-weight: 700;
+    color: #1e293b;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.mock-bp-row:last-child {
+    border-bottom: none;
+}
+
+.mock-highscore-section {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.mock-score-pill {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.95em;
+}
+
+.mock-score-pill.pass {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.mock-score-pill.fail {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.mock-start-btn {
+    display: block;
+    width: 100%;
+    max-width: 250px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    background-color: #1abc9c;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.05em;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+.mock-start-btn:hover {
+    background-color: #16a085;
+}
+
+/* --- ACTIVE SESSION STYLES --- */
+.mock-test-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 12px;
+    margin-bottom: 15px;
+}
+
+.mock-title-grp {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mock-exit-btn {
+    font-size: 0.85em;
+    font-weight: 700;
+    color: #ef4444 !important;
+    background-color: #fef2f2;
+    border: 1px solid #fee2e2;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mock-exit-btn:hover {
+    background-color: #fee2e2;
+    color: #b91c1c !important;
+}
+
+.mock-stats-grp {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mock-stat-badge {
+    background-color: #f1f5f9;
+    color: #475569;
+    font-size: 0.8em;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+}
+
+.mock-timer-badge {
+    background-color: #f8fafc;
+    color: #1e293b;
+    font-size: 0.8em;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+}
+
+#mock-timer.danger {
+    color: #ef4444;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0.5; }
+}
+
+.mock-question-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.mock-card-meta {
+    font-size: 0.75em;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.mock-action-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 15px;
+    margin-top: 20px;
+}
+
+.mock-nav-btn {
+    padding: 8px 18px;
+    font-size: 0.9em;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid #cbd5e1;
+    background-color: #ffffff;
+    color: #475569;
+    transition: all 0.2s ease;
+}
+
+.mock-nav-btn:hover:not(:disabled) {
+    background-color: #f1f5f9;
+    border-color: #94a3b8;
+}
+
+.mock-nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.mock-submit-btn {
+    padding: 8px 18px;
+    font-size: 0.9em;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    background-color: #27ae60;
+    color: #ffffff !important;
+    transition: background-color 0.2s ease;
+}
+
+.mock-submit-btn:hover {
+    background-color: #2ecc71;
+}
+
+/* --- SCORECARD CATEGORY STYLES --- */
+.mock-category-breakdown {
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+.mock-cat-perf-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 15px;
+    font-size: 0.9em;
+    border-bottom: 1px solid #cbd5e1;
+    background-color: #ffffff;
+}
+
+.mock-cat-perf-row:last-child {
+    border-bottom: none;
+}
+
+.mock-cat-name {
+    color: #475569;
+    font-weight: 500;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.text-green {
+    color: #22c55e;
+}
+
+.text-red {
+    color: #ef4444;
+}
+
+/* --- QUESTION REVIEW STATE --- */
+.mock-review-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.mock-review-card {
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.01);
+}
+
+.mock-review-card.correct {
+    border-left: 5px solid #22c55e;
+}
+
+.mock-review-card.incorrect {
+    border-left: 5px solid #ef4444;
+}
+
+.mock-review-meta {
+    font-size: 0.75em;
+    font-weight: 700;
+    color: #64748b;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.mock-review-question {
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 15px;
+    font-size: 1.05em;
+}
+
+.mock-review-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.mock-review-opt {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 10px 12px;
+    font-size: 0.9em;
+    color: #475569;
+}
+
+.mock-review-opt.correct {
+    border-color: #22c55e;
+    background-color: #f0fdf4;
+    color: #15803d;
+    font-weight: 600;
+}
+
+.mock-review-opt.incorrect {
+    border-color: #ef4444;
+    background-color: #fef2f2;
+    color: #b91c1c;
+}
+
+.mock-review-marker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #e2e8f0;
+    color: #475569;
+    font-size: 0.8em;
+    font-weight: 700;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.mock-review-opt.correct .mock-review-marker {
+    background-color: #22c55e;
+    color: #ffffff;
+}
+
+.mock-review-opt.incorrect .mock-review-marker {
+    background-color: #ef4444;
+    color: #ffffff;
+}
+
+.mock-review-explanation {
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 12px 15px;
+    font-size: 0.85em;
+    color: #475569;
+    line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+    .mock-rules-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}
+
+/* ========================================================
+   📰 TECHNOLOGY MAGAZINE (BIZCLIK STYLE) DIGITAL READER CSS
+   ======================================================== */
+
+/* PDF Export Bar */
+.mag-pdf-header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #090d16 0%, #111827 100%);
+    color: #ffffff;
+    padding: 14px 22px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    border-left: 5px solid #0284c7;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+.mag-pdf-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.pdf-icon {
+    font-size: 1.8em;
+}
+.mag-pdf-btn {
+    background-color: #0284c7;
+    color: #ffffff !important;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.88em;
+}
+.mag-pdf-btn:hover {
+    background-color: #0369a1;
+}
+
+/* Digital Flipbook Reader Container */
+.mag-flipbook-container {
+    background-color: #0b0f19;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 25px 0 35px 0;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+.mag-flipbook-viewport {
+    position: relative;
+    min-height: 480px;
+    overflow: hidden;
+}
+.mag-page {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+.mag-page.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Page 1: Cover Spread */
+.mag-cover-layout {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.mag-cover-image-wrap {
+    position: relative;
+    max-height: 520px;
+    overflow: hidden;
+}
+.mag-cover-img {
+    width: 100%;
+    height: 520px;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.55);
+}
+.mag-cover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #ffffff;
+}
+.mag-masthead {
+    font-size: 2.8em;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    line-height: 1;
+}
+.mag-sub-masthead {
+    font-size: 0.9em;
+    font-weight: 800;
+    letter-spacing: 0.25em;
+    color: #38bdf8;
+    margin-bottom: 20px;
+}
+.mag-cover-headline {
+    font-size: 2.1em;
+    font-weight: 900;
+    line-height: 1.25;
+    color: #ffffff;
+    max-width: 800px;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+}
+.mag-cover-bullets {
+    font-size: 1.05em;
+    color: #e2e8f0;
+    line-height: 1.8;
+    font-weight: 600;
+}
+.mag-cover-date {
+    font-size: 0.8em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #94a3b8;
+}
+
+/* Page 2: Spread Layout */
+.mag-spread-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    background-color: #ffffff;
+    color: #0f172a;
+    padding: 30px;
+    border-radius: 10px;
+    min-height: 460px;
+}
+.editorial-tag {
+    display: inline-block;
+    background-color: #0f172a;
+    color: #ffffff;
+    font-size: 0.72em;
+    font-weight: 800;
+    padding: 3px 10px;
+    letter-spacing: 0.08em;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.editorial-dropcap {
+    float: left;
+    font-size: 3.5em;
+    line-height: 0.8;
+    font-weight: 900;
+    color: #0284c7;
+    margin-right: 8px;
+    margin-bottom: -4px;
+}
+.editor-signoff {
+    border-top: 2px solid #e2e8f0;
+    padding-top: 10px;
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+/* Flipbook Toolbar Controls */
+.mag-flipbook-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    border-top: 1px solid #1e293b;
+    padding-top: 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.mag-nav-btn {
+    background-color: #1e293b;
+    color: #f8fafc;
+    border: 1px solid #334155;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: all 0.2s ease;
+}
+.mag-nav-btn:hover {
+    background-color: #0284c7;
+    border-color: #0284c7;
+}
+.mag-page-indicator {
+    color: #94a3b8;
+    font-weight: 700;
+    font-size: 0.9em;
+}
+.mag-spread-link {
+    color: #38bdf8 !important;
+    font-weight: 700;
+    font-size: 0.9em;
+    text-decoration: none !important;
+}
+
+/* Magazine Cards Grid with Real Photos */
+.magazine-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+    margin-bottom: 35px;
+}
+.magazine-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.magazine-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+}
+.card-img-wrap {
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+}
+.card-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.magazine-card:hover .card-thumb-img {
+    transform: scale(1.05);
+}
+.card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/* Editorial Article Layout */
+.mag-article-hero {
+    margin-bottom: 25px;
+}
+.mag-hero-img {
+    width: 100%;
+    max-height: 450px;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+}
+.mag-hero-caption {
+    font-size: 0.85em;
+    color: #64748b;
+    margin-top: 8px;
+    font-style: italic;
+}
+.editorial-pullquote {
+    font-size: 1.25em !important;
+    font-weight: 700 !important;
+    color: #0284c7 !important;
+    border-left: 4px solid #0284c7 !important;
+    background-color: #f0f9ff !important;
+    padding: 18px 24px !important;
+    margin: 25px 0 !important;
+    line-height: 1.5 !important;
+    border-radius: 0 8px 8px 0;
+}
+
+/* Issue TOC Grid with Real Thumbnails */
+.issue-toc-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 25px 0;
+}
+.issue-toc-item {
+    display: flex;
+    gap: 20px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 16px;
+    border-radius: 10px;
+    align-items: center;
+}
+.toc-img-wrap {
+    width: 120px;
+    height: 90px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 6px;
+}
+.toc-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Hero Spread */
+.mag-hero-spread {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    background: #0f172a;
+    color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+.mag-spread-cover-img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.mag-spread-intro h2 {
+    color: #ffffff !important;
+    margin-top: 0 !important;
+}
+
+@media (max-width: 768px) {
+    .mag-spread-layout, .mag-hero-spread {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================================
+   📰 MULTI-COLUMN MAGAZINE EDITORIAL SPREAD STYLES
+   ======================================================== */
+
+/* Stat Infobox Grid */
+.magazine-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 25px 0 35px 0;
+}
+.magazine-stat-box {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border: 1px solid #334155;
+    border-top: 3px solid #0284c7;
+    border-radius: 8px;
+    padding: 16px 12px;
+    text-align: center;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.stat-val {
+    font-size: 1.4em;
+    font-weight: 900;
+    color: #38bdf8;
+    line-height: 1.2;
+    margin-bottom: 4px;
+}
+.stat-label {
+    font-size: 0.78em;
+    color: #cbd5e1;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Two-Column Magazine Body */
+.magazine-columns {
+    column-count: 2;
+    column-gap: 36px;
+    column-rule: 1px solid #e2e8f0;
+    font-size: 0.95em;
+    line-height: 1.7;
+    color: #334155;
+    margin-bottom: 40px;
+}
+
+/* Column Spanning Elements */
+.magazine-pullquote-span {
+    column-span: all;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    color: #ffffff !important;
+    border-left: 5px solid #38bdf8;
+    padding: 22px 30px;
+    border-radius: 8px;
+    margin: 30px 0;
+    font-size: 1.25em !important;
+    font-weight: 700 !important;
+    line-height: 1.5 !important;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.magazine-sidebar-callout {
+    column-span: all;
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 20px 25px;
+    margin: 25px 0;
+}
+.magazine-sidebar-callout h4 {
+    margin-top: 0 !important;
+    color: #0284c7 !important;
+    font-size: 1.1em !important;
+}
+
+/* Table Column Spanning */
+.magazine-columns table {
+    column-span: all;
+    margin: 30px 0;
+    width: 100%;
+}
+
+/* Author Signature Card */
+.magazine-author-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 40px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.author-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.author-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #0284c7;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.2em;
+}
+.next-feature-btn {
+    background-color: #0f172a;
+    color: #ffffff !important;
+    padding: 9px 18px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.88em;
+    text-decoration: none !important;
+    transition: background-color 0.2s ease;
+}
+.next-feature-btn:hover {
+    background-color: #0284c7;
+}
+
+@media (max-width: 900px) {
+    .magazine-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .magazine-columns {
+        column-count: 1;
+    }
+    .magazine-author-card {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+}
+
+/* ========================================================
+   📄 PIXEL-PERFECT MAGAZINE PAGE SPREAD STYLES (PDF STYLE)
+   ======================================================== */
+
+/* Full Magazine Container & Viewer Controls */
+.pdf-mag-viewer {
+    background-color: #0b0f19;
+    padding: 30px 20px;
+    border-radius: 12px;
+    margin: 20px 0 40px 0;
+}
+.pdf-mag-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1e293b;
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    border-left: 4px solid #00a896;
+}
+.pdf-mag-btn {
+    background-color: #00a896;
+    color: #ffffff !important;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.88em;
+    transition: all 0.2s ease;
+}
+.pdf-mag-btn:hover {
+    background-color: #028090;
+}
+
+/* Double-Page Spread Layout */
+.pdf-mag-spread-viewport {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* Individual Magazine Page (A4 Aspect Ratio) */
+.pdf-mag-page {
+    background-color: #ffffff;
+    color: #1e293b;
+    width: 540px;
+    min-height: 750px;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Top Accent Header Bar (Matching sample PDF) */
+.pdf-page-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 32px;
+    background-color: #00a896;
+    color: #ffffff;
+    padding: 0 16px;
+    font-size: 0.75em;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+}
+.pdf-page-top-bar::before {
+    content: "";
+    display: block;
+    width: 60%;
+    height: 100%;
+    background-color: #028090;
+    clip-path: polygon(0 0, 95% 0, 100% 100%, 0 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.pdf-page-top-bar span {
+    position: relative;
+    z-index: 2;
+}
+
+/* Title Box Header Banner */
+.pdf-page-title-banner {
+    background-color: #028090;
+    color: #ffffff;
+    padding: 16px 20px;
+    margin: 12px 16px 16px 16px;
+    border-radius: 4px;
+}
+.pdf-page-title-banner h2 {
+    color: #ffffff !important;
+    font-size: 1.3em !important;
+    font-weight: 900 !important;
+    margin: 0 0 4px 0 !important;
+    line-height: 1.25 !important;
+}
+.pdf-page-title-banner p {
+    margin: 0;
+    font-size: 0.85em;
+    opacity: 0.9;
+}
+
+/* Magazine Page Content Padding */
+.pdf-page-body {
+    padding: 0 18px;
+    flex-grow: 1;
+    font-size: 0.82em;
+    line-height: 1.55;
+    color: #334155;
+}
+
+/* 2-Column Grid inside Page Body */
+.pdf-page-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+/* Styled Drop Cap */
+.pdf-dropcap {
+    float: left;
+    font-size: 2.8em;
+    line-height: 0.8;
+    font-weight: 900;
+    color: #00a896;
+    margin-right: 6px;
+    margin-bottom: -2px;
+}
+
+/* Feature Image inside Page */
+.pdf-page-img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+    margin: 8px 0;
+}
+.pdf-img-caption {
+    font-size: 0.72em;
+    color: #64748b;
+    font-style: italic;
+    margin-bottom: 8px;
+}
+
+/* Callout Box (Matching PDF sample) */
+.pdf-callout-box {
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-left: 4px solid #00a896;
+    padding: 10px 12px;
+    border-radius: 4px;
+    margin: 10px 0;
+    font-size: 0.9em;
+}
+.pdf-callout-box h4 {
+    margin: 0 0 4px 0 !important;
+    color: #028090 !important;
+    font-size: 0.95em !important;
+}
+
+/* Table inside Page */
+.pdf-page-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78em;
+    margin: 8px 0;
+}
+.pdf-page-table th {
+    background-color: #028090;
+    color: #ffffff;
+    padding: 5px 8px;
+    text-align: left;
+    font-weight: 700;
+}
+.pdf-page-table td {
+    padding: 5px 8px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* Bottom Footer Bar (Matching sample PDF) */
+.pdf-page-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 28px;
+    border-top: 3px solid #00a896;
+    padding: 0 16px;
+    font-size: 0.72em;
+    color: #64748b;
+    font-weight: 700;
+    background-color: #f8fafc;
+}
+
+/* FORCE HIGH-CONTRAST LEGIBILITY FOR ALL TEXT INSIDE PDF MAGAZINE PAGES */
+.pdf-mag-page {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+}
+.pdf-mag-page p, 
+.pdf-mag-page li, 
+.pdf-mag-page td {
+    color: #1e293b !important;
+}
+.pdf-mag-page h1, 
+.pdf-mag-page h2:not(.pdf-page-title-banner h2), 
+.pdf-mag-page h3, 
+.pdf-mag-page h4:not(.pdf-callout-box h4), 
+.pdf-mag-page h5, 
+.pdf-mag-page h6 {
+    color: #0f172a !important;
+}
+.pdf-page-top-bar span {
+    color: #ffffff !important;
+}
+.pdf-page-title-banner {
+    background-color: #028090 !important;
+    color: #ffffff !important;
+}
+.pdf-page-title-banner h2, 
+.pdf-page-title-banner p {
+    color: #ffffff !important;
+}
+.pdf-callout-box {
+    background-color: #f0fdf4 !important;
+    border: 1px solid #bbf7d0 !important;
+    border-left: 4px solid #00a896 !important;
+}
+.pdf-callout-box h4 {
+    color: #028090 !important;
+}
+.pdf-callout-box p, 
+.pdf-callout-box span, 
+.pdf-callout-box strong {
+    color: #064e3b !important;
+}
+.pdf-page-table th {
+    background-color: #028090 !important;
+    color: #ffffff !important;
+}
+.pdf-page-table td {
+    color: #0f172a !important;
+}
+.pdf-page-footer span {
+    color: #475569 !important;
+}
+
+/* ========================================================
+   📰 IST TECH MAGAZINE PDF EXACT LAYOUT STYLES (PAGES 8 & 14)
+   ======================================================== */
+
+.ist-mag-container {
+    background-color: #ffffff !important;
+    color: #1e293b !important;
+    padding: 0 !important;
+    margin: 0 auto 40px auto !important;
+    max-width: 900px !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* Top Accent Slant Badge Bar (Matching PDF E-ARTICLES header & Eye-Catching aikaboom.com badge) */
+.ist-mag-top-accent {
+    background-color: #f8fafc;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-right: 0;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid #cbd5e1;
+}
+.ist-mag-site-ref {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #38bdf8 !important;
+    font-weight: 800 !important;
+    font-size: 0.78em !important;
+    letter-spacing: 0.05em;
+    padding: 3px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
+    margin-right: 12px;
+    text-decoration: none !important;
+    text-transform: lowercase;
+    transition: all 0.25 ease;
+}
+.ist-mag-site-ref::before {
+    content: "🌐";
+    font-size: 0.9em;
+}
+.ist-mag-site-ref:hover {
+    border-color: #00a896;
+    color: #34d399 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 168, 150, 0.25);
+}
+.ist-mag-top-badge {
+    background-color: #028090;
+    color: #ffffff !important;
+    font-weight: 800;
+    font-size: 0.85em;
+    letter-spacing: 0.12em;
+    padding: 7px 25px 7px 35px;
+    clip-path: polygon(15px 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/* Title Box Header Banner (Matching PDF sample Page 14) */
+.ist-mag-header-box {
+    background-color: #00a896 !important;
+    color: #ffffff !important;
+    padding: 24px 30px !important;
+    margin: 20px 25px 20px 25px !important;
+    border-radius: 4px !important;
+}
+.ist-mag-header-box h1 {
+    color: #ffffff !important;
+    font-size: 1.8em !important;
+    font-weight: 900 !important;
+    margin: 0 0 6px 0 !important;
+    line-height: 1.25 !important;
+}
+.ist-mag-header-box h2 {
+    color: #ffffff !important;
+    font-size: 1.1em !important;
+    font-weight: 600 !important;
+    margin: 0 0 12px 0 !important;
+    opacity: 0.95 !important;
+}
+.ist-mag-header-box .author {
+    color: #e0f2fe !important;
+    font-size: 0.9em !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+}
+
+/* Lead Paragraph (Matching PDF sample intro) */
+.ist-mag-lead {
+    font-style: italic;
+    font-size: 0.98em;
+    line-height: 1.65;
+    color: #0f172a !important;
+    padding: 0 30px;
+    margin-bottom: 22px;
+}
+
+/* Main 2-Column Article Grid (Matching PDF sample columns) */
+.ist-mag-content-body {
+    padding: 0 30px 25px 30px;
+}
+.ist-mag-cols {
+    column-count: 2;
+    column-gap: 32px;
+    font-size: 0.88em;
+    line-height: 1.65;
+    color: #1e293b !important;
+}
+
+/* Bright Teal Section Headings (Matching PDF sample headings) */
+.ist-mag-heading {
+    color: #00a896 !important;
+    font-size: 1.15em !important;
+    font-weight: 800 !important;
+    margin: 18px 0 8px 0 !important;
+    line-height: 1.3 !important;
+    column-span: none;
+}
+
+/* Inline Photographs & Captions */
+.ist-mag-img {
+    width: 100%;
+    max-height: 240px;
+    object-fit: cover;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    display: block;
+    margin: 12px 0 4px 0;
+}
+.ist-mag-caption {
+    font-size: 0.76em;
+    color: #64748b !important;
+    font-style: italic;
+    margin-bottom: 14px;
+}
+
+/* Stat Box / Callout Box (Matching PDF sample callouts) */
+.ist-mag-callout {
+    background-color: #f0fdf4 !important;
+    border: 1px solid #bbf7d0 !important;
+    border-left: 4px solid #00a896 !important;
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin: 16px 0;
+}
+.ist-mag-callout h4 {
+    color: #028090 !important;
+    font-size: 1.02em !important;
+    margin: 0 0 6px 0 !important;
+    font-weight: 800 !important;
+}
+.ist-mag-callout p {
+    color: #064e3b !important;
+    font-size: 0.9em !important;
+    margin: 0 !important;
+}
+
+/* Comparison Table (Matching PDF sample table formatting) */
+.ist-mag-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82em;
+    margin: 16px 0;
+    column-span: all;
+}
+.ist-mag-table th {
+    background-color: #028090 !important;
+    color: #ffffff !important;
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 800;
+}
+.ist-mag-table td {
+    padding: 7px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #0f172a !important;
+}
+.ist-mag-table tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+/* Bottom Footer Bar (Matching PDF sample footer) */
+.ist-mag-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 32px;
+    background-color: #f8fafc;
+    border-top: 3px solid #028090;
+    padding: 0 25px;
+    font-size: 0.78em;
+    font-weight: 700;
+    color: #475569 !important;
+}
+
+@media (max-width: 768px) {
+    .ist-mag-cols {
+        column-count: 1;
+    }
+}
+
+
+
+
+
+
