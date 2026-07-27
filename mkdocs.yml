@@ -855,3 +855,7 @@ nav:
                 - "38.4b Hands-on lab environment setup: building a local single-GPU practice environment": 10_exam_prep_certification/chapter_38/38.4b_384b_hands.md
                 - "38.4c Exam registration: Pearson VUE scheduling, policies, and accommodation requests": 10_exam_prep_certification/chapter_38/38.4c_384c_exam_registration.md
                 - "38.4d Post-NCA-AIIO certification roadmap: NVIDIA Certified Professional (NCP) tracks": 10_exam_prep_certification/chapter_38/38.4d_384d_post.md
+    - 📰 Technology Magazine:
+        - Main Digital Reader: magazine/index.md
+        - "Issue #1 (August 2026)": magazine/issue-01/index.md
+        - 🏛️ Monthly Issues Archive: magazine/archive.md

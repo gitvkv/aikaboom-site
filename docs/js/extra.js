@@ -1339,6 +1339,67 @@ document.addEventListener("DOMContentLoaded", function () {
         // Load simulator home
         renderMockHome();
     }
+
+    // --- 7. DIGITAL FLIPBOOK READER & MAGAZINE CATEGORY FILTERING ---
+    const pages = document.querySelectorAll(".mag-page");
+    const prevBtn = document.getElementById("mag-prev-btn");
+    const nextBtn = document.getElementById("mag-next-btn");
+    const pageIndicator = document.getElementById("mag-page-indicator");
+
+    if (pages.length > 0 && prevBtn && nextBtn) {
+        let currentPage = 1;
+        const totalPages = pages.length;
+
+        function updatePage(pageIndex) {
+            pages.forEach(function (p) { p.classList.remove("active"); });
+            const targetPage = document.querySelector(`.mag-page[data-page="${pageIndex}"]`);
+            if (targetPage) {
+                targetPage.classList.add("active");
+            }
+            if (pageIndicator) {
+                pageIndicator.textContent = `Page ${pageIndex} of ${totalPages}`;
+            }
+        }
+
+        prevBtn.addEventListener("click", function () {
+            if (currentPage > 1) {
+                currentPage--;
+                updatePage(currentPage);
+            }
+        });
+
+        nextBtn.addEventListener("click", function () {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updatePage(currentPage);
+            }
+        });
+    }
+
+    // Category Filter Buttons
+    const filterButtons = document.querySelectorAll(".magazine-filter-btn");
+    const magazineCards = document.querySelectorAll(".magazine-card");
+
+    if (filterButtons.length > 0 && magazineCards.length > 0) {
+        filterButtons.forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                filterButtons.forEach(function (b) { b.classList.remove("active"); });
+                btn.classList.add("active");
+
+                const targetFilter = btn.getAttribute("data-filter");
+
+                magazineCards.forEach(function (card) {
+                    const cardCat = card.getAttribute("data-category");
+                    if (targetFilter === "all" || cardCat === targetFilter) {
+                        card.style.display = "flex";
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+            });
+        });
+    }
 });
+
 
 
