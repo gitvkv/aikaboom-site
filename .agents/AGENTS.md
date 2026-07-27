@@ -24,3 +24,10 @@
 * **NVIDIA Green (`#76b900`):** Use for active compute/processors (GPUs, TPUs, accelerators) using `classDef cpu`.
 * **Tech Blue (`#3498db`):** Use for local memory and registers (RAM, HBM, cache hierarchy) using `classDef memory`.
 * **Slate Grey (`#64748b`):** Use for connection lines, system buses, and structural groups using `classDef system`.
+
+## 🚀 Production Deployment & GitHub Pages Rules
+* **Mandatory CNAME & .nojekyll in Source:** `docs/CNAME` (containing `aikaboom.com`) and `docs/.nojekyll` MUST always exist inside `docs/` so MkDocs automatically includes them in `site/` on every build.
+* **Pre-Push Validation:** Always verify `site/CNAME`, `site/index.html`, and `site/.nojekyll` exist before executing git push.
+* **Dual Branch & Remote Sync:** Push compiled production builds to both `main` and `gh-pages` branches across all remotes (`origin` and `backup`).
+* **Live HTTP Verification:** Test live URL response codes with cache-busting parameters (`https://aikaboom.com/?check=1`) to confirm `200 OK` status across edge CDN nodes.
+
